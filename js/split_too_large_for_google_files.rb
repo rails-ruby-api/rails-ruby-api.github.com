@@ -34,7 +34,7 @@ data.each_with_index do |chunk, index|
     out = ["var search_data = search_data || {'index':{}};"]
     out << "search_data['index'] = search_data['index'] || {};"
     out << "search_data['index']['info'] = search_data['index']['info'] || [];"
-    out << "search_data[\"index\"][\"info\"].concat(#{chunk.to_json});"
+    out << "search_data[\"index\"][\"info\"] = search_data[\"index\"][\"info\"].concat(#{chunk.to_json});"
     f.write(out.join("\n"))
   end
 end
@@ -43,8 +43,8 @@ data = json["index"]["longSearchIndex"].chunk(2)
 data.each_with_index do |chunk, index|
   File.open("search_index_long_search_index_#{index}.js", "w") do |f|
     out = ["var search_data = search_data || {\"index\":{}};"]
-    out << "search_data['index']['longSearchIndex'] = search_data\[\”index\”\]\[\”longSearchIndex\”\] || [];"
-    out << "search_data[\"index\"][\"longSearchIndex\"].concat(#{chunk.to_json});"
+    out << "search_data['index']['longSearchIndex'] = search_data['index']['longSearchIndex'] || [];"
+    out << "search_data['index']['longSearchIndex'] = search_data[\"index\"][\"longSearchIndex\"].concat(#{chunk.to_json});"
     f.write(out.join("\n"))
   end
 end
