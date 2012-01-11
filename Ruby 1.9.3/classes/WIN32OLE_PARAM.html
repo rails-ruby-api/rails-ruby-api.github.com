@@ -1,0 +1,675 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>WIN32OLE_PARAM</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/github.css" type="text/css" media="screen" />
+<script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            WIN32OLE_PARAM 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../files/ext/win32ole/win32ole_c.html">ext/win32ole/win32ole.c</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p><code>WIN32OLE_PARAM</code> objects represent param information of the OLE
+method.</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>D</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-default">default</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>I</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-input-3F">input?</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-inspect">inspect</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-name">name</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>O</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-ole_type">ole_type</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-ole_type_detail">ole_type_detail</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-optional-3F">optional?</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-output-3F">output?</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>R</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-retval-3F">retval?</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-to_s">to_s</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <a name="method-c-new"></a><b>new</b>(p1, p2)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre>static VALUE foleparam_initialize(VALUE self, VALUE olemethod, VALUE n)
+{
+    int idx;
+    if (!rb_obj_is_kind_of(olemethod, cWIN32OLE_METHOD)) {
+        rb_raise(rb_eTypeError, &quot;1st parameter must be WIN32OLE_METHOD object&quot;);
+    }
+    idx = FIX2INT(n);
+    return oleparam_ole_param(self, olemethod, idx);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-default">
+            
+              <a name="method-i-default"></a><b>WIN32OLE_PARAM#default
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns default value. If the default value does not exist, this method
+returns nil.</p>
+
+<pre class="ruby"><span class="ruby-identifier">tobj</span> = <span class="ruby-constant">WIN32OLE_TYPE</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">'Microsoft Excel 9.0 Object Library'</span>, <span class="ruby-string">'Workbook'</span>)
+<span class="ruby-identifier">method</span> = <span class="ruby-constant">WIN32OLE_METHOD</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">tobj</span>, <span class="ruby-string">'SaveAs'</span>)
+<span class="ruby-identifier">method</span>.<span class="ruby-identifier">params</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">param</span><span class="ruby-operator">|</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">param</span>.<span class="ruby-identifier">default</span>
+    <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;#{param.name} (= #{param.default})&quot;</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;#{param}&quot;</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span>
+
+<span class="ruby-constant">The</span> <span class="ruby-identifier">above</span> <span class="ruby-identifier">script</span> <span class="ruby-identifier">result</span> <span class="ruby-identifier">is</span> <span class="ruby-identifier">following</span><span class="ruby-operator">:</span>
+    <span class="ruby-constant">Filename</span>
+    <span class="ruby-constant">FileFormat</span>
+    <span class="ruby-constant">Password</span>
+    <span class="ruby-constant">WriteResPassword</span>
+    <span class="ruby-constant">ReadOnlyRecommended</span>
+    <span class="ruby-constant">CreateBackup</span>
+    <span class="ruby-constant">AccessMode</span> (= <span class="ruby-value">1</span>)
+    <span class="ruby-constant">ConflictResolution</span>
+    <span class="ruby-constant">AddToMru</span>
+    <span class="ruby-constant">TextCodepage</span>
+    <span class="ruby-constant">TextVisualLayout</span>
+</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-default_source')" id="l_method-i-default_source">show</a>
+                
+              </p>
+              <div id="method-i-default_source" class="dyn-source">
+                <pre>static VALUE foleparam_default(VALUE self)
+{
+    struct oleparamdata *pparam;
+    Data_Get_Struct(self, struct oleparamdata, pparam);
+    return ole_param_default(pparam-&gt;pTypeInfo, pparam-&gt;method_index,
+                             pparam-&gt;index);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-input-3F">
+            
+              <a name="method-i-input-3F"></a><b>WIN32OLE_PARAM#input?
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns true if the parameter is input.</p>
+
+<pre class="ruby"><span class="ruby-identifier">tobj</span> = <span class="ruby-constant">WIN32OLE_TYPE</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">'Microsoft Excel 9.0 Object Library'</span>, <span class="ruby-string">'Workbook'</span>)
+<span class="ruby-identifier">method</span> = <span class="ruby-constant">WIN32OLE_METHOD</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">tobj</span>, <span class="ruby-string">'SaveAs'</span>)
+<span class="ruby-identifier">param1</span> = <span class="ruby-identifier">method</span>.<span class="ruby-identifier">params</span>[<span class="ruby-value">0</span>]
+<span class="ruby-identifier">puts</span> <span class="ruby-identifier">param1</span>.<span class="ruby-identifier">input?</span> <span class="ruby-comment"># =&gt; true</span>
+</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-input-3F_source')" id="l_method-i-input-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-input-3F_source" class="dyn-source">
+                <pre>static VALUE foleparam_input(VALUE self)
+{
+    struct oleparamdata *pparam;
+    Data_Get_Struct(self, struct oleparamdata, pparam);
+    return ole_param_flag_mask(pparam-&gt;pTypeInfo, pparam-&gt;method_index,
+                               pparam-&gt;index, PARAMFLAG_FIN);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-inspect">
+            
+              <a name="method-i-inspect"></a><b>WIN32OLE_PARAM#inspect &rarr; String
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the parameter name with class name. If the parameter has default
+value, then returns name=value string with class name.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-inspect_source')" id="l_method-i-inspect_source">show</a>
+                
+              </p>
+              <div id="method-i-inspect_source" class="dyn-source">
+                <pre>static VALUE
+foleparam_inspect(VALUE self)
+{
+    VALUE detail = foleparam_name(self);
+    VALUE defval = foleparam_default(self);
+    if (defval != Qnil) {
+        rb_str_cat2(detail, &quot;=&quot;);
+        rb_str_concat(detail, rb_funcall(defval, rb_intern(&quot;inspect&quot;), 0));
+    }
+    return make_inspect(&quot;WIN32OLE_PARAM&quot;, detail);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-name">
+            
+              <a name="method-i-name"></a><b>WIN32OLE_PARAM#name
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns name.</p>
+
+<pre class="ruby"><span class="ruby-identifier">tobj</span> = <span class="ruby-constant">WIN32OLE_TYPE</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">'Microsoft Excel 9.0 Object Library'</span>, <span class="ruby-string">'Workbook'</span>)
+<span class="ruby-identifier">method</span> = <span class="ruby-constant">WIN32OLE_METHOD</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">tobj</span>, <span class="ruby-string">'SaveAs'</span>)
+<span class="ruby-identifier">param1</span> = <span class="ruby-identifier">method</span>.<span class="ruby-identifier">params</span>[<span class="ruby-value">0</span>]
+<span class="ruby-identifier">puts</span> <span class="ruby-identifier">param1</span>.<span class="ruby-identifier">name</span> <span class="ruby-comment"># =&gt; Filename</span>
+</pre>
+            </div>
+          
+          
+          
+            <div class="aka">
+              Also aliased as: <a href="WIN32OLE_PARAM.html#method-i-to_s">to_s</a>
+            </div>
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-name_source')" id="l_method-i-name_source">show</a>
+                
+              </p>
+              <div id="method-i-name_source" class="dyn-source">
+                <pre>static VALUE
+foleparam_name(VALUE self)
+{
+    return rb_ivar_get(self, rb_intern(&quot;name&quot;));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-ole_type">
+            
+              <a name="method-i-ole_type"></a><b>WIN32OLE_PARAM#ole_type
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns OLE type of <a href="WIN32OLE_PARAM.html">WIN32OLE_PARAM</a>
+object(parameter of OLE method).</p>
+
+<pre class="ruby"><span class="ruby-identifier">tobj</span> = <span class="ruby-constant">WIN32OLE_TYPE</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">'Microsoft Excel 9.0 Object Library'</span>, <span class="ruby-string">'Workbook'</span>)
+<span class="ruby-identifier">method</span> = <span class="ruby-constant">WIN32OLE_METHOD</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">tobj</span>, <span class="ruby-string">'SaveAs'</span>)
+<span class="ruby-identifier">param1</span> = <span class="ruby-identifier">method</span>.<span class="ruby-identifier">params</span>[<span class="ruby-value">0</span>]
+<span class="ruby-identifier">puts</span> <span class="ruby-identifier">param1</span>.<span class="ruby-identifier">ole_type</span> <span class="ruby-comment"># =&gt; VARIANT</span>
+</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-ole_type_source')" id="l_method-i-ole_type_source">show</a>
+                
+              </p>
+              <div id="method-i-ole_type_source" class="dyn-source">
+                <pre>static VALUE
+foleparam_ole_type(VALUE self)
+{
+    struct oleparamdata *pparam;
+    Data_Get_Struct(self, struct oleparamdata, pparam);
+    return ole_param_ole_type(pparam-&gt;pTypeInfo, pparam-&gt;method_index,
+                              pparam-&gt;index);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-ole_type_detail">
+            
+              <a name="method-i-ole_type_detail"></a><b>WIN32OLE_PARAM#ole_type_detail
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns detail information of type of argument.</p>
+
+<pre class="ruby"><span class="ruby-identifier">tobj</span> = <span class="ruby-constant">WIN32OLE_TYPE</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">'Microsoft Excel 9.0 Object Library'</span>, <span class="ruby-string">'IWorksheetFunction'</span>)
+<span class="ruby-identifier">method</span> = <span class="ruby-constant">WIN32OLE_METHOD</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">tobj</span>, <span class="ruby-string">'SumIf'</span>)
+<span class="ruby-identifier">param1</span> = <span class="ruby-identifier">method</span>.<span class="ruby-identifier">params</span>[<span class="ruby-value">0</span>]
+<span class="ruby-identifier">p</span> <span class="ruby-identifier">param1</span>.<span class="ruby-identifier">ole_type_detail</span> <span class="ruby-comment"># =&gt; [&quot;PTR&quot;, &quot;USERDEFINED&quot;, &quot;Range&quot;]</span>
+</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-ole_type_detail_source')" id="l_method-i-ole_type_detail_source">show</a>
+                
+              </p>
+              <div id="method-i-ole_type_detail_source" class="dyn-source">
+                <pre>static VALUE
+foleparam_ole_type_detail(VALUE self)
+{
+    struct oleparamdata *pparam;
+    Data_Get_Struct(self, struct oleparamdata, pparam);
+    return ole_param_ole_type_detail(pparam-&gt;pTypeInfo, pparam-&gt;method_index,
+                                     pparam-&gt;index);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-optional-3F">
+            
+              <a name="method-i-optional-3F"></a><b>WIN32OLE_PARAM#optional?
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns true if argument is optional.</p>
+
+<pre class="ruby"><span class="ruby-identifier">tobj</span> = <span class="ruby-constant">WIN32OLE_TYPE</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">'Microsoft Excel 9.0 Object Library'</span>, <span class="ruby-string">'Workbook'</span>)
+<span class="ruby-identifier">method</span> = <span class="ruby-constant">WIN32OLE_METHOD</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">tobj</span>, <span class="ruby-string">'SaveAs'</span>)
+<span class="ruby-identifier">param1</span> = <span class="ruby-identifier">method</span>.<span class="ruby-identifier">params</span>[<span class="ruby-value">0</span>]
+<span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;#{param1.name} #{param1.optional?}&quot;</span> <span class="ruby-comment"># =&gt; Filename true</span>
+</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-optional-3F_source')" id="l_method-i-optional-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-optional-3F_source" class="dyn-source">
+                <pre>static VALUE foleparam_optional(VALUE self)
+{
+    struct oleparamdata *pparam;
+    Data_Get_Struct(self, struct oleparamdata, pparam);
+    return ole_param_flag_mask(pparam-&gt;pTypeInfo, pparam-&gt;method_index,
+                               pparam-&gt;index, PARAMFLAG_FOPT);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-output-3F">
+            
+              <a name="method-i-output-3F"></a><b>WIN32OLE#output?
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns true if argument is output.</p>
+
+<pre class="ruby"><span class="ruby-identifier">tobj</span> = <span class="ruby-constant">WIN32OLE_TYPE</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">'Microsoft Internet Controls'</span>, <span class="ruby-string">'DWebBrowserEvents'</span>)
+<span class="ruby-identifier">method</span> = <span class="ruby-constant">WIN32OLE_METHOD</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">tobj</span>, <span class="ruby-string">'NewWindow'</span>)
+<span class="ruby-identifier">method</span>.<span class="ruby-identifier">params</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">param</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;#{param.name} #{param.output?}&quot;</span>
+<span class="ruby-keyword">end</span>
+
+<span class="ruby-constant">The</span> <span class="ruby-identifier">result</span> <span class="ruby-identifier">of</span> <span class="ruby-identifier">above</span> <span class="ruby-identifier">script</span> <span class="ruby-identifier">is</span> <span class="ruby-identifier">following</span><span class="ruby-operator">:</span>
+  <span class="ruby-constant">URL</span> <span class="ruby-keyword">false</span>
+  <span class="ruby-constant">Flags</span> <span class="ruby-keyword">false</span>
+  <span class="ruby-constant">TargetFrameName</span> <span class="ruby-keyword">false</span>
+  <span class="ruby-constant">PostData</span> <span class="ruby-keyword">false</span>
+  <span class="ruby-constant">Headers</span> <span class="ruby-keyword">false</span>
+  <span class="ruby-constant">Processed</span> <span class="ruby-keyword">true</span>
+</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-output-3F_source')" id="l_method-i-output-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-output-3F_source" class="dyn-source">
+                <pre>static VALUE foleparam_output(VALUE self)
+{
+    struct oleparamdata *pparam;
+    Data_Get_Struct(self, struct oleparamdata, pparam);
+    return ole_param_flag_mask(pparam-&gt;pTypeInfo, pparam-&gt;method_index,
+                               pparam-&gt;index, PARAMFLAG_FOUT);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-retval-3F">
+            
+              <a name="method-i-retval-3F"></a><b>WIN32OLE_PARAM#retval?
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns true if argument is return value.</p>
+
+<pre class="ruby"><span class="ruby-identifier">tobj</span> = <span class="ruby-constant">WIN32OLE_TYPE</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">'DirectX 7 for Visual Basic Type Library'</span>,
+                         <span class="ruby-string">'DirectPlayLobbyConnection'</span>)
+<span class="ruby-identifier">method</span> = <span class="ruby-constant">WIN32OLE_METHOD</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">tobj</span>, <span class="ruby-string">'GetPlayerShortName'</span>)
+<span class="ruby-identifier">param</span> = <span class="ruby-identifier">method</span>.<span class="ruby-identifier">params</span>[<span class="ruby-value">0</span>]
+<span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;#{param.name} #{param.retval?}&quot;</span>  <span class="ruby-comment"># =&gt; name true</span>
+</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-retval-3F_source')" id="l_method-i-retval-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-retval-3F_source" class="dyn-source">
+                <pre>static VALUE foleparam_retval(VALUE self)
+{
+    struct oleparamdata *pparam;
+    Data_Get_Struct(self, struct oleparamdata, pparam);
+    return ole_param_flag_mask(pparam-&gt;pTypeInfo, pparam-&gt;method_index,
+                               pparam-&gt;index, PARAMFLAG_FRETVAL);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-to_s">
+            
+              <a name="method-i-to_s"></a><b>to_s</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    

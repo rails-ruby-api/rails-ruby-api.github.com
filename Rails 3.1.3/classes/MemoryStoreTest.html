@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>MemoryStoreTest</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/github.css" type="text/css" media="screen" />
+<script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            MemoryStoreTest 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="ActiveSupport/TestCase.html">ActiveSupport::TestCase</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../files/activesupport/test/caching_test_rb.html">activesupport/test/caching_test.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>S</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-setup">setup</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-test_prune_size">test_prune_size</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_prune_size_on_write">test_prune_size_on_write</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_pruning_is_capped_at_a_max_time">test_pruning_is_capped_at_a_max_time</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+    <!-- Includes -->
+    <div class="sectiontitle">Included Modules</div>
+    <ul>
+      
+        <li>
+          
+            <a href="CacheStoreBehavior.html">
+              CacheStoreBehavior
+            </a>
+          
+        </li>
+      
+        <li>
+          
+            <a href="CacheDeleteMatchedBehavior.html">
+              CacheDeleteMatchedBehavior
+            </a>
+          
+        </li>
+      
+        <li>
+          
+            <a href="CacheIncrementDecrementBehavior.html">
+              CacheIncrementDecrementBehavior
+            </a>
+          
+        </li>
+      
+    </ul>
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+        
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-setup">
+            
+              <a name="method-i-setup"></a><b>setup</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-setup_source')" id="l_method-i-setup_source">show</a>
+                
+              </p>
+              <div id="method-i-setup_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activesupport/test/caching_test.rb, line 593</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">setup</span>
+  <span class="ruby-ivar">@cache</span> = <span class="ruby-constant">ActiveSupport</span><span class="ruby-operator">::</span><span class="ruby-constant">Cache</span>.<span class="ruby-identifier">lookup_store</span>(<span class="ruby-value">:memory_store</span>, <span class="ruby-value">:expires_in</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-number">60</span>, <span class="ruby-value">:size</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-number">100</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_prune_size">
+            
+              <a name="method-i-test_prune_size"></a><b>test_prune_size</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_prune_size_source')" id="l_method-i-test_prune_size_source">show</a>
+                
+              </p>
+              <div id="method-i-test_prune_size_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activesupport/test/caching_test.rb, line 601</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_prune_size</span>
+  <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">write</span>(<span class="ruby-number">1</span>, <span class="ruby-string">&quot;aaaaaaaaaa&quot;</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">sleep</span>(<span class="ruby-number">0.001</span>)
+  <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">write</span>(<span class="ruby-number">2</span>, <span class="ruby-string">&quot;bbbbbbbbbb&quot;</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">sleep</span>(<span class="ruby-number">0.001</span>)
+  <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">write</span>(<span class="ruby-number">3</span>, <span class="ruby-string">&quot;cccccccccc&quot;</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">sleep</span>(<span class="ruby-number">0.001</span>)
+  <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">write</span>(<span class="ruby-number">4</span>, <span class="ruby-string">&quot;dddddddddd&quot;</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">sleep</span>(<span class="ruby-number">0.001</span>)
+  <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">write</span>(<span class="ruby-number">5</span>, <span class="ruby-string">&quot;eeeeeeeeee&quot;</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">sleep</span>(<span class="ruby-number">0.001</span>)
+  <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">read</span>(<span class="ruby-number">2</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">sleep</span>(<span class="ruby-number">0.001</span>)
+  <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">read</span>(<span class="ruby-number">4</span>)
+  <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">prune</span>(<span class="ruby-number">30</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-keyword">true</span>, <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-number">5</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-keyword">true</span>, <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-number">4</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-keyword">false</span>, <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-number">3</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-keyword">true</span>, <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-number">2</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-keyword">false</span>, <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-number">1</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_prune_size_on_write">
+            
+              <a name="method-i-test_prune_size_on_write"></a><b>test_prune_size_on_write</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_prune_size_on_write_source')" id="l_method-i-test_prune_size_on_write_source">show</a>
+                
+              </p>
+              <div id="method-i-test_prune_size_on_write_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activesupport/test/caching_test.rb, line 617</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_prune_size_on_write</span>
+  <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">write</span>(<span class="ruby-number">1</span>, <span class="ruby-string">&quot;aaaaaaaaaa&quot;</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">sleep</span>(<span class="ruby-number">0.001</span>)
+  <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">write</span>(<span class="ruby-number">2</span>, <span class="ruby-string">&quot;bbbbbbbbbb&quot;</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">sleep</span>(<span class="ruby-number">0.001</span>)
+  <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">write</span>(<span class="ruby-number">3</span>, <span class="ruby-string">&quot;cccccccccc&quot;</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">sleep</span>(<span class="ruby-number">0.001</span>)
+  <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">write</span>(<span class="ruby-number">4</span>, <span class="ruby-string">&quot;dddddddddd&quot;</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">sleep</span>(<span class="ruby-number">0.001</span>)
+  <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">write</span>(<span class="ruby-number">5</span>, <span class="ruby-string">&quot;eeeeeeeeee&quot;</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">sleep</span>(<span class="ruby-number">0.001</span>)
+  <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">write</span>(<span class="ruby-number">6</span>, <span class="ruby-string">&quot;ffffffffff&quot;</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">sleep</span>(<span class="ruby-number">0.001</span>)
+  <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">write</span>(<span class="ruby-number">7</span>, <span class="ruby-string">&quot;gggggggggg&quot;</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">sleep</span>(<span class="ruby-number">0.001</span>)
+  <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">write</span>(<span class="ruby-number">8</span>, <span class="ruby-string">&quot;hhhhhhhhhh&quot;</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">sleep</span>(<span class="ruby-number">0.001</span>)
+  <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">write</span>(<span class="ruby-number">9</span>, <span class="ruby-string">&quot;iiiiiiiiii&quot;</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">sleep</span>(<span class="ruby-number">0.001</span>)
+  <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">write</span>(<span class="ruby-number">10</span>, <span class="ruby-string">&quot;kkkkkkkkkk&quot;</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">sleep</span>(<span class="ruby-number">0.001</span>)
+  <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">read</span>(<span class="ruby-number">2</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">sleep</span>(<span class="ruby-number">0.001</span>)
+  <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">read</span>(<span class="ruby-number">4</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">sleep</span>(<span class="ruby-number">0.001</span>)
+  <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">write</span>(<span class="ruby-number">11</span>, <span class="ruby-string">&quot;llllllllll&quot;</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-keyword">true</span>, <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-number">11</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-keyword">true</span>, <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-number">10</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-keyword">true</span>, <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-number">9</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-keyword">true</span>, <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-number">8</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-keyword">true</span>, <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-number">7</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-keyword">false</span>, <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-number">6</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-keyword">false</span>, <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-number">5</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-keyword">true</span>, <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-number">4</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-keyword">false</span>, <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-number">3</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-keyword">true</span>, <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-number">2</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-keyword">false</span>, <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-number">1</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_pruning_is_capped_at_a_max_time">
+            
+              <a name="method-i-test_pruning_is_capped_at_a_max_time"></a><b>test_pruning_is_capped_at_a_max_time</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_pruning_is_capped_at_a_max_time_source')" id="l_method-i-test_pruning_is_capped_at_a_max_time_source">show</a>
+                
+              </p>
+              <div id="method-i-test_pruning_is_capped_at_a_max_time_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activesupport/test/caching_test.rb, line 644</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_pruning_is_capped_at_a_max_time</span>
+  <span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">@cache</span>.<span class="ruby-identifier">delete_entry</span> (*<span class="ruby-identifier">args</span>)
+    <span class="ruby-identifier">sleep</span>(<span class="ruby-number">0.01</span>)
+    <span class="ruby-keyword">super</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">write</span>(<span class="ruby-number">1</span>, <span class="ruby-string">&quot;aaaaaaaaaa&quot;</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">sleep</span>(<span class="ruby-number">0.001</span>)
+  <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">write</span>(<span class="ruby-number">2</span>, <span class="ruby-string">&quot;bbbbbbbbbb&quot;</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">sleep</span>(<span class="ruby-number">0.001</span>)
+  <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">write</span>(<span class="ruby-number">3</span>, <span class="ruby-string">&quot;cccccccccc&quot;</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">sleep</span>(<span class="ruby-number">0.001</span>)
+  <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">write</span>(<span class="ruby-number">4</span>, <span class="ruby-string">&quot;dddddddddd&quot;</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">sleep</span>(<span class="ruby-number">0.001</span>)
+  <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">write</span>(<span class="ruby-number">5</span>, <span class="ruby-string">&quot;eeeeeeeeee&quot;</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">sleep</span>(<span class="ruby-number">0.001</span>)
+  <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">prune</span>(<span class="ruby-number">30</span>, <span class="ruby-number">0.001</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-keyword">true</span>, <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-number">5</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-keyword">true</span>, <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-number">4</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-keyword">true</span>, <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-number">3</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-keyword">true</span>, <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-number">2</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-keyword">false</span>, <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-number">1</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    

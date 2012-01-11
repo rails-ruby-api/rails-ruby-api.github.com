@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Sprockets::Bootstrap</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            Sprockets::Bootstrap 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/actionpack/lib/sprockets/bootstrap_rb.html">actionpack/lib/sprockets/bootstrap.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>E</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-expand_css_compressor">expand_css_compressor</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-expand_js_compressor">expand_js_compressor</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>R</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-run">run</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <a name="method-c-new"></a><b>new</b>(app)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionpack/lib/sprockets/bootstrap.rb, line 3</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">initialize</span>(<span class="ruby-identifier">app</span>)
+  <span class="ruby-ivar">@app</span> = <span class="ruby-identifier">app</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-run">
+            
+              <a name="method-i-run"></a><b>run</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>TODO: Get rid of config.assets.enabled</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-run_source')" id="l_method-i-run_source">show</a>
+                
+              </p>
+              <div id="method-i-run_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionpack/lib/sprockets/bootstrap.rb, line 8</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">run</span>
+  <span class="ruby-identifier">app</span>, <span class="ruby-identifier">config</span> = <span class="ruby-ivar">@app</span>, <span class="ruby-ivar">@app</span>.<span class="ruby-identifier">config</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">app</span>.<span class="ruby-identifier">assets</span>
+
+  <span class="ruby-identifier">config</span>.<span class="ruby-identifier">assets</span>.<span class="ruby-identifier">paths</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">path</span><span class="ruby-operator">|</span> <span class="ruby-identifier">app</span>.<span class="ruby-identifier">assets</span>.<span class="ruby-identifier">append_path</span>(<span class="ruby-identifier">path</span>) }
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">config</span>.<span class="ruby-identifier">assets</span>.<span class="ruby-identifier">compress</span>
+    <span class="ruby-comment"># temporarily hardcode default JS compressor to uglify. Soon, it will work</span>
+    <span class="ruby-comment"># the same as SCSS, where a default plugin sets the default.</span>
+    <span class="ruby-keyword">unless</span> <span class="ruby-identifier">config</span>.<span class="ruby-identifier">assets</span>.<span class="ruby-identifier">js_compressor</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">false</span>
+      <span class="ruby-identifier">app</span>.<span class="ruby-identifier">assets</span>.<span class="ruby-identifier">js_compressor</span> = <span class="ruby-constant">LazyCompressor</span>.<span class="ruby-identifier">new</span> { <span class="ruby-identifier">expand_js_compressor</span>(<span class="ruby-identifier">config</span>.<span class="ruby-identifier">assets</span>.<span class="ruby-identifier">js_compressor</span> <span class="ruby-operator">||</span> <span class="ruby-value">:uglifier</span>) }
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-keyword">unless</span> <span class="ruby-identifier">config</span>.<span class="ruby-identifier">assets</span>.<span class="ruby-identifier">css_compressor</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">false</span>
+      <span class="ruby-identifier">app</span>.<span class="ruby-identifier">assets</span>.<span class="ruby-identifier">css_compressor</span> = <span class="ruby-constant">LazyCompressor</span>.<span class="ruby-identifier">new</span> { <span class="ruby-identifier">expand_css_compressor</span>(<span class="ruby-identifier">config</span>.<span class="ruby-identifier">assets</span>.<span class="ruby-identifier">css_compressor</span>) }
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">config</span>.<span class="ruby-identifier">assets</span>.<span class="ruby-identifier">compile</span>
+    <span class="ruby-identifier">app</span>.<span class="ruby-identifier">routes</span>.<span class="ruby-identifier">prepend</span> <span class="ruby-keyword">do</span>
+      <span class="ruby-identifier">mount</span> <span class="ruby-identifier">app</span>.<span class="ruby-identifier">assets</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">config</span>.<span class="ruby-identifier">assets</span>.<span class="ruby-identifier">prefix</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">config</span>.<span class="ruby-identifier">assets</span>.<span class="ruby-identifier">digest</span>
+    <span class="ruby-identifier">app</span>.<span class="ruby-identifier">assets</span> = <span class="ruby-identifier">app</span>.<span class="ruby-identifier">assets</span>.<span class="ruby-identifier">index</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+              
+      <div class="sectiontitle">Instance Protected methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-expand_css_compressor">
+            
+              <a name="method-i-expand_css_compressor"></a><b>expand_css_compressor</b>(sym)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-expand_css_compressor_source')" id="l_method-i-expand_css_compressor_source">show</a>
+                
+              </p>
+              <div id="method-i-expand_css_compressor_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionpack/lib/sprockets/bootstrap.rb, line 55</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">expand_css_compressor</span>(<span class="ruby-identifier">sym</span>)
+  <span class="ruby-keyword">case</span> <span class="ruby-identifier">sym</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-value">:yui</span>
+    <span class="ruby-identifier">require</span> <span class="ruby-string">'yui/compressor'</span>
+    <span class="ruby-constant">YUI</span><span class="ruby-operator">::</span><span class="ruby-constant">CssCompressor</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">sym</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-expand_js_compressor">
+            
+              <a name="method-i-expand_js_compressor"></a><b>expand_js_compressor</b>(sym)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-expand_js_compressor_source')" id="l_method-i-expand_js_compressor_source">show</a>
+                
+              </p>
+              <div id="method-i-expand_js_compressor_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionpack/lib/sprockets/bootstrap.rb, line 39</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">expand_js_compressor</span>(<span class="ruby-identifier">sym</span>)
+  <span class="ruby-keyword">case</span> <span class="ruby-identifier">sym</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-value">:closure</span>
+    <span class="ruby-identifier">require</span> <span class="ruby-string">'closure-compiler'</span>
+    <span class="ruby-constant">Closure</span><span class="ruby-operator">::</span><span class="ruby-constant">Compiler</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-value">:uglifier</span>
+    <span class="ruby-identifier">require</span> <span class="ruby-string">'uglifier'</span>
+    <span class="ruby-constant">Uglifier</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-value">:yui</span>
+    <span class="ruby-identifier">require</span> <span class="ruby-string">'yui/compressor'</span>
+    <span class="ruby-constant">YUI</span><span class="ruby-operator">::</span><span class="ruby-constant">JavaScriptCompressor</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">sym</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    

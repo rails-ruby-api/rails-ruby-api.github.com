@@ -1,0 +1,668 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>WEBrick::CGI::Socket</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/github.css" type="text/css" media="screen" />
+<script src="../../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            WEBrick::CGI::Socket 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../../Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../../files/lib/webrick/cgi_rb.html">lib/webrick/cgi.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>#</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-3C-3C">&lt;&lt;</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>A</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-addr">addr</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>C</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-cert">cert</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-cipher">cipher</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>E</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-each">each</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-eof-3F">eof?</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>G</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-gets">gets</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>P</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-peer_cert">peer_cert</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-peer_cert_chain">peer_cert_chain</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-peeraddr">peeraddr</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>R</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-read">read</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+    <!-- Includes -->
+    <div class="sectiontitle">Included Modules</div>
+    <ul>
+      
+        <li>
+          
+            <a href="../../Enumerable.html">
+              Enumerable
+            </a>
+          
+        </li>
+      
+    </ul>
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <a name="method-c-new"></a><b>new</b>(config, env, stdin, stdout)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/webrick/cgi.rb, line 126</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">initialize</span>(<span class="ruby-identifier">config</span>, <span class="ruby-identifier">env</span>, <span class="ruby-identifier">stdin</span>, <span class="ruby-identifier">stdout</span>)
+  <span class="ruby-ivar">@config</span> = <span class="ruby-identifier">config</span>
+  <span class="ruby-ivar">@env</span> = <span class="ruby-identifier">env</span>
+  <span class="ruby-ivar">@header_part</span> = <span class="ruby-constant">StringIO</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-ivar">@body_part</span> = <span class="ruby-identifier">stdin</span>
+  <span class="ruby-ivar">@out_port</span> = <span class="ruby-identifier">stdout</span>
+  <span class="ruby-ivar">@out_port</span>.<span class="ruby-identifier">binmode</span>
+
+  <span class="ruby-ivar">@server_addr</span> = <span class="ruby-ivar">@env</span>[<span class="ruby-string">&quot;SERVER_ADDR&quot;</span>] <span class="ruby-operator">||</span> <span class="ruby-string">&quot;0.0.0.0&quot;</span>
+  <span class="ruby-ivar">@server_name</span> = <span class="ruby-ivar">@env</span>[<span class="ruby-string">&quot;SERVER_NAME&quot;</span>]
+  <span class="ruby-ivar">@server_port</span> = <span class="ruby-ivar">@env</span>[<span class="ruby-string">&quot;SERVER_PORT&quot;</span>]
+  <span class="ruby-ivar">@remote_addr</span> = <span class="ruby-ivar">@env</span>[<span class="ruby-string">&quot;REMOTE_ADDR&quot;</span>]
+  <span class="ruby-ivar">@remote_host</span> = <span class="ruby-ivar">@env</span>[<span class="ruby-string">&quot;REMOTE_HOST&quot;</span>] <span class="ruby-operator">||</span> <span class="ruby-ivar">@remote_addr</span>
+  <span class="ruby-ivar">@remote_port</span> = <span class="ruby-ivar">@env</span>[<span class="ruby-string">&quot;REMOTE_PORT&quot;</span>] <span class="ruby-operator">||</span> <span class="ruby-number">0</span>
+
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-ivar">@header_part</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">request_line</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">CRLF</span>
+    <span class="ruby-identifier">setup_header</span>
+    <span class="ruby-ivar">@header_part</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">CRLF</span>
+    <span class="ruby-ivar">@header_part</span>.<span class="ruby-identifier">rewind</span>
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Exception</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">CGIError</span>, <span class="ruby-string">&quot;invalid CGI environment&quot;</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-3C-3C">
+            
+              <a name="method-i-3C-3C"></a><b>&lt;&lt;</b>(data)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-3C-3C_source')" id="l_method-i-3C-3C_source">show</a>
+                
+              </p>
+              <div id="method-i-3C-3C_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/webrick/cgi.rb, line 215</span>
+<span class="ruby-keyword">def</span> <span class="ruby-operator">&lt;&lt;</span>(<span class="ruby-keyword ruby-title">data</span>)
+  <span class="ruby-ivar">@out_port</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">data</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-addr">
+            
+              <a name="method-i-addr"></a><b>addr</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-addr_source')" id="l_method-i-addr_source">show</a>
+                
+              </p>
+              <div id="method-i-addr_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/webrick/cgi.rb, line 195</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">addr</span>
+  [<span class="ruby-keyword">nil</span>, <span class="ruby-ivar">@server_port</span>, <span class="ruby-ivar">@server_name</span>, <span class="ruby-ivar">@server_addr</span>]
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-cert">
+            
+              <a name="method-i-cert"></a><b>cert</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-cert_source')" id="l_method-i-cert_source">show</a>
+                
+              </p>
+              <div id="method-i-cert_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/webrick/cgi.rb, line 219</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">cert</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span> <span class="ruby-keyword">unless</span> <span class="ruby-keyword">defined?</span>(<span class="ruby-constant">OpenSSL</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">pem</span> = <span class="ruby-ivar">@env</span>[<span class="ruby-string">&quot;SSL_SERVER_CERT&quot;</span>]
+    <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">X509</span><span class="ruby-operator">::</span><span class="ruby-constant">Certificate</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">pem</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">pem</span>.<span class="ruby-identifier">empty?</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-cipher">
+            
+              <a name="method-i-cipher"></a><b>cipher</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-cipher_source')" id="l_method-i-cipher_source">show</a>
+                
+              </p>
+              <div id="method-i-cipher_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/webrick/cgi.rb, line 248</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">cipher</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span> <span class="ruby-keyword">unless</span> <span class="ruby-keyword">defined?</span>(<span class="ruby-constant">OpenSSL</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">cipher</span> = <span class="ruby-ivar">@env</span>[<span class="ruby-string">&quot;SSL_CIPHER&quot;</span>]
+    <span class="ruby-identifier">ret</span> = [ <span class="ruby-identifier">cipher</span> ]
+    <span class="ruby-identifier">ret</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-ivar">@env</span>[<span class="ruby-string">&quot;SSL_PROTOCOL&quot;</span>]
+    <span class="ruby-identifier">ret</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-ivar">@env</span>[<span class="ruby-string">&quot;SSL_CIPHER_USEKEYSIZE&quot;</span>]
+    <span class="ruby-identifier">ret</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-ivar">@env</span>[<span class="ruby-string">&quot;SSL_CIPHER_ALGKEYSIZE&quot;</span>]
+    <span class="ruby-identifier">ret</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-each">
+            
+              <a name="method-i-each"></a><b>each</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-each_source')" id="l_method-i-each_source">show</a>
+                
+              </p>
+              <div id="method-i-each_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/webrick/cgi.rb, line 207</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">each</span>
+  <span class="ruby-identifier">input</span>.<span class="ruby-identifier">each</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span> <span class="ruby-keyword">yield</span>(<span class="ruby-identifier">line</span>) }
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-eof-3F">
+            
+              <a name="method-i-eof-3F"></a><b>eof?</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-eof-3F_source')" id="l_method-i-eof-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-eof-3F_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/webrick/cgi.rb, line 211</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">eof?</span>
+  <span class="ruby-identifier">input</span>.<span class="ruby-identifier">eof?</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-gets">
+            
+              <a name="method-i-gets"></a><b>gets</b>(eol=LF, size=nil)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-gets_source')" id="l_method-i-gets_source">show</a>
+                
+              </p>
+              <div id="method-i-gets_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/webrick/cgi.rb, line 199</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">gets</span>(<span class="ruby-identifier">eol</span>=<span class="ruby-constant">LF</span>, <span class="ruby-identifier">size</span>=<span class="ruby-keyword">nil</span>)
+  <span class="ruby-identifier">input</span>.<span class="ruby-identifier">gets</span>(<span class="ruby-identifier">eol</span>, <span class="ruby-identifier">size</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-peer_cert">
+            
+              <a name="method-i-peer_cert"></a><b>peer_cert</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-peer_cert_source')" id="l_method-i-peer_cert_source">show</a>
+                
+              </p>
+              <div id="method-i-peer_cert_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/webrick/cgi.rb, line 226</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">peer_cert</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span> <span class="ruby-keyword">unless</span> <span class="ruby-keyword">defined?</span>(<span class="ruby-constant">OpenSSL</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">pem</span> = <span class="ruby-ivar">@env</span>[<span class="ruby-string">&quot;SSL_CLIENT_CERT&quot;</span>]
+    <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">X509</span><span class="ruby-operator">::</span><span class="ruby-constant">Certificate</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">pem</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">pem</span>.<span class="ruby-identifier">empty?</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-peer_cert_chain">
+            
+              <a name="method-i-peer_cert_chain"></a><b>peer_cert_chain</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-peer_cert_chain_source')" id="l_method-i-peer_cert_chain_source">show</a>
+                
+              </p>
+              <div id="method-i-peer_cert_chain_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/webrick/cgi.rb, line 233</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">peer_cert_chain</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span> <span class="ruby-keyword">unless</span> <span class="ruby-keyword">defined?</span>(<span class="ruby-constant">OpenSSL</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@env</span>[<span class="ruby-string">&quot;SSL_CLIENT_CERT_CHAIN_0&quot;</span>]
+    <span class="ruby-identifier">keys</span> = <span class="ruby-ivar">@env</span>.<span class="ruby-identifier">keys</span>
+    <span class="ruby-identifier">certs</span> = <span class="ruby-identifier">keys</span>.<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">collect</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">k</span><span class="ruby-operator">|</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-regexp">/^SSL_CLIENT_CERT_CHAIN_\d+$/</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">k</span>
+        <span class="ruby-keyword">if</span> <span class="ruby-identifier">pem</span> = <span class="ruby-ivar">@env</span>[<span class="ruby-identifier">k</span>]
+          <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">X509</span><span class="ruby-operator">::</span><span class="ruby-constant">Certificate</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">pem</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">pem</span>.<span class="ruby-identifier">empty?</span>
+        <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">end</span>
+    }
+    <span class="ruby-identifier">certs</span>.<span class="ruby-identifier">compact</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-peeraddr">
+            
+              <a name="method-i-peeraddr"></a><b>peeraddr</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-peeraddr_source')" id="l_method-i-peeraddr_source">show</a>
+                
+              </p>
+              <div id="method-i-peeraddr_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/webrick/cgi.rb, line 191</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">peeraddr</span>
+  [<span class="ruby-keyword">nil</span>, <span class="ruby-ivar">@remote_port</span>, <span class="ruby-ivar">@remote_host</span>, <span class="ruby-ivar">@remote_addr</span>]
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-read">
+            
+              <a name="method-i-read"></a><b>read</b>(size=nil)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-read_source')" id="l_method-i-read_source">show</a>
+                
+              </p>
+              <div id="method-i-read_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/webrick/cgi.rb, line 203</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">read</span>(<span class="ruby-identifier">size</span>=<span class="ruby-keyword">nil</span>)
+  <span class="ruby-identifier">input</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">size</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    

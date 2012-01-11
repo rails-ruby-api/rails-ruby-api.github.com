@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>SimpleDelegator</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/github.css" type="text/css" media="screen" />
+<script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            SimpleDelegator 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="Delegator.html">Delegator</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../files/lib/delegate_rb.html">lib/delegate.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>A concrete implementation of <a href="Delegator.html">Delegator</a>, this
+class provides the means to delegate all supported method calls to the
+object passed into the constructor and even to change the object being
+delegated to at a later time with #__setobj__.</p>
+
+<p>Here’s a simple example that takes advantage of the fact that
+SimpleDelegator’s delegation object can be changed at any time.</p>
+
+<pre class="ruby"><span class="ruby-keyword">class</span> <span class="ruby-constant">Stats</span>
+  <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>
+    <span class="ruby-ivar">@source</span> = <span class="ruby-constant">SimpleDelegator</span>.<span class="ruby-identifier">new</span>([])
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">def</span> <span class="ruby-identifier">stats</span>(<span class="ruby-identifier">records</span>)
+    <span class="ruby-ivar">@source</span>.<span class="ruby-identifier">__setobj__</span>(<span class="ruby-identifier">records</span>)
+
+    <span class="ruby-node">&quot;Elements:  #{@source.size}\n&quot;</span> <span class="ruby-operator">+</span>
+    <span class="ruby-node">&quot; Non-Nil:  #{@source.compact.size}\n&quot;</span> <span class="ruby-operator">+</span>
+    <span class="ruby-node">&quot;  Unique:  #{@source.uniq.size}\n&quot;</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span>
+
+<span class="ruby-identifier">s</span> = <span class="ruby-constant">Stats</span>.<span class="ruby-identifier">new</span>
+<span class="ruby-identifier">puts</span> <span class="ruby-identifier">s</span>.<span class="ruby-identifier">stats</span>(<span class="ruby-node">%w{James Edward Gray II}</span>)
+<span class="ruby-identifier">puts</span>
+<span class="ruby-identifier">puts</span> <span class="ruby-identifier">s</span>.<span class="ruby-identifier">stats</span>([<span class="ruby-value">1</span>, <span class="ruby-value">2</span>, <span class="ruby-value">3</span>, <span class="ruby-keyword">nil</span>, <span class="ruby-value">4</span>, <span class="ruby-value">5</span>, <span class="ruby-value">1</span>, <span class="ruby-value">2</span>])
+</pre>
+
+<p>Prints:</p>
+
+<pre>Elements:  4
+ Non-Nil:  4
+  Unique:  4
+
+Elements:  8
+ Non-Nil:  7
+  Unique:  6</pre>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>#</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-__getobj__">__getobj__</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-__setobj__">__setobj__</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+        
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-__getobj__">
+            
+              <a name="method-i-__getobj__"></a><b>__getobj__</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the current object method calls are being delegated to.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-__getobj___source')" id="l_method-i-__getobj___source">show</a>
+                
+              </p>
+              <div id="method-i-__getobj___source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/delegate.rb, line 264</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">__getobj__</span>
+  <span class="ruby-ivar">@delegate_sd_obj</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-__setobj__">
+            
+              <a name="method-i-__setobj__"></a><b>__setobj__</b>(obj)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Changes the delegate object to <em>obj</em>.</p>
+
+<p>It’s important to note that this does <strong>not</strong> cause
+SimpleDelegator’s methods to change.  Because of this, you probably only
+want to change delegation to objects of the same type as the original
+delegate.</p>
+
+<p>Here’s an example of changing the delegation object.</p>
+
+<pre class="ruby"><span class="ruby-identifier">names</span> = <span class="ruby-constant">SimpleDelegator</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">%w{James Edward Gray II}</span>)
+<span class="ruby-identifier">puts</span> <span class="ruby-identifier">names</span>[<span class="ruby-value">1</span>]    <span class="ruby-comment"># =&gt; Edward</span>
+<span class="ruby-identifier">names</span>.<span class="ruby-identifier">__setobj__</span>(<span class="ruby-node">%w{Gavin Sinclair}</span>)
+<span class="ruby-identifier">puts</span> <span class="ruby-identifier">names</span>[<span class="ruby-value">1</span>]    <span class="ruby-comment"># =&gt; Sinclair</span>
+</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-__setobj___source')" id="l_method-i-__setobj___source">show</a>
+                
+              </p>
+              <div id="method-i-__setobj___source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/delegate.rb, line 282</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">__setobj__</span>(<span class="ruby-identifier">obj</span>)
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-string">&quot;cannot delegate to self&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">equal?</span>(<span class="ruby-identifier">obj</span>)
+  <span class="ruby-ivar">@delegate_sd_obj</span> = <span class="ruby-identifier">obj</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    

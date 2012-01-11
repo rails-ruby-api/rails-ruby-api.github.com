@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>RSS::Maker::AtomTextConstructBase::EnsureXMLContent</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../../css/github.css" type="text/css" media="screen" />
+<script src="../../../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Module</span> 
+            RSS::Maker::AtomTextConstructBase::EnsureXMLContent 
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../../../files/lib/rss/maker/base_rb.html">lib/rss/maker/base.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>E</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-ensure_xml_content">ensure_xml_content</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>I</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-included">included</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>X</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-xhtml-3D">xhtml=</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-xml_content-3D">xml_content=</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-included">
+            
+              <a name="method-c-included"></a><b>included</b>(base)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-included_source')" id="l_method-c-included_source">show</a>
+                
+              </p>
+              <div id="method-c-included_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rss/maker/base.rb, line 294</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">included</span>(<span class="ruby-identifier">base</span>)
+  <span class="ruby-keyword">super</span>
+  <span class="ruby-identifier">base</span>.<span class="ruby-identifier">class_eval</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-node">%w(type content xml_content)</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">element</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">attr_reader</span> <span class="ruby-identifier">element</span>
+      <span class="ruby-identifier">attr_writer</span> <span class="ruby-identifier">element</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">element</span> <span class="ruby-operator">!=</span> <span class="ruby-string">&quot;xml_content&quot;</span>
+      <span class="ruby-identifier">add_need_initialize_variable</span>(<span class="ruby-identifier">element</span>)
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-identifier">alias_method</span>(<span class="ruby-value">:xhtml</span>, <span class="ruby-value">:xml_content</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-ensure_xml_content">
+            
+              <a name="method-i-ensure_xml_content"></a><b>ensure_xml_content</b>(content)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-ensure_xml_content_source')" id="l_method-i-ensure_xml_content_source">show</a>
+                
+              </p>
+              <div id="method-i-ensure_xml_content_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rss/maker/base.rb, line 308</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">ensure_xml_content</span>(<span class="ruby-identifier">content</span>)
+  <span class="ruby-identifier">xhtml_uri</span> = <span class="ruby-operator">::</span><span class="ruby-constant">RSS</span><span class="ruby-operator">::</span><span class="ruby-constant">Atom</span><span class="ruby-operator">::</span><span class="ruby-constant">XHTML_URI</span>
+  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">content</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">RSS</span><span class="ruby-operator">::</span><span class="ruby-constant">XML</span><span class="ruby-operator">::</span><span class="ruby-constant">Element</span>) <span class="ruby-keyword">and</span>
+      [<span class="ruby-string">&quot;div&quot;</span>, <span class="ruby-identifier">xhtml_uri</span>] <span class="ruby-operator">==</span> [<span class="ruby-identifier">content</span>.<span class="ruby-identifier">name</span>, <span class="ruby-identifier">content</span>.<span class="ruby-identifier">uri</span>]
+    <span class="ruby-identifier">children</span> = <span class="ruby-identifier">content</span>
+    <span class="ruby-identifier">children</span> = [<span class="ruby-identifier">children</span>] <span class="ruby-keyword">unless</span> <span class="ruby-identifier">content</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Array</span>)
+    <span class="ruby-identifier">children</span> = <span class="ruby-identifier">set_xhtml_uri_as_default_uri</span>(<span class="ruby-identifier">children</span>)
+    <span class="ruby-identifier">content</span> = <span class="ruby-constant">RSS</span><span class="ruby-operator">::</span><span class="ruby-constant">XML</span><span class="ruby-operator">::</span><span class="ruby-constant">Element</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&quot;div&quot;</span>, <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">xhtml_uri</span>,
+                                    {<span class="ruby-string">&quot;xmlns&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">xhtml_uri</span>},
+                                    <span class="ruby-identifier">children</span>)
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">content</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-xhtml-3D">
+            
+              <a name="method-i-xhtml-3D"></a><b>xhtml=</b>(content)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-xhtml-3D_source')" id="l_method-i-xhtml-3D_source">show</a>
+                
+              </p>
+              <div id="method-i-xhtml-3D_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rss/maker/base.rb, line 326</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">xhtml=</span>(<span class="ruby-identifier">content</span>)
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">xml_content</span> = <span class="ruby-identifier">content</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-xml_content-3D">
+            
+              <a name="method-i-xml_content-3D"></a><b>xml_content=</b>(content)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-xml_content-3D_source')" id="l_method-i-xml_content-3D_source">show</a>
+                
+              </p>
+              <div id="method-i-xml_content-3D_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rss/maker/base.rb, line 322</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">xml_content=</span>(<span class="ruby-identifier">content</span>)
+  <span class="ruby-ivar">@xml_content</span> = <span class="ruby-identifier">ensure_xml_content</span>(<span class="ruby-identifier">content</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    

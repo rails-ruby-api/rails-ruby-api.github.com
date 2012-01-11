@@ -1,0 +1,533 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>REXML::Parsers::SAX2Parser</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/github.css" type="text/css" media="screen" />
+<script src="../../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            REXML::Parsers::SAX2Parser 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../../Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../../files/lib/rexml/parsers/sax2parser_rb.html">lib/rexml/parsers/sax2parser.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p><a href="SAX2Parser.html">SAX2Parser</a></p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>A</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-add_listener">add_listener</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>D</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-deafen">deafen</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>L</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-listen">listen</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>P</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-parse">parse</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>S</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-source">source</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <a name="method-c-new"></a><b>new</b>(source)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rexml/parsers/sax2parser.rb, line 10</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">initialize</span> <span class="ruby-identifier">source</span>
+  <span class="ruby-ivar">@parser</span> = <span class="ruby-constant">BaseParser</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">source</span>)
+  <span class="ruby-ivar">@listeners</span> = []
+  <span class="ruby-ivar">@procs</span> = []
+  <span class="ruby-ivar">@namespace_stack</span> = []
+  <span class="ruby-ivar">@has_listeners</span> = <span class="ruby-keyword">false</span>
+  <span class="ruby-ivar">@tag_stack</span> = []
+  <span class="ruby-ivar">@entities</span> = {}
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-add_listener">
+            
+              <a name="method-i-add_listener"></a><b>add_listener</b>( listener )
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-add_listener_source')" id="l_method-i-add_listener_source">show</a>
+                
+              </p>
+              <div id="method-i-add_listener_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rexml/parsers/sax2parser.rb, line 24</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">add_listener</span>( <span class="ruby-identifier">listener</span> )
+  <span class="ruby-ivar">@parser</span>.<span class="ruby-identifier">add_listener</span>( <span class="ruby-identifier">listener</span> )
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-deafen">
+            
+              <a name="method-i-deafen"></a><b>deafen</b>( listener=nil, &amp;blok )
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-deafen_source')" id="l_method-i-deafen_source">show</a>
+                
+              </p>
+              <div id="method-i-deafen_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rexml/parsers/sax2parser.rb, line 76</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">deafen</span>( <span class="ruby-identifier">listener</span>=<span class="ruby-keyword">nil</span>, &amp;<span class="ruby-identifier">blok</span> )
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">listener</span>
+    <span class="ruby-ivar">@listeners</span>.<span class="ruby-identifier">delete_if</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">item</span><span class="ruby-operator">|</span> <span class="ruby-identifier">item</span>[<span class="ruby-number">-1</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">listener</span> }
+    <span class="ruby-ivar">@has_listeners</span> = <span class="ruby-keyword">false</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@listeners</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-number">0</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-ivar">@procs</span>.<span class="ruby-identifier">delete_if</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">item</span><span class="ruby-operator">|</span> <span class="ruby-identifier">item</span>[<span class="ruby-number">-1</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">blok</span> }
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-listen">
+            
+              <a name="method-i-listen"></a><b>listen</b>( *args, &amp;blok )
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Listen arguments:</p>
+
+<p><a href="../../Symbol.html">Symbol</a>, Array, Block</p>
+
+<pre>Listen to Symbol events on Array elements</pre>
+
+<p><a href="../../Symbol.html">Symbol</a>, Block</p>
+
+<pre>Listen to Symbol events</pre>
+
+<p>Array, Listener</p>
+
+<pre>Listen to all events on Array elements</pre>
+
+<p>Array, Block</p>
+
+<pre>Listen to :start_element events on Array elements</pre>
+
+<p>Listener</p>
+
+<pre>Listen to All events</pre>
+
+<p><a href="../../Symbol.html">Symbol</a> can be one of: :start_element,
+:end_element, :start_prefix_mapping, :end_prefix_mapping, :characters,
+:processing_instruction, :doctype, :attlistdecl, :elementdecl, :entitydecl,
+:notationdecl, :cdata, :xmldecl, :comment</p>
+
+<p>There is an additional symbol that can be listened for: :progress. This
+will be called for every event generated, passing in the current stream
+position.</p>
+
+<p>Array contains regular expressions or strings which will be matched against
+fully qualified element names.</p>
+
+<p>Listener must implement the methods in <a
+href="../SAX2Listener.html">SAX2Listener</a></p>
+
+<p>Block will be passed the same arguments as a <a
+href="../SAX2Listener.html">SAX2Listener</a> method would be, where the
+method name is the same as the matched <a
+href="../../Symbol.html">Symbol</a>. See the <a
+href="../SAX2Listener.html">SAX2Listener</a> for more information.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-listen_source')" id="l_method-i-listen_source">show</a>
+                
+              </p>
+              <div id="method-i-listen_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rexml/parsers/sax2parser.rb, line 58</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">listen</span>( *<span class="ruby-identifier">args</span>, &amp;<span class="ruby-identifier">blok</span> )
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">args</span>[<span class="ruby-number">0</span>].<span class="ruby-identifier">kind_of?</span> <span class="ruby-constant">Symbol</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-number">2</span>
+      <span class="ruby-identifier">args</span>[<span class="ruby-number">1</span>].<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">match</span><span class="ruby-operator">|</span> <span class="ruby-ivar">@procs</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-identifier">args</span>[<span class="ruby-number">0</span>], <span class="ruby-identifier">match</span>, <span class="ruby-identifier">blok</span>] }
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">add</span>( [<span class="ruby-identifier">args</span>[<span class="ruby-number">0</span>], <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">blok</span>] )
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">args</span>[<span class="ruby-number">0</span>].<span class="ruby-identifier">kind_of?</span> <span class="ruby-constant">Array</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-number">2</span>
+      <span class="ruby-identifier">args</span>[<span class="ruby-number">0</span>].<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">match</span><span class="ruby-operator">|</span> <span class="ruby-identifier">add</span>( [<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">match</span>, <span class="ruby-identifier">args</span>[<span class="ruby-number">1</span>]] ) }
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">args</span>[<span class="ruby-number">0</span>].<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">match</span><span class="ruby-operator">|</span> <span class="ruby-identifier">add</span>( [ <span class="ruby-value">:start_element</span>, <span class="ruby-identifier">match</span>, <span class="ruby-identifier">blok</span> ] ) }
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">add</span>([<span class="ruby-keyword">nil</span>, <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">args</span>[<span class="ruby-number">0</span>]])
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-parse">
+            
+              <a name="method-i-parse"></a><b>parse</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-parse_source')" id="l_method-i-parse_source">show</a>
+                
+              </p>
+              <div id="method-i-parse_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rexml/parsers/sax2parser.rb, line 85</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">parse</span>
+  <span class="ruby-ivar">@procs</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">sym</span>,<span class="ruby-identifier">match</span>,<span class="ruby-identifier">block</span><span class="ruby-operator">|</span> <span class="ruby-identifier">block</span>.<span class="ruby-identifier">call</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">sym</span> <span class="ruby-operator">==</span> <span class="ruby-value">:start_document</span> }
+  <span class="ruby-ivar">@listeners</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">sym</span>,<span class="ruby-identifier">match</span>,<span class="ruby-identifier">block</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">block</span>.<span class="ruby-identifier">start_document</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">sym</span> <span class="ruby-operator">==</span> <span class="ruby-value">:start_document</span> <span class="ruby-keyword">or</span> <span class="ruby-identifier">sym</span>.<span class="ruby-identifier">nil?</span>
+  }
+  <span class="ruby-identifier">context</span> = []
+  <span class="ruby-keyword">while</span> <span class="ruby-keyword">true</span>
+    <span class="ruby-identifier">event</span> = <span class="ruby-ivar">@parser</span>.<span class="ruby-identifier">pull</span>
+    <span class="ruby-keyword">case</span> <span class="ruby-identifier">event</span>[<span class="ruby-number">0</span>]
+    <span class="ruby-keyword">when</span> <span class="ruby-value">:end_document</span>
+      <span class="ruby-identifier">handle</span>( <span class="ruby-value">:end_document</span> )
+      <span class="ruby-keyword">break</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-value">:start_doctype</span>
+      <span class="ruby-identifier">handle</span>( <span class="ruby-value">:doctype</span>, *<span class="ruby-identifier">event</span>[<span class="ruby-number">1</span><span class="ruby-operator">..</span><span class="ruby-number">-1</span>])
+    <span class="ruby-keyword">when</span> <span class="ruby-value">:end_doctype</span>
+      <span class="ruby-identifier">context</span> = <span class="ruby-identifier">context</span>[<span class="ruby-number">1</span>]
+    <span class="ruby-keyword">when</span> <span class="ruby-value">:start_element</span>
+      <span class="ruby-ivar">@tag_stack</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">event</span>[<span class="ruby-number">1</span>])
+      <span class="ruby-comment"># find the observers for namespaces</span>
+      <span class="ruby-identifier">procs</span> = <span class="ruby-identifier">get_procs</span>( <span class="ruby-value">:start_prefix_mapping</span>, <span class="ruby-identifier">event</span>[<span class="ruby-number">1</span>] )
+      <span class="ruby-identifier">listeners</span> = <span class="ruby-identifier">get_listeners</span>( <span class="ruby-value">:start_prefix_mapping</span>, <span class="ruby-identifier">event</span>[<span class="ruby-number">1</span>] )
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">procs</span> <span class="ruby-keyword">or</span> <span class="ruby-identifier">listeners</span>
+        <span class="ruby-comment"># break out the namespace declarations</span>
+        <span class="ruby-comment"># The attributes live in event[2]</span>
+        <span class="ruby-identifier">event</span>[<span class="ruby-number">2</span>].<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">n</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">event</span>[<span class="ruby-number">2</span>][<span class="ruby-identifier">n</span>] = <span class="ruby-ivar">@parser</span>.<span class="ruby-identifier">normalize</span>(<span class="ruby-identifier">v</span>)}
+        <span class="ruby-identifier">nsdecl</span> = <span class="ruby-identifier">event</span>[<span class="ruby-number">2</span>].<span class="ruby-identifier">find_all</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">n</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span> <span class="ruby-identifier">n</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp">/^xmlns(:|$)/</span> }
+        <span class="ruby-identifier">nsdecl</span>.<span class="ruby-identifier">collect!</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">n</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span> [ <span class="ruby-identifier">n</span>[<span class="ruby-number">6</span><span class="ruby-operator">..</span><span class="ruby-number">-1</span>], <span class="ruby-identifier">value</span> ] }
+        <span class="ruby-ivar">@namespace_stack</span>.<span class="ruby-identifier">push</span>({})
+        <span class="ruby-identifier">nsdecl</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">n</span>,<span class="ruby-identifier">v</span><span class="ruby-operator">|</span>
+          <span class="ruby-ivar">@namespace_stack</span>[<span class="ruby-number">-1</span>][<span class="ruby-identifier">n</span>] = <span class="ruby-identifier">v</span>
+          <span class="ruby-comment"># notify observers of namespaces</span>
+          <span class="ruby-identifier">procs</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">ob</span><span class="ruby-operator">|</span> <span class="ruby-identifier">ob</span>.<span class="ruby-identifier">call</span>( <span class="ruby-identifier">n</span>, <span class="ruby-identifier">v</span> ) } <span class="ruby-keyword">if</span> <span class="ruby-identifier">procs</span>
+          <span class="ruby-identifier">listeners</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">ob</span><span class="ruby-operator">|</span> <span class="ruby-identifier">ob</span>.<span class="ruby-identifier">start_prefix_mapping</span>(<span class="ruby-identifier">n</span>, <span class="ruby-identifier">v</span>) } <span class="ruby-keyword">if</span> <span class="ruby-identifier">listeners</span>
+        <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">end</span>
+      <span class="ruby-identifier">event</span>[<span class="ruby-number">1</span>] <span class="ruby-operator">=~</span> <span class="ruby-constant">Namespace</span><span class="ruby-operator">::</span><span class="ruby-constant">NAMESPLIT</span>
+      <span class="ruby-identifier">prefix</span> = <span class="ruby-node">$1</span>
+      <span class="ruby-identifier">local</span> = <span class="ruby-node">$2</span>
+      <span class="ruby-identifier">uri</span> = <span class="ruby-identifier">get_namespace</span>(<span class="ruby-identifier">prefix</span>)
+      <span class="ruby-comment"># find the observers for start_element</span>
+      <span class="ruby-identifier">procs</span> = <span class="ruby-identifier">get_procs</span>( <span class="ruby-value">:start_element</span>, <span class="ruby-identifier">event</span>[<span class="ruby-number">1</span>] )
+      <span class="ruby-identifier">listeners</span> = <span class="ruby-identifier">get_listeners</span>( <span class="ruby-value">:start_element</span>, <span class="ruby-identifier">event</span>[<span class="ruby-number">1</span>] )
+      <span class="ruby-comment"># notify observers</span>
+      <span class="ruby-identifier">procs</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">ob</span><span class="ruby-operator">|</span> <span class="ruby-identifier">ob</span>.<span class="ruby-identifier">call</span>( <span class="ruby-identifier">uri</span>, <span class="ruby-identifier">local</span>, <span class="ruby-identifier">event</span>[<span class="ruby-number">1</span>], <span class="ruby-identifier">event</span>[<span class="ruby-number">2</span>] ) } <span class="ruby-keyword">if</span> <span class="ruby-identifier">procs</span>
+      <span class="ruby-identifier">listeners</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">ob</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">ob</span>.<span class="ruby-identifier">start_element</span>( <span class="ruby-identifier">uri</span>, <span class="ruby-identifier">local</span>, <span class="ruby-identifier">event</span>[<span class="ruby-number">1</span>], <span class="ruby-identifier">event</span>[<span class="ruby-number">2</span>] )
+      } <span class="ruby-keyword">if</span> <span class="ruby-identifier">listeners</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-value">:end_element</span>
+      <span class="ruby-ivar">@tag_stack</span>.<span class="ruby-identifier">pop</span>
+      <span class="ruby-identifier">event</span>[<span class="ruby-number">1</span>] <span class="ruby-operator">=~</span> <span class="ruby-constant">Namespace</span><span class="ruby-operator">::</span><span class="ruby-constant">NAMESPLIT</span>
+      <span class="ruby-identifier">prefix</span> = <span class="ruby-node">$1</span>
+      <span class="ruby-identifier">local</span> = <span class="ruby-node">$2</span>
+      <span class="ruby-identifier">uri</span> = <span class="ruby-identifier">get_namespace</span>(<span class="ruby-identifier">prefix</span>)
+      <span class="ruby-comment"># find the observers for start_element</span>
+      <span class="ruby-identifier">procs</span> = <span class="ruby-identifier">get_procs</span>( <span class="ruby-value">:end_element</span>, <span class="ruby-identifier">event</span>[<span class="ruby-number">1</span>] )
+      <span class="ruby-identifier">listeners</span> = <span class="ruby-identifier">get_listeners</span>( <span class="ruby-value">:end_element</span>, <span class="ruby-identifier">event</span>[<span class="ruby-number">1</span>] )
+      <span class="ruby-comment"># notify observers</span>
+      <span class="ruby-identifier">procs</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">ob</span><span class="ruby-operator">|</span> <span class="ruby-identifier">ob</span>.<span class="ruby-identifier">call</span>( <span class="ruby-identifier">uri</span>, <span class="ruby-identifier">local</span>, <span class="ruby-identifier">event</span>[<span class="ruby-number">1</span>] ) } <span class="ruby-keyword">if</span> <span class="ruby-identifier">procs</span>
+      <span class="ruby-identifier">listeners</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">ob</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">ob</span>.<span class="ruby-identifier">end_element</span>( <span class="ruby-identifier">uri</span>, <span class="ruby-identifier">local</span>, <span class="ruby-identifier">event</span>[<span class="ruby-number">1</span>] )
+      } <span class="ruby-keyword">if</span> <span class="ruby-identifier">listeners</span>
+
+      <span class="ruby-identifier">namespace_mapping</span> = <span class="ruby-ivar">@namespace_stack</span>.<span class="ruby-identifier">pop</span>
+      <span class="ruby-comment"># find the observers for namespaces</span>
+      <span class="ruby-identifier">procs</span> = <span class="ruby-identifier">get_procs</span>( <span class="ruby-value">:end_prefix_mapping</span>, <span class="ruby-identifier">event</span>[<span class="ruby-number">1</span>] )
+      <span class="ruby-identifier">listeners</span> = <span class="ruby-identifier">get_listeners</span>( <span class="ruby-value">:end_prefix_mapping</span>, <span class="ruby-identifier">event</span>[<span class="ruby-number">1</span>] )
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">procs</span> <span class="ruby-keyword">or</span> <span class="ruby-identifier">listeners</span>
+        <span class="ruby-identifier">namespace_mapping</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">ns_prefix</span>, <span class="ruby-identifier">ns_uri</span><span class="ruby-operator">|</span>
+          <span class="ruby-comment"># notify observers of namespaces</span>
+          <span class="ruby-identifier">procs</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">ob</span><span class="ruby-operator">|</span> <span class="ruby-identifier">ob</span>.<span class="ruby-identifier">call</span>( <span class="ruby-identifier">ns_prefix</span> ) } <span class="ruby-keyword">if</span> <span class="ruby-identifier">procs</span>
+          <span class="ruby-identifier">listeners</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">ob</span><span class="ruby-operator">|</span> <span class="ruby-identifier">ob</span>.<span class="ruby-identifier">end_prefix_mapping</span>(<span class="ruby-identifier">ns_prefix</span>) } <span class="ruby-keyword">if</span> <span class="ruby-identifier">listeners</span>
+        <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-value">:text</span>
+      <span class="ruby-comment">#normalized = @parser.normalize( event[1] )</span>
+      <span class="ruby-comment">#handle( :characters, normalized )</span>
+      <span class="ruby-identifier">copy</span> = <span class="ruby-identifier">event</span>[<span class="ruby-number">1</span>].<span class="ruby-identifier">clone</span>
+
+      <span class="ruby-identifier">esub</span> = <span class="ruby-identifier">proc</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">match</span><span class="ruby-operator">|</span>
+        <span class="ruby-keyword">if</span> <span class="ruby-ivar">@entities</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-node">$1</span>)
+          <span class="ruby-ivar">@entities</span>[<span class="ruby-node">$1</span>].<span class="ruby-identifier">gsub</span>(<span class="ruby-constant">Text</span><span class="ruby-operator">::</span><span class="ruby-constant">REFERENCE</span>, &amp;<span class="ruby-identifier">esub</span>)
+        <span class="ruby-keyword">else</span>
+          <span class="ruby-identifier">match</span>
+        <span class="ruby-keyword">end</span>
+      }
+
+      <span class="ruby-identifier">copy</span>.<span class="ruby-identifier">gsub!</span>( <span class="ruby-constant">Text</span><span class="ruby-operator">::</span><span class="ruby-constant">REFERENCE</span>, &amp;<span class="ruby-identifier">esub</span> )
+      <span class="ruby-identifier">copy</span>.<span class="ruby-identifier">gsub!</span>( <span class="ruby-constant">Text</span><span class="ruby-operator">::</span><span class="ruby-constant">NUMERICENTITY</span> ) {<span class="ruby-operator">|</span><span class="ruby-identifier">m</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">m</span>=<span class="ruby-node">$1</span>
+        <span class="ruby-identifier">m</span> = <span class="ruby-node">&quot;0#{m}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">m</span>[<span class="ruby-number">0</span>] <span class="ruby-operator">==</span> <span class="ruby-number">xx</span>
+        [<span class="ruby-constant">Integer</span>(<span class="ruby-identifier">m</span>)].<span class="ruby-identifier">pack</span>(<span class="ruby-string">'U*'</span>)
+      }
+      <span class="ruby-identifier">handle</span>( <span class="ruby-value">:characters</span>, <span class="ruby-identifier">copy</span> )
+    <span class="ruby-keyword">when</span> <span class="ruby-value">:entitydecl</span>
+      <span class="ruby-ivar">@entities</span>[ <span class="ruby-identifier">event</span>[<span class="ruby-number">1</span>] ] = <span class="ruby-identifier">event</span>[<span class="ruby-number">2</span>] <span class="ruby-keyword">if</span> <span class="ruby-identifier">event</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-number">3</span>
+      <span class="ruby-identifier">handle</span>( *<span class="ruby-identifier">event</span> )
+    <span class="ruby-keyword">when</span> <span class="ruby-value">:processing_instruction</span>, <span class="ruby-value">:comment</span>, <span class="ruby-value">:attlistdecl</span>,
+      <span class="ruby-value">:elementdecl</span>, <span class="ruby-value">:cdata</span>, <span class="ruby-value">:notationdecl</span>, <span class="ruby-value">:xmldecl</span>
+      <span class="ruby-identifier">handle</span>( *<span class="ruby-identifier">event</span> )
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">handle</span>( <span class="ruby-value">:progress</span>, <span class="ruby-ivar">@parser</span>.<span class="ruby-identifier">position</span> )
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-source">
+            
+              <a name="method-i-source"></a><b>source</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-source_source')" id="l_method-i-source_source">show</a>
+                
+              </p>
+              <div id="method-i-source_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rexml/parsers/sax2parser.rb, line 20</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">source</span>
+  <span class="ruby-ivar">@parser</span>.<span class="ruby-identifier">source</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    

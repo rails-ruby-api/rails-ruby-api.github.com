@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>DRb::DRbServer::InvokeMethod18Mixin</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/github.css" type="text/css" media="screen" />
+<script src="../../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Module</span> 
+            DRb::DRbServer::InvokeMethod18Mixin 
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../../files/lib/drb/invokemethod_rb.html">lib/drb/invokemethod.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>B</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-block_yield">block_yield</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>P</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-perform_with_block">perform_with_block</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+        
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-block_yield">
+            
+              <a name="method-i-block_yield"></a><b>block_yield</b>(x)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-block_yield_source')" id="l_method-i-block_yield_source">show</a>
+                
+              </p>
+              <div id="method-i-block_yield_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/drb/invokemethod.rb, line 6</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">block_yield</span>(<span class="ruby-identifier">x</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">x</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-number">1</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">x</span>[<span class="ruby-number">0</span>].<span class="ruby-identifier">class</span> <span class="ruby-operator">==</span> <span class="ruby-constant">Array</span>
+    <span class="ruby-identifier">x</span>[<span class="ruby-number">0</span>] = <span class="ruby-constant">DRbArray</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">x</span>[<span class="ruby-number">0</span>])
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-ivar">@block</span>.<span class="ruby-identifier">call</span>(*<span class="ruby-identifier">x</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-perform_with_block">
+            
+              <a name="method-i-perform_with_block"></a><b>perform_with_block</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-perform_with_block_source')" id="l_method-i-perform_with_block_source">show</a>
+                
+              </p>
+              <div id="method-i-perform_with_block_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/drb/invokemethod.rb, line 13</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">perform_with_block</span>
+  <span class="ruby-ivar">@obj</span>.<span class="ruby-identifier">__send__</span>(<span class="ruby-ivar">@msg_id</span>, *<span class="ruby-ivar">@argv</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span>*<span class="ruby-identifier">x</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">jump_error</span> = <span class="ruby-keyword">nil</span>
+    <span class="ruby-keyword">begin</span>
+      <span class="ruby-identifier">block_value</span> = <span class="ruby-identifier">block_yield</span>(<span class="ruby-identifier">x</span>)
+    <span class="ruby-keyword">rescue</span> <span class="ruby-constant">LocalJumpError</span>
+      <span class="ruby-identifier">jump_error</span> = <span class="ruby-identifier">$!</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">jump_error</span>
+      <span class="ruby-keyword">case</span> <span class="ruby-identifier">jump_error</span>.<span class="ruby-identifier">reason</span>
+      <span class="ruby-keyword">when</span> <span class="ruby-value">:break</span>
+        <span class="ruby-keyword">break</span>(<span class="ruby-identifier">jump_error</span>.<span class="ruby-identifier">exit_value</span>)
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-identifier">raise</span> <span class="ruby-identifier">jump_error</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">block_value</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    

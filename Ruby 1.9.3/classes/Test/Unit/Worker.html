@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Test::Unit::Worker</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/github.css" type="text/css" media="screen" />
+<script src="../../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            Test::Unit::Worker 
+            
+                <span class="parent">&lt; 
+                    
+                    Runner
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../../files/lib/test/unit/parallel_rb.html">lib/test/unit/parallel.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>#</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-_run_suite">_run_suite</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-_run_suites">_run_suites</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>I</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-increment_io">increment_io</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>O</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-orig_run_suite">orig_run_suite</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>R</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-run">run</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+        
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-_run_suite">
+            
+              <a name="method-i-_run_suite"></a><b>_run_suite</b>(suite, type)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+            <div class="aka">
+              Also aliased as: <a href="Worker.html#method-i-orig_run_suite">orig_run_suite</a>
+            </div>
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-_run_suite_source')" id="l_method-i-_run_suite_source">show</a>
+                
+              </p>
+              <div id="method-i-_run_suite_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/test/unit/parallel.rb, line 27</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">_run_suite</span>(<span class="ruby-identifier">suite</span>, <span class="ruby-identifier">type</span>)
+  <span class="ruby-identifier">r</span> = <span class="ruby-identifier">report</span>.<span class="ruby-identifier">dup</span>
+  <span class="ruby-identifier">orig_testout</span> = <span class="ruby-constant">MiniTest</span><span class="ruby-operator">::</span><span class="ruby-constant">Unit</span>.<span class="ruby-identifier">output</span>
+  <span class="ruby-identifier">i</span>,<span class="ruby-identifier">o</span> = <span class="ruby-constant">IO</span>.<span class="ruby-identifier">pipe</span>
+
+  <span class="ruby-constant">MiniTest</span><span class="ruby-operator">::</span><span class="ruby-constant">Unit</span>.<span class="ruby-identifier">output</span> = <span class="ruby-identifier">o</span>
+  <span class="ruby-identifier">orig_stdin</span>, <span class="ruby-identifier">orig_stdout</span> = <span class="ruby-identifier">$stdin</span>, <span class="ruby-identifier">$stdout</span>
+
+  <span class="ruby-identifier">th</span> = <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-keyword">begin</span>
+      <span class="ruby-keyword">while</span> <span class="ruby-identifier">buf</span> = (<span class="ruby-keyword">self</span>.<span class="ruby-identifier">verbose</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">i</span>.<span class="ruby-identifier">gets</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">i</span>.<span class="ruby-identifier">read</span>(<span class="ruby-number">5</span>))
+        <span class="ruby-ivar">@stdout</span>.<span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;p #{[buf].pack(&quot;m&quot;).gsub(&quot;\n&quot;,&quot;&quot;)}&quot;</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">rescue</span> <span class="ruby-constant">IOError</span>
+    <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">EPIPE</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">e</span>, <span class="ruby-identifier">f</span>, <span class="ruby-identifier">s</span> = <span class="ruby-ivar">@errors</span>, <span class="ruby-ivar">@failures</span>, <span class="ruby-ivar">@skips</span>
+
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-identifier">result</span> = <span class="ruby-identifier">orig_run_suite</span>(<span class="ruby-identifier">suite</span>, <span class="ruby-identifier">type</span>)
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Interrupt</span>
+    <span class="ruby-ivar">@need_exit</span> = <span class="ruby-keyword">true</span>
+    <span class="ruby-identifier">result</span> = [<span class="ruby-keyword">nil</span>,<span class="ruby-keyword">nil</span>]
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-constant">MiniTest</span><span class="ruby-operator">::</span><span class="ruby-constant">Unit</span>.<span class="ruby-identifier">output</span> = <span class="ruby-identifier">orig_testout</span>
+  <span class="ruby-identifier">$stdin</span> = <span class="ruby-identifier">orig_stdin</span>
+  <span class="ruby-identifier">$stdout</span> = <span class="ruby-identifier">orig_stdout</span>
+
+  <span class="ruby-identifier">o</span>.<span class="ruby-identifier">close</span>
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-identifier">th</span>.<span class="ruby-identifier">join</span>
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">IOError</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-keyword">unless</span> [<span class="ruby-string">&quot;stream closed&quot;</span>,<span class="ruby-string">&quot;closed stream&quot;</span>].<span class="ruby-identifier">include?</span> <span class="ruby-identifier">$!</span>.<span class="ruby-identifier">message</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">i</span>.<span class="ruby-identifier">close</span>
+
+  <span class="ruby-identifier">result</span> <span class="ruby-operator">&lt;&lt;</span> (<span class="ruby-identifier">report</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">r</span>)
+  <span class="ruby-identifier">result</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-ivar">@errors</span><span class="ruby-operator">-</span><span class="ruby-identifier">e</span>,<span class="ruby-ivar">@failures</span><span class="ruby-operator">-</span><span class="ruby-identifier">f</span>,<span class="ruby-ivar">@skips</span><span class="ruby-operator">-</span><span class="ruby-identifier">s</span>]
+  <span class="ruby-identifier">result</span> <span class="ruby-operator">&lt;&lt;</span> (<span class="ruby-identifier">$:</span> <span class="ruby-operator">-</span> <span class="ruby-ivar">@old_loadpath</span>)
+  <span class="ruby-identifier">result</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">suite</span>.<span class="ruby-identifier">name</span>
+
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-ivar">@stdout</span>.<span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;done #{[Marshal.dump(result)].pack(&quot;m&quot;).gsub(&quot;\n&quot;,&quot;&quot;)}&quot;</span>
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">EPIPE</span>; <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">result</span>
+<span class="ruby-keyword">ensure</span>
+  <span class="ruby-constant">MiniTest</span><span class="ruby-operator">::</span><span class="ruby-constant">Unit</span>.<span class="ruby-identifier">output</span> = <span class="ruby-identifier">orig_stdout</span>
+  <span class="ruby-identifier">$stdin</span> = <span class="ruby-identifier">orig_stdin</span>
+  <span class="ruby-identifier">$stdout</span> = <span class="ruby-identifier">orig_stdout</span>
+  <span class="ruby-identifier">o</span>.<span class="ruby-identifier">close</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">o</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">o</span>.<span class="ruby-identifier">closed?</span>
+  <span class="ruby-identifier">i</span>.<span class="ruby-identifier">close</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">i</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">i</span>.<span class="ruby-identifier">closed?</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-_run_suites">
+            
+              <a name="method-i-_run_suites"></a><b>_run_suites</b>(suites, type)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-_run_suites_source')" id="l_method-i-_run_suites_source">show</a>
+                
+              </p>
+              <div id="method-i-_run_suites_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/test/unit/parallel.rb, line 21</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">_run_suites</span>(<span class="ruby-identifier">suites</span>, <span class="ruby-identifier">type</span>)
+  <span class="ruby-identifier">suites</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">suite</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">_run_suite</span>(<span class="ruby-identifier">suite</span>, <span class="ruby-identifier">type</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-increment_io">
+            
+              <a name="method-i-increment_io"></a><b>increment_io</b>(orig)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-increment_io_source')" id="l_method-i-increment_io_source">show</a>
+                
+              </p>
+              <div id="method-i-increment_io_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/test/unit/parallel.rb, line 15</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">increment_io</span>(<span class="ruby-identifier">orig</span>)
+  *<span class="ruby-identifier">rest</span>, <span class="ruby-identifier">io</span> = <span class="ruby-number">32</span>.<span class="ruby-identifier">times</span>.<span class="ruby-identifier">inject</span>([<span class="ruby-identifier">orig</span>.<span class="ruby-identifier">dup</span>]){<span class="ruby-operator">|</span><span class="ruby-identifier">ios</span>, <span class="ruby-operator">|</span> <span class="ruby-identifier">ios</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">ios</span>.<span class="ruby-identifier">last</span>.<span class="ruby-identifier">dup</span> }
+  <span class="ruby-identifier">rest</span>.<span class="ruby-identifier">each</span>(&amp;<span class="ruby-value">:close</span>)
+  <span class="ruby-identifier">io</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-orig_run_suite">
+            
+              <a name="method-i-orig_run_suite"></a><b>orig_run_suite</b>(suite, type)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-run">
+            
+              <a name="method-i-run"></a><b>run</b>(args = [])
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-run_source')" id="l_method-i-run_source">show</a>
+                
+              </p>
+              <div id="method-i-run_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/test/unit/parallel.rb, line 83</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">run</span>(<span class="ruby-identifier">args</span> = [])
+  <span class="ruby-identifier">process_args</span> <span class="ruby-identifier">args</span>
+  <span class="ruby-identifier">@@stop_auto_run</span> = <span class="ruby-keyword">true</span>
+  <span class="ruby-ivar">@opts</span> = <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">dup</span>
+  <span class="ruby-ivar">@need_exit</span> = <span class="ruby-keyword">false</span>
+
+  <span class="ruby-ivar">@old_loadpath</span> = []
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-ivar">@stdout</span> = <span class="ruby-identifier">increment_io</span>(<span class="ruby-constant">STDOUT</span>)
+    <span class="ruby-ivar">@stdin</span> = <span class="ruby-identifier">increment_io</span>(<span class="ruby-constant">STDIN</span>)
+    <span class="ruby-ivar">@stdout</span>.<span class="ruby-identifier">sync</span> = <span class="ruby-keyword">true</span>
+    <span class="ruby-ivar">@stdout</span>.<span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;ready&quot;</span>
+    <span class="ruby-keyword">while</span> <span class="ruby-identifier">buf</span> = <span class="ruby-ivar">@stdin</span>.<span class="ruby-identifier">gets</span>
+      <span class="ruby-keyword">case</span> <span class="ruby-identifier">buf</span>.<span class="ruby-identifier">chomp</span>
+      <span class="ruby-keyword">when</span> <span class="ruby-regexp">/^loadpath (.+?)$/</span>
+        <span class="ruby-ivar">@old_loadpath</span> = <span class="ruby-identifier">$:</span>.<span class="ruby-identifier">dup</span>
+        <span class="ruby-identifier">$:</span>.<span class="ruby-identifier">push</span>(*<span class="ruby-constant">Marshal</span>.<span class="ruby-identifier">load</span>(<span class="ruby-node">$1</span>.<span class="ruby-identifier">unpack</span>(<span class="ruby-string">&quot;m&quot;</span>)[<span class="ruby-number">0</span>].<span class="ruby-identifier">force_encoding</span>(<span class="ruby-string">&quot;ASCII-8BIT&quot;</span>))).<span class="ruby-identifier">uniq!</span>
+      <span class="ruby-keyword">when</span> <span class="ruby-regexp">/^run (.+?) (.+?)$/</span>
+        <span class="ruby-ivar">@stdout</span>.<span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;okay&quot;</span>
+
+        <span class="ruby-ivar">@options</span> = <span class="ruby-ivar">@opts</span>.<span class="ruby-identifier">dup</span>
+        <span class="ruby-identifier">suites</span> = <span class="ruby-constant">MiniTest</span><span class="ruby-operator">::</span><span class="ruby-constant">Unit</span><span class="ruby-operator">::</span><span class="ruby-constant">TestCase</span>.<span class="ruby-identifier">test_suites</span>
+
+        <span class="ruby-keyword">begin</span>
+          <span class="ruby-identifier">require</span> <span class="ruby-node">$1</span>
+        <span class="ruby-keyword">rescue</span> <span class="ruby-constant">LoadError</span>
+          <span class="ruby-ivar">@stdout</span>.<span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;after #{[Marshal.dump([$1, $!])].pack(&quot;m&quot;).gsub(&quot;\n&quot;,&quot;&quot;)}&quot;</span>
+          <span class="ruby-ivar">@stdout</span>.<span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;ready&quot;</span>
+          <span class="ruby-keyword">next</span>
+        <span class="ruby-keyword">end</span>
+        <span class="ruby-identifier">_run_suites</span> <span class="ruby-constant">MiniTest</span><span class="ruby-operator">::</span><span class="ruby-constant">Unit</span><span class="ruby-operator">::</span><span class="ruby-constant">TestCase</span>.<span class="ruby-identifier">test_suites</span><span class="ruby-operator">-</span><span class="ruby-identifier">suites</span>, <span class="ruby-node">$2</span>.<span class="ruby-identifier">to_sym</span>
+
+        <span class="ruby-keyword">if</span> <span class="ruby-ivar">@need_exit</span>
+          <span class="ruby-keyword">begin</span>
+            <span class="ruby-ivar">@stdout</span>.<span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;bye&quot;</span>
+          <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">EPIPE</span>; <span class="ruby-keyword">end</span>
+          <span class="ruby-identifier">exit</span>
+        <span class="ruby-keyword">else</span>
+          <span class="ruby-ivar">@stdout</span>.<span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;ready&quot;</span>
+        <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">when</span> <span class="ruby-regexp">/^quit$/</span>
+        <span class="ruby-keyword">begin</span>
+          <span class="ruby-ivar">@stdout</span>.<span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;bye&quot;</span>
+        <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">EPIPE</span>; <span class="ruby-keyword">end</span>
+        <span class="ruby-identifier">exit</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">EPIPE</span>
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Exception</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+    <span class="ruby-keyword">begin</span>
+      <span class="ruby-ivar">@stdout</span>.<span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;bye #{[Marshal.dump(e)].pack(&quot;m&quot;).gsub(&quot;\n&quot;,&quot;&quot;)}&quot;</span>
+    <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">EPIPE</span>;<span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">exit</span>
+  <span class="ruby-keyword">ensure</span>
+    <span class="ruby-ivar">@stdin</span>.<span class="ruby-identifier">close</span>
+    <span class="ruby-ivar">@stdout</span>.<span class="ruby-identifier">close</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    

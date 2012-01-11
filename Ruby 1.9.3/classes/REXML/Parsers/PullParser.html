@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>REXML::Parsers::PullParser</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/github.css" type="text/css" media="screen" />
+<script src="../../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            REXML::Parsers::PullParser 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../../Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../../files/lib/rexml/parsers/pullparser_rb.html">lib/rexml/parsers/pullparser.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<h1 id="label-Using+the+Pull+Parser">Using the Pull Parser</h1>
+
+<p><em>This API is experimental, and subject to change.</em></p>
+
+<pre>parser = PullParser.new( &quot;&lt;a&gt;text&lt;b att='val'/&gt;txet&lt;/a&gt;&quot; )
+while parser.has_next?
+  res = parser.next
+  puts res[1]['att'] if res.start_tag? and res[0] == 'b'
+end</pre>
+
+<p>See the <a href="PullEvent.html">PullEvent</a> class for information on the
+content of the results. The data is identical to the arguments passed for
+the various events to the <a
+href="../StreamListener.html">StreamListener</a> API.</p>
+
+<p>Notice that:</p>
+
+<pre>parser = PullParser.new( &quot;&lt;a&gt;BAD DOCUMENT&quot; )
+while parser.has_next?
+  res = parser.next
+  raise res[1] if res.error?
+end</pre>
+
+<p>Nat Price gave me some good ideas for the API.</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>A</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-add_listener">add_listener</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>E</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-each">each</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>P</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-peek">peek</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-pull">pull</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>U</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-unshift">unshift</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+    <!-- Includes -->
+    <div class="sectiontitle">Included Modules</div>
+    <ul>
+      
+        <li>
+          
+            <a href="../XMLTokens.html">
+              REXML::XMLTokens
+            </a>
+          
+        </li>
+      
+    </ul>
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <a name="method-c-new"></a><b>new</b>(stream)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rexml/parsers/pullparser.rb, line 37</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">initialize</span> <span class="ruby-identifier">stream</span>
+  <span class="ruby-ivar">@entities</span> = {}
+  <span class="ruby-ivar">@listeners</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-ivar">@parser</span> = <span class="ruby-constant">BaseParser</span>.<span class="ruby-identifier">new</span>( <span class="ruby-identifier">stream</span> )
+  <span class="ruby-ivar">@my_stack</span> = []
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-add_listener">
+            
+              <a name="method-i-add_listener"></a><b>add_listener</b>( listener )
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-add_listener_source')" id="l_method-i-add_listener_source">show</a>
+                
+              </p>
+              <div id="method-i-add_listener_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rexml/parsers/pullparser.rb, line 44</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">add_listener</span>( <span class="ruby-identifier">listener</span> )
+  <span class="ruby-ivar">@listeners</span> = [] <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@listeners</span>
+  <span class="ruby-ivar">@listeners</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">listener</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-each">
+            
+              <a name="method-i-each"></a><b>each</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-each_source')" id="l_method-i-each_source">show</a>
+                
+              </p>
+              <div id="method-i-each_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rexml/parsers/pullparser.rb, line 49</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">each</span>
+  <span class="ruby-keyword">while</span> <span class="ruby-identifier">has_next?</span>
+    <span class="ruby-keyword">yield</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">pull</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-peek">
+            
+              <a name="method-i-peek"></a><b>peek</b>(depth=0)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-peek_source')" id="l_method-i-peek_source">show</a>
+                
+              </p>
+              <div id="method-i-peek_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rexml/parsers/pullparser.rb, line 55</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">peek</span> <span class="ruby-identifier">depth</span>=<span class="ruby-number">0</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@my_stack</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">&lt;=</span> <span class="ruby-identifier">depth</span>
+    (<span class="ruby-identifier">depth</span> <span class="ruby-operator">-</span> <span class="ruby-ivar">@my_stack</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">+</span> <span class="ruby-number">1</span>).<span class="ruby-identifier">times</span> {
+      <span class="ruby-identifier">e</span> = <span class="ruby-constant">PullEvent</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@parser</span>.<span class="ruby-identifier">pull</span>)
+      <span class="ruby-ivar">@my_stack</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">e</span>)
+    }
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-ivar">@my_stack</span>[<span class="ruby-identifier">depth</span>]
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-pull">
+            
+              <a name="method-i-pull"></a><b>pull</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-pull_source')" id="l_method-i-pull_source">show</a>
+                
+              </p>
+              <div id="method-i-pull_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rexml/parsers/pullparser.rb, line 65</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">pull</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-ivar">@my_stack</span>.<span class="ruby-identifier">shift</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@my_stack</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">&gt;</span> <span class="ruby-number">0</span>
+
+  <span class="ruby-identifier">event</span> = <span class="ruby-ivar">@parser</span>.<span class="ruby-identifier">pull</span>
+  <span class="ruby-keyword">case</span> <span class="ruby-identifier">event</span>[<span class="ruby-number">0</span>]
+  <span class="ruby-keyword">when</span> <span class="ruby-value">:entitydecl</span>
+    <span class="ruby-ivar">@entities</span>[ <span class="ruby-identifier">event</span>[<span class="ruby-number">1</span>] ] =
+      <span class="ruby-identifier">event</span>[<span class="ruby-number">2</span>] <span class="ruby-keyword">unless</span> <span class="ruby-identifier">event</span>[<span class="ruby-number">2</span>] <span class="ruby-operator">=~</span> <span class="ruby-regexp">/PUBLIC|SYSTEM/</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-value">:text</span>
+    <span class="ruby-identifier">unnormalized</span> = <span class="ruby-ivar">@parser</span>.<span class="ruby-identifier">unnormalize</span>( <span class="ruby-identifier">event</span>[<span class="ruby-number">1</span>], <span class="ruby-ivar">@entities</span> )
+    <span class="ruby-identifier">event</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">unnormalized</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-constant">PullEvent</span>.<span class="ruby-identifier">new</span>( <span class="ruby-identifier">event</span> )
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-unshift">
+            
+              <a name="method-i-unshift"></a><b>unshift</b>(token)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-unshift_source')" id="l_method-i-unshift_source">show</a>
+                
+              </p>
+              <div id="method-i-unshift_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rexml/parsers/pullparser.rb, line 80</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">unshift</span> <span class="ruby-identifier">token</span>
+  <span class="ruby-ivar">@my_stack</span>.<span class="ruby-identifier">unshift</span> <span class="ruby-identifier">token</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    

@@ -1,0 +1,528 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>PTY</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/github.css" type="text/css" media="screen" />
+<script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Module</span> 
+            PTY 
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../files/ext/pty/pty_c.html">ext/pty/pty.c</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>Creates and managed pseudo terminals (PTYs).  See also <a
+href="http://en.wikipedia.org/wiki/Pseudo_terminal">en.wikipedia.org/wiki/Pseudo_terminal</a></p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+    <!-- Namespace -->
+    <div class="sectiontitle">Namespace</div>
+    <ul>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="PTY/ChildExited.html">PTY::ChildExited</a>
+        </li>
+      
+    </ul>
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>C</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-check">check</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>G</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-getpty">getpty</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>O</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-open">open</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>S</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-spawn">spawn</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-check">
+            
+              <a name="method-c-check"></a><b>PTY.check(pid, raise = false) => Process::Status or nil
+PTY.check(pid, true)          => nil or raises PTY::ChildExited
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Checks the status of the child process specified by <code>pid</code>.
+Returns <code>nil</code> if the process is still alive.  If the process is
+not alive, will return a <code>Process::Status</code> or raise a
+<code>PTY::ChildExited</code> (if <code>raise</code> was true).</p>
+<dl class="rdoc-list note-list"><dt><code>pid</code>
+<dd>
+<p>The process id of the process to check</p>
+</dd><dt><code>raise</code>
+<dd>
+<p>If true and the process identified by <code>pid</code> is no longer alive a
+<code>PTY::ChildExited</code> is raised.</p>
+</dd></dl>
+
+<p>Returns nil or a <code>Process::Status</code> when <code>raise</code> is
+false.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-check_source')" id="l_method-c-check_source">show</a>
+                
+              </p>
+              <div id="method-c-check_source" class="dyn-source">
+                <pre>static VALUE
+pty_check(int argc, VALUE *argv, VALUE self)
+{
+    VALUE pid, exc;
+    pid_t cpid;
+    int status;
+
+    rb_scan_args(argc, argv, &quot;11&quot;, &amp;pid, &amp;exc);
+    cpid = rb_waitpid(NUM2PIDT(pid), &amp;status, WNOHANG|WUNTRACED);
+    if (cpid == -1) return Qnil;
+
+    if (!RTEST(exc)) return rb_last_status_get();
+    raise_from_check(cpid, status);
+    return Qnil;                /* not reached */
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-getpty">
+            
+              <a name="method-c-getpty"></a><b>PTY.spawn(command_line)  { |r, w, pid| ... }
+PTY.spawn(command_line)  => [r, w, pid]
+PTY.spawn(command, args, ...)  { |r, w, pid| ... }
+PTY.spawn(command, args, ...)  => [r, w, pid]
+PTY.getpty(command_line)  { |r, w, pid| ... }
+PTY.getpty(command_line)  => [r, w, pid]
+PTY.getpty(command, args, ...)  { |r, w, pid| ... }
+PTY.getpty(command, args, ...)  => [r, w, pid]
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Spawns the specified command on a newly allocated pty.</p>
+
+<p>The command’s controlling tty is set to the slave device of the pty and its
+standard input/output/error is redirected to the slave device.</p>
+<dl class="rdoc-list note-list"><dt><code>command_line</code>
+<dd>
+<p>The full command line to run</p>
+</dd><dt><code>command</code>
+<dd>
+<p>The command to run, as a String.</p>
+</dd><dt><code>args</code>
+<dd>
+<p>Zero or more arguments, as Strings, representing the arguments to
+<code>command</code></p>
+</dd></dl>
+
+<p>In the non-block form this returns an array of size three, <code>[r, w,
+pid]</code>.  In the block form the block will be called with these as
+arguments, <code>|r,w,pid|</code>:</p>
+<dl class="rdoc-list note-list"><dt><code>r</code>
+<dd>
+<p>An <a href="IO.html">IO</a> that can be read from that contains the
+command’s standard output and standard error</p>
+</dd><dt><code>w</code>
+<dd>
+<p>An <a href="IO.html">IO</a> that can be written to that is the command’s
+standard input</p>
+</dd><dt><code>pid</code>
+<dd>
+<p>The process identifier for the command.</p>
+</dd></dl>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-getpty_source')" id="l_method-c-getpty_source">show</a>
+                
+              </p>
+              <div id="method-c-getpty_source" class="dyn-source">
+                <pre>static VALUE
+pty_getpty(int argc, VALUE *argv, VALUE self)
+{
+    VALUE res;
+    struct pty_info info;
+    rb_io_t *wfptr,*rfptr;
+    VALUE rport = rb_obj_alloc(rb_cFile);
+    VALUE wport = rb_obj_alloc(rb_cFile);
+    char SlaveName[DEVICELEN];
+
+    MakeOpenFile(rport, rfptr);
+    MakeOpenFile(wport, wfptr);
+
+    establishShell(argc, argv, &amp;info, SlaveName);
+
+    rfptr-&gt;mode = rb_io_mode_flags(&quot;r&quot;);
+    rfptr-&gt;fd = info.fd;
+    rfptr-&gt;pathv = rb_obj_freeze(rb_str_new_cstr(SlaveName));
+
+    wfptr-&gt;mode = rb_io_mode_flags(&quot;w&quot;) | FMODE_SYNC;
+    wfptr-&gt;fd = dup(info.fd);
+    if (wfptr-&gt;fd == -1)
+        rb_sys_fail(&quot;dup()&quot;);
+    rb_update_max_fd(wfptr-&gt;fd);
+    wfptr-&gt;pathv = rfptr-&gt;pathv;
+
+    res = rb_ary_new2(3);
+    rb_ary_store(res,0,(VALUE)rport);
+    rb_ary_store(res,1,(VALUE)wport);
+    rb_ary_store(res,2,PIDT2NUM(info.child_pid));
+
+    if (rb_block_given_p()) {
+        rb_ensure(rb_yield, res, pty_detach_process, (VALUE)&amp;info);
+        return Qnil;
+    }
+    return res;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-open">
+            
+              <a name="method-c-open"></a><b>PTY.open => [master_io, slave_file]
+PTY.open {|master_io, slave_file| ... } => block value
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Allocates a pty (pseudo-terminal).</p>
+
+<p>In the non-block form, returns a two element array, <code>[master_io,
+slave_file]</code>.</p>
+
+<p>In the block form, yields two arguments <code>master_io, slave_file</code>
+and the value of the block is returned from <code>open</code>.</p>
+
+<p>The <a href="IO.html">IO</a> and <a href="File.html">File</a> are both
+closed after the block completes if they haven’t been already closed.</p>
+
+<p>The arguments in both forms are:</p>
+<dl class="rdoc-list note-list"><dt><code>master_io</code>
+<dd>
+<p>the master of the pty, as an <a href="IO.html">IO</a>.</p>
+</dd><dt><code>slave_file</code>
+<dd>
+<p>the slave of the pty, as a <a href="File.html">File</a>.  The path to the
+terminal device is available via <code>slave_file.path</code></p>
+</dd></dl>
+
+<h3 id="method-c-open-label-Example">Example</h3>
+
+<pre class="ruby"><span class="ruby-constant">PTY</span>.<span class="ruby-identifier">open</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">m</span>, <span class="ruby-identifier">s</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">p</span> <span class="ruby-identifier">m</span>      <span class="ruby-comment">#=&gt; #&lt;IO:masterpty:/dev/pts/1&gt;</span>
+  <span class="ruby-identifier">p</span> <span class="ruby-identifier">s</span>      <span class="ruby-comment">#=&gt; #&lt;File:/dev/pts/1&gt;</span>
+  <span class="ruby-identifier">p</span> <span class="ruby-identifier">s</span>.<span class="ruby-identifier">path</span> <span class="ruby-comment">#=&gt; &quot;/dev/pts/1&quot;</span>
+}
+
+<span class="ruby-comment"># Change the buffering type in factor command,</span>
+<span class="ruby-comment"># assuming that factor uses stdio for stdout buffering.</span>
+<span class="ruby-comment"># If IO.pipe is used instead of PTY.open,</span>
+<span class="ruby-comment"># this code deadlocks because factor's stdout is fully buffered.</span>
+<span class="ruby-identifier">require</span> <span class="ruby-string">'io/console'</span> <span class="ruby-comment"># for IO#raw!</span>
+<span class="ruby-identifier">m</span>, <span class="ruby-identifier">s</span> = <span class="ruby-constant">PTY</span>.<span class="ruby-identifier">open</span>
+<span class="ruby-identifier">s</span>.<span class="ruby-identifier">raw!</span> <span class="ruby-comment"># disable newline conversion.</span>
+<span class="ruby-identifier">r</span>, <span class="ruby-identifier">w</span> = <span class="ruby-constant">IO</span>.<span class="ruby-identifier">pipe</span>
+<span class="ruby-identifier">pid</span> = <span class="ruby-identifier">spawn</span>(<span class="ruby-string">&quot;factor&quot;</span>, :<span class="ruby-keyword">in</span>=<span class="ruby-operator">&gt;</span><span class="ruby-identifier">r</span>, :<span class="ruby-identifier">out=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">s</span>)
+<span class="ruby-identifier">r</span>.<span class="ruby-identifier">close</span>
+<span class="ruby-identifier">s</span>.<span class="ruby-identifier">close</span>
+<span class="ruby-identifier">w</span>.<span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;42&quot;</span>
+<span class="ruby-identifier">p</span> <span class="ruby-identifier">m</span>.<span class="ruby-identifier">gets</span> <span class="ruby-comment">#=&gt; &quot;42: 2 3 7\n&quot;</span>
+<span class="ruby-identifier">w</span>.<span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;144&quot;</span>
+<span class="ruby-identifier">p</span> <span class="ruby-identifier">m</span>.<span class="ruby-identifier">gets</span> <span class="ruby-comment">#=&gt; &quot;144: 2 2 2 2 3 3\n&quot;</span>
+<span class="ruby-identifier">w</span>.<span class="ruby-identifier">close</span>
+<span class="ruby-comment"># The result of read operation when pty slave is closed is platform</span>
+<span class="ruby-comment"># dependent.</span>
+<span class="ruby-identifier">ret</span> = <span class="ruby-keyword">begin</span>
+        <span class="ruby-identifier">m</span>.<span class="ruby-identifier">gets</span>          <span class="ruby-comment"># FreeBSD returns nil.</span>
+      <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">EIO</span> <span class="ruby-comment"># GNU/Linux raises EIO.</span>
+        <span class="ruby-keyword">nil</span>
+      <span class="ruby-keyword">end</span>
+<span class="ruby-identifier">p</span> <span class="ruby-identifier">ret</span> <span class="ruby-comment">#=&gt; nil</span>
+</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-open_source')" id="l_method-c-open_source">show</a>
+                
+              </p>
+              <div id="method-c-open_source" class="dyn-source">
+                <pre>static VALUE
+pty_open(VALUE klass)
+{
+    int master_fd, slave_fd;
+    char slavename[DEVICELEN];
+    VALUE master_io, slave_file;
+    rb_io_t *master_fptr, *slave_fptr;
+    VALUE assoc;
+
+    getDevice(&amp;master_fd, &amp;slave_fd, slavename, 1);
+
+    master_io = rb_obj_alloc(rb_cIO);
+    MakeOpenFile(master_io, master_fptr);
+    master_fptr-&gt;mode = FMODE_READWRITE | FMODE_SYNC | FMODE_DUPLEX;
+    master_fptr-&gt;fd = master_fd;
+    master_fptr-&gt;pathv = rb_obj_freeze(rb_sprintf(&quot;masterpty:%s&quot;, slavename));
+
+    slave_file = rb_obj_alloc(rb_cFile);
+    MakeOpenFile(slave_file, slave_fptr);
+    slave_fptr-&gt;mode = FMODE_READWRITE | FMODE_SYNC | FMODE_DUPLEX | FMODE_TTY;
+    slave_fptr-&gt;fd = slave_fd;
+    slave_fptr-&gt;pathv = rb_obj_freeze(rb_str_new_cstr(slavename));
+
+    assoc = rb_assoc_new(master_io, slave_file);
+    if (rb_block_given_p()) {
+        return rb_ensure(rb_yield, assoc, pty_close_pty, assoc);
+    }
+    return assoc;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-spawn">
+            
+              <a name="method-c-spawn"></a><b>PTY.spawn(command_line)  { |r, w, pid| ... }
+PTY.spawn(command_line)  => [r, w, pid]
+PTY.spawn(command, args, ...)  { |r, w, pid| ... }
+PTY.spawn(command, args, ...)  => [r, w, pid]
+PTY.getpty(command_line)  { |r, w, pid| ... }
+PTY.getpty(command_line)  => [r, w, pid]
+PTY.getpty(command, args, ...)  { |r, w, pid| ... }
+PTY.getpty(command, args, ...)  => [r, w, pid]
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Spawns the specified command on a newly allocated pty.</p>
+
+<p>The command’s controlling tty is set to the slave device of the pty and its
+standard input/output/error is redirected to the slave device.</p>
+<dl class="rdoc-list note-list"><dt><code>command_line</code>
+<dd>
+<p>The full command line to run</p>
+</dd><dt><code>command</code>
+<dd>
+<p>The command to run, as a String.</p>
+</dd><dt><code>args</code>
+<dd>
+<p>Zero or more arguments, as Strings, representing the arguments to
+<code>command</code></p>
+</dd></dl>
+
+<p>In the non-block form this returns an array of size three, <code>[r, w,
+pid]</code>.  In the block form the block will be called with these as
+arguments, <code>|r,w,pid|</code>:</p>
+<dl class="rdoc-list note-list"><dt><code>r</code>
+<dd>
+<p>An <a href="IO.html">IO</a> that can be read from that contains the
+command’s standard output and standard error</p>
+</dd><dt><code>w</code>
+<dd>
+<p>An <a href="IO.html">IO</a> that can be written to that is the command’s
+standard input</p>
+</dd><dt><code>pid</code>
+<dd>
+<p>The process identifier for the command.</p>
+</dd></dl>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-spawn_source')" id="l_method-c-spawn_source">show</a>
+                
+              </p>
+              <div id="method-c-spawn_source" class="dyn-source">
+                <pre>static VALUE
+pty_getpty(int argc, VALUE *argv, VALUE self)
+{
+    VALUE res;
+    struct pty_info info;
+    rb_io_t *wfptr,*rfptr;
+    VALUE rport = rb_obj_alloc(rb_cFile);
+    VALUE wport = rb_obj_alloc(rb_cFile);
+    char SlaveName[DEVICELEN];
+
+    MakeOpenFile(rport, rfptr);
+    MakeOpenFile(wport, wfptr);
+
+    establishShell(argc, argv, &amp;info, SlaveName);
+
+    rfptr-&gt;mode = rb_io_mode_flags(&quot;r&quot;);
+    rfptr-&gt;fd = info.fd;
+    rfptr-&gt;pathv = rb_obj_freeze(rb_str_new_cstr(SlaveName));
+
+    wfptr-&gt;mode = rb_io_mode_flags(&quot;w&quot;) | FMODE_SYNC;
+    wfptr-&gt;fd = dup(info.fd);
+    if (wfptr-&gt;fd == -1)
+        rb_sys_fail(&quot;dup()&quot;);
+    rb_update_max_fd(wfptr-&gt;fd);
+    wfptr-&gt;pathv = rfptr-&gt;pathv;
+
+    res = rb_ary_new2(3);
+    rb_ary_store(res,0,(VALUE)rport);
+    rb_ary_store(res,1,(VALUE)wport);
+    rb_ary_store(res,2,PIDT2NUM(info.child_pid));
+
+    if (rb_block_given_p()) {
+        rb_ensure(rb_yield, res, pty_detach_process, (VALUE)&amp;info);
+        return Qnil;
+    }
+    return res;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+                        </div>
+    </div>
+  </body>
+</html>    

@@ -1,0 +1,482 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>LifecycleTest</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/github.css" type="text/css" media="screen" />
+<script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            LifecycleTest 
+            
+                <span class="parent">&lt; 
+                    
+                    ActiveRecord::TestCase
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../files/activerecord/test/cases/lifecycle_test_rb.html">activerecord/test/cases/lifecycle_test.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-test_after_find_can_be_observed_when_its_defined_on_the_model">test_after_find_can_be_observed_when_its_defined_on_the_model</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_after_find_can_be_observed_when_its_not_defined_on_the_model">test_after_find_can_be_observed_when_its_not_defined_on_the_model</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_auto_observer">test_auto_observer</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_before_destroy">test_before_destroy</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_inferred_auto_observer">test_inferred_auto_observer</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_invalid_observer">test_invalid_observer</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_observer_is_called_once">test_observer_is_called_once</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_observing_subclasses">test_observing_subclasses</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_observing_two_classes">test_observing_two_classes</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+        
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-test_after_find_can_be_observed_when_its_defined_on_the_model">
+            
+              <a name="method-i-test_after_find_can_be_observed_when_its_defined_on_the_model"></a><b>test_after_find_can_be_observed_when_its_defined_on_the_model</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_after_find_can_be_observed_when_its_defined_on_the_model_source')" id="l_method-i-test_after_find_can_be_observed_when_its_defined_on_the_model_source">show</a>
+                
+              </p>
+              <div id="method-i-test_after_find_can_be_observed_when_its_defined_on_the_model_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/lifecycle_test.rb, line 185</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_after_find_can_be_observed_when_its_defined_on_the_model</span>
+  <span class="ruby-identifier">observer</span> = <span class="ruby-constant">TopicObserver</span>.<span class="ruby-identifier">instance</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-constant">Topic</span>, <span class="ruby-constant">TopicObserver</span>.<span class="ruby-identifier">observed_class</span>
+
+  <span class="ruby-identifier">topic</span> = <span class="ruby-constant">Topic</span>.<span class="ruby-identifier">find</span>(<span class="ruby-number">1</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">topic</span>, <span class="ruby-identifier">observer</span>.<span class="ruby-identifier">topic</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_after_find_can_be_observed_when_its_not_defined_on_the_model">
+            
+              <a name="method-i-test_after_find_can_be_observed_when_its_not_defined_on_the_model"></a><b>test_after_find_can_be_observed_when_its_not_defined_on_the_model</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_after_find_can_be_observed_when_its_not_defined_on_the_model_source')" id="l_method-i-test_after_find_can_be_observed_when_its_not_defined_on_the_model_source">show</a>
+                
+              </p>
+              <div id="method-i-test_after_find_can_be_observed_when_its_not_defined_on_the_model_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/lifecycle_test.rb, line 177</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_after_find_can_be_observed_when_its_not_defined_on_the_model</span>
+  <span class="ruby-identifier">observer</span> = <span class="ruby-constant">MinimalisticObserver</span>.<span class="ruby-identifier">instance</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-constant">Minimalistic</span>, <span class="ruby-constant">MinimalisticObserver</span>.<span class="ruby-identifier">observed_class</span>
+
+  <span class="ruby-identifier">minimalistic</span> = <span class="ruby-constant">Minimalistic</span>.<span class="ruby-identifier">find</span>(<span class="ruby-number">1</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">minimalistic</span>, <span class="ruby-identifier">observer</span>.<span class="ruby-identifier">minimalistic</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_auto_observer">
+            
+              <a name="method-i-test_auto_observer"></a><b>test_auto_observer</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_auto_observer_source')" id="l_method-i-test_auto_observer_source">show</a>
+                
+              </p>
+              <div id="method-i-test_auto_observer_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/lifecycle_test.rb, line 137</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_auto_observer</span>
+  <span class="ruby-identifier">topic_observer</span> = <span class="ruby-constant">TopicaAuditor</span>.<span class="ruby-identifier">instance</span>
+  <span class="ruby-identifier">assert_nil</span> <span class="ruby-constant">TopicaAuditor</span>.<span class="ruby-identifier">observed_class</span>
+  <span class="ruby-identifier">assert_equal</span> [<span class="ruby-constant">Topic</span>], <span class="ruby-constant">TopicaAuditor</span>.<span class="ruby-identifier">instance</span>.<span class="ruby-identifier">observed_classes</span>.<span class="ruby-identifier">to_a</span>
+
+  <span class="ruby-identifier">topic</span> = <span class="ruby-constant">Topic</span>.<span class="ruby-identifier">find</span>(<span class="ruby-number">1</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">topic</span>.<span class="ruby-identifier">title</span>, <span class="ruby-identifier">topic_observer</span>.<span class="ruby-identifier">topic</span>.<span class="ruby-identifier">title</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_before_destroy">
+            
+              <a name="method-i-test_before_destroy"></a><b>test_before_destroy</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_before_destroy_source')" id="l_method-i-test_before_destroy_source">show</a>
+                
+              </p>
+              <div id="method-i-test_before_destroy_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/lifecycle_test.rb, line 130</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_before_destroy</span>
+  <span class="ruby-identifier">topic</span> = <span class="ruby-constant">Topic</span>.<span class="ruby-identifier">find</span>(<span class="ruby-number">1</span>)
+  <span class="ruby-identifier">assert_difference</span> <span class="ruby-string">'Topic.count'</span>, <span class="ruby-operator">-</span>(<span class="ruby-number">1</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">topic</span>.<span class="ruby-identifier">replies</span>.<span class="ruby-identifier">size</span>) <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">topic</span>.<span class="ruby-identifier">destroy</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_inferred_auto_observer">
+            
+              <a name="method-i-test_inferred_auto_observer"></a><b>test_inferred_auto_observer</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_inferred_auto_observer_source')" id="l_method-i-test_inferred_auto_observer_source">show</a>
+                
+              </p>
+              <div id="method-i-test_inferred_auto_observer_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/lifecycle_test.rb, line 146</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_inferred_auto_observer</span>
+  <span class="ruby-identifier">topic_observer</span> = <span class="ruby-constant">TopicObserver</span>.<span class="ruby-identifier">instance</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-constant">Topic</span>, <span class="ruby-constant">TopicObserver</span>.<span class="ruby-identifier">observed_class</span>
+
+  <span class="ruby-identifier">topic</span> = <span class="ruby-constant">Topic</span>.<span class="ruby-identifier">find</span>(<span class="ruby-number">1</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">topic</span>.<span class="ruby-identifier">title</span>, <span class="ruby-identifier">topic_observer</span>.<span class="ruby-identifier">topic</span>.<span class="ruby-identifier">title</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_invalid_observer">
+            
+              <a name="method-i-test_invalid_observer"></a><b>test_invalid_observer</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_invalid_observer_source')" id="l_method-i-test_invalid_observer_source">show</a>
+                
+              </p>
+              <div id="method-i-test_invalid_observer_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/lifecycle_test.rb, line 193</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_invalid_observer</span>
+  <span class="ruby-identifier">assert_raise</span>(<span class="ruby-constant">ArgumentError</span>) { <span class="ruby-constant">Topic</span>.<span class="ruby-identifier">observers</span> = <span class="ruby-constant">Object</span>.<span class="ruby-identifier">new</span>; <span class="ruby-constant">Topic</span>.<span class="ruby-identifier">instantiate_observers</span> }
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_observer_is_called_once">
+            
+              <a name="method-i-test_observer_is_called_once"></a><b>test_observer_is_called_once</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_observer_is_called_once_source')" id="l_method-i-test_observer_is_called_once_source">show</a>
+                
+              </p>
+              <div id="method-i-test_observer_is_called_once_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/lifecycle_test.rb, line 246</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_observer_is_called_once</span>
+  <span class="ruby-identifier">observer</span> = <span class="ruby-constant">DeveloperObserver</span>.<span class="ruby-identifier">instance</span> <span class="ruby-comment"># activate</span>
+  <span class="ruby-identifier">observer</span>.<span class="ruby-identifier">calls</span>.<span class="ruby-identifier">clear</span>
+
+  <span class="ruby-identifier">developer</span> = <span class="ruby-constant">Developer</span>.<span class="ruby-identifier">create!</span> <span class="ruby-value">:name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'Ancestor'</span>, <span class="ruby-value">:salary</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-number">100000</span>
+  <span class="ruby-identifier">special_developer</span> = <span class="ruby-constant">SpecialDeveloper</span>.<span class="ruby-identifier">create!</span> <span class="ruby-value">:name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'Descendent'</span>, <span class="ruby-value">:salary</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-number">100000</span>
+
+  <span class="ruby-identifier">assert_equal</span> [<span class="ruby-identifier">developer</span>, <span class="ruby-identifier">special_developer</span>], <span class="ruby-identifier">observer</span>.<span class="ruby-identifier">calls</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_observing_subclasses">
+            
+              <a name="method-i-test_observing_subclasses"></a><b>test_observing_subclasses</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_observing_subclasses_source')" id="l_method-i-test_observing_subclasses_source">show</a>
+                
+              </p>
+              <div id="method-i-test_observing_subclasses_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/lifecycle_test.rb, line 164</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_observing_subclasses</span>
+  <span class="ruby-identifier">multi_observer</span> = <span class="ruby-constant">MultiObserver</span>.<span class="ruby-identifier">instance</span>
+
+  <span class="ruby-identifier">developer</span> = <span class="ruby-constant">SpecialDeveloper</span>.<span class="ruby-identifier">find</span>(<span class="ruby-number">1</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">developer</span>.<span class="ruby-identifier">name</span>, <span class="ruby-identifier">multi_observer</span>.<span class="ruby-identifier">record</span>.<span class="ruby-identifier">name</span>
+
+  <span class="ruby-identifier">klass</span> = <span class="ruby-constant">Class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">Developer</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">klass</span>, <span class="ruby-identifier">multi_observer</span>.<span class="ruby-identifier">last_inherited</span>
+
+  <span class="ruby-identifier">developer</span> = <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">find</span>(<span class="ruby-number">1</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">developer</span>.<span class="ruby-identifier">name</span>, <span class="ruby-identifier">multi_observer</span>.<span class="ruby-identifier">record</span>.<span class="ruby-identifier">name</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_observing_two_classes">
+            
+              <a name="method-i-test_observing_two_classes"></a><b>test_observing_two_classes</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_observing_two_classes_source')" id="l_method-i-test_observing_two_classes_source">show</a>
+                
+              </p>
+              <div id="method-i-test_observing_two_classes_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/lifecycle_test.rb, line 154</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_observing_two_classes</span>
+  <span class="ruby-identifier">multi_observer</span> = <span class="ruby-constant">MultiObserver</span>.<span class="ruby-identifier">instance</span>
+
+  <span class="ruby-identifier">topic</span> = <span class="ruby-constant">Topic</span>.<span class="ruby-identifier">find</span>(<span class="ruby-number">1</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">topic</span>.<span class="ruby-identifier">title</span>, <span class="ruby-identifier">multi_observer</span>.<span class="ruby-identifier">record</span>.<span class="ruby-identifier">title</span>
+
+  <span class="ruby-identifier">developer</span> = <span class="ruby-constant">Developer</span>.<span class="ruby-identifier">find</span>(<span class="ruby-number">1</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">developer</span>.<span class="ruby-identifier">name</span>, <span class="ruby-identifier">multi_observer</span>.<span class="ruby-identifier">record</span>.<span class="ruby-identifier">name</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    

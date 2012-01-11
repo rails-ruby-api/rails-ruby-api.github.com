@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>ActionDispatch::RemoteIp::RemoteIpGetter</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/github.css" type="text/css" media="screen" />
+<script src="../../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            ActionDispatch::RemoteIp::RemoteIpGetter 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../../Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../../files/actionpack/lib/action_dispatch/middleware/remote_ip_rb.html">actionpack/lib/action_dispatch/middleware/remote_ip.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>R</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-remote_addrs">remote_addrs</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-to_s">to_s</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <a name="method-c-new"></a><b>new</b>(env, check_ip_spoofing, trusted_proxies)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionpack/lib/action_dispatch/middleware/remote_ip.rb, line 6</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">initialize</span>(<span class="ruby-identifier">env</span>, <span class="ruby-identifier">check_ip_spoofing</span>, <span class="ruby-identifier">trusted_proxies</span>)
+  <span class="ruby-ivar">@env</span> = <span class="ruby-identifier">env</span>
+  <span class="ruby-ivar">@check_ip_spoofing</span> = <span class="ruby-identifier">check_ip_spoofing</span>
+  <span class="ruby-ivar">@trusted_proxies</span> = <span class="ruby-identifier">trusted_proxies</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-remote_addrs">
+            
+              <a name="method-i-remote_addrs"></a><b>remote_addrs</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-remote_addrs_source')" id="l_method-i-remote_addrs_source">show</a>
+                
+              </p>
+              <div id="method-i-remote_addrs_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionpack/lib/action_dispatch/middleware/remote_ip.rb, line 12</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">remote_addrs</span>
+  <span class="ruby-ivar">@remote_addrs</span> <span class="ruby-operator">||=</span> <span class="ruby-keyword">begin</span>
+    <span class="ruby-identifier">list</span> = <span class="ruby-ivar">@env</span>[<span class="ruby-string">'REMOTE_ADDR'</span>] <span class="ruby-operator">?</span> <span class="ruby-ivar">@env</span>[<span class="ruby-string">'REMOTE_ADDR'</span>].<span class="ruby-identifier">split</span>(<span class="ruby-regexp">/[,\s]+/</span>) <span class="ruby-operator">:</span> []
+    <span class="ruby-identifier">list</span>.<span class="ruby-identifier">reject</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">addr</span><span class="ruby-operator">|</span> <span class="ruby-identifier">addr</span> <span class="ruby-operator">=~</span> <span class="ruby-ivar">@trusted_proxies</span> }
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-to_s">
+            
+              <a name="method-i-to_s"></a><b>to_s</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-to_s_source')" id="l_method-i-to_s_source">show</a>
+                
+              </p>
+              <div id="method-i-to_s_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionpack/lib/action_dispatch/middleware/remote_ip.rb, line 19</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">to_s</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">remote_addrs</span>.<span class="ruby-identifier">first</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">remote_addrs</span>.<span class="ruby-identifier">any?</span>
+
+  <span class="ruby-identifier">forwarded_ips</span> = <span class="ruby-ivar">@env</span>[<span class="ruby-string">'HTTP_X_FORWARDED_FOR'</span>] <span class="ruby-operator">?</span> <span class="ruby-ivar">@env</span>[<span class="ruby-string">'HTTP_X_FORWARDED_FOR'</span>].<span class="ruby-identifier">strip</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp">/[,\s]+/</span>) <span class="ruby-operator">:</span> []
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">client_ip</span> = <span class="ruby-ivar">@env</span>[<span class="ruby-string">'HTTP_CLIENT_IP'</span>]
+    <span class="ruby-keyword">if</span> <span class="ruby-ivar">@check_ip_spoofing</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">forwarded_ips</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">client_ip</span>)
+      <span class="ruby-comment"># We don't know which came from the proxy, and which from the user</span>
+      <span class="ruby-identifier">raise</span> <span class="ruby-constant">IpSpoofAttackError</span>, <span class="ruby-string">&quot;IP spoofing attack?!&quot;</span>                <span class="ruby-node">&quot;HTTP_CLIENT_IP=#{@env['HTTP_CLIENT_IP'].inspect}&quot;</span>                <span class="ruby-node">&quot;HTTP_X_FORWARDED_FOR=#{@env['HTTP_X_FORWARDED_FOR'].inspect}&quot;</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-identifier">client_ip</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">forwarded_ips</span>.<span class="ruby-identifier">reject</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">ip</span><span class="ruby-operator">|</span> <span class="ruby-identifier">ip</span> <span class="ruby-operator">=~</span> <span class="ruby-ivar">@trusted_proxies</span> }.<span class="ruby-identifier">last</span> <span class="ruby-operator">||</span> <span class="ruby-ivar">@env</span>[<span class="ruby-string">&quot;REMOTE_ADDR&quot;</span>]
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    

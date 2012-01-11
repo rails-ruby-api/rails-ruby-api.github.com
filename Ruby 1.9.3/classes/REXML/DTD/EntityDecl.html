@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>REXML::DTD::EntityDecl</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/github.css" type="text/css" media="screen" />
+<script src="../../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            REXML::DTD::EntityDecl 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../Child.html">REXML::Child</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../../files/lib/rexml/dtd/entitydecl_rb.html">lib/rexml/dtd/entitydecl.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>P</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-parse_source">parse_source</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-to_s">to_s</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>W</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-write">write</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+      <!-- Section constants -->
+      <div class="sectiontitle">Constants</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class="attr-name">START</td>
+            <td>=</td>
+            <td class="attr-value">&quot;&lt;!ENTITY&quot;</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">START_RE</td>
+            <td>=</td>
+            <td class="attr-value">/^\s*#{START}/um</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">PUBLIC</td>
+            <td>=</td>
+            <td class="attr-value">/^\s*#{START}\s+(?:%\s+)?(\w+)\s+PUBLIC\s+(([&quot;']).*?\3)\s+(([&quot;']).*?\5)\s*&gt;/um</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">SYSTEM</td>
+            <td>=</td>
+            <td class="attr-value">/^\s*#{START}\s+(?:%\s+)?(\w+)\s+SYSTEM\s+(([&quot;']).*?\3)(?:\s+NDATA\s+\w+)?\s*&gt;/um</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">PLAIN</td>
+            <td>=</td>
+            <td class="attr-value">/^\s*#{START}\s+(\w+)\s+(([&quot;']).*?\3)\s*&gt;/um</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">PERCENT</td>
+            <td>=</td>
+            <td class="attr-value">/^\s*#{START}\s+%\s+(\w+)\s+(([&quot;']).*?\3)\s*&gt;/um</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+      </table>
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <a name="method-c-new"></a><b>new</b>(src)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>&lt;!ENTITY name <a href="EntityDecl.html#SYSTEM">SYSTEM</a> “…”&gt;
+&lt;!ENTITY name “…”&gt;</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rexml/dtd/entitydecl.rb, line 13</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">initialize</span> <span class="ruby-identifier">src</span>
+  <span class="ruby-keyword">super</span>()
+  <span class="ruby-identifier">md</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">src</span>.<span class="ruby-identifier">match</span>( <span class="ruby-constant">PUBLIC</span> )
+    <span class="ruby-identifier">md</span> = <span class="ruby-identifier">src</span>.<span class="ruby-identifier">match</span>( <span class="ruby-constant">PUBLIC</span>, <span class="ruby-keyword">true</span> )
+    <span class="ruby-ivar">@middle</span> = <span class="ruby-string">&quot;PUBLIC&quot;</span>
+    <span class="ruby-ivar">@content</span> = <span class="ruby-node">&quot;#{md[2]} #{md[4]}&quot;</span>
+  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">src</span>.<span class="ruby-identifier">match</span>( <span class="ruby-constant">SYSTEM</span> )
+    <span class="ruby-identifier">md</span> = <span class="ruby-identifier">src</span>.<span class="ruby-identifier">match</span>( <span class="ruby-constant">SYSTEM</span>, <span class="ruby-keyword">true</span> )
+    <span class="ruby-ivar">@middle</span> = <span class="ruby-string">&quot;SYSTEM&quot;</span>
+    <span class="ruby-ivar">@content</span> = <span class="ruby-identifier">md</span>[<span class="ruby-number">2</span>]
+  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">src</span>.<span class="ruby-identifier">match</span>( <span class="ruby-constant">PLAIN</span> )
+    <span class="ruby-identifier">md</span> = <span class="ruby-identifier">src</span>.<span class="ruby-identifier">match</span>( <span class="ruby-constant">PLAIN</span>, <span class="ruby-keyword">true</span> )
+    <span class="ruby-ivar">@middle</span> = <span class="ruby-string">&quot;&quot;</span>
+    <span class="ruby-ivar">@content</span> = <span class="ruby-identifier">md</span>[<span class="ruby-number">2</span>]
+  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">src</span>.<span class="ruby-identifier">match</span>( <span class="ruby-constant">PERCENT</span> )
+    <span class="ruby-identifier">md</span> = <span class="ruby-identifier">src</span>.<span class="ruby-identifier">match</span>( <span class="ruby-constant">PERCENT</span>, <span class="ruby-keyword">true</span> )
+    <span class="ruby-ivar">@middle</span> = <span class="ruby-string">&quot;&quot;</span>
+    <span class="ruby-ivar">@content</span> = <span class="ruby-identifier">md</span>[<span class="ruby-number">2</span>]
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">ParseException</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&quot;failed Entity match&quot;</span>, <span class="ruby-identifier">src</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">md</span>.<span class="ruby-identifier">nil?</span>
+  <span class="ruby-ivar">@name</span> = <span class="ruby-identifier">md</span>[<span class="ruby-number">1</span>]
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-parse_source">
+            
+              <a name="method-c-parse_source"></a><b>parse_source</b>(source, listener)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-parse_source_source')" id="l_method-c-parse_source_source">show</a>
+                
+              </p>
+              <div id="method-c-parse_source_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rexml/dtd/entitydecl.rb, line 49</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">EntityDecl</span>.<span class="ruby-identifier">parse_source</span> <span class="ruby-identifier">source</span>, <span class="ruby-identifier">listener</span>
+  <span class="ruby-identifier">md</span> = <span class="ruby-identifier">source</span>.<span class="ruby-identifier">match</span>( <span class="ruby-constant">PATTERN_RE</span>, <span class="ruby-keyword">true</span> )
+  <span class="ruby-identifier">thing</span> = <span class="ruby-identifier">md</span>[<span class="ruby-number">0</span>].<span class="ruby-identifier">squeeze</span>(<span class="ruby-string">&quot; \t\n\r&quot;</span>)
+  <span class="ruby-identifier">listener</span>.<span class="ruby-identifier">send</span> <span class="ruby-identifier">inspect</span>.<span class="ruby-identifier">downcase</span>, <span class="ruby-identifier">thing</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-to_s">
+            
+              <a name="method-i-to_s"></a><b>to_s</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-to_s_source')" id="l_method-i-to_s_source">show</a>
+                
+              </p>
+              <div id="method-i-to_s_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rexml/dtd/entitydecl.rb, line 37</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">to_s</span>
+  <span class="ruby-identifier">rv</span> = <span class="ruby-node">&quot;&lt;!ENTITY #@name &quot;</span>
+  <span class="ruby-identifier">rv</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;#@middle &quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@middle</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-number">0</span>
+  <span class="ruby-identifier">rv</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-ivar">@content</span>
+  <span class="ruby-identifier">rv</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-write">
+            
+              <a name="method-i-write"></a><b>write</b>( output, indent )
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-write_source')" id="l_method-i-write_source">show</a>
+                
+              </p>
+              <div id="method-i-write_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rexml/dtd/entitydecl.rb, line 44</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">write</span>( <span class="ruby-identifier">output</span>, <span class="ruby-identifier">indent</span> )
+  <span class="ruby-identifier">indent</span>( <span class="ruby-identifier">output</span>, <span class="ruby-identifier">indent</span> )
+  <span class="ruby-identifier">output</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">to_s</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    

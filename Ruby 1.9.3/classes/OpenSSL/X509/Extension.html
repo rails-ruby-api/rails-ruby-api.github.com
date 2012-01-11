@@ -1,0 +1,672 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>OpenSSL::X509::Extension</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/github.css" type="text/css" media="screen" />
+<script src="../../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            OpenSSL::X509::Extension 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../../Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../../files/ext/openssl/lib/openssl/x509-internal_rb.html">ext/openssl/lib/openssl/x509-internal.rb</a></li>
+            
+            <li><a href="../../../files/ext/openssl/ossl_ssl_session_c.html">ext/openssl/ossl_ssl_session.c</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>C</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-critical-3D">critical=</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-critical-3F">critical?</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>O</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-oid">oid</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-oid-3D">oid=</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-to_a">to_a</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-to_der">to_der</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-to_h">to_h</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-to_s">to_s</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>V</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-value">value</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-value-3D">value=</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <a name="method-c-new"></a><b>OpenSSL::X509::Extension.new asn1
+OpenSSL::X509::Extension.new name, value
+OpenSSL::X509::Extension.new name, value, critical
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Creates an <a href="../X509.html">X509</a> extension.</p>
+
+<p>The extension may be created from <code>asn1</code> data or from an
+extension <code>name</code> and <code>value</code>.  The <code>name</code>
+may be either an OID or an extension name.  If <code>critical</code> is
+true the extension is marked critical.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre>static VALUE
+ossl_x509ext_initialize(int argc, VALUE *argv, VALUE self)
+{
+    VALUE oid, value, critical;
+    const unsigned char *p;
+    X509_EXTENSION *ext, *x;
+
+    GetX509Ext(self, ext);
+    if(rb_scan_args(argc, argv, &quot;12&quot;, &amp;oid, &amp;value, &amp;critical) == 1){
+        oid = ossl_to_der_if_possible(oid);
+        StringValue(oid);
+        p = (unsigned char *)RSTRING_PTR(oid);
+        x = d2i_X509_EXTENSION(&amp;ext, &amp;p, RSTRING_LEN(oid));
+        DATA_PTR(self) = ext;
+        if(!x)
+            ossl_raise(eX509ExtError, NULL);
+        return self;
+    }
+    rb_funcall(self, rb_intern(&quot;oid=&quot;), 1, oid);
+    rb_funcall(self, rb_intern(&quot;value=&quot;), 1, value);
+    if(argc &gt; 2) rb_funcall(self, rb_intern(&quot;critical=&quot;), 1, critical);
+
+    return self;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-critical-3D">
+            
+              <a name="method-i-critical-3D"></a><b>critical=</b>(p1)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-critical-3D_source')" id="l_method-i-critical-3D_source">show</a>
+                
+              </p>
+              <div id="method-i-critical-3D_source" class="dyn-source">
+                <pre>static VALUE
+ossl_x509ext_set_critical(VALUE self, VALUE flag)
+{
+    X509_EXTENSION *ext;
+
+    GetX509Ext(self, ext);
+    X509_EXTENSION_set_critical(ext, RTEST(flag) ? 1 : 0);
+
+    return flag;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-critical-3F">
+            
+              <a name="method-i-critical-3F"></a><b>critical?</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-critical-3F_source')" id="l_method-i-critical-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-critical-3F_source" class="dyn-source">
+                <pre>static VALUE
+ossl_x509ext_get_critical(VALUE obj)
+{
+    X509_EXTENSION *ext;
+
+    GetX509Ext(obj, ext);
+    return X509_EXTENSION_get_critical(ext) ? Qtrue : Qfalse;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-oid">
+            
+              <a name="method-i-oid"></a><b>oid</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-oid_source')" id="l_method-i-oid_source">show</a>
+                
+              </p>
+              <div id="method-i-oid_source" class="dyn-source">
+                <pre>static VALUE
+ossl_x509ext_get_oid(VALUE obj)
+{
+    X509_EXTENSION *ext;
+    ASN1_OBJECT *extobj;
+    BIO *out;
+    VALUE ret;
+    int nid;
+
+    GetX509Ext(obj, ext);
+    extobj = X509_EXTENSION_get_object(ext);
+    if ((nid = OBJ_obj2nid(extobj)) != NID_undef)
+        ret = rb_str_new2(OBJ_nid2sn(nid));
+    else{
+        if (!(out = BIO_new(BIO_s_mem())))
+            ossl_raise(eX509ExtError, NULL);
+        i2a_ASN1_OBJECT(out, extobj);
+        ret = ossl_membio2str(out);
+    }
+
+    return ret;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-oid-3D">
+            
+              <a name="method-i-oid-3D"></a><b>oid=</b>(p1)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-oid-3D_source')" id="l_method-i-oid-3D_source">show</a>
+                
+              </p>
+              <div id="method-i-oid-3D_source" class="dyn-source">
+                <pre>static VALUE
+ossl_x509ext_set_oid(VALUE self, VALUE oid)
+{
+    X509_EXTENSION *ext;
+    ASN1_OBJECT *obj;
+    char *s;
+
+    s = StringValuePtr(oid);
+    obj = OBJ_txt2obj(s, 0);
+    if(!obj) obj = OBJ_txt2obj(s, 1);
+    if(!obj) ossl_raise(eX509ExtError, NULL);
+    GetX509Ext(self, ext);
+    X509_EXTENSION_set_object(ext, obj);
+
+    return oid;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-to_a">
+            
+              <a name="method-i-to_a"></a><b>to_a</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-to_a_source')" id="l_method-i-to_a_source">show</a>
+                
+              </p>
+              <div id="method-i-to_a_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/openssl/lib/openssl/x509-internal.rb, line 57</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">to_a</span>
+  [ <span class="ruby-keyword">self</span>.<span class="ruby-identifier">oid</span>, <span class="ruby-keyword">self</span>.<span class="ruby-identifier">value</span>, <span class="ruby-keyword">self</span>.<span class="ruby-identifier">critical?</span> ]
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-to_der">
+            
+              <a name="method-i-to_der"></a><b>to_der</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-to_der_source')" id="l_method-i-to_der_source">show</a>
+                
+              </p>
+              <div id="method-i-to_der_source" class="dyn-source">
+                <pre>static VALUE
+ossl_x509ext_to_der(VALUE obj)
+{
+    X509_EXTENSION *ext;
+    unsigned char *p;
+    long len;
+    VALUE str;
+
+    GetX509Ext(obj, ext);
+    if((len = i2d_X509_EXTENSION(ext, NULL)) &lt;= 0)
+        ossl_raise(eX509ExtError, NULL);
+    str = rb_str_new(0, len);
+    p = (unsigned char *)RSTRING_PTR(str);
+    if(i2d_X509_EXTENSION(ext, &amp;p) &lt; 0)
+        ossl_raise(eX509ExtError, NULL);
+    ossl_str_adjust(str, p);
+
+    return str;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-to_h">
+            
+              <a name="method-i-to_h"></a><b>to_h</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-to_h_source')" id="l_method-i-to_h_source">show</a>
+                
+              </p>
+              <div id="method-i-to_h_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/openssl/lib/openssl/x509-internal.rb, line 53</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">to_h</span> <span class="ruby-comment"># {&quot;oid&quot;=&gt;sn|ln, &quot;value&quot;=&gt;value, &quot;critical&quot;=&gt;true|false}</span>
+  {<span class="ruby-string">&quot;oid&quot;</span>=<span class="ruby-operator">&gt;</span><span class="ruby-keyword">self</span>.<span class="ruby-identifier">oid</span>,<span class="ruby-string">&quot;value&quot;</span>=<span class="ruby-operator">&gt;</span><span class="ruby-keyword">self</span>.<span class="ruby-identifier">value</span>,<span class="ruby-string">&quot;critical&quot;</span>=<span class="ruby-operator">&gt;</span><span class="ruby-keyword">self</span>.<span class="ruby-identifier">critical?</span>}
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-to_s">
+            
+              <a name="method-i-to_s"></a><b>to_s</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-to_s_source')" id="l_method-i-to_s_source">show</a>
+                
+              </p>
+              <div id="method-i-to_s_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/openssl/lib/openssl/x509-internal.rb, line 46</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">to_s</span> <span class="ruby-comment"># &quot;oid = critical, value&quot;</span>
+  <span class="ruby-identifier">str</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">oid</span>
+  <span class="ruby-identifier">str</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&quot; = &quot;</span>
+  <span class="ruby-identifier">str</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&quot;critical, &quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">critical?</span>
+  <span class="ruby-identifier">str</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">value</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">/\n/</span>, <span class="ruby-string">&quot;, &quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-value">
+            
+              <a name="method-i-value"></a><b>value</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-value_source')" id="l_method-i-value_source">show</a>
+                
+              </p>
+              <div id="method-i-value_source" class="dyn-source">
+                <pre>static VALUE
+ossl_x509ext_get_value(VALUE obj)
+{
+    X509_EXTENSION *ext;
+    BIO *out;
+    VALUE ret;
+
+    GetX509Ext(obj, ext);
+    if (!(out = BIO_new(BIO_s_mem())))
+        ossl_raise(eX509ExtError, NULL);
+    if (!X509V3_EXT_print(out, ext, 0, 0))
+        M_ASN1_OCTET_STRING_print(out, ext-&gt;value);
+    ret = ossl_membio2str(out);
+
+    return ret;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-value-3D">
+            
+              <a name="method-i-value-3D"></a><b>value=</b>(p1)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-value-3D_source')" id="l_method-i-value-3D_source">show</a>
+                
+              </p>
+              <div id="method-i-value-3D_source" class="dyn-source">
+                <pre>static VALUE
+ossl_x509ext_set_value(VALUE self, VALUE data)
+{
+    X509_EXTENSION *ext;
+    ASN1_OCTET_STRING *asn1s;
+    char *s;
+
+    data = ossl_to_der_if_possible(data);
+    StringValue(data);
+    if(!(s = OPENSSL_malloc(RSTRING_LEN(data))))
+        ossl_raise(eX509ExtError, &quot;malloc error&quot;);
+    memcpy(s, RSTRING_PTR(data), RSTRING_LEN(data));
+    if(!(asn1s = ASN1_OCTET_STRING_new())){
+        OPENSSL_free(s);
+        ossl_raise(eX509ExtError, NULL);
+    }
+    if(!M_ASN1_OCTET_STRING_set(asn1s, s, RSTRING_LENINT(data))){
+        OPENSSL_free(s);
+        ASN1_OCTET_STRING_free(asn1s);
+        ossl_raise(eX509ExtError, NULL);
+    }
+    OPENSSL_free(s);
+    GetX509Ext(self, ext);
+    X509_EXTENSION_set_data(ext, asn1s);
+
+    return data;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    

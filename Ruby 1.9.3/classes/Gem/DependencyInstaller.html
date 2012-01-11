@@ -1,0 +1,688 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Gem::DependencyInstaller</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            Gem::DependencyInstaller 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/lib/rubygems/dependency_installer_rb.html">lib/rubygems/dependency_installer.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>Installs a gem along with all its dependencies from local and remote gems.</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>A</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-add_found_dependencies">add_found_dependencies</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>F</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-find_gems_with_sources">find_gems_with_sources</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-find_spec_by_name_and_version">find_spec_by_name_and_version</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>G</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-gather_dependencies">gather_dependencies</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>I</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-install">install</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+    <!-- Includes -->
+    <div class="sectiontitle">Included Modules</div>
+    <ul>
+      
+        <li>
+          
+            <a href="UserInteraction.html">
+              Gem::UserInteraction
+            </a>
+          
+        </li>
+      
+    </ul>
+  
+
+
+
+  
+
+    
+
+    
+
+    
+      <!-- Section constants -->
+      <div class="sectiontitle">Constants</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class="attr-name">DEFAULT_OPTIONS</td>
+            <td>=</td>
+            <td class="attr-value">{
+:env_shebang         =&gt; false,
+:domain              =&gt; :both, # HACK dup
+:force               =&gt; false,
+:format_executable   =&gt; false, # HACK dup
+:ignore_dependencies =&gt; false,
+:prerelease          =&gt; false,
+:security_policy     =&gt; nil, # HACK NoSecurity requires OpenSSL. AlmostNo? Low?
+:wrappers            =&gt; true,
+}</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+      </table>
+    
+
+
+    
+      <!-- Section attributes -->
+      <div class="sectiontitle">Attributes</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [R]
+            </td>
+            <td class='attr-name'>gems_to_install</td>
+            <td class='attr-desc'></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [R]
+            </td>
+            <td class='attr-name'>installed_gems</td>
+            <td class='attr-desc'></td>
+          </tr>
+        
+      </table>
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <a name="method-c-new"></a><b>new</b>(options = {})
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Creates a new installer instance.</p>
+
+<p>Options are:</p>
+<dl class="rdoc-list note-list"><dt>:cache_dir
+<dd>
+<p>Alternate repository path to store .gem files in.</p>
+</dd><dt>:domain
+<dd>
+<p>:local, :remote, or :both.  :local only searches gems in the current
+directory.  :remote searches only gems in <a
+href="../Gem.html#method-c-sources">Gem.sources</a>. :both searches both.</p>
+</dd><dt>:env_shebang
+<dd>
+<p>See <a href="Installer.html#method-c-new">Gem::Installer.new</a>.</p>
+</dd><dt>:force
+<dd>
+<p>See <a href="Installer.html#method-i-install">Gem::Installer#install</a>.</p>
+</dd><dt>:format_executable
+<dd>
+<p>See Gem::Installer#initialize.</p>
+</dd><dt>:ignore_dependencies
+<dd>
+<p>Don’t install any dependencies.</p>
+</dd><dt>:install_dir
+<dd>
+<p>See <a href="Installer.html#method-i-install">Gem::Installer#install</a>.</p>
+</dd><dt>:prerelease
+<dd>
+<p>Allow prerelease versions.  See <a
+href="DependencyInstaller.html#method-i-install">#install</a>.</p>
+</dd><dt>:security_policy
+<dd>
+<p>See <a href="Installer.html#method-c-new">Gem::Installer.new</a> and <a
+href="Security.html">Gem::Security</a>.</p>
+</dd><dt>:user_install
+<dd>
+<p>See <a href="Installer.html#method-c-new">Gem::Installer.new</a></p>
+</dd><dt>:wrappers
+<dd>
+<p>See <a href="Installer.html#method-c-new">Gem::Installer.new</a></p>
+</dd></dl>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/dependency_installer.rb, line 46</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">initialize</span>(<span class="ruby-identifier">options</span> = {})
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:install_dir</span>] <span class="ruby-keyword">then</span>
+    <span class="ruby-ivar">@gem_home</span> = <span class="ruby-identifier">options</span>[<span class="ruby-value">:install_dir</span>]
+
+    <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Specification</span>.<span class="ruby-identifier">dirs</span> = <span class="ruby-ivar">@gem_home</span>
+    <span class="ruby-constant">Gem</span>.<span class="ruby-identifier">ensure_gem_subdirectories</span> <span class="ruby-ivar">@gem_home</span>
+    <span class="ruby-identifier">options</span>[<span class="ruby-value">:install_dir</span>] = <span class="ruby-ivar">@gem_home</span> <span class="ruby-comment"># FIX: because we suck and reuse below</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">options</span> = <span class="ruby-constant">DEFAULT_OPTIONS</span>.<span class="ruby-identifier">merge</span> <span class="ruby-identifier">options</span>
+
+  <span class="ruby-ivar">@bin_dir</span>             = <span class="ruby-identifier">options</span>[<span class="ruby-value">:bin_dir</span>]
+  <span class="ruby-ivar">@development</span>         = <span class="ruby-identifier">options</span>[<span class="ruby-value">:development</span>]
+  <span class="ruby-ivar">@domain</span>              = <span class="ruby-identifier">options</span>[<span class="ruby-value">:domain</span>]
+  <span class="ruby-ivar">@env_shebang</span>         = <span class="ruby-identifier">options</span>[<span class="ruby-value">:env_shebang</span>]
+  <span class="ruby-ivar">@force</span>               = <span class="ruby-identifier">options</span>[<span class="ruby-value">:force</span>]
+  <span class="ruby-ivar">@format_executable</span>   = <span class="ruby-identifier">options</span>[<span class="ruby-value">:format_executable</span>]
+  <span class="ruby-ivar">@ignore_dependencies</span> = <span class="ruby-identifier">options</span>[<span class="ruby-value">:ignore_dependencies</span>]
+  <span class="ruby-ivar">@prerelease</span>          = <span class="ruby-identifier">options</span>[<span class="ruby-value">:prerelease</span>]
+  <span class="ruby-ivar">@security_policy</span>     = <span class="ruby-identifier">options</span>[<span class="ruby-value">:security_policy</span>]
+  <span class="ruby-ivar">@user_install</span>        = <span class="ruby-identifier">options</span>[<span class="ruby-value">:user_install</span>]
+  <span class="ruby-ivar">@wrappers</span>            = <span class="ruby-identifier">options</span>[<span class="ruby-value">:wrappers</span>]
+
+  <span class="ruby-ivar">@installed_gems</span> = []
+
+  <span class="ruby-ivar">@install_dir</span> = <span class="ruby-identifier">options</span>[<span class="ruby-value">:install_dir</span>] <span class="ruby-operator">||</span> <span class="ruby-constant">Gem</span>.<span class="ruby-identifier">dir</span>
+  <span class="ruby-ivar">@cache_dir</span> = <span class="ruby-identifier">options</span>[<span class="ruby-value">:cache_dir</span>] <span class="ruby-operator">||</span> <span class="ruby-ivar">@install_dir</span>
+
+  <span class="ruby-comment"># Set with any errors that SpecFetcher finds while search through</span>
+  <span class="ruby-comment"># gemspecs for a dep</span>
+  <span class="ruby-ivar">@errors</span> = <span class="ruby-keyword">nil</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-add_found_dependencies">
+            
+              <a name="method-i-add_found_dependencies"></a><b>add_found_dependencies</b>(to_do, dependency_list)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-add_found_dependencies_source')" id="l_method-i-add_found_dependencies_source">show</a>
+                
+              </p>
+              <div id="method-i-add_found_dependencies_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/dependency_installer.rb, line 159</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">add_found_dependencies</span> <span class="ruby-identifier">to_do</span>, <span class="ruby-identifier">dependency_list</span>
+  <span class="ruby-identifier">seen</span> = {}
+  <span class="ruby-identifier">dependencies</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">h</span>, <span class="ruby-identifier">name</span><span class="ruby-operator">|</span> <span class="ruby-identifier">h</span>[<span class="ruby-identifier">name</span>] = <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Dependency</span>.<span class="ruby-identifier">new</span> <span class="ruby-identifier">name</span> }
+
+  <span class="ruby-keyword">until</span> <span class="ruby-identifier">to_do</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">spec</span> = <span class="ruby-identifier">to_do</span>.<span class="ruby-identifier">shift</span>
+    <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword">or</span> <span class="ruby-identifier">seen</span>[<span class="ruby-identifier">spec</span>.<span class="ruby-identifier">name</span>]
+    <span class="ruby-identifier">seen</span>[<span class="ruby-identifier">spec</span>.<span class="ruby-identifier">name</span>] = <span class="ruby-keyword">true</span>
+
+    <span class="ruby-identifier">deps</span> = <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">runtime_dependencies</span>
+    <span class="ruby-identifier">deps</span> <span class="ruby-operator">|=</span> <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">development_dependencies</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@development</span>
+
+    <span class="ruby-identifier">deps</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">dep</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">dependencies</span>[<span class="ruby-identifier">dep</span>.<span class="ruby-identifier">name</span>] = <span class="ruby-identifier">dependencies</span>[<span class="ruby-identifier">dep</span>.<span class="ruby-identifier">name</span>].<span class="ruby-identifier">merge</span> <span class="ruby-identifier">dep</span>
+
+      <span class="ruby-identifier">results</span> = <span class="ruby-identifier">find_gems_with_sources</span>(<span class="ruby-identifier">dep</span>).<span class="ruby-identifier">reverse</span>
+
+      <span class="ruby-identifier">results</span>.<span class="ruby-identifier">reject!</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">dep_spec</span>,<span class="ruby-operator">|</span>
+        <span class="ruby-identifier">to_do</span>.<span class="ruby-identifier">push</span> <span class="ruby-identifier">dep_spec</span>
+
+        <span class="ruby-comment"># already locally installed</span>
+        <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Specification</span>.<span class="ruby-identifier">any?</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">installed_spec</span><span class="ruby-operator">|</span>
+          <span class="ruby-identifier">dep</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">installed_spec</span>.<span class="ruby-identifier">name</span> <span class="ruby-keyword">and</span>
+            <span class="ruby-identifier">dep</span>.<span class="ruby-identifier">requirement</span>.<span class="ruby-identifier">satisfied_by?</span> <span class="ruby-identifier">installed_spec</span>.<span class="ruby-identifier">version</span>
+        <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">end</span>
+
+      <span class="ruby-identifier">results</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">dep_spec</span>, <span class="ruby-identifier">source_uri</span><span class="ruby-operator">|</span>
+        <span class="ruby-ivar">@specs_and_sources</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-identifier">dep_spec</span>, <span class="ruby-identifier">source_uri</span>]
+
+        <span class="ruby-identifier">dependency_list</span>.<span class="ruby-identifier">add</span> <span class="ruby-identifier">dep_spec</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">dependency_list</span>.<span class="ruby-identifier">remove_specs_unsatisfied_by</span> <span class="ruby-identifier">dependencies</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-find_gems_with_sources">
+            
+              <a name="method-i-find_gems_with_sources"></a><b>find_gems_with_sources</b>(dep)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns a list of pairs of gemspecs and source_uris that match <a
+href="Dependency.html">Gem::Dependency</a> <code>dep</code> from both local
+(<a href="../Dir.html#method-c-pwd">Dir.pwd</a>) and remote (<a
+href="../Gem.html#method-c-sources">Gem.sources</a>) sources.  Gems are
+sorted with newer gems preferred over older gems, and local gems preferred
+over remote gems.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-find_gems_with_sources_source')" id="l_method-i-find_gems_with_sources_source">show</a>
+                
+              </p>
+              <div id="method-i-find_gems_with_sources_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/dependency_installer.rb, line 85</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">find_gems_with_sources</span>(<span class="ruby-identifier">dep</span>)
+  <span class="ruby-comment"># Reset the errors</span>
+  <span class="ruby-ivar">@errors</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-identifier">gems_and_sources</span> = []
+
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@domain</span> <span class="ruby-operator">==</span> <span class="ruby-value">:both</span> <span class="ruby-keyword">or</span> <span class="ruby-ivar">@domain</span> <span class="ruby-operator">==</span> <span class="ruby-value">:local</span> <span class="ruby-keyword">then</span>
+    <span class="ruby-constant">Dir</span>[<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">Dir</span>.<span class="ruby-identifier">pwd</span>, <span class="ruby-node">&quot;#{dep.name}-[0-9]*.gem&quot;</span>)].<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">gem_file</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">spec</span> = <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Format</span>.<span class="ruby-identifier">from_file_by_path</span>(<span class="ruby-identifier">gem_file</span>).<span class="ruby-identifier">spec</span>
+      <span class="ruby-identifier">gems_and_sources</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-identifier">spec</span>, <span class="ruby-identifier">gem_file</span>] <span class="ruby-keyword">if</span> <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">dep</span>.<span class="ruby-identifier">name</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@domain</span> <span class="ruby-operator">==</span> <span class="ruby-value">:both</span> <span class="ruby-keyword">or</span> <span class="ruby-ivar">@domain</span> <span class="ruby-operator">==</span> <span class="ruby-value">:remote</span> <span class="ruby-keyword">then</span>
+    <span class="ruby-keyword">begin</span>
+      <span class="ruby-comment"># REFACTOR: all = dep.requirement.needs_all?</span>
+      <span class="ruby-identifier">requirements</span> = <span class="ruby-identifier">dep</span>.<span class="ruby-identifier">requirement</span>.<span class="ruby-identifier">requirements</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">req</span>, <span class="ruby-identifier">ver</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">req</span>
+      <span class="ruby-keyword">end</span>
+
+      <span class="ruby-identifier">all</span> = <span class="ruby-operator">!</span><span class="ruby-identifier">dep</span>.<span class="ruby-identifier">prerelease?</span> <span class="ruby-operator">&amp;&amp;</span>
+            <span class="ruby-comment"># we only need latest if there's one requirement and it is</span>
+            <span class="ruby-comment"># guaranteed to match the newest specs</span>
+            (<span class="ruby-identifier">requirements</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">&gt;</span> <span class="ruby-number">1</span> <span class="ruby-keyword">or</span>
+              (<span class="ruby-identifier">requirements</span>.<span class="ruby-identifier">first</span> <span class="ruby-operator">!=</span> <span class="ruby-string">&quot;&gt;=&quot;</span> <span class="ruby-keyword">and</span> <span class="ruby-identifier">requirements</span>.<span class="ruby-identifier">first</span> <span class="ruby-operator">!=</span> <span class="ruby-string">&quot;&gt;&quot;</span>))
+
+      <span class="ruby-identifier">found</span>, <span class="ruby-ivar">@errors</span> = <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">SpecFetcher</span>.<span class="ruby-identifier">fetcher</span>.<span class="ruby-identifier">fetch_with_errors</span> <span class="ruby-identifier">dep</span>, <span class="ruby-identifier">all</span>, <span class="ruby-keyword">true</span>, <span class="ruby-identifier">dep</span>.<span class="ruby-identifier">prerelease?</span>
+
+      <span class="ruby-identifier">gems_and_sources</span>.<span class="ruby-identifier">push</span>(*<span class="ruby-identifier">found</span>)
+
+    <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">RemoteFetcher</span><span class="ruby-operator">::</span><span class="ruby-constant">FetchError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-constant">Gem</span>.<span class="ruby-identifier">configuration</span>.<span class="ruby-identifier">really_verbose</span> <span class="ruby-keyword">then</span>
+        <span class="ruby-identifier">say</span> <span class="ruby-node">&quot;Error fetching remote data:\t\t#{e.message}&quot;</span>
+        <span class="ruby-identifier">say</span> <span class="ruby-string">&quot;Falling back to local-only install&quot;</span>
+      <span class="ruby-keyword">end</span>
+      <span class="ruby-ivar">@domain</span> = <span class="ruby-value">:local</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">gems_and_sources</span>.<span class="ruby-identifier">sort_by</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">gem</span>, <span class="ruby-identifier">source</span><span class="ruby-operator">|</span>
+    [<span class="ruby-identifier">gem</span>, <span class="ruby-identifier">source</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp">/^http:\/\//</span> <span class="ruby-operator">?</span> <span class="ruby-number">0</span> <span class="ruby-operator">:</span> <span class="ruby-number">1</span>] <span class="ruby-comment"># local gems win</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-find_spec_by_name_and_version">
+            
+              <a name="method-i-find_spec_by_name_and_version"></a><b>find_spec_by_name_and_version</b>(gem_name, version = Gem::Requirement.default, prerelease = false)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Finds a spec and the source_uri it came from for gem <code>gem_name</code>
+and <code>version</code>.  Returns an Array of specs and sources required
+for installation of the gem.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-find_spec_by_name_and_version_source')" id="l_method-i-find_spec_by_name_and_version_source">show</a>
+                
+              </p>
+              <div id="method-i-find_spec_by_name_and_version_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/dependency_installer.rb, line 202</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">find_spec_by_name_and_version</span>(<span class="ruby-identifier">gem_name</span>,
+                                  <span class="ruby-identifier">version</span> = <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Requirement</span>.<span class="ruby-identifier">default</span>,
+                                  <span class="ruby-identifier">prerelease</span> = <span class="ruby-keyword">false</span>)
+  <span class="ruby-identifier">spec_and_source</span> = <span class="ruby-keyword">nil</span>
+
+  <span class="ruby-identifier">glob</span> = <span class="ruby-keyword">if</span> <span class="ruby-constant">File</span><span class="ruby-operator">::</span><span class="ruby-constant">ALT_SEPARATOR</span> <span class="ruby-keyword">then</span>
+           <span class="ruby-identifier">gem_name</span>.<span class="ruby-identifier">gsub</span> <span class="ruby-constant">File</span><span class="ruby-operator">::</span><span class="ruby-constant">ALT_SEPARATOR</span>, <span class="ruby-constant">File</span><span class="ruby-operator">::</span><span class="ruby-constant">SEPARATOR</span>
+         <span class="ruby-keyword">else</span>
+           <span class="ruby-identifier">gem_name</span>
+         <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">local_gems</span> = <span class="ruby-constant">Dir</span>[<span class="ruby-node">&quot;#{glob}*&quot;</span>].<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">reverse</span>
+
+  <span class="ruby-identifier">local_gems</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">gem_file</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">next</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">gem_file</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp">/gem$/</span>
+    <span class="ruby-keyword">begin</span>
+      <span class="ruby-identifier">spec</span> = <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Format</span>.<span class="ruby-identifier">from_file_by_path</span>(<span class="ruby-identifier">gem_file</span>).<span class="ruby-identifier">spec</span>
+      <span class="ruby-identifier">spec_and_source</span> = [<span class="ruby-identifier">spec</span>, <span class="ruby-identifier">gem_file</span>]
+      <span class="ruby-keyword">break</span>
+    <span class="ruby-keyword">rescue</span> <span class="ruby-constant">SystemCallError</span>, <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Package</span><span class="ruby-operator">::</span><span class="ruby-constant">FormatError</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">spec_and_source</span> <span class="ruby-keyword">then</span>
+    <span class="ruby-identifier">dep</span> = <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Dependency</span>.<span class="ruby-identifier">new</span> <span class="ruby-identifier">gem_name</span>, <span class="ruby-identifier">version</span>
+    <span class="ruby-identifier">dep</span>.<span class="ruby-identifier">prerelease</span> = <span class="ruby-keyword">true</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">prerelease</span>
+    <span class="ruby-identifier">spec_and_sources</span> = <span class="ruby-identifier">find_gems_with_sources</span>(<span class="ruby-identifier">dep</span>).<span class="ruby-identifier">reverse</span>
+    <span class="ruby-identifier">spec_and_source</span> = <span class="ruby-identifier">spec_and_sources</span>.<span class="ruby-identifier">find</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">spec</span>, <span class="ruby-identifier">source</span><span class="ruby-operator">|</span>
+      <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Platform</span>.<span class="ruby-identifier">match</span> <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">platform</span>
+    }
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">spec_and_source</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword">then</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">GemNotFoundException</span>.<span class="ruby-identifier">new</span>(
+      <span class="ruby-node">&quot;Could not find a valid gem '#{gem_name}' (#{version}) locally or in a repository&quot;</span>,
+      <span class="ruby-identifier">gem_name</span>, <span class="ruby-identifier">version</span>, <span class="ruby-ivar">@errors</span>)
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-ivar">@specs_and_sources</span> = [<span class="ruby-identifier">spec_and_source</span>]
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-gather_dependencies">
+            
+              <a name="method-i-gather_dependencies"></a><b>gather_dependencies</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Gathers all dependencies necessary for the installation from local and
+remote sources unless the ignore_dependencies was given.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-gather_dependencies_source')" id="l_method-i-gather_dependencies_source">show</a>
+                
+              </p>
+              <div id="method-i-gather_dependencies_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/dependency_installer.rb, line 132</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">gather_dependencies</span>
+  <span class="ruby-identifier">specs</span> = <span class="ruby-ivar">@specs_and_sources</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">spec</span>,<span class="ruby-identifier">_</span><span class="ruby-operator">|</span> <span class="ruby-identifier">spec</span> }
+
+  <span class="ruby-comment"># these gems were listed by the user, always install them</span>
+  <span class="ruby-identifier">keep_names</span> = <span class="ruby-identifier">specs</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">spec</span><span class="ruby-operator">|</span> <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">full_name</span> }
+
+  <span class="ruby-identifier">dependency_list</span> = <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">DependencyList</span>.<span class="ruby-identifier">new</span> <span class="ruby-ivar">@development</span>
+  <span class="ruby-identifier">dependency_list</span>.<span class="ruby-identifier">add</span>(*<span class="ruby-identifier">specs</span>)
+  <span class="ruby-identifier">to_do</span> = <span class="ruby-identifier">specs</span>.<span class="ruby-identifier">dup</span>
+
+  <span class="ruby-identifier">add_found_dependencies</span> <span class="ruby-identifier">to_do</span>, <span class="ruby-identifier">dependency_list</span> <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@ignore_dependencies</span>
+
+  <span class="ruby-identifier">dependency_list</span>.<span class="ruby-identifier">specs</span>.<span class="ruby-identifier">reject!</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">spec</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">not</span> <span class="ruby-identifier">keep_names</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">spec</span>.<span class="ruby-identifier">full_name</span>) <span class="ruby-keyword">and</span>
+    <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Specification</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">spec</span>)
+  }
+
+  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">dependency_list</span>.<span class="ruby-identifier">ok?</span> <span class="ruby-keyword">or</span> <span class="ruby-ivar">@ignore_dependencies</span> <span class="ruby-keyword">or</span> <span class="ruby-ivar">@force</span> <span class="ruby-keyword">then</span>
+    <span class="ruby-identifier">reason</span> = <span class="ruby-identifier">dependency_list</span>.<span class="ruby-identifier">why_not_ok?</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>,<span class="ruby-identifier">v</span><span class="ruby-operator">|</span>
+      <span class="ruby-node">&quot;#{k} requires #{v.join(&quot;, &quot;)}&quot;</span>
+    }.<span class="ruby-identifier">join</span>(<span class="ruby-string">&quot;; &quot;</span>)
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">DependencyError</span>, <span class="ruby-node">&quot;Unable to resolve dependencies: #{reason}&quot;</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-ivar">@gems_to_install</span> = <span class="ruby-identifier">dependency_list</span>.<span class="ruby-identifier">dependency_order</span>.<span class="ruby-identifier">reverse</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-install">
+            
+              <a name="method-i-install"></a><b>install</b>(dep_or_name, version = Gem::Requirement.default)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Installs the gem <code>dep_or_name</code> and all its dependencies. 
+Returns an Array of installed gem specifications.</p>
+
+<p>If the <code>:prerelease</code> option is set and there is a prerelease for
+<code>dep_or_name</code> the prerelease version will be installed.</p>
+
+<p>Unless explicitly specified as a prerelease dependency, prerelease gems
+that <code>dep_or_name</code> depend on will not be installed.</p>
+
+<p>If c-1.a depends on b-1 and a-1.a and there is a gem b-1.a available then
+c-1.a, b-1 and a-1.a will be installed.  b-1.a will need to be installed
+separately.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-install_source')" id="l_method-i-install_source">show</a>
+                
+              </p>
+              <div id="method-i-install_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/dependency_installer.rb, line 257</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">install</span> <span class="ruby-identifier">dep_or_name</span>, <span class="ruby-identifier">version</span> = <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Requirement</span>.<span class="ruby-identifier">default</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-constant">String</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">dep_or_name</span> <span class="ruby-keyword">then</span>
+    <span class="ruby-identifier">find_spec_by_name_and_version</span> <span class="ruby-identifier">dep_or_name</span>, <span class="ruby-identifier">version</span>, <span class="ruby-ivar">@prerelease</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">dep_or_name</span>.<span class="ruby-identifier">prerelease</span> = <span class="ruby-ivar">@prerelease</span>
+    <span class="ruby-ivar">@specs_and_sources</span> = [<span class="ruby-identifier">find_gems_with_sources</span>(<span class="ruby-identifier">dep_or_name</span>).<span class="ruby-identifier">last</span>]
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-ivar">@installed_gems</span> = []
+
+  <span class="ruby-identifier">gather_dependencies</span>
+
+  <span class="ruby-identifier">last</span> = <span class="ruby-ivar">@gems_to_install</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">-</span> <span class="ruby-number">1</span>
+  <span class="ruby-ivar">@gems_to_install</span>.<span class="ruby-identifier">each_with_index</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">spec</span>, <span class="ruby-identifier">index</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Specification</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">spec</span>) <span class="ruby-keyword">and</span> <span class="ruby-identifier">index</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">last</span>
+
+    <span class="ruby-comment"># TODO: make this sorta_verbose so other users can benefit from it</span>
+    <span class="ruby-identifier">say</span> <span class="ruby-node">&quot;Installing gem #{spec.full_name}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-constant">Gem</span>.<span class="ruby-identifier">configuration</span>.<span class="ruby-identifier">really_verbose</span>
+
+    <span class="ruby-identifier">_</span>, <span class="ruby-identifier">source_uri</span> = <span class="ruby-ivar">@specs_and_sources</span>.<span class="ruby-identifier">assoc</span> <span class="ruby-identifier">spec</span>
+    <span class="ruby-keyword">begin</span>
+      <span class="ruby-identifier">local_gem_path</span> = <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">RemoteFetcher</span>.<span class="ruby-identifier">fetcher</span>.<span class="ruby-identifier">download</span> <span class="ruby-identifier">spec</span>, <span class="ruby-identifier">source_uri</span>,
+                                                           <span class="ruby-ivar">@cache_dir</span>
+    <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">RemoteFetcher</span><span class="ruby-operator">::</span><span class="ruby-constant">FetchError</span>
+      <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@force</span>
+      <span class="ruby-identifier">raise</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-identifier">inst</span> = <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Installer</span>.<span class="ruby-identifier">new</span> <span class="ruby-identifier">local_gem_path</span>,
+                              <span class="ruby-value">:bin_dir</span>             =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@bin_dir</span>,
+                              <span class="ruby-value">:development</span>         =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@development</span>,
+                              <span class="ruby-value">:env_shebang</span>         =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@env_shebang</span>,
+                              <span class="ruby-value">:force</span>               =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@force</span>,
+                              <span class="ruby-value">:format_executable</span>   =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@format_executable</span>,
+                              <span class="ruby-value">:ignore_dependencies</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@ignore_dependencies</span>,
+                              <span class="ruby-value">:install_dir</span>         =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@install_dir</span>,
+                              <span class="ruby-value">:security_policy</span>     =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@security_policy</span>,
+                              <span class="ruby-value">:user_install</span>        =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@user_install</span>,
+                              <span class="ruby-value">:wrappers</span>            =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@wrappers</span>
+
+    <span class="ruby-identifier">spec</span> = <span class="ruby-identifier">inst</span>.<span class="ruby-identifier">install</span>
+
+    <span class="ruby-ivar">@installed_gems</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">spec</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-ivar">@installed_gems</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    

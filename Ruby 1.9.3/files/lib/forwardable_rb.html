@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>forwardable.rb</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            forwardable.rb
+        </h1>
+        <ul class="files">
+            <li>lib/forwardable.rb</li>
+            <li>Last modified: 2011-05-22 04:14:57 +0200</li>
+        </ul>
+    </div>
+
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<pre>forwardable.rb -
+    $Release Version: 1.1$
+    $Revision: 31685 $
+    by Keiju ISHITSUKA(keiju@ishitsuka.com)
+    original definition by delegator.rb
+    Revised by Daniel J. Berger with suggestions from Florian Gross.
+
+    Documentation by James Edward Gray II and Gavin Sinclair</pre>
+
+<h2 id="label-Introduction">Introduction</h2>
+
+<p>This library allows you delegate method calls to an object, on a method by
+method basis.</p>
+
+<h2 id="label-Notes">Notes</h2>
+
+<p>Be advised, <a href="../../classes/RDoc.html">RDoc</a> will not detect
+delegated methods.</p>
+
+<p><strong>forwardable.rb provides single-method delegation via the
+def_delegator() and def_delegators() methods.  For full-class delegation
+via DelegateClass(), see delegate.rb.</strong></p>
+
+<h2 id="label-Examples">Examples</h2>
+
+<h3 id="label-Forwardable"><a href="../../classes/Forwardable.html">Forwardable</a></h3>
+
+<p><a href="../../classes/Forwardable.html">Forwardable</a> makes building a
+new class based on existing work, with a proper interface, almost trivial. 
+We want to rely on what has come before obviously, but with delegation we
+can take just the methods we need and even rename them as appropriate.  In
+many cases this is preferable to inheritance, which gives us the entire old
+interface, even if much of it isn’t needed.</p>
+
+<pre class="ruby"><span class="ruby-keyword">class</span> <span class="ruby-constant">Queue</span>
+  <span class="ruby-identifier">extend</span> <span class="ruby-constant">Forwardable</span>
+
+  <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>
+    <span class="ruby-ivar">@q</span> = [ ]    <span class="ruby-comment"># prepare delegate object</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-comment"># setup preferred interface, enq() and deq()...</span>
+  <span class="ruby-identifier">def_delegator</span> :<span class="ruby-ivar">@q</span>, :<span class="ruby-identifier">push</span>, :<span class="ruby-identifier">enq</span>
+  <span class="ruby-identifier">def_delegator</span> :<span class="ruby-ivar">@q</span>, :<span class="ruby-identifier">shift</span>, :<span class="ruby-identifier">deq</span>
+
+  <span class="ruby-comment"># support some general Array methods that fit Queues well</span>
+  <span class="ruby-identifier">def_delegators</span> :<span class="ruby-ivar">@q</span>, :<span class="ruby-identifier">clear</span>, :<span class="ruby-identifier">first</span>, :<span class="ruby-identifier">push</span>, :<span class="ruby-identifier">shift</span>, :<span class="ruby-identifier">size</span>
+<span class="ruby-keyword">end</span>
+
+<span class="ruby-identifier">q</span> = <span class="ruby-constant">Queue</span>.<span class="ruby-identifier">new</span>
+<span class="ruby-identifier">q</span>.<span class="ruby-identifier">enq</span> <span class="ruby-value">1</span>, <span class="ruby-value">2</span>, <span class="ruby-value">3</span>, <span class="ruby-value">4</span>, <span class="ruby-value">5</span>
+<span class="ruby-identifier">q</span>.<span class="ruby-identifier">push</span> <span class="ruby-value">6</span>
+
+<span class="ruby-identifier">q</span>.<span class="ruby-identifier">shift</span>    <span class="ruby-comment"># =&gt; 1</span>
+<span class="ruby-keyword">while</span> <span class="ruby-identifier">q</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+  <span class="ruby-identifier">puts</span> <span class="ruby-identifier">q</span>.<span class="ruby-identifier">deq</span>
+<span class="ruby-keyword">end</span>
+
+<span class="ruby-identifier">q</span>.<span class="ruby-identifier">enq</span> <span class="ruby-string">&quot;Ruby&quot;</span>, <span class="ruby-string">&quot;Perl&quot;</span>, <span class="ruby-string">&quot;Python&quot;</span>
+<span class="ruby-identifier">puts</span> <span class="ruby-identifier">q</span>.<span class="ruby-identifier">first</span>
+<span class="ruby-identifier">q</span>.<span class="ruby-identifier">clear</span>
+<span class="ruby-identifier">puts</span> <span class="ruby-identifier">q</span>.<span class="ruby-identifier">first</span>
+</pre>
+
+<p><em>Prints:</em></p>
+
+<pre>2
+3
+4
+5
+6
+Ruby
+nil</pre>
+
+<p><a href="../../classes/SingleForwardable.html">SingleForwardable</a> can be
+used to setup delegation at the object level as well.</p>
+
+<pre>printer = String.new
+printer.extend SingleForwardable        # prepare object for delegation
+printer.def_delegator &quot;STDOUT&quot;, &quot;puts&quot;  # add delegation for STDOUT.puts()
+printer.puts &quot;Howdy!&quot;</pre>
+
+<p>Also, <a href="../../classes/SingleForwardable.html">SingleForwardable</a>
+can be use to <a href="../../classes/Class.html">Class</a> or <a
+href="../../classes/Module.html">Module</a>.</p>
+
+<pre class="ruby"><span class="ruby-keyword">module</span> <span class="ruby-constant">Facade</span>
+  <span class="ruby-identifier">extend</span> <span class="ruby-constant">SingleForwardable</span>
+  <span class="ruby-identifier">def_delegator</span> :<span class="ruby-constant">Implementation</span>, :<span class="ruby-identifier">service</span>
+
+  <span class="ruby-keyword">class</span> <span class="ruby-constant">Implementation</span>
+     <span class="ruby-keyword">def</span> <span class="ruby-identifier">service</span><span class="ruby-operator">...</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span>
+</pre>
+
+<p>If you want to use both <a
+href="../../classes/Forwardable.html">Forwardable</a> and <a
+href="../../classes/SingleForwardable.html">SingleForwardable</a>, you can
+use methods def_instance_delegator and def_single_delegator, etc.</p>
+
+<p>If the object isn’t a <a href="../../classes/Module.html">Module</a> and <a
+href="../../classes/Class.html">Class</a>, You can too extend <a
+href="../../classes/Forwardable.html">Forwardable</a> module.</p>
+
+<pre>printer = String.new
+printer.extend Forwardable              # prepare object for delegation
+printer.def_delegator &quot;STDOUT&quot;, &quot;puts&quot;  # add delegation for STDOUT.puts()
+printer.puts &quot;Howdy!&quot;</pre>
+
+<p><em>Prints:</em></p>
+
+<pre>Howdy!</pre>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+    <!-- Namespace -->
+    <div class="sectiontitle">Namespace</div>
+    <ul>
+      
+        <li>
+          <span class="type">MODULE</span>
+          <a href="../../classes/Forwardable.html">Forwardable</a>
+        </li>
+      
+        <li>
+          <span class="type">MODULE</span>
+          <a href="../../classes/SingleForwardable.html">SingleForwardable</a>
+        </li>
+      
+    </ul>
+  
+
+
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+              </div>
+    </div>
+  </body>
+</html>

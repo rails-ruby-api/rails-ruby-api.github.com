@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>DL::CarriedFunction</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            DL::CarriedFunction 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="Function.html">DL::Function</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/ext/dl/lib/dl/func_rb.html">ext/dl/lib/dl/func.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>B</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-bind_at_call">bind_at_call</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>C</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-create_carrier">create_carrier</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <a name="method-c-new"></a><b>new</b>(cfunc, argtypes, n)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/dl/lib/dl/func.rb, line 157</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">initialize</span>(<span class="ruby-identifier">cfunc</span>, <span class="ruby-identifier">argtypes</span>, <span class="ruby-identifier">n</span>)
+  <span class="ruby-keyword">super</span>(<span class="ruby-identifier">cfunc</span>, <span class="ruby-identifier">argtypes</span>)
+  <span class="ruby-ivar">@carrier</span> = []
+  <span class="ruby-ivar">@index</span> = <span class="ruby-identifier">n</span>
+  <span class="ruby-ivar">@mutex</span> = <span class="ruby-constant">Mutex</span>.<span class="ruby-identifier">new</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-bind_at_call">
+            
+              <a name="method-i-bind_at_call"></a><b>bind_at_call</b>(&amp;block)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-bind_at_call_source')" id="l_method-i-bind_at_call_source">show</a>
+                
+              </p>
+              <div id="method-i-bind_at_call_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/dl/lib/dl/func.rb, line 172</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">bind_at_call</span>(&amp;<span class="ruby-identifier">block</span>)
+  <span class="ruby-identifier">userdata</span> = <span class="ruby-ivar">@carrier</span>[<span class="ruby-number">-1</span>]
+  <span class="ruby-identifier">userdata</span>[<span class="ruby-number">0</span>].<span class="ruby-identifier">push</span>(<span class="ruby-identifier">block</span>)
+  <span class="ruby-identifier">bind</span>{<span class="ruby-operator">|</span>*<span class="ruby-identifier">args</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">ptr</span> = <span class="ruby-identifier">args</span>[<span class="ruby-ivar">@index</span>]
+    <span class="ruby-keyword">if</span>( <span class="ruby-operator">!</span><span class="ruby-identifier">ptr</span> )
+      <span class="ruby-identifier">raise</span>(<span class="ruby-constant">RuntimeError</span>, <span class="ruby-node">&quot;The index of userdata should be lower than #{args.size}.&quot;</span>)
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">userdata</span> = <span class="ruby-identifier">dlunwrap</span>(<span class="ruby-constant">Integer</span>(<span class="ruby-identifier">ptr</span>))
+    <span class="ruby-identifier">args</span>[<span class="ruby-ivar">@index</span>] = <span class="ruby-identifier">userdata</span>[<span class="ruby-number">1</span>]
+    <span class="ruby-identifier">userdata</span>[<span class="ruby-number">0</span>][<span class="ruby-number">0</span>].<span class="ruby-identifier">call</span>(*<span class="ruby-identifier">args</span>)
+  }
+  <span class="ruby-ivar">@mutex</span>.<span class="ruby-identifier">unlock</span>()
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-create_carrier">
+            
+              <a name="method-i-create_carrier"></a><b>create_carrier</b>(data)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-create_carrier_source')" id="l_method-i-create_carrier_source">show</a>
+                
+              </p>
+              <div id="method-i-create_carrier_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/dl/lib/dl/func.rb, line 164</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">create_carrier</span>(<span class="ruby-identifier">data</span>)
+  <span class="ruby-identifier">ary</span> = []
+  <span class="ruby-identifier">userdata</span> = [<span class="ruby-identifier">ary</span>, <span class="ruby-identifier">data</span>]
+  <span class="ruby-ivar">@mutex</span>.<span class="ruby-identifier">lock</span>()
+  <span class="ruby-ivar">@carrier</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">userdata</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">dlwrap</span>(<span class="ruby-identifier">userdata</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    

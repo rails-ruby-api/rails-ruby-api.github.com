@@ -1,0 +1,642 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Net::HTTPResponse</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            Net::HTTPResponse 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/lib/net/http_rb.html">lib/net/http.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>HTTP response class.</p>
+
+<p>This class wraps together the response header and the response body (the
+entity requested).</p>
+
+<p>It mixes in the <a href="HTTPHeader.html">HTTPHeader</a> module, which
+provides access to response header values both via hash-like methods and
+via individual readers.</p>
+
+<p>Note that each possible HTTP response code defines its own <a
+href="HTTPResponse.html">HTTPResponse</a> subclass.  These are listed
+below.</p>
+
+<p>All classes are defined under the <a href="../Net.html">Net</a> module.
+Indentation indicates inheritance.</p>
+
+<pre>xxx        HTTPResponse
+
+  1xx        HTTPInformation
+    100        HTTPContinue
+    101        HTTPSwitchProtocol
+
+  2xx        HTTPSuccess
+    200        HTTPOK
+    201        HTTPCreated
+    202        HTTPAccepted
+    203        HTTPNonAuthoritativeInformation
+    204        HTTPNoContent
+    205        HTTPResetContent
+    206        HTTPPartialContent
+
+  3xx        HTTPRedirection
+    300        HTTPMultipleChoice
+    301        HTTPMovedPermanently
+    302        HTTPFound
+    303        HTTPSeeOther
+    304        HTTPNotModified
+    305        HTTPUseProxy
+    307        HTTPTemporaryRedirect
+
+  4xx        HTTPClientError
+    400        HTTPBadRequest
+    401        HTTPUnauthorized
+    402        HTTPPaymentRequired
+    403        HTTPForbidden
+    404        HTTPNotFound
+    405        HTTPMethodNotAllowed
+    406        HTTPNotAcceptable
+    407        HTTPProxyAuthenticationRequired
+    408        HTTPRequestTimeOut
+    409        HTTPConflict
+    410        HTTPGone
+    411        HTTPLengthRequired
+    412        HTTPPreconditionFailed
+    413        HTTPRequestEntityTooLarge
+    414        HTTPRequestURITooLong
+    415        HTTPUnsupportedMediaType
+    416        HTTPRequestedRangeNotSatisfiable
+    417        HTTPExpectationFailed
+
+  5xx        HTTPServerError
+    500        HTTPInternalServerError
+    501        HTTPNotImplemented
+    502        HTTPBadGateway
+    503        HTTPServiceUnavailable
+    504        HTTPGatewayTimeOut
+    505        HTTPVersionNotSupported
+
+  xxx        HTTPUnknownResponse</pre>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>B</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-body">body</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-body-3D">body=</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-body_permitted-3F">body_permitted?</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>E</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-entity">entity</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>I</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-inspect">inspect</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>R</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-read_body">read_body</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>V</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-value">value</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+    <!-- Includes -->
+    <div class="sectiontitle">Included Modules</div>
+    <ul>
+      
+        <li>
+          
+            <a href="HTTPHeader.html">
+              Net::HTTPHeader
+            </a>
+          
+        </li>
+      
+    </ul>
+  
+
+
+
+  
+
+    
+
+    
+
+    
+      <!-- Section constants -->
+      <div class="sectiontitle">Constants</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class="attr-name">CODE_CLASS_TO_OBJ</td>
+            <td>=</td>
+            <td class="attr-value">{
+'1' =&gt; HTTPInformation,
+'2' =&gt; HTTPSuccess,
+'3' =&gt; HTTPRedirection,
+'4' =&gt; HTTPClientError,
+'5' =&gt; HTTPServerError
+}</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">CODE_TO_OBJ</td>
+            <td>=</td>
+            <td class="attr-value">{
+'100' =&gt; HTTPContinue,
+'101' =&gt; HTTPSwitchProtocol,
+
+'200' =&gt; HTTPOK,
+'201' =&gt; HTTPCreated,
+'202' =&gt; HTTPAccepted,
+'203' =&gt; HTTPNonAuthoritativeInformation,
+'204' =&gt; HTTPNoContent,
+'205' =&gt; HTTPResetContent,
+'206' =&gt; HTTPPartialContent,
+
+'300' =&gt; HTTPMultipleChoice,
+'301' =&gt; HTTPMovedPermanently,
+'302' =&gt; HTTPFound,
+'303' =&gt; HTTPSeeOther,
+'304' =&gt; HTTPNotModified,
+'305' =&gt; HTTPUseProxy,
+'307' =&gt; HTTPTemporaryRedirect,
+
+'400' =&gt; HTTPBadRequest,
+'401' =&gt; HTTPUnauthorized,
+'402' =&gt; HTTPPaymentRequired,
+'403' =&gt; HTTPForbidden,
+'404' =&gt; HTTPNotFound,
+'405' =&gt; HTTPMethodNotAllowed,
+'406' =&gt; HTTPNotAcceptable,
+'407' =&gt; HTTPProxyAuthenticationRequired,
+'408' =&gt; HTTPRequestTimeOut,
+'409' =&gt; HTTPConflict,
+'410' =&gt; HTTPGone,
+'411' =&gt; HTTPLengthRequired,
+'412' =&gt; HTTPPreconditionFailed,
+'413' =&gt; HTTPRequestEntityTooLarge,
+'414' =&gt; HTTPRequestURITooLong,
+'415' =&gt; HTTPUnsupportedMediaType,
+'416' =&gt; HTTPRequestedRangeNotSatisfiable,
+'417' =&gt; HTTPExpectationFailed,
+
+'500' =&gt; HTTPInternalServerError,
+'501' =&gt; HTTPNotImplemented,
+'502' =&gt; HTTPBadGateway,
+'503' =&gt; HTTPServiceUnavailable,
+'504' =&gt; HTTPGatewayTimeOut,
+'505' =&gt; HTTPVersionNotSupported
+}</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+      </table>
+    
+
+
+    
+      <!-- Section attributes -->
+      <div class="sectiontitle">Attributes</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [R]
+            </td>
+            <td class='attr-name'>code</td>
+            <td class='attr-desc'><p>The HTTP result code string. For example, ‘302’.  You can also determine
+the response type by examining which response subclass the response object
+is an instance of.</p></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [R]
+            </td>
+            <td class='attr-name'>http_version</td>
+            <td class='attr-desc'><p>The HTTP version supported by the server.</p></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [R]
+            </td>
+            <td class='attr-name'>message</td>
+            <td class='attr-desc'><p>The HTTP result message sent by the server. For example, ‘Not Found’.</p></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [R]
+            </td>
+            <td class='attr-name'>msg</td>
+            <td class='attr-desc'><p>The HTTP result message sent by the server. For example, ‘Not Found’.</p></td>
+          </tr>
+        
+      </table>
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-body_permitted-3F">
+            
+              <a name="method-c-body_permitted-3F"></a><b>body_permitted?</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>true if the response has a body.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-body_permitted-3F_source')" id="l_method-c-body_permitted-3F_source">show</a>
+                
+              </p>
+              <div id="method-c-body_permitted-3F_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/net/http.rb, line 2326</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">HTTPResponse</span>.<span class="ruby-identifier">body_permitted?</span>
+  <span class="ruby-keyword">self</span><span class="ruby-operator">::</span><span class="ruby-constant">HAS_BODY</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-body">
+            
+              <a name="method-i-body"></a><b>body</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the full entity body.</p>
+
+<p>Calling this method a second or subsequent time will return the string
+already read.</p>
+
+<pre class="ruby"><span class="ruby-identifier">http</span>.<span class="ruby-identifier">request_get</span>(<span class="ruby-string">'/index.html'</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">res</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">puts</span> <span class="ruby-identifier">res</span>.<span class="ruby-identifier">body</span>
+}
+
+<span class="ruby-identifier">http</span>.<span class="ruby-identifier">request_get</span>(<span class="ruby-string">'/index.html'</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">res</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">p</span> <span class="ruby-identifier">res</span>.<span class="ruby-identifier">body</span>.<span class="ruby-identifier">object_id</span>   <span class="ruby-comment"># 538149362</span>
+  <span class="ruby-identifier">p</span> <span class="ruby-identifier">res</span>.<span class="ruby-identifier">body</span>.<span class="ruby-identifier">object_id</span>   <span class="ruby-comment"># 538149362</span>
+}
+</pre>
+            </div>
+          
+          
+          
+            <div class="aka">
+              Also aliased as: <a href="HTTPResponse.html#method-i-entity">entity</a>
+            </div>
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-body_source')" id="l_method-i-body_source">show</a>
+                
+              </p>
+              <div id="method-i-body_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/net/http.rb, line 2734</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">body</span>
+  <span class="ruby-identifier">read_body</span>()
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-body-3D">
+            
+              <a name="method-i-body-3D"></a><b>body=</b>(value)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Because it may be necessary to modify the body, Eg, decompression this
+method facilitates that.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-body-3D_source')" id="l_method-i-body-3D_source">show</a>
+                
+              </p>
+              <div id="method-i-body-3D_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/net/http.rb, line 2740</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">body=</span>(<span class="ruby-identifier">value</span>)
+  <span class="ruby-ivar">@body</span> = <span class="ruby-identifier">value</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-entity">
+            
+              <a name="method-i-entity"></a><b>entity</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-inspect">
+            
+              <a name="method-i-inspect"></a><b>inspect</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-inspect_source')" id="l_method-i-inspect_source">show</a>
+                
+              </p>
+              <div id="method-i-inspect_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/net/http.rb, line 2619</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">inspect</span>
+  <span class="ruby-node">&quot;#&lt;#{self.class} #{@code} #{@message} readbody=#{@read}&gt;&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-read_body">
+            
+              <a name="method-i-read_body"></a><b>read_body</b>(dest = nil, &amp;block)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Gets the entity body returned by the remote HTTP server.</p>
+
+<p>If a block is given, the body is passed to the block, and the body is
+provided in fragments, as it is read in from the socket.</p>
+
+<p>Calling this method a second or subsequent time for the same <a
+href="HTTPResponse.html">HTTPResponse</a> object will return the value
+already read.</p>
+
+<pre class="ruby"><span class="ruby-identifier">http</span>.<span class="ruby-identifier">request_get</span>(<span class="ruby-string">'/index.html'</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">res</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">puts</span> <span class="ruby-identifier">res</span>.<span class="ruby-identifier">read_body</span>
+}
+
+<span class="ruby-identifier">http</span>.<span class="ruby-identifier">request_get</span>(<span class="ruby-string">'/index.html'</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">res</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">p</span> <span class="ruby-identifier">res</span>.<span class="ruby-identifier">read_body</span>.<span class="ruby-identifier">object_id</span>   <span class="ruby-comment"># 538149362</span>
+  <span class="ruby-identifier">p</span> <span class="ruby-identifier">res</span>.<span class="ruby-identifier">read_body</span>.<span class="ruby-identifier">object_id</span>   <span class="ruby-comment"># 538149362</span>
+}
+
+<span class="ruby-comment"># using iterator</span>
+<span class="ruby-identifier">http</span>.<span class="ruby-identifier">request_get</span>(<span class="ruby-string">'/index.html'</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">res</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">res</span>.<span class="ruby-identifier">read_body</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">segment</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">print</span> <span class="ruby-identifier">segment</span>
+  <span class="ruby-keyword">end</span>
+}
+</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-read_body_source')" id="l_method-i-read_body_source">show</a>
+                
+              </p>
+              <div id="method-i-read_body_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/net/http.rb, line 2702</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">read_body</span>(<span class="ruby-identifier">dest</span> = <span class="ruby-keyword">nil</span>, &amp;<span class="ruby-identifier">block</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@read</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">IOError</span>, <span class="ruby-node">&quot;#{self.class}\#read_body called twice&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">dest</span> <span class="ruby-keyword">or</span> <span class="ruby-identifier">block</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-ivar">@body</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">to</span> = <span class="ruby-identifier">procdest</span>(<span class="ruby-identifier">dest</span>, <span class="ruby-identifier">block</span>)
+  <span class="ruby-identifier">stream_check</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@body_exist</span>
+    <span class="ruby-identifier">read_body_0</span> <span class="ruby-identifier">to</span>
+    <span class="ruby-ivar">@body</span> = <span class="ruby-identifier">to</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-ivar">@body</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-ivar">@read</span> = <span class="ruby-keyword">true</span>
+
+  <span class="ruby-ivar">@body</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-value">
+            
+              <a name="method-i-value"></a><b>value</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Raises an HTTP error if the response is not 2xx (success).</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-value_source')" id="l_method-i-value_source">show</a>
+                
+              </p>
+              <div id="method-i-value_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/net/http.rb, line 2640</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">value</span>
+  <span class="ruby-identifier">error!</span> <span class="ruby-keyword">unless</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">HTTPSuccess</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    

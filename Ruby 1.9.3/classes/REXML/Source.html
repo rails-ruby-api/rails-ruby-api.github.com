@@ -1,0 +1,653 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>REXML::Source</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            REXML::Source 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/lib/rexml/source_rb.html">lib/rexml/source.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>A <a href="Source.html">Source</a> can be searched for patterns, and wraps
+buffers and other objects and provides consumption of text</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>C</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-consume">consume</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-current_line">current_line</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>E</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-empty-3F">empty?</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-encoding-3D">encoding=</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>M</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-match">match</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-match_to">match_to</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-match_to_consume">match_to_consume</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>P</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-position">position</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>R</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-read">read</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>S</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-scan">scan</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+    <!-- Includes -->
+    <div class="sectiontitle">Included Modules</div>
+    <ul>
+      
+        <li>
+          
+            <a href="Encoding.html">
+              REXML::Encoding
+            </a>
+          
+        </li>
+      
+    </ul>
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+      <!-- Section attributes -->
+      <div class="sectiontitle">Attributes</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [R]
+            </td>
+            <td class='attr-name'>buffer</td>
+            <td class='attr-desc'><p>The current buffer (what we’re going to read next)</p></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [R]
+            </td>
+            <td class='attr-name'>encoding</td>
+            <td class='attr-desc'></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [R]
+            </td>
+            <td class='attr-name'>line</td>
+            <td class='attr-desc'><p>The line number of the last consumed text</p></td>
+          </tr>
+        
+      </table>
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <a name="method-c-new"></a><b>new</b>(arg, encoding=nil)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Constructor @param arg must be a String, and should be a valid <a
+href="../XML.html">XML</a> document @param encoding if non-null, sets the
+encoding of the source to this value, overriding all encoding detection</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rexml/source.rb, line 41</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">initialize</span>(<span class="ruby-identifier">arg</span>, <span class="ruby-identifier">encoding</span>=<span class="ruby-keyword">nil</span>)
+  <span class="ruby-ivar">@orig</span> = <span class="ruby-ivar">@buffer</span> = <span class="ruby-identifier">arg</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">encoding</span>
+    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">encoding</span> = <span class="ruby-identifier">encoding</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">encoding</span> = <span class="ruby-identifier">check_encoding</span>( <span class="ruby-ivar">@buffer</span> )
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-ivar">@line</span> = <span class="ruby-number">0</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-consume">
+            
+              <a name="method-i-consume"></a><b>consume</b>( pattern )
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-consume_source')" id="l_method-i-consume_source">show</a>
+                
+              </p>
+              <div id="method-i-consume_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rexml/source.rb, line 92</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">consume</span>( <span class="ruby-identifier">pattern</span> )
+  <span class="ruby-ivar">@buffer</span> = <span class="ruby-node">$'</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">pattern</span>.<span class="ruby-identifier">match</span>( <span class="ruby-ivar">@buffer</span> )
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-current_line">
+            
+              <a name="method-i-current_line"></a><b>current_line</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>@return the current line in the source</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-current_line_source')" id="l_method-i-current_line_source">show</a>
+                
+              </p>
+              <div id="method-i-current_line_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rexml/source.rb, line 122</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">current_line</span>
+  <span class="ruby-identifier">lines</span> = <span class="ruby-ivar">@orig</span>.<span class="ruby-identifier">split</span>
+  <span class="ruby-identifier">res</span> = <span class="ruby-identifier">lines</span>.<span class="ruby-identifier">grep</span> <span class="ruby-ivar">@buffer</span>[<span class="ruby-number">0</span><span class="ruby-operator">..</span><span class="ruby-number">30</span>]
+  <span class="ruby-identifier">res</span> = <span class="ruby-identifier">res</span>[<span class="ruby-number">-1</span>] <span class="ruby-keyword">if</span> <span class="ruby-identifier">res</span>.<span class="ruby-identifier">kind_of?</span> <span class="ruby-constant">Array</span>
+  <span class="ruby-identifier">lines</span>.<span class="ruby-identifier">index</span>( <span class="ruby-identifier">res</span> ) <span class="ruby-keyword">if</span> <span class="ruby-identifier">res</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-empty-3F">
+            
+              <a name="method-i-empty-3F"></a><b>empty?</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>@return true if the <a href="Source.html">Source</a> is exhausted</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-empty-3F_source')" id="l_method-i-empty-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-empty-3F_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rexml/source.rb, line 113</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">empty?</span>
+  <span class="ruby-ivar">@buffer</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-encoding-3D">
+            
+              <a name="method-i-encoding-3D"></a><b>encoding=</b>(enc)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Inherited from <a href="Encoding.html">Encoding</a> Overridden to support
+optimized en/decoding</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-encoding-3D_source')" id="l_method-i-encoding-3D_source">show</a>
+                
+              </p>
+              <div id="method-i-encoding-3D_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rexml/source.rb, line 54</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">encoding=</span>(<span class="ruby-identifier">enc</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">unless</span> <span class="ruby-keyword">super</span>
+  <span class="ruby-ivar">@line_break</span> = <span class="ruby-identifier">encode</span>( <span class="ruby-string">'&gt;'</span> )
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@encoding</span> <span class="ruby-operator">!=</span> <span class="ruby-string">'UTF-8'</span>
+    <span class="ruby-ivar">@buffer</span> = <span class="ruby-identifier">decode</span>(<span class="ruby-ivar">@buffer</span>)
+    <span class="ruby-ivar">@to_utf</span> = <span class="ruby-keyword">true</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-ivar">@to_utf</span> = <span class="ruby-keyword">false</span>
+    <span class="ruby-ivar">@buffer</span>.<span class="ruby-identifier">force_encoding</span> <span class="ruby-operator">::</span><span class="ruby-constant">Encoding</span><span class="ruby-operator">::</span><span class="ruby-constant">UTF_8</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-match">
+            
+              <a name="method-i-match"></a><b>match</b>(pattern, cons=false)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-match_source')" id="l_method-i-match_source">show</a>
+                
+              </p>
+              <div id="method-i-match_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rexml/source.rb, line 106</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">match</span>(<span class="ruby-identifier">pattern</span>, <span class="ruby-identifier">cons</span>=<span class="ruby-keyword">false</span>)
+  <span class="ruby-identifier">md</span> = <span class="ruby-identifier">pattern</span>.<span class="ruby-identifier">match</span>(<span class="ruby-ivar">@buffer</span>)
+  <span class="ruby-ivar">@buffer</span> = <span class="ruby-node">$'</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">cons</span> <span class="ruby-keyword">and</span> <span class="ruby-identifier">md</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">md</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-match_to">
+            
+              <a name="method-i-match_to"></a><b>match_to</b>( char, pattern )
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-match_to_source')" id="l_method-i-match_to_source">show</a>
+                
+              </p>
+              <div id="method-i-match_to_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rexml/source.rb, line 96</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">match_to</span>( <span class="ruby-identifier">char</span>, <span class="ruby-identifier">pattern</span> )
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">pattern</span>.<span class="ruby-identifier">match</span>(<span class="ruby-ivar">@buffer</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-match_to_consume">
+            
+              <a name="method-i-match_to_consume"></a><b>match_to_consume</b>( char, pattern )
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-match_to_consume_source')" id="l_method-i-match_to_consume_source">show</a>
+                
+              </p>
+              <div id="method-i-match_to_consume_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rexml/source.rb, line 100</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">match_to_consume</span>( <span class="ruby-identifier">char</span>, <span class="ruby-identifier">pattern</span> )
+  <span class="ruby-identifier">md</span> = <span class="ruby-identifier">pattern</span>.<span class="ruby-identifier">match</span>(<span class="ruby-ivar">@buffer</span>)
+  <span class="ruby-ivar">@buffer</span> = <span class="ruby-node">$'</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">md</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-position">
+            
+              <a name="method-i-position"></a><b>position</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-position_source')" id="l_method-i-position_source">show</a>
+                
+              </p>
+              <div id="method-i-position_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rexml/source.rb, line 117</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">position</span>
+  <span class="ruby-ivar">@orig</span>.<span class="ruby-identifier">index</span>( <span class="ruby-ivar">@buffer</span> )
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-read">
+            
+              <a name="method-i-read"></a><b>read</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-read_source')" id="l_method-i-read_source">show</a>
+                
+              </p>
+              <div id="method-i-read_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rexml/source.rb, line 89</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">read</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-scan">
+            
+              <a name="method-i-scan"></a><b>scan</b>(pattern, cons=false)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Scans the source for a given pattern.  Note, that this is not your usual
+scan() method.  For one thing, the pattern argument has some requirements;
+for another, the source can be consumed.  You can easily confuse this
+method.  Originally, the patterns were easier to construct and this method
+more robust, because this method generated search regexes on the fly;
+however, this was computationally expensive and slowed down the entire <a
+href="../REXML.html">REXML</a> package considerably, since this is by far
+the most commonly called method. @param pattern must be a <a
+href="../Regexp.html">Regexp</a>, and must be in the form of /^s*(#{your
+pattern, with no groups})(.*)/.  The first group will be returned; the
+second group is used if the consume flag is set. @param consume if true,
+the pattern returned will be consumed, leaving everything after it in the
+<a href="Source.html">Source</a>. @return the pattern, if found, or nil if
+the <a href="Source.html">Source</a> is empty or the pattern is not found.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-scan_source')" id="l_method-i-scan_source">show</a>
+                
+              </p>
+              <div id="method-i-scan_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rexml/source.rb, line 82</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">scan</span>(<span class="ruby-identifier">pattern</span>, <span class="ruby-identifier">cons</span>=<span class="ruby-keyword">false</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@buffer</span>.<span class="ruby-identifier">nil?</span>
+  <span class="ruby-identifier">rv</span> = <span class="ruby-ivar">@buffer</span>.<span class="ruby-identifier">scan</span>(<span class="ruby-identifier">pattern</span>)
+  <span class="ruby-ivar">@buffer</span> = <span class="ruby-node">$'</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">cons</span> <span class="ruby-keyword">and</span> <span class="ruby-identifier">rv</span>.<span class="ruby-identifier">size</span><span class="ruby-operator">&gt;</span><span class="ruby-number">0</span>
+  <span class="ruby-identifier">rv</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    

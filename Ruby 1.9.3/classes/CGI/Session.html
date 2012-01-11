@@ -1,0 +1,685 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>CGI::Session</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            CGI::Session 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/lib/cgi/session/pstore_rb.html">lib/cgi/session/pstore.rb</a></li>
+            
+            <li><a href="../../files/lib/cgi/session_rb.html">lib/cgi/session.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<h2 id="label-Overview">Overview</h2>
+
+<p>This file provides the <a href="Session.html">CGI::Session</a> class, which
+provides session support for <a href="../CGI.html">CGI</a> scripts.  A
+session is a sequence of HTTP requests and responses linked together and
+associated with a single client. Information associated with the session is
+stored on the server between requests.  A session id is passed between
+client and server with every request and response, transparently to the
+user.  This adds state information to the otherwise stateless HTTP
+request/response protocol.</p>
+
+<h2 id="label-Lifecycle">Lifecycle</h2>
+
+<p>A <a href="Session.html">CGI::Session</a> instance is created from a <a
+href="../CGI.html">CGI</a> object.  By default, this <a
+href="Session.html">CGI::Session</a> instance will start a new session if
+none currently exists, or continue the current session for this client if
+one does exist.  The <code>new_session</code> option can be used to either
+always or never create a new session.  See new() for more details.</p>
+
+<p><a href="Session.html#method-i-delete">#delete</a> deletes a session from
+session storage.  It does not however remove the session id from the
+client.  If the client makes another request with the same id, the effect
+will be to start a new session with the old session’s id.</p>
+
+<h2 id="label-Setting+and+retrieving+session+data.">Setting and retrieving session data.</h2>
+
+<p>The <a href="Session.html">Session</a> class associates data with a session
+as key-value pairs. This data can be set and retrieved by indexing the <a
+href="Session.html">Session</a> instance using ‘[]’, much the same as
+hashes (although other hash methods are not supported).</p>
+
+<p>When session processing has been completed for a request, the session
+should be closed using the close() method.  This will store the session’s
+state to persistent storage.  If you want to store the session’s state to
+persistent storage without finishing session processing for this request,
+call the update() method.</p>
+
+<h2 id="label-Storing+session+state">Storing session state</h2>
+
+<p>The caller can specify what form of storage to use for the session’s data
+with the <code>database_manager</code> option to <a
+href="Session.html#method-c-new">::new</a>.  The following storage classes
+are provided as part of the standard library:</p>
+<dl class="rdoc-list note-list"><dt><a href="Session/FileStore.html">CGI::Session::FileStore</a>
+<dd>
+<p>stores data as plain text in a flat file.  Only works with String data. 
+This is the default storage type.</p>
+</dd><dt><a href="Session/MemoryStore.html">CGI::Session::MemoryStore</a>
+<dd>
+<p>stores data in an in-memory hash.  The data only persists for as long as
+the current ruby interpreter instance does.</p>
+</dd><dt><a href="Session/PStore.html">CGI::Session::PStore</a>
+<dd>
+<p>stores data in Marshalled format.  Provided by cgi/session/pstore.rb. 
+Supports data of any type, and provides file-locking and transaction
+support.</p>
+</dd></dl>
+
+<p>Custom storage types can also be created by defining a class with the
+following methods:</p>
+
+<pre>new(session, options)
+restore  # returns hash of session data.
+update
+close
+delete</pre>
+
+<p>Changing storage type mid-session does not work.  Note in particular that
+by default the <a href="Session/FileStore.html">FileStore</a> and <a
+href="Session/PStore.html">PStore</a> session data files have the same
+name.  If your application switches from one to the other without making
+sure that filenames will be different and clients still have old sessions
+lying around in cookies, then things will break nastily!</p>
+
+<h2 id="label-Maintaining+the+session+id.">Maintaining the session id.</h2>
+
+<p>Most session state is maintained on the server.  However, a session id must
+be passed backwards and forwards between client and server to maintain a
+reference to this session state.</p>
+
+<p>The simplest way to do this is via cookies.  The <a
+href="Session.html">CGI::Session</a> class provides transparent support for
+session id communication via cookies if the client has cookies enabled.</p>
+
+<p>If the client has cookies disabled, the session id must be included as a
+parameter of all requests sent by the client to the server.  The <a
+href="Session.html">CGI::Session</a> class in conjunction with the <a
+href="../CGI.html">CGI</a> class will transparently add the session id as a
+hidden input field to all forms generated using the CGI#form() HTML
+generation method.  No built-in support is provided for other mechanisms,
+such as URL re-writing.  The caller is responsible for extracting the
+session id from the <a
+href="Session.html#attribute-i-session_id">#session_id</a> attribute and
+manually encoding it in URLs and adding it as a hidden input to HTML forms
+created by other mechanisms.  Also, session expiry is not automatically
+handled.</p>
+
+<h2 id="label-Examples+of+use">Examples of use</h2>
+
+<h3 id="label-Setting+the+user%27s+name">Setting the user’s name</h3>
+
+<pre class="ruby"><span class="ruby-identifier">require</span> <span class="ruby-string">'cgi'</span>
+<span class="ruby-identifier">require</span> <span class="ruby-string">'cgi/session'</span>
+<span class="ruby-identifier">require</span> <span class="ruby-string">'cgi/session/pstore'</span>     <span class="ruby-comment"># provides CGI::Session::PStore</span>
+
+<span class="ruby-identifier">cgi</span> = <span class="ruby-constant">CGI</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&quot;html4&quot;</span>)
+
+<span class="ruby-identifier">session</span> = <span class="ruby-constant">CGI</span><span class="ruby-operator">::</span><span class="ruby-constant">Session</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">cgi</span>,
+    <span class="ruby-string">'database_manager'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">CGI</span><span class="ruby-operator">::</span><span class="ruby-constant">Session</span><span class="ruby-operator">::</span><span class="ruby-constant">PStore</span>,  <span class="ruby-comment"># use PStore</span>
+    <span class="ruby-string">'session_key'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'_rb_sess_id'</span>,              <span class="ruby-comment"># custom session key</span>
+    <span class="ruby-string">'session_expires'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span> <span class="ruby-operator">+</span> <span class="ruby-value">30</span> * <span class="ruby-value">60</span>,     <span class="ruby-comment"># 30 minute timeout</span>
+    <span class="ruby-string">'prefix'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'pstore_sid_'</span>)                   <span class="ruby-comment"># PStore option</span>
+<span class="ruby-keyword">if</span> <span class="ruby-identifier">cgi</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-string">'user_name'</span>) <span class="ruby-keyword">and</span> <span class="ruby-identifier">cgi</span>[<span class="ruby-string">'user_name'</span>] <span class="ruby-operator">!=</span> <span class="ruby-string">''</span>
+    <span class="ruby-comment"># coerce to String: cgi[] returns the</span>
+    <span class="ruby-comment"># string-like CGI::QueryExtension::Value</span>
+    <span class="ruby-identifier">session</span>[<span class="ruby-string">'user_name'</span>] = <span class="ruby-identifier">cgi</span>[<span class="ruby-string">'user_name'</span>].<span class="ruby-identifier">to_s</span>
+<span class="ruby-keyword">elsif</span> <span class="ruby-operator">!</span><span class="ruby-identifier">session</span>[<span class="ruby-string">'user_name'</span>]
+    <span class="ruby-identifier">session</span>[<span class="ruby-string">'user_name'</span>] = <span class="ruby-string">&quot;guest&quot;</span>
+<span class="ruby-keyword">end</span>
+<span class="ruby-identifier">session</span>.<span class="ruby-identifier">close</span>
+</pre>
+
+<h3 id="label-Creating+a+new+session+safely">Creating a new session safely</h3>
+
+<pre class="ruby"><span class="ruby-identifier">require</span> <span class="ruby-string">'cgi'</span>
+<span class="ruby-identifier">require</span> <span class="ruby-string">'cgi/session'</span>
+
+<span class="ruby-identifier">cgi</span> = <span class="ruby-constant">CGI</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&quot;html4&quot;</span>)
+
+<span class="ruby-comment"># We make sure to delete an old session if one exists,</span>
+<span class="ruby-comment"># not just to free resources, but to prevent the session</span>
+<span class="ruby-comment"># from being maliciously hijacked later on.</span>
+<span class="ruby-keyword">begin</span>
+    <span class="ruby-identifier">session</span> = <span class="ruby-constant">CGI</span><span class="ruby-operator">::</span><span class="ruby-constant">Session</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">cgi</span>, <span class="ruby-string">'new_session'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">false</span>)
+    <span class="ruby-identifier">session</span>.<span class="ruby-identifier">delete</span>
+<span class="ruby-keyword">rescue</span> <span class="ruby-constant">ArgumentError</span>  <span class="ruby-comment"># if no old session</span>
+<span class="ruby-keyword">end</span>
+<span class="ruby-identifier">session</span> = <span class="ruby-constant">CGI</span><span class="ruby-operator">::</span><span class="ruby-constant">Session</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">cgi</span>, <span class="ruby-string">'new_session'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>)
+<span class="ruby-identifier">session</span>.<span class="ruby-identifier">close</span>
+</pre>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+    <!-- Namespace -->
+    <div class="sectiontitle">Namespace</div>
+    <ul>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="Session/FileStore.html">CGI::Session::FileStore</a>
+        </li>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="Session/MemoryStore.html">CGI::Session::MemoryStore</a>
+        </li>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="Session/NullStore.html">CGI::Session::NullStore</a>
+        </li>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="Session/PStore.html">CGI::Session::PStore</a>
+        </li>
+      
+    </ul>
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>#</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-5B-5D">[]</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-5B-5D-3D">[]=</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>C</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-close">close</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>D</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-delete">delete</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>U</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-update">update</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+      <!-- Section attributes -->
+      <div class="sectiontitle">Attributes</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [R]
+            </td>
+            <td class='attr-name'>new_session</td>
+            <td class='attr-desc'><p>The id of this session.</p></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [R]
+            </td>
+            <td class='attr-name'>session_id</td>
+            <td class='attr-desc'><p>The id of this session.</p></td>
+          </tr>
+        
+      </table>
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <a name="method-c-new"></a><b>new</b>(request, option={})
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Create a new <a href="Session.html">CGI::Session</a> object for
+<code>request</code>.</p>
+
+<p><code>request</code> is an instance of the <code>CGI</code> class (see
+cgi.rb). <code>option</code> is a hash of options for initialising this <a
+href="Session.html">CGI::Session</a> instance.  The following options are
+recognised:</p>
+<dl class="rdoc-list note-list"><dt>session_key
+<dd>
+<p>the parameter name used for the session id. Defaults to ‘_session_id’.</p>
+</dd><dt><a href="Session.html#attribute-i-session_id">#session_id</a>
+<dd>
+<p>the session id to use.  If not provided, then it is retrieved from the
+<code>session_key</code> parameter of the request, or automatically
+generated for a new session.</p>
+</dd><dt><a href="Session.html#attribute-i-new_session">#new_session</a>
+<dd>
+<p>if true, force creation of a new session.  If not set, a new session is
+only created if none currently exists.  If false, a new session is never
+created, and if none currently exists and the <code>session_id</code>
+option is not set, an <a href="../ArgumentError.html">ArgumentError</a> is
+raised.</p>
+</dd><dt>database_manager
+<dd>
+<p>the name of the class providing storage facilities for session state
+persistence.  Built-in support is provided for <code>FileStore</code> (the
+default), <code>MemoryStore</code>, and <code>PStore</code> (from
+cgi/session/pstore.rb).  See the documentation for these classes for more
+details.</p>
+</dd></dl>
+
+<p>The following options are also recognised, but only apply if the session id
+is stored in a cookie.</p>
+<dl class="rdoc-list note-list"><dt>session_expires
+<dd>
+<p>the time the current session expires, as a <code>Time</code> object.  If
+not set, the session will terminate when the user’s browser is closed.</p>
+</dd><dt>session_domain
+<dd>
+<p>the hostname domain for which this session is valid. If not set, defaults
+to the hostname of the server.</p>
+</dd><dt>session_secure
+<dd>
+<p>if <code>true</code>, this session will only work over HTTPS.</p>
+</dd><dt>session_path
+<dd>
+<p>the path for which this session applies.  Defaults to the directory of the
+<a href="../CGI.html">CGI</a> script.</p>
+</dd></dl>
+
+<p><code>option</code> is also passed on to the session storage class
+initializer; see the documentation for each session storage class for the
+options they support.</p>
+
+<p>The retrieved or created session is automatically added to
+<code>request</code> as a cookie, and also to its
+<code>output_hidden</code> table, which is used to add hidden input
+elements to forms.</p>
+
+<p><strong>WARNING</strong> the <code>output_hidden</code> fields are
+surrounded by a &lt;fieldset&gt; tag in HTML 4 generation, which is
+<em>not</em> invisible on many browsers; you may wish to disable the use of
+fieldsets with code similar to the following (see <a
+href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-list/37805">blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-list/37805</a>)</p>
+
+<pre class="ruby"><span class="ruby-identifier">cgi</span> = <span class="ruby-constant">CGI</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&quot;html4&quot;</span>)
+<span class="ruby-keyword">class</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">cgi</span>
+    <span class="ruby-identifier">undef_method</span> :<span class="ruby-identifier">fieldset</span>
+<span class="ruby-keyword">end</span>
+</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/cgi/session.rb, line 245</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">initialize</span>(<span class="ruby-identifier">request</span>, <span class="ruby-identifier">option</span>={})
+  <span class="ruby-ivar">@new_session</span> = <span class="ruby-keyword">false</span>
+  <span class="ruby-identifier">session_key</span> = <span class="ruby-identifier">option</span>[<span class="ruby-string">'session_key'</span>] <span class="ruby-operator">||</span> <span class="ruby-string">'_session_id'</span>
+  <span class="ruby-identifier">session_id</span> = <span class="ruby-identifier">option</span>[<span class="ruby-string">'session_id'</span>]
+  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">session_id</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">option</span>[<span class="ruby-string">'new_session'</span>]
+      <span class="ruby-identifier">session_id</span> = <span class="ruby-identifier">create_new_id</span>
+      <span class="ruby-ivar">@new_session</span> = <span class="ruby-keyword">true</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">session_id</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">request</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">session_key</span>)
+      <span class="ruby-identifier">session_id</span> = <span class="ruby-identifier">request</span>[<span class="ruby-identifier">session_key</span>]
+      <span class="ruby-identifier">session_id</span> = <span class="ruby-identifier">session_id</span>.<span class="ruby-identifier">read</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">session_id</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-value">:read</span>)
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">unless</span> <span class="ruby-identifier">session_id</span>
+      <span class="ruby-identifier">session_id</span>, = <span class="ruby-identifier">request</span>.<span class="ruby-identifier">cookies</span>[<span class="ruby-identifier">session_key</span>]
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">unless</span> <span class="ruby-identifier">session_id</span>
+      <span class="ruby-keyword">unless</span> <span class="ruby-identifier">option</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-string">'new_session'</span>, <span class="ruby-keyword">true</span>)
+        <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-string">&quot;session_key `%s' should be supplied&quot;</span><span class="ruby-operator">%</span><span class="ruby-identifier">session_key</span>
+      <span class="ruby-keyword">end</span>
+      <span class="ruby-identifier">session_id</span> = <span class="ruby-identifier">create_new_id</span>
+      <span class="ruby-ivar">@new_session</span> = <span class="ruby-keyword">true</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-ivar">@session_id</span> = <span class="ruby-identifier">session_id</span>
+  <span class="ruby-identifier">dbman</span> = <span class="ruby-identifier">option</span>[<span class="ruby-string">'database_manager'</span>] <span class="ruby-operator">||</span> <span class="ruby-constant">FileStore</span>
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-ivar">@dbman</span> = <span class="ruby-identifier">dbman</span><span class="ruby-operator">::</span><span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>, <span class="ruby-identifier">option</span>)
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">NoSession</span>
+    <span class="ruby-keyword">unless</span> <span class="ruby-identifier">option</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-string">'new_session'</span>, <span class="ruby-keyword">true</span>)
+      <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-string">&quot;invalid session_id `%s'&quot;</span><span class="ruby-operator">%</span><span class="ruby-identifier">session_id</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">session_id</span> = <span class="ruby-ivar">@session_id</span> = <span class="ruby-identifier">create_new_id</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">session_id</span>
+    <span class="ruby-ivar">@new_session</span>=<span class="ruby-keyword">true</span>
+    <span class="ruby-keyword">retry</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">request</span>.<span class="ruby-identifier">instance_eval</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-ivar">@output_hidden</span> = {<span class="ruby-identifier">session_key</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">session_id</span>} <span class="ruby-keyword">unless</span> <span class="ruby-identifier">option</span>[<span class="ruby-string">'no_hidden'</span>]
+    <span class="ruby-ivar">@output_cookies</span> =  [
+      <span class="ruby-constant">Cookie</span><span class="ruby-operator">::</span><span class="ruby-identifier">new</span>(<span class="ruby-string">&quot;name&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">session_key</span>,
+      <span class="ruby-string">&quot;value&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">session_id</span>,
+      <span class="ruby-string">&quot;expires&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">option</span>[<span class="ruby-string">'session_expires'</span>],
+      <span class="ruby-string">&quot;domain&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">option</span>[<span class="ruby-string">'session_domain'</span>],
+      <span class="ruby-string">&quot;secure&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">option</span>[<span class="ruby-string">'session_secure'</span>],
+      <span class="ruby-string">&quot;path&quot;</span> =<span class="ruby-operator">&gt;</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">option</span>[<span class="ruby-string">'session_path'</span>]
+        <span class="ruby-identifier">option</span>[<span class="ruby-string">'session_path'</span>]
+      <span class="ruby-keyword">elsif</span> <span class="ruby-constant">ENV</span>[<span class="ruby-string">&quot;SCRIPT_NAME&quot;</span>]
+        <span class="ruby-constant">File</span><span class="ruby-operator">::</span><span class="ruby-identifier">dirname</span>(<span class="ruby-constant">ENV</span>[<span class="ruby-string">&quot;SCRIPT_NAME&quot;</span>])
+      <span class="ruby-keyword">else</span>
+      <span class="ruby-string">&quot;&quot;</span>
+      <span class="ruby-keyword">end</span>)
+    ] <span class="ruby-keyword">unless</span> <span class="ruby-identifier">option</span>[<span class="ruby-string">'no_cookies'</span>]
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-ivar">@dbprot</span> = [<span class="ruby-ivar">@dbman</span>]
+  <span class="ruby-constant">ObjectSpace</span><span class="ruby-operator">::</span><span class="ruby-identifier">define_finalizer</span>(<span class="ruby-keyword">self</span>, <span class="ruby-constant">Session</span><span class="ruby-operator">::</span><span class="ruby-identifier">callback</span>(<span class="ruby-ivar">@dbprot</span>))
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-5B-5D">
+            
+              <a name="method-i-5B-5D"></a><b>[]</b>(key)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Retrieve the session data for key <code>key</code>.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-5B-5D_source')" id="l_method-i-5B-5D_source">show</a>
+                
+              </p>
+              <div id="method-i-5B-5D_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/cgi/session.rb, line 306</span>
+<span class="ruby-keyword">def</span> <span class="ruby-operator">[]</span>(<span class="ruby-keyword ruby-title">key</span>)
+  <span class="ruby-ivar">@data</span> <span class="ruby-operator">||=</span> <span class="ruby-ivar">@dbman</span>.<span class="ruby-identifier">restore</span>
+  <span class="ruby-ivar">@data</span>[<span class="ruby-identifier">key</span>]
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-5B-5D-3D">
+            
+              <a name="method-i-5B-5D-3D"></a><b>[]=</b>(key, val)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p><a href="../Set.html">Set</a> the session date for key <code>key</code>.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-5B-5D-3D_source')" id="l_method-i-5B-5D-3D_source">show</a>
+                
+              </p>
+              <div id="method-i-5B-5D-3D_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/cgi/session.rb, line 312</span>
+<span class="ruby-keyword">def</span> <span class="ruby-operator">[]=</span>(<span class="ruby-keyword ruby-title">key</span>, <span class="ruby-identifier">val</span>)
+  <span class="ruby-ivar">@write_lock</span> <span class="ruby-operator">||=</span> <span class="ruby-keyword">true</span>
+  <span class="ruby-ivar">@data</span> <span class="ruby-operator">||=</span> <span class="ruby-ivar">@dbman</span>.<span class="ruby-identifier">restore</span>
+  <span class="ruby-ivar">@data</span>[<span class="ruby-identifier">key</span>] = <span class="ruby-identifier">val</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-close">
+            
+              <a name="method-i-close"></a><b>close</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Store session data on the server and close the session storage. For some
+session storage types, this is a no-op.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-close_source')" id="l_method-i-close_source">show</a>
+                
+              </p>
+              <div id="method-i-close_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/cgi/session.rb, line 326</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">close</span>
+  <span class="ruby-ivar">@dbman</span>.<span class="ruby-identifier">close</span>
+  <span class="ruby-ivar">@dbprot</span>.<span class="ruby-identifier">clear</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-delete">
+            
+              <a name="method-i-delete"></a><b>delete</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Delete the session from storage.  Also closes the storage.</p>
+
+<p>Note that the session’s data is <em>not</em> automatically deleted upon the
+session expiring.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-delete_source')" id="l_method-i-delete_source">show</a>
+                
+              </p>
+              <div id="method-i-delete_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/cgi/session.rb, line 335</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">delete</span>
+  <span class="ruby-ivar">@dbman</span>.<span class="ruby-identifier">delete</span>
+  <span class="ruby-ivar">@dbprot</span>.<span class="ruby-identifier">clear</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-update">
+            
+              <a name="method-i-update"></a><b>update</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Store session data on the server.  For some session storage types, this is
+a no-op.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-update_source')" id="l_method-i-update_source">show</a>
+                
+              </p>
+              <div id="method-i-update_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/cgi/session.rb, line 320</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">update</span>
+  <span class="ruby-ivar">@dbman</span>.<span class="ruby-identifier">update</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    

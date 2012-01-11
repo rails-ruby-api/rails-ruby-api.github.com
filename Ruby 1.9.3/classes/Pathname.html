@@ -1,0 +1,4789 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Pathname</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/github.css" type="text/css" media="screen" />
+<script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            Pathname 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../files/ext/pathname/lib/pathname_rb.html">ext/pathname/lib/pathname.rb</a></li>
+            
+            <li><a href="../files/ext/pathname/pathname_c.html">ext/pathname/pathname.c</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<h2 id="label-Pathname"><a href="Pathname.html">Pathname</a></h2>
+
+<p><a href="Pathname.html">Pathname</a> represents a pathname which locates a
+file in a filesystem. The pathname depends on OS: Unix, Windows, etc. <a
+href="Pathname.html">Pathname</a> library works with pathnames of local OS.
+However non-Unix pathnames are supported experimentally.</p>
+
+<p>It does not represent the file itself. A <a
+href="Pathname.html">Pathname</a> can be relative or absolute.  It’s not
+until you try to reference the file that it even matters whether the file
+exists or not.</p>
+
+<p><a href="Pathname.html">Pathname</a> is immutable.  It has no method for
+destructive update.</p>
+
+<p>The value of this class is to manipulate file path information in a neater
+way than standard Ruby provides.  The examples below demonstrate the
+difference.  <strong>All</strong> functionality from <a
+href="File.html">File</a>, <a href="FileTest.html">FileTest</a>, and some
+from <a href="Dir.html">Dir</a> and <a href="FileUtils.html">FileUtils</a>
+is included, in an unsurprising way.  It is essentially a facade for all of
+these, and more.</p>
+
+<h2 id="label-Examples">Examples</h2>
+
+<h3 id="label-Example+1%3A+Using+Pathname">Example 1: Using <a href="Pathname.html">Pathname</a></h3>
+
+<pre class="ruby"><span class="ruby-identifier">require</span> <span class="ruby-string">'pathname'</span>
+<span class="ruby-identifier">pn</span> = <span class="ruby-constant">Pathname</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&quot;/usr/bin/ruby&quot;</span>)
+<span class="ruby-identifier">size</span> = <span class="ruby-identifier">pn</span>.<span class="ruby-identifier">size</span>              <span class="ruby-comment"># 27662</span>
+<span class="ruby-identifier">isdir</span> = <span class="ruby-identifier">pn</span>.<span class="ruby-identifier">directory?</span>       <span class="ruby-comment"># false</span>
+<span class="ruby-identifier">dir</span>  = <span class="ruby-identifier">pn</span>.<span class="ruby-identifier">dirname</span>           <span class="ruby-comment"># Pathname:/usr/bin</span>
+<span class="ruby-identifier">base</span> = <span class="ruby-identifier">pn</span>.<span class="ruby-identifier">basename</span>          <span class="ruby-comment"># Pathname:ruby</span>
+<span class="ruby-identifier">dir</span>, <span class="ruby-identifier">base</span> = <span class="ruby-identifier">pn</span>.<span class="ruby-identifier">split</span>        <span class="ruby-comment"># [Pathname:/usr/bin, Pathname:ruby]</span>
+<span class="ruby-identifier">data</span> = <span class="ruby-identifier">pn</span>.<span class="ruby-identifier">read</span>
+<span class="ruby-identifier">pn</span>.<span class="ruby-identifier">open</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-identifier">_</span> }
+<span class="ruby-identifier">pn</span>.<span class="ruby-identifier">each_line</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span> <span class="ruby-identifier">_</span> }
+</pre>
+
+<h3 id="label-Example+2%3A+Using+standard+Ruby">Example 2: Using standard Ruby</h3>
+
+<pre class="ruby"><span class="ruby-identifier">pn</span> = <span class="ruby-string">&quot;/usr/bin/ruby&quot;</span>
+<span class="ruby-identifier">size</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">size</span>(<span class="ruby-identifier">pn</span>)        <span class="ruby-comment"># 27662</span>
+<span class="ruby-identifier">isdir</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-identifier">pn</span>) <span class="ruby-comment"># false</span>
+<span class="ruby-identifier">dir</span>  = <span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-identifier">pn</span>)     <span class="ruby-comment"># &quot;/usr/bin&quot;</span>
+<span class="ruby-identifier">base</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">pn</span>)    <span class="ruby-comment"># &quot;ruby&quot;</span>
+<span class="ruby-identifier">dir</span>, <span class="ruby-identifier">base</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">split</span>(<span class="ruby-identifier">pn</span>)  <span class="ruby-comment"># [&quot;/usr/bin&quot;, &quot;ruby&quot;]</span>
+<span class="ruby-identifier">data</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">pn</span>)
+<span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">pn</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-identifier">_</span> }
+<span class="ruby-constant">File</span>.<span class="ruby-identifier">foreach</span>(<span class="ruby-identifier">pn</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span> <span class="ruby-identifier">_</span> }
+</pre>
+
+<h3 id="label-Example+3%3A+Special+features">Example 3: Special features</h3>
+
+<pre>p1 = Pathname.new(&quot;/usr/lib&quot;)   # Pathname:/usr/lib
+p2 = p1 + &quot;ruby/1.8&quot;            # Pathname:/usr/lib/ruby/1.8
+p3 = p1.parent                  # Pathname:/usr
+p4 = p2.relative_path_from(p3)  # Pathname:lib/ruby/1.8
+pwd = Pathname.pwd              # Pathname:/home/gavin
+pwd.absolute?                   # true
+p5 = Pathname.new &quot;.&quot;           # Pathname:.
+p5 = p5 + &quot;music/../articles&quot;   # Pathname:music/../articles
+p5.cleanpath                    # Pathname:articles
+p5.realpath                     # Pathname:/home/gavin/articles
+p5.children                     # [Pathname:/home/gavin/articles/linux, ...]</pre>
+
+<h2 id="label-Breakdown+of+functionality">Breakdown of functionality</h2>
+
+<h3 id="label-Core+methods">Core methods</h3>
+
+<p>These methods are effectively manipulating a String, because that’s all a
+path is.  Except for <a
+href="Pathname.html#method-i-mountpoint-3F">#mountpoint?</a>, <a
+href="Pathname.html#method-i-children">#children</a>, <a
+href="Pathname.html#method-i-each_child">#each_child</a>, <a
+href="Pathname.html#method-i-realdirpath">#realdirpath</a> and <a
+href="Pathname.html#method-i-realpath">#realpath</a>, they don’t access the
+filesystem.</p>
+<ul><li>
+<p>+</p>
+</li><li>
+<p><a href="Pathname.html#method-i-join">#join</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-parent">#parent</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-root-3F">#root?</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-absolute-3F">#absolute?</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-relative-3F">#relative?</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-relative_path_from">#relative_path_from</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-each_filename">#each_filename</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-cleanpath">#cleanpath</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-realpath">#realpath</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-realdirpath">#realdirpath</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-children">#children</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-each_child">#each_child</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-mountpoint-3F">#mountpoint?</a></p>
+</li></ul>
+
+<h3 id="label-File+status+predicate+methods"><a href="File.html">File</a> status predicate methods</h3>
+
+<p>These methods are a facade for FileTest:</p>
+<ul><li>
+<p><a href="Pathname.html#method-i-blockdev-3F">#blockdev?</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-chardev-3F">#chardev?</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-directory-3F">#directory?</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-executable-3F">#executable?</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-executable_real-3F">#executable_real?</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-exist-3F">#exist?</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-file-3F">#file?</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-grpowned-3F">#grpowned?</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-owned-3F">#owned?</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-pipe-3F">#pipe?</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-readable-3F">#readable?</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-world_readable-3F">#world_readable?</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-readable_real-3F">#readable_real?</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-setgid-3F">#setgid?</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-setuid-3F">#setuid?</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-size">#size</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-size-3F">#size?</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-socket-3F">#socket?</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-sticky-3F">#sticky?</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-symlink-3F">#symlink?</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-writable-3F">#writable?</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-world_writable-3F">#world_writable?</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-writable_real-3F">#writable_real?</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-zero-3F">#zero?</a></p>
+</li></ul>
+
+<h3 id="label-File+property+and+manipulation+methods"><a href="File.html">File</a> property and manipulation methods</h3>
+
+<p>These methods are a facade for File:</p>
+<ul><li>
+<p><a href="Pathname.html#method-i-atime">#atime</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-ctime">#ctime</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-mtime">#mtime</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-chmod">#chmod</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-lchmod">#lchmod</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-chown">#chown</a>(owner, group)</p>
+</li><li>
+<p><a href="Pathname.html#method-i-lchown">#lchown</a>(owner, group)</p>
+</li><li>
+<p><a href="Pathname.html#method-i-fnmatch">#fnmatch</a>(pattern, *args)</p>
+</li><li>
+<p><a href="Pathname.html#method-i-fnmatch-3F">#fnmatch?</a>(pattern, *args)</p>
+</li><li>
+<p><a href="Pathname.html#method-i-ftype">#ftype</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-make_link">#make_link</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-open">#open</a>(*args, &amp;block)</p>
+</li><li>
+<p><a href="Pathname.html#method-i-readlink">#readlink</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-rename">#rename</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-stat">#stat</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-lstat">#lstat</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-make_symlink">#make_symlink</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-truncate">#truncate</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-utime">#utime</a>(atime, mtime)</p>
+</li><li>
+<p><a href="Pathname.html#method-i-basename">#basename</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-dirname">#dirname</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-extname">#extname</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-expand_path">#expand_path</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-split">#split</a></p>
+</li></ul>
+
+<h3 id="label-Directory+methods">Directory methods</h3>
+
+<p>These methods are a facade for Dir:</p>
+<ul><li>
+<p><a href="Pathname.html#method-c-glob">::glob</a></p>
+</li><li>
+<p><a href="Pathname.html#method-c-getwd">::getwd</a> / <a
+href="Pathname.html#method-c-pwd">::pwd</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-rmdir">#rmdir</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-entries">#entries</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-each_entry">#each_entry</a>(&amp;block)</p>
+</li><li>
+<p><a href="Pathname.html#method-i-mkdir">#mkdir</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-opendir">#opendir</a></p>
+</li></ul>
+
+<h3 id="label-IO"><a href="IO.html">IO</a></h3>
+
+<p>These methods are a facade for IO:</p>
+<ul><li>
+<p><a href="Pathname.html#method-i-each_line">#each_line</a>(*args,
+&amp;block)</p>
+</li><li>
+<p><a href="Pathname.html#method-i-read">#read</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-binread">#binread</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-readlines">#readlines</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-sysopen">#sysopen</a></p>
+</li></ul>
+
+<h3 id="label-Utilities">Utilities</h3>
+
+<p>These methods are a mixture of <a href="Find.html">Find</a>, <a
+href="FileUtils.html">FileUtils</a>, and others:</p>
+<ul><li>
+<p><a href="Pathname.html#method-i-find">#find</a>(&amp;block)</p>
+</li><li>
+<p><a href="Pathname.html#method-i-mkpath">#mkpath</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-rmtree">#rmtree</a></p>
+</li><li>
+<p><a href="Pathname.html#method-i-unlink">#unlink</a> / <a
+href="Pathname.html#method-i-delete">#delete</a></p>
+</li></ul>
+
+<h2 id="label-Method+documentation"><a href="Method.html">Method</a> documentation</h2>
+
+<p>As the above section shows, most of the methods in <a
+href="Pathname.html">Pathname</a> are facades.  The documentation for these
+methods generally just says, for instance, “See <a
+href="FileTest.html#method-i-writable-3F">FileTest#writable?</a>”, as you
+should be familiar with the original method anyway, and its documentation
+(e.g. through <code>ri</code>) will contain more information.  In some
+cases, a brief description will follow.</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>#</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-2B">+</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-3C-3D-3E">&lt;=&gt;</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-3D-3D">==</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-3D-3D-3D">===</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>A</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-absolute-3F">absolute?</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-ascend">ascend</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-atime">atime</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>B</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-basename">basename</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-binread">binread</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-blockdev-3F">blockdev?</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>C</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-chardev-3F">chardev?</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-children">children</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-chmod">chmod</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-chown">chown</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-cleanpath">cleanpath</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-ctime">ctime</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>D</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-delete">delete</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-descend">descend</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-directory-3F">directory?</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-dirname">dirname</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>E</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-each_child">each_child</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-each_entry">each_entry</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-each_filename">each_filename</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-each_line">each_line</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-entries">entries</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-eql-3F">eql?</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-executable-3F">executable?</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-executable_real-3F">executable_real?</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-exist-3F">exist?</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-expand_path">expand_path</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-extname">extname</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>F</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-file-3F">file?</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-find">find</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-fnmatch">fnmatch</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-fnmatch-3F">fnmatch?</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-freeze">freeze</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-ftype">ftype</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>G</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-getwd">getwd</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-glob">glob</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-grpowned-3F">grpowned?</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>J</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-join">join</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>L</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-lchmod">lchmod</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-lchown">lchown</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-lstat">lstat</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>M</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-make_link">make_link</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-make_symlink">make_symlink</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-mkdir">mkdir</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-mkpath">mkpath</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-mountpoint-3F">mountpoint?</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-mtime">mtime</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>O</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-open">open</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-opendir">opendir</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-owned-3F">owned?</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>P</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-parent">parent</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-pipe-3F">pipe?</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-pwd">pwd</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>R</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-read">read</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-readable-3F">readable?</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-readable_real-3F">readable_real?</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-readlines">readlines</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-readlink">readlink</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-realdirpath">realdirpath</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-realpath">realpath</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-relative-3F">relative?</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-relative_path_from">relative_path_from</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-rename">rename</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-rmdir">rmdir</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-rmtree">rmtree</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-root-3F">root?</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>S</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-setgid-3F">setgid?</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-setuid-3F">setuid?</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-size">size</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-size-3F">size?</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-socket-3F">socket?</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-split">split</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-stat">stat</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-sticky-3F">sticky?</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-sub">sub</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-sub_ext">sub_ext</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-symlink-3F">symlink?</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-sysopen">sysopen</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-taint">taint</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-to_path">to_path</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-to_s">to_s</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-truncate">truncate</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>U</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-unlink">unlink</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-untaint">untaint</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-utime">utime</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>W</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-world_readable-3F">world_readable?</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-world_writable-3F">world_writable?</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-writable-3F">writable?</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-writable_real-3F">writable_real?</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>Z</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-zero-3F">zero?</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+      <!-- Section constants -->
+      <div class="sectiontitle">Constants</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class="attr-name">SEPARATOR_LIST</td>
+            <td>=</td>
+            <td class="attr-value">&quot;#{Regexp.quote File::ALT_SEPARATOR}#{Regexp.quote File::SEPARATOR}&quot;</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">SEPARATOR_PAT</td>
+            <td>=</td>
+            <td class="attr-value">/[#{SEPARATOR_LIST}]/</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+      </table>
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-getwd">
+            
+              <a name="method-c-getwd"></a><b>getwd</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>Dir.getwd</code>.  Returns the current working directory as a <a
+href="Pathname.html">Pathname</a>.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-getwd_source')" id="l_method-c-getwd_source">show</a>
+                
+              </p>
+              <div id="method-c-getwd_source" class="dyn-source">
+                <pre>static VALUE
+path_s_getwd(VALUE klass)
+{
+    VALUE str;
+    str = rb_funcall(rb_cDir, rb_intern(&quot;getwd&quot;), 0);
+    return rb_class_new_instance(1, &amp;str, klass);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-glob">
+            
+              <a name="method-c-glob"></a><b>glob</b>(p1, p2 = v2)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>Dir.glob</code>.  Returns or yields <a
+href="Pathname.html">Pathname</a> objects.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-glob_source')" id="l_method-c-glob_source">show</a>
+                
+              </p>
+              <div id="method-c-glob_source" class="dyn-source">
+                <pre>static VALUE
+path_s_glob(int argc, VALUE *argv, VALUE klass)
+{
+    VALUE args[2];
+    int n;
+
+    n = rb_scan_args(argc, argv, &quot;11&quot;, &amp;args[0], &amp;args[1]);
+    if (rb_block_given_p()) {
+        return rb_block_call(rb_cDir, rb_intern(&quot;glob&quot;), n, args, glob_i, klass);
+    }
+    else {
+        VALUE ary;
+        long i;
+        ary = rb_funcall2(rb_cDir, rb_intern(&quot;glob&quot;), n, args);
+        ary = rb_convert_type(ary, T_ARRAY, &quot;Array&quot;, &quot;to_ary&quot;);
+        for (i = 0; i &lt; RARRAY_LEN(ary); i++) {
+            VALUE elt = RARRAY_PTR(ary)[i];
+            elt = rb_class_new_instance(1, &amp;elt, klass);
+            rb_ary_store(ary, i, elt);
+        }
+        return ary;
+    }
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <a name="method-c-new"></a><b>new</b>(p1)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Create a <a href="Pathname.html">Pathname</a> object from the given String
+(or String-like object). If <code>path</code> contains a NUL character
+(<code>\0</code>), an <a href="ArgumentError.html">ArgumentError</a> is
+raised.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre>static VALUE
+path_initialize(VALUE self, VALUE arg)
+{
+    VALUE str;
+    if (TYPE(arg) == T_STRING) {
+        str = arg;
+    }
+    else {
+        str = rb_check_funcall(arg, id_to_path, 0, NULL);
+        if (str == Qundef)
+            str = arg;
+        StringValue(str);
+    }
+    if (memchr(RSTRING_PTR(str), '\0', RSTRING_LEN(str)))
+        rb_raise(rb_eArgError, &quot;pathname contains null byte&quot;);
+    str = rb_obj_dup(str);
+
+    set_strpath(self, str);
+    OBJ_INFECT(self, str);
+    return self;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-pwd">
+            
+              <a name="method-c-pwd"></a><b>pwd</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>Dir.getwd</code>.  Returns the current working directory as a <a
+href="Pathname.html">Pathname</a>.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-pwd_source')" id="l_method-c-pwd_source">show</a>
+                
+              </p>
+              <div id="method-c-pwd_source" class="dyn-source">
+                <pre>static VALUE
+path_s_getwd(VALUE klass)
+{
+    VALUE str;
+    str = rb_funcall(rb_cDir, rb_intern(&quot;getwd&quot;), 0);
+    return rb_class_new_instance(1, &amp;str, klass);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-2B">
+            
+              <a name="method-i-2B"></a><b>+</b>(other)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Pathname#+ appends a pathname fragment to this one to produce a new <a
+href="Pathname.html">Pathname</a> object.</p>
+
+<pre>p1 = Pathname.new(&quot;/usr&quot;)      # Pathname:/usr
+p2 = p1 + &quot;bin/ruby&quot;           # Pathname:/usr/bin/ruby
+p3 = p1 + &quot;/etc/passwd&quot;        # Pathname:/etc/passwd</pre>
+
+<p>This method doesn’t access the file system; it is pure string manipulation.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-2B_source')" id="l_method-i-2B_source">show</a>
+                
+              </p>
+              <div id="method-i-2B_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/pathname/lib/pathname.rb, line 307</span>
+<span class="ruby-keyword">def</span> <span class="ruby-operator">+</span>(<span class="ruby-keyword ruby-title">other</span>)
+  <span class="ruby-identifier">other</span> = <span class="ruby-constant">Pathname</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">other</span>) <span class="ruby-keyword">unless</span> <span class="ruby-constant">Pathname</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">other</span>
+  <span class="ruby-constant">Pathname</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">plus</span>(<span class="ruby-ivar">@path</span>, <span class="ruby-identifier">other</span>.<span class="ruby-identifier">to_s</span>))
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-3C-3D-3E">
+            
+              <a name="method-i-3C-3D-3E"></a><b>&lt;=&gt;</b>(p1)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Provides for comparing pathnames, case-sensitively.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-3C-3D-3E_source')" id="l_method-i-3C-3D-3E_source">show</a>
+                
+              </p>
+              <div id="method-i-3C-3D-3E_source" class="dyn-source">
+                <pre>static VALUE
+path_cmp(VALUE self, VALUE other)
+{
+    VALUE s1, s2;
+    char *p1, *p2;
+    char *e1, *e2;
+    if (!rb_obj_is_kind_of(other, rb_cPathname))
+        return Qnil;
+    s1 = get_strpath(self);
+    s2 = get_strpath(other);
+    p1 = RSTRING_PTR(s1);
+    p2 = RSTRING_PTR(s2);
+    e1 = p1 + RSTRING_LEN(s1);
+    e2 = p2 + RSTRING_LEN(s2);
+    while (p1 &lt; e1 &amp;&amp; p2 &lt; e2) {
+        int c1, c2;
+        c1 = (unsigned char)*p1++;
+        c2 = (unsigned char)*p2++;
+        if (c1 == '/') c1 = '\0';
+        if (c2 == '/') c2 = '\0';
+        if (c1 != c2) {
+            if (c1 &lt; c2)
+                return INT2FIX(-1);
+            else
+                return INT2FIX(1);
+        }
+    }
+    if (p1 &lt; e1)
+        return INT2FIX(1);
+    if (p2 &lt; e2)
+        return INT2FIX(-1);
+    return INT2FIX(0);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-3D-3D">
+            
+              <a name="method-i-3D-3D"></a><b>==</b>(p1)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Compare this pathname with <code>other</code>.  The comparison is
+string-based. Be aware that two different paths (<code>foo.txt</code> and
+<code>./foo.txt</code>) can refer to the same file.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-3D-3D_source')" id="l_method-i-3D-3D_source">show</a>
+                
+              </p>
+              <div id="method-i-3D-3D_source" class="dyn-source">
+                <pre>static VALUE
+path_eq(VALUE self, VALUE other)
+{
+    if (!rb_obj_is_kind_of(other, rb_cPathname))
+        return Qfalse;
+    return rb_str_equal(get_strpath(self), get_strpath(other));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-3D-3D-3D">
+            
+              <a name="method-i-3D-3D-3D"></a><b>===</b>(p1)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Compare this pathname with <code>other</code>.  The comparison is
+string-based. Be aware that two different paths (<code>foo.txt</code> and
+<code>./foo.txt</code>) can refer to the same file.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-3D-3D-3D_source')" id="l_method-i-3D-3D-3D_source">show</a>
+                
+              </p>
+              <div id="method-i-3D-3D-3D_source" class="dyn-source">
+                <pre>static VALUE
+path_eq(VALUE self, VALUE other)
+{
+    if (!rb_obj_is_kind_of(other, rb_cPathname))
+        return Qfalse;
+    return rb_str_equal(get_strpath(self), get_strpath(other));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-absolute-3F">
+            
+              <a name="method-i-absolute-3F"></a><b>absolute?</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Predicate method for testing whether a path is absolute. It returns
+<code>true</code> if the pathname begins with a slash.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-absolute-3F_source')" id="l_method-i-absolute-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-absolute-3F_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/pathname/lib/pathname.rb, line 214</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">absolute?</span>
+  <span class="ruby-operator">!</span><span class="ruby-identifier">relative?</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-ascend">
+            
+              <a name="method-i-ascend"></a><b>ascend</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Iterates over and yields a new <a href="Pathname.html">Pathname</a> object
+for each element in the given path in ascending order.</p>
+
+<pre class="ruby"><span class="ruby-constant">Pathname</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">'/path/to/some/file.rb'</span>).<span class="ruby-identifier">ascend</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">p</span> <span class="ruby-identifier">v</span>}
+   <span class="ruby-comment">#&lt;Pathname:/path/to/some/file.rb&gt;</span>
+   <span class="ruby-comment">#&lt;Pathname:/path/to/some&gt;</span>
+   <span class="ruby-comment">#&lt;Pathname:/path/to&gt;</span>
+   <span class="ruby-comment">#&lt;Pathname:/path&gt;</span>
+   <span class="ruby-comment">#&lt;Pathname:/&gt;</span>
+
+<span class="ruby-constant">Pathname</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">'path/to/some/file.rb'</span>).<span class="ruby-identifier">ascend</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">p</span> <span class="ruby-identifier">v</span>}
+   <span class="ruby-comment">#&lt;Pathname:path/to/some/file.rb&gt;</span>
+   <span class="ruby-comment">#&lt;Pathname:path/to/some&gt;</span>
+   <span class="ruby-comment">#&lt;Pathname:path/to&gt;</span>
+   <span class="ruby-comment">#&lt;Pathname:path&gt;</span>
+</pre>
+
+<p>It doesn’t access actual filesystem.</p>
+
+<p>This method is available since 1.8.5.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-ascend_source')" id="l_method-i-ascend_source">show</a>
+                
+              </p>
+              <div id="method-i-ascend_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/pathname/lib/pathname.rb, line 287</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">ascend</span>
+  <span class="ruby-identifier">path</span> = <span class="ruby-ivar">@path</span>
+  <span class="ruby-keyword">yield</span> <span class="ruby-keyword">self</span>
+  <span class="ruby-keyword">while</span> <span class="ruby-identifier">r</span> = <span class="ruby-identifier">chop_basename</span>(<span class="ruby-identifier">path</span>)
+    <span class="ruby-identifier">path</span>, = <span class="ruby-identifier">r</span>
+    <span class="ruby-keyword">break</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">path</span>.<span class="ruby-identifier">empty?</span>
+    <span class="ruby-keyword">yield</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">del_trailing_separator</span>(<span class="ruby-identifier">path</span>))
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-atime">
+            
+              <a name="method-i-atime"></a><b>atime</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>File.atime</code>.  Returns last access time.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-atime_source')" id="l_method-i-atime_source">show</a>
+                
+              </p>
+              <div id="method-i-atime_source" class="dyn-source">
+                <pre>static VALUE
+path_atime(VALUE self)
+{
+    return rb_funcall(rb_cFile, rb_intern(&quot;atime&quot;), 1, get_strpath(self));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-basename">
+            
+              <a name="method-i-basename"></a><b>basename</b>(p1 = v1)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>File.basename</code>.  Returns the last component of the path.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-basename_source')" id="l_method-i-basename_source">show</a>
+                
+              </p>
+              <div id="method-i-basename_source" class="dyn-source">
+                <pre>static VALUE
+path_basename(int argc, VALUE *argv, VALUE self)
+{
+    VALUE str = get_strpath(self);
+    VALUE fext;
+    if (rb_scan_args(argc, argv, &quot;01&quot;, &amp;fext) == 0)
+        str = rb_funcall(rb_cFile, rb_intern(&quot;basename&quot;), 1, str);
+    else
+        str = rb_funcall(rb_cFile, rb_intern(&quot;basename&quot;), 2, str, fext);
+    return rb_class_new_instance(1, &amp;str, rb_obj_class(self));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-binread">
+            
+              <a name="method-i-binread"></a><b>pathname.binread([length [, offset]]) &rarr; string
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>IO.binread</code>.  Returns all the bytes from the file, or the
+first <code>N</code> if specified.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-binread_source')" id="l_method-i-binread_source">show</a>
+                
+              </p>
+              <div id="method-i-binread_source" class="dyn-source">
+                <pre>static VALUE
+path_binread(int argc, VALUE *argv, VALUE self)
+{
+    VALUE args[3];
+    int n;
+
+    args[0] = get_strpath(self);
+    n = rb_scan_args(argc, argv, &quot;02&quot;, &amp;args[1], &amp;args[2]);
+    return rb_funcall2(rb_cIO, rb_intern(&quot;binread&quot;), 1+n, args);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-blockdev-3F">
+            
+              <a name="method-i-blockdev-3F"></a><b>blockdev?</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>FileTest.blockdev?</code>.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-blockdev-3F_source')" id="l_method-i-blockdev-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-blockdev-3F_source" class="dyn-source">
+                <pre>static VALUE
+path_blockdev_p(VALUE self)
+{
+    return rb_funcall(rb_mFileTest, rb_intern(&quot;blockdev?&quot;), 1, get_strpath(self));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-chardev-3F">
+            
+              <a name="method-i-chardev-3F"></a><b>chardev?</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>FileTest.chardev?</code>.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-chardev-3F_source')" id="l_method-i-chardev-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-chardev-3F_source" class="dyn-source">
+                <pre>static VALUE
+path_chardev_p(VALUE self)
+{
+    return rb_funcall(rb_mFileTest, rb_intern(&quot;chardev?&quot;), 1, get_strpath(self));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-children">
+            
+              <a name="method-i-children"></a><b>children</b>(with_directory=true)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the children of the directory (files and subdirectories, not
+recursive) as an array of <a href="Pathname.html">Pathname</a> objects.  By
+default, the returned pathnames will have enough information to access the
+files.  If you set <code>with_directory</code> to <code>false</code>, then
+the returned pathnames will contain the filename only.</p>
+
+<p>For example:</p>
+
+<pre>pn = Pathname(&quot;/usr/lib/ruby/1.8&quot;)
+pn.children
+    # -&gt; [ Pathname:/usr/lib/ruby/1.8/English.rb,
+           Pathname:/usr/lib/ruby/1.8/Env.rb,
+           Pathname:/usr/lib/ruby/1.8/abbrev.rb, ... ]
+pn.children(false)
+    # -&gt; [ Pathname:English.rb, Pathname:Env.rb, Pathname:abbrev.rb, ... ]</pre>
+
+<p>Note that the results never contain the entries <code>.</code> and
+<code>..</code> in the directory because they are not children.</p>
+
+<p>This method has existed since 1.8.1.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-children_source')" id="l_method-i-children_source">show</a>
+                
+              </p>
+              <div id="method-i-children_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/pathname/lib/pathname.rb, line 394</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">children</span>(<span class="ruby-identifier">with_directory</span>=<span class="ruby-keyword">true</span>)
+  <span class="ruby-identifier">with_directory</span> = <span class="ruby-keyword">false</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@path</span> <span class="ruby-operator">==</span> <span class="ruby-string">'.'</span>
+  <span class="ruby-identifier">result</span> = []
+  <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">foreach</span>(<span class="ruby-ivar">@path</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">e</span> <span class="ruby-operator">==</span> <span class="ruby-string">'.'</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">e</span> <span class="ruby-operator">==</span> <span class="ruby-string">'..'</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">with_directory</span>
+      <span class="ruby-identifier">result</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-ivar">@path</span>, <span class="ruby-identifier">e</span>))
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">result</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">e</span>)
+    <span class="ruby-keyword">end</span>
+  }
+  <span class="ruby-identifier">result</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-chmod">
+            
+              <a name="method-i-chmod"></a><b>chmod</b>(p1)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>File.chmod</code>.  Changes permissions.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-chmod_source')" id="l_method-i-chmod_source">show</a>
+                
+              </p>
+              <div id="method-i-chmod_source" class="dyn-source">
+                <pre>static VALUE
+path_chmod(VALUE self, VALUE mode)
+{
+    return rb_funcall(rb_cFile, rb_intern(&quot;chmod&quot;), 2, mode, get_strpath(self));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-chown">
+            
+              <a name="method-i-chown"></a><b>chown</b>(p1, p2)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>File.chown</code>.  Change owner and group of file.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-chown_source')" id="l_method-i-chown_source">show</a>
+                
+              </p>
+              <div id="method-i-chown_source" class="dyn-source">
+                <pre>static VALUE
+path_chown(VALUE self, VALUE owner, VALUE group)
+{
+    return rb_funcall(rb_cFile, rb_intern(&quot;chown&quot;), 3, owner, group, get_strpath(self));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-cleanpath">
+            
+              <a name="method-i-cleanpath"></a><b>cleanpath</b>(consider_symlink=false)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns clean pathname of <code>self</code> with consecutive slashes and
+useless dots removed.  The filesystem is not accessed.</p>
+
+<p>If <code>consider_symlink</code> is <code>true</code>, then a more
+conservative algorithm is used to avoid breaking symbolic linkages.  This
+may retain more <code>..</code> entries than absolutely necessary, but
+without accessing the filesystem, this can’t be avoided.  See <a
+href="Pathname.html#method-i-realpath">#realpath</a>.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-cleanpath_source')" id="l_method-i-cleanpath_source">show</a>
+                
+              </p>
+              <div id="method-i-cleanpath_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/pathname/lib/pathname.rb, line 85</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">cleanpath</span>(<span class="ruby-identifier">consider_symlink</span>=<span class="ruby-keyword">false</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">consider_symlink</span>
+    <span class="ruby-identifier">cleanpath_conservative</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">cleanpath_aggressive</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-ctime">
+            
+              <a name="method-i-ctime"></a><b>ctime</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>File.ctime</code>.  Returns last (directory entry, not file)
+change time.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-ctime_source')" id="l_method-i-ctime_source">show</a>
+                
+              </p>
+              <div id="method-i-ctime_source" class="dyn-source">
+                <pre>static VALUE
+path_ctime(VALUE self)
+{
+    return rb_funcall(rb_cFile, rb_intern(&quot;ctime&quot;), 1, get_strpath(self));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-delete">
+            
+              <a name="method-i-delete"></a><b>delete</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Removes a file or directory, using <code>File.unlink</code> or
+<code>Dir.unlink</code> as necessary.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-delete_source')" id="l_method-i-delete_source">show</a>
+                
+              </p>
+              <div id="method-i-delete_source" class="dyn-source">
+                <pre>static VALUE
+path_unlink(VALUE self)
+{
+    VALUE eENOTDIR = rb_const_get_at(rb_mErrno, rb_intern(&quot;ENOTDIR&quot;));
+    VALUE str = get_strpath(self);
+    return rb_rescue2(unlink_body, str, unlink_rescue, str, eENOTDIR, (VALUE)0);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-descend">
+            
+              <a name="method-i-descend"></a><b>descend</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Iterates over and yields a new <a href="Pathname.html">Pathname</a> object
+for each element in the given path in descending order.</p>
+
+<pre class="ruby"><span class="ruby-constant">Pathname</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">'/path/to/some/file.rb'</span>).<span class="ruby-identifier">descend</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">p</span> <span class="ruby-identifier">v</span>}
+   <span class="ruby-comment">#&lt;Pathname:/&gt;</span>
+   <span class="ruby-comment">#&lt;Pathname:/path&gt;</span>
+   <span class="ruby-comment">#&lt;Pathname:/path/to&gt;</span>
+   <span class="ruby-comment">#&lt;Pathname:/path/to/some&gt;</span>
+   <span class="ruby-comment">#&lt;Pathname:/path/to/some/file.rb&gt;</span>
+
+<span class="ruby-constant">Pathname</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">'path/to/some/file.rb'</span>).<span class="ruby-identifier">descend</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">p</span> <span class="ruby-identifier">v</span>}
+   <span class="ruby-comment">#&lt;Pathname:path&gt;</span>
+   <span class="ruby-comment">#&lt;Pathname:path/to&gt;</span>
+   <span class="ruby-comment">#&lt;Pathname:path/to/some&gt;</span>
+   <span class="ruby-comment">#&lt;Pathname:path/to/some/file.rb&gt;</span>
+</pre>
+
+<p>It doesn’t access actual filesystem.</p>
+
+<p>This method is available since 1.8.5.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-descend_source')" id="l_method-i-descend_source">show</a>
+                
+              </p>
+              <div id="method-i-descend_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/pathname/lib/pathname.rb, line 260</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">descend</span>
+  <span class="ruby-identifier">vs</span> = []
+  <span class="ruby-identifier">ascend</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">vs</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">v</span> }
+  <span class="ruby-identifier">vs</span>.<span class="ruby-identifier">reverse_each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-keyword">yield</span> <span class="ruby-identifier">v</span> }
+  <span class="ruby-keyword">nil</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-directory-3F">
+            
+              <a name="method-i-directory-3F"></a><b>directory?</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>FileTest.directory?</code>.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-directory-3F_source')" id="l_method-i-directory-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-directory-3F_source" class="dyn-source">
+                <pre>static VALUE
+path_directory_p(VALUE self)
+{
+    return rb_funcall(rb_mFileTest, rb_intern(&quot;directory?&quot;), 1, get_strpath(self));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-dirname">
+            
+              <a name="method-i-dirname"></a><b>dirname</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>File.dirname</code>.  Returns all but the last component of the
+path.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-dirname_source')" id="l_method-i-dirname_source">show</a>
+                
+              </p>
+              <div id="method-i-dirname_source" class="dyn-source">
+                <pre>static VALUE
+path_dirname(VALUE self)
+{
+    VALUE str = get_strpath(self);
+    str = rb_funcall(rb_cFile, rb_intern(&quot;dirname&quot;), 1, str);
+    return rb_class_new_instance(1, &amp;str, rb_obj_class(self));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-each_child">
+            
+              <a name="method-i-each_child"></a><b>each_child</b>(with_directory=true, &amp;b)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Iterates over the children of the directory (files and subdirectories, not
+recursive). It yields <a href="Pathname.html">Pathname</a> object for each
+child. By default, the yielded pathnames will have enough information to
+access the files. If you set <code>with_directory</code> to
+<code>false</code>, then the returned pathnames will contain the filename
+only.</p>
+
+<pre class="ruby"><span class="ruby-constant">Pathname</span>(<span class="ruby-string">&quot;/usr/local&quot;</span>).<span class="ruby-identifier">each_child</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-identifier">p</span> <span class="ruby-identifier">f</span> }
+<span class="ruby-comment">#=&gt; #&lt;Pathname:/usr/local/share&gt;</span>
+<span class="ruby-comment">#   #&lt;Pathname:/usr/local/bin&gt;</span>
+<span class="ruby-comment">#   #&lt;Pathname:/usr/local/games&gt;</span>
+<span class="ruby-comment">#   #&lt;Pathname:/usr/local/lib&gt;</span>
+<span class="ruby-comment">#   #&lt;Pathname:/usr/local/include&gt;</span>
+<span class="ruby-comment">#   #&lt;Pathname:/usr/local/sbin&gt;</span>
+<span class="ruby-comment">#   #&lt;Pathname:/usr/local/src&gt;</span>
+<span class="ruby-comment">#   #&lt;Pathname:/usr/local/man&gt;</span>
+
+<span class="ruby-constant">Pathname</span>(<span class="ruby-string">&quot;/usr/local&quot;</span>).<span class="ruby-identifier">each_child</span>(<span class="ruby-keyword">false</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-identifier">p</span> <span class="ruby-identifier">f</span> }
+<span class="ruby-comment">#=&gt; #&lt;Pathname:share&gt;</span>
+<span class="ruby-comment">#   #&lt;Pathname:bin&gt;</span>
+<span class="ruby-comment">#   #&lt;Pathname:games&gt;</span>
+<span class="ruby-comment">#   #&lt;Pathname:lib&gt;</span>
+<span class="ruby-comment">#   #&lt;Pathname:include&gt;</span>
+<span class="ruby-comment">#   #&lt;Pathname:sbin&gt;</span>
+<span class="ruby-comment">#   #&lt;Pathname:src&gt;</span>
+<span class="ruby-comment">#   #&lt;Pathname:man&gt;</span>
+</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-each_child_source')" id="l_method-i-each_child_source">show</a>
+                
+              </p>
+              <div id="method-i-each_child_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/pathname/lib/pathname.rb, line 434</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">each_child</span>(<span class="ruby-identifier">with_directory</span>=<span class="ruby-keyword">true</span>, &amp;<span class="ruby-identifier">b</span>)
+  <span class="ruby-identifier">children</span>(<span class="ruby-identifier">with_directory</span>).<span class="ruby-identifier">each</span>(&amp;<span class="ruby-identifier">b</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-each_entry">
+            
+              <a name="method-i-each_entry"></a><b>each_entry</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Iterates over the entries (files and subdirectories) in the directory.  It
+yields a <a href="Pathname.html">Pathname</a> object for each entry.</p>
+
+<p>This method has available since 1.8.1.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-each_entry_source')" id="l_method-i-each_entry_source">show</a>
+                
+              </p>
+              <div id="method-i-each_entry_source" class="dyn-source">
+                <pre>static VALUE
+path_each_entry(VALUE self)
+{
+    VALUE args[1];
+
+    args[0] = get_strpath(self);
+    return rb_block_call(rb_cDir, rb_intern(&quot;foreach&quot;), 1, args, each_entry_i, rb_obj_class(self));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-each_filename">
+            
+              <a name="method-i-each_filename"></a><b>each_filename</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Iterates over each component of the path.</p>
+
+<pre class="ruby"><span class="ruby-constant">Pathname</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&quot;/usr/bin/ruby&quot;</span>).<span class="ruby-identifier">each_filename</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">filename</span><span class="ruby-operator">|</span> <span class="ruby-operator">...</span> }
+  <span class="ruby-comment"># yields &quot;usr&quot;, &quot;bin&quot;, and &quot;ruby&quot;.</span>
+</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-each_filename_source')" id="l_method-i-each_filename_source">show</a>
+                
+              </p>
+              <div id="method-i-each_filename_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/pathname/lib/pathname.rb, line 233</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">each_filename</span> <span class="ruby-comment"># :yield: filename</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">to_enum</span>(<span class="ruby-identifier">__method__</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">block_given?</span>
+  <span class="ruby-identifier">_</span>, <span class="ruby-identifier">names</span> = <span class="ruby-identifier">split_names</span>(<span class="ruby-ivar">@path</span>)
+  <span class="ruby-identifier">names</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">filename</span><span class="ruby-operator">|</span> <span class="ruby-keyword">yield</span> <span class="ruby-identifier">filename</span> }
+  <span class="ruby-keyword">nil</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-each_line">
+            
+              <a name="method-i-each_line"></a><b>pathname.each_line {|line| ... }
+pathname.each_line(sep=$/ [, open_args]) {|line| block }     &rarr; nil
+pathname.each_line(limit [, open_args]) {|line| block }      &rarr; nil
+pathname.each_line(sep, limit [, open_args]) {|line| block } &rarr; nil
+pathname.each_line(...)                                      &rarr; an_enumerator
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p><a href="Pathname.html#method-i-each_line">#each_line</a> iterates over the
+line in the file.  It yields a String object for each line.</p>
+
+<p>This method is availabel since 1.8.1.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-each_line_source')" id="l_method-i-each_line_source">show</a>
+                
+              </p>
+              <div id="method-i-each_line_source" class="dyn-source">
+                <pre>static VALUE
+path_each_line(int argc, VALUE *argv, VALUE self)
+{
+    VALUE args[4];
+    int n;
+
+    args[0] = get_strpath(self);
+    n = rb_scan_args(argc, argv, &quot;03&quot;, &amp;args[1], &amp;args[2], &amp;args[3]);
+    if (rb_block_given_p()) {
+        return rb_block_call(rb_cIO, rb_intern(&quot;foreach&quot;), 1+n, args, 0, 0);
+    }
+    else {
+        return rb_funcall2(rb_cIO, rb_intern(&quot;foreach&quot;), 1+n, args);
+    }
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-entries">
+            
+              <a name="method-i-entries"></a><b>entries</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Return the entries (files and subdirectories) in the directory, each as a
+<a href="Pathname.html">Pathname</a> object.</p>
+
+<p>The result may contain the current directory #&lt;Pathname:.&gt; and the
+parent directory #&lt;Pathname:..&gt;.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-entries_source')" id="l_method-i-entries_source">show</a>
+                
+              </p>
+              <div id="method-i-entries_source" class="dyn-source">
+                <pre>static VALUE
+path_entries(VALUE self)
+{
+    VALUE klass, str, ary;
+    long i;
+    klass = rb_obj_class(self);
+    str = get_strpath(self);
+    ary = rb_funcall(rb_cDir, rb_intern(&quot;entries&quot;), 1, str);
+    ary = rb_convert_type(ary, T_ARRAY, &quot;Array&quot;, &quot;to_ary&quot;);
+    for (i = 0; i &lt; RARRAY_LEN(ary); i++) {
+        VALUE elt = RARRAY_PTR(ary)[i];
+        elt = rb_class_new_instance(1, &amp;elt, klass);
+        rb_ary_store(ary, i, elt);
+    }
+    return ary;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-eql-3F">
+            
+              <a name="method-i-eql-3F"></a><b>eql?</b>(p1)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Compare this pathname with <code>other</code>.  The comparison is
+string-based. Be aware that two different paths (<code>foo.txt</code> and
+<code>./foo.txt</code>) can refer to the same file.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-eql-3F_source')" id="l_method-i-eql-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-eql-3F_source" class="dyn-source">
+                <pre>static VALUE
+path_eq(VALUE self, VALUE other)
+{
+    if (!rb_obj_is_kind_of(other, rb_cPathname))
+        return Qfalse;
+    return rb_str_equal(get_strpath(self), get_strpath(other));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-executable-3F">
+            
+              <a name="method-i-executable-3F"></a><b>executable?</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>FileTest.executable?</code>.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-executable-3F_source')" id="l_method-i-executable-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-executable-3F_source" class="dyn-source">
+                <pre>static VALUE
+path_executable_p(VALUE self)
+{
+    return rb_funcall(rb_mFileTest, rb_intern(&quot;executable?&quot;), 1, get_strpath(self));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-executable_real-3F">
+            
+              <a name="method-i-executable_real-3F"></a><b>executable_real?</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>FileTest.executable_real?</code>.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-executable_real-3F_source')" id="l_method-i-executable_real-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-executable_real-3F_source" class="dyn-source">
+                <pre>static VALUE
+path_executable_real_p(VALUE self)
+{
+    return rb_funcall(rb_mFileTest, rb_intern(&quot;executable_real?&quot;), 1, get_strpath(self));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-exist-3F">
+            
+              <a name="method-i-exist-3F"></a><b>exist?</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>FileTest.exist?</code>.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-exist-3F_source')" id="l_method-i-exist-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-exist-3F_source" class="dyn-source">
+                <pre>static VALUE
+path_exist_p(VALUE self)
+{
+    return rb_funcall(rb_mFileTest, rb_intern(&quot;exist?&quot;), 1, get_strpath(self));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-expand_path">
+            
+              <a name="method-i-expand_path"></a><b>expand_path</b>(p1 = v1)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>File.expand_path</code>.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-expand_path_source')" id="l_method-i-expand_path_source">show</a>
+                
+              </p>
+              <div id="method-i-expand_path_source" class="dyn-source">
+                <pre>static VALUE
+path_expand_path(int argc, VALUE *argv, VALUE self)
+{
+    VALUE str = get_strpath(self);
+    VALUE dname;
+    if (rb_scan_args(argc, argv, &quot;01&quot;, &amp;dname) == 0)
+        str = rb_funcall(rb_cFile, rb_intern(&quot;expand_path&quot;), 1, str);
+    else
+        str = rb_funcall(rb_cFile, rb_intern(&quot;expand_path&quot;), 2, str, dname);
+    return rb_class_new_instance(1, &amp;str, rb_obj_class(self));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-extname">
+            
+              <a name="method-i-extname"></a><b>extname</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>File.extname</code>.  Returns the file’s extension.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-extname_source')" id="l_method-i-extname_source">show</a>
+                
+              </p>
+              <div id="method-i-extname_source" class="dyn-source">
+                <pre>static VALUE
+path_extname(VALUE self)
+{
+    VALUE str = get_strpath(self);
+    return rb_funcall(rb_cFile, rb_intern(&quot;extname&quot;), 1, str);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-file-3F">
+            
+              <a name="method-i-file-3F"></a><b>file?</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>FileTest.file?</code>.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-file-3F_source')" id="l_method-i-file-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-file-3F_source" class="dyn-source">
+                <pre>static VALUE
+path_file_p(VALUE self)
+{
+    return rb_funcall(rb_mFileTest, rb_intern(&quot;file?&quot;), 1, get_strpath(self));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-find">
+            
+              <a name="method-i-find"></a><b>find</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p><a href="Pathname.html#method-i-find">#find</a> is an iterator to traverse
+a directory tree in a depth first manner.  It yields a <a
+href="Pathname.html">Pathname</a> for each file under “this” directory.</p>
+
+<p>Since it is implemented by <code>find.rb</code>, <code>Find.prune</code>
+can be used to control the traversal.</p>
+
+<p>If <code>self</code> is <code>.</code>, yielded pathnames begin with a
+filename in the current directory, not <code>./</code>.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-find_source')" id="l_method-i-find_source">show</a>
+                
+              </p>
+              <div id="method-i-find_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/pathname/lib/pathname.rb, line 498</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">find</span>(&amp;<span class="ruby-identifier">block</span>) <span class="ruby-comment"># :yield: pathname</span>
+  <span class="ruby-identifier">require</span> <span class="ruby-string">'find'</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@path</span> <span class="ruby-operator">==</span> <span class="ruby-string">'.'</span>
+    <span class="ruby-constant">Find</span>.<span class="ruby-identifier">find</span>(<span class="ruby-ivar">@path</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-keyword">yield</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">f</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-regexp">%r{\A\./}</span>, <span class="ruby-string">''</span>)) }
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-constant">Find</span>.<span class="ruby-identifier">find</span>(<span class="ruby-ivar">@path</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-keyword">yield</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">f</span>) }
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-fnmatch">
+            
+              <a name="method-i-fnmatch"></a><b>pathname.fnmatch(pattern, [flags])        &rarr; string
+pathname.fnmatch?(pattern, [flags])       &rarr; string
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>File.fnmatch</code>.  Return <code>true</code> if the receiver
+matches the given pattern.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-fnmatch_source')" id="l_method-i-fnmatch_source">show</a>
+                
+              </p>
+              <div id="method-i-fnmatch_source" class="dyn-source">
+                <pre>static VALUE
+path_fnmatch(int argc, VALUE *argv, VALUE self)
+{
+    VALUE str = get_strpath(self);
+    VALUE pattern, flags;
+    if (rb_scan_args(argc, argv, &quot;11&quot;, &amp;pattern, &amp;flags) == 1)
+        return rb_funcall(rb_cFile, rb_intern(&quot;fnmatch&quot;), 2, pattern, str);
+    else
+        return rb_funcall(rb_cFile, rb_intern(&quot;fnmatch&quot;), 3, pattern, str, flags);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-fnmatch-3F">
+            
+              <a name="method-i-fnmatch-3F"></a><b>pathname.fnmatch(pattern, [flags])        &rarr; string
+pathname.fnmatch?(pattern, [flags])       &rarr; string
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>File.fnmatch</code>.  Return <code>true</code> if the receiver
+matches the given pattern.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-fnmatch-3F_source')" id="l_method-i-fnmatch-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-fnmatch-3F_source" class="dyn-source">
+                <pre>static VALUE
+path_fnmatch(int argc, VALUE *argv, VALUE self)
+{
+    VALUE str = get_strpath(self);
+    VALUE pattern, flags;
+    if (rb_scan_args(argc, argv, &quot;11&quot;, &amp;pattern, &amp;flags) == 1)
+        return rb_funcall(rb_cFile, rb_intern(&quot;fnmatch&quot;), 2, pattern, str);
+    else
+        return rb_funcall(rb_cFile, rb_intern(&quot;fnmatch&quot;), 3, pattern, str, flags);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-freeze">
+            
+              <a name="method-i-freeze"></a><b>freeze</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-freeze_source')" id="l_method-i-freeze_source">show</a>
+                
+              </p>
+              <div id="method-i-freeze_source" class="dyn-source">
+                <pre>static VALUE
+path_freeze(VALUE self)
+{
+    rb_call_super(0, 0);
+    rb_str_freeze(get_strpath(self));
+    return self;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-ftype">
+            
+              <a name="method-i-ftype"></a><b>ftype</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>File.ftype</code>.  Returns “type” of file (“file”, “directory”,
+etc).</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-ftype_source')" id="l_method-i-ftype_source">show</a>
+                
+              </p>
+              <div id="method-i-ftype_source" class="dyn-source">
+                <pre>static VALUE
+path_ftype(VALUE self)
+{
+    return rb_funcall(rb_cFile, rb_intern(&quot;ftype&quot;), 1, get_strpath(self));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-grpowned-3F">
+            
+              <a name="method-i-grpowned-3F"></a><b>grpowned?</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>FileTest.grpowned?</code>.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-grpowned-3F_source')" id="l_method-i-grpowned-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-grpowned-3F_source" class="dyn-source">
+                <pre>static VALUE
+path_grpowned_p(VALUE self)
+{
+    return rb_funcall(rb_mFileTest, rb_intern(&quot;grpowned?&quot;), 1, get_strpath(self));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-join">
+            
+              <a name="method-i-join"></a><b>join</b>(*args)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p><a href="Pathname.html#method-i-join">#join</a> joins pathnames.</p>
+
+<p><code>path0.join(path1, ..., pathN)</code> is the same as <code>path0 +
+path1 + ... + pathN</code>.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-join_source')" id="l_method-i-join_source">show</a>
+                
+              </p>
+              <div id="method-i-join_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/pathname/lib/pathname.rb, line 360</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">join</span>(*<span class="ruby-identifier">args</span>)
+  <span class="ruby-identifier">args</span>.<span class="ruby-identifier">unshift</span> <span class="ruby-keyword">self</span>
+  <span class="ruby-identifier">result</span> = <span class="ruby-identifier">args</span>.<span class="ruby-identifier">pop</span>
+  <span class="ruby-identifier">result</span> = <span class="ruby-constant">Pathname</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">result</span>) <span class="ruby-keyword">unless</span> <span class="ruby-constant">Pathname</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">result</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">result</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">result</span>.<span class="ruby-identifier">absolute?</span>
+  <span class="ruby-identifier">args</span>.<span class="ruby-identifier">reverse_each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">arg</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">arg</span> = <span class="ruby-constant">Pathname</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">arg</span>) <span class="ruby-keyword">unless</span> <span class="ruby-constant">Pathname</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">arg</span>
+    <span class="ruby-identifier">result</span> = <span class="ruby-identifier">arg</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">result</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-identifier">result</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">result</span>.<span class="ruby-identifier">absolute?</span>
+  }
+  <span class="ruby-identifier">result</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-lchmod">
+            
+              <a name="method-i-lchmod"></a><b>lchmod</b>(p1)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>File.lchmod</code>.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-lchmod_source')" id="l_method-i-lchmod_source">show</a>
+                
+              </p>
+              <div id="method-i-lchmod_source" class="dyn-source">
+                <pre>static VALUE
+path_lchmod(VALUE self, VALUE mode)
+{
+    return rb_funcall(rb_cFile, rb_intern(&quot;lchmod&quot;), 2, mode, get_strpath(self));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-lchown">
+            
+              <a name="method-i-lchown"></a><b>lchown</b>(p1, p2)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>File.lchown</code>.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-lchown_source')" id="l_method-i-lchown_source">show</a>
+                
+              </p>
+              <div id="method-i-lchown_source" class="dyn-source">
+                <pre>static VALUE
+path_lchown(VALUE self, VALUE owner, VALUE group)
+{
+    return rb_funcall(rb_cFile, rb_intern(&quot;lchown&quot;), 3, owner, group, get_strpath(self));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-lstat">
+            
+              <a name="method-i-lstat"></a><b>lstat</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>File.lstat</code>.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-lstat_source')" id="l_method-i-lstat_source">show</a>
+                
+              </p>
+              <div id="method-i-lstat_source" class="dyn-source">
+                <pre>static VALUE
+path_lstat(VALUE self)
+{
+    return rb_funcall(rb_cFile, rb_intern(&quot;lstat&quot;), 1, get_strpath(self));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-make_link">
+            
+              <a name="method-i-make_link"></a><b>pathname.make_link(old)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>File.link</code>.  Creates a hard link at <em>pathname</em>.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-make_link_source')" id="l_method-i-make_link_source">show</a>
+                
+              </p>
+              <div id="method-i-make_link_source" class="dyn-source">
+                <pre>static VALUE
+path_make_link(VALUE self, VALUE old)
+{
+    return rb_funcall(rb_cFile, rb_intern(&quot;link&quot;), 2, old, get_strpath(self));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-make_symlink">
+            
+              <a name="method-i-make_symlink"></a><b>pathname.make_symlink(old)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>File.symlink</code>.  Creates a symbolic link.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-make_symlink_source')" id="l_method-i-make_symlink_source">show</a>
+                
+              </p>
+              <div id="method-i-make_symlink_source" class="dyn-source">
+                <pre>static VALUE
+path_make_symlink(VALUE self, VALUE old)
+{
+    return rb_funcall(rb_cFile, rb_intern(&quot;symlink&quot;), 2, old, get_strpath(self));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-mkdir">
+            
+              <a name="method-i-mkdir"></a><b>mkdir</b>(p1 = v1)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>Dir.mkdir</code>.  Create the referenced directory.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-mkdir_source')" id="l_method-i-mkdir_source">show</a>
+                
+              </p>
+              <div id="method-i-mkdir_source" class="dyn-source">
+                <pre>static VALUE
+path_mkdir(int argc, VALUE *argv, VALUE self)
+{
+    VALUE str = get_strpath(self);
+    VALUE vmode;
+    if (rb_scan_args(argc, argv, &quot;01&quot;, &amp;vmode) == 0)
+        return rb_funcall(rb_cDir, rb_intern(&quot;mkdir&quot;), 1, str);
+    else
+        return rb_funcall(rb_cDir, rb_intern(&quot;mkdir&quot;), 2, str, vmode);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-mkpath">
+            
+              <a name="method-i-mkpath"></a><b>mkpath</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>FileUtils.mkpath</code>.  Creates a full path, including any
+intermediate directories that don’t yet exist.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-mkpath_source')" id="l_method-i-mkpath_source">show</a>
+                
+              </p>
+              <div id="method-i-mkpath_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/pathname/lib/pathname.rb, line 512</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">mkpath</span>
+  <span class="ruby-identifier">require</span> <span class="ruby-string">'fileutils'</span>
+  <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mkpath</span>(<span class="ruby-ivar">@path</span>)
+  <span class="ruby-keyword">nil</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-mountpoint-3F">
+            
+              <a name="method-i-mountpoint-3F"></a><b>mountpoint?</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>mountpoint? returns <code>true</code> if <code>self</code> points to a
+mountpoint.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-mountpoint-3F_source')" id="l_method-i-mountpoint-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-mountpoint-3F_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/pathname/lib/pathname.rb, line 190</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">mountpoint?</span>
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-identifier">stat1</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">lstat</span>
+    <span class="ruby-identifier">stat2</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">parent</span>.<span class="ruby-identifier">lstat</span>
+    <span class="ruby-identifier">stat1</span>.<span class="ruby-identifier">dev</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">stat2</span>.<span class="ruby-identifier">dev</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">stat1</span>.<span class="ruby-identifier">ino</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">stat2</span>.<span class="ruby-identifier">ino</span> <span class="ruby-operator">||</span>
+      <span class="ruby-identifier">stat1</span>.<span class="ruby-identifier">dev</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">stat2</span>.<span class="ruby-identifier">dev</span>
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">ENOENT</span>
+    <span class="ruby-keyword">false</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-mtime">
+            
+              <a name="method-i-mtime"></a><b>mtime</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>File.mtime</code>.  Returns last modification time.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-mtime_source')" id="l_method-i-mtime_source">show</a>
+                
+              </p>
+              <div id="method-i-mtime_source" class="dyn-source">
+                <pre>static VALUE
+path_mtime(VALUE self)
+{
+    return rb_funcall(rb_cFile, rb_intern(&quot;mtime&quot;), 1, get_strpath(self));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-open">
+            
+              <a name="method-i-open"></a><b>open</b>(p1 = v1, p2 = v2, p3 = v3)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>File.open</code>.  Opens the file for reading or writing.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-open_source')" id="l_method-i-open_source">show</a>
+                
+              </p>
+              <div id="method-i-open_source" class="dyn-source">
+                <pre>static VALUE
+path_open(int argc, VALUE *argv, VALUE self)
+{
+    VALUE args[4];
+    int n;
+
+    args[0] = get_strpath(self);
+    n = rb_scan_args(argc, argv, &quot;03&quot;, &amp;args[1], &amp;args[2], &amp;args[3]);
+    if (rb_block_given_p()) {
+        return rb_block_call(rb_cFile, rb_intern(&quot;open&quot;), 1+n, args, 0, 0);
+    }
+    else {
+        return rb_funcall2(rb_cFile, rb_intern(&quot;open&quot;), 1+n, args);
+    }
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-opendir">
+            
+              <a name="method-i-opendir"></a><b>opendir</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>Dir.open</code>.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-opendir_source')" id="l_method-i-opendir_source">show</a>
+                
+              </p>
+              <div id="method-i-opendir_source" class="dyn-source">
+                <pre>static VALUE
+path_opendir(VALUE self)
+{
+    VALUE args[1];
+
+    args[0] = get_strpath(self);
+    return rb_block_call(rb_cDir, rb_intern(&quot;open&quot;), 1, args, 0, 0);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-owned-3F">
+            
+              <a name="method-i-owned-3F"></a><b>owned?</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>FileTest.owned?</code>.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-owned-3F_source')" id="l_method-i-owned-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-owned-3F_source" class="dyn-source">
+                <pre>static VALUE
+path_owned_p(VALUE self)
+{
+    return rb_funcall(rb_mFileTest, rb_intern(&quot;owned?&quot;), 1, get_strpath(self));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-parent">
+            
+              <a name="method-i-parent"></a><b>parent</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p><a href="Pathname.html#method-i-parent">#parent</a> returns the parent
+directory.</p>
+
+<p>This is same as <code>self + '..'</code>.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-parent_source')" id="l_method-i-parent_source">show</a>
+                
+              </p>
+              <div id="method-i-parent_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/pathname/lib/pathname.rb, line 185</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">parent</span>
+  <span class="ruby-keyword">self</span> <span class="ruby-operator">+</span> <span class="ruby-string">'..'</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-pipe-3F">
+            
+              <a name="method-i-pipe-3F"></a><b>pipe?</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>FileTest.pipe?</code>.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-pipe-3F_source')" id="l_method-i-pipe-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-pipe-3F_source" class="dyn-source">
+                <pre>static VALUE
+path_pipe_p(VALUE self)
+{
+    return rb_funcall(rb_mFileTest, rb_intern(&quot;pipe?&quot;), 1, get_strpath(self));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-read">
+            
+              <a name="method-i-read"></a><b>pathname.read([length [, offset]]) &rarr; string
+pathname.read([length [, offset]], open_args) &rarr; string
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>IO.read</code>.  Returns all data from the file, or the first
+<code>N</code> bytes if specified.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-read_source')" id="l_method-i-read_source">show</a>
+                
+              </p>
+              <div id="method-i-read_source" class="dyn-source">
+                <pre>static VALUE
+path_read(int argc, VALUE *argv, VALUE self)
+{
+    VALUE args[4];
+    int n;
+
+    args[0] = get_strpath(self);
+    n = rb_scan_args(argc, argv, &quot;03&quot;, &amp;args[1], &amp;args[2], &amp;args[3]);
+    return rb_funcall2(rb_cIO, rb_intern(&quot;read&quot;), 1+n, args);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-readable-3F">
+            
+              <a name="method-i-readable-3F"></a><b>readable?</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>FileTest.readable?</code>.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-readable-3F_source')" id="l_method-i-readable-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-readable-3F_source" class="dyn-source">
+                <pre>static VALUE
+path_readable_p(VALUE self)
+{
+    return rb_funcall(rb_mFileTest, rb_intern(&quot;readable?&quot;), 1, get_strpath(self));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-readable_real-3F">
+            
+              <a name="method-i-readable_real-3F"></a><b>readable_real?</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>FileTest.readable_real?</code>.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-readable_real-3F_source')" id="l_method-i-readable_real-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-readable_real-3F_source" class="dyn-source">
+                <pre>static VALUE
+path_readable_real_p(VALUE self)
+{
+    return rb_funcall(rb_mFileTest, rb_intern(&quot;readable_real?&quot;), 1, get_strpath(self));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-readlines">
+            
+              <a name="method-i-readlines"></a><b>pathname.readlines(sep=$/ [, open_args])     &rarr; array
+pathname.readlines(limit [, open_args])      &rarr; array
+pathname.readlines(sep, limit [, open_args]) &rarr; array
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>IO.readlines</code>.  Returns all the lines from the file.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-readlines_source')" id="l_method-i-readlines_source">show</a>
+                
+              </p>
+              <div id="method-i-readlines_source" class="dyn-source">
+                <pre>static VALUE
+path_readlines(int argc, VALUE *argv, VALUE self)
+{
+    VALUE args[4];
+    int n;
+
+    args[0] = get_strpath(self);
+    n = rb_scan_args(argc, argv, &quot;03&quot;, &amp;args[1], &amp;args[2], &amp;args[3]);
+    return rb_funcall2(rb_cIO, rb_intern(&quot;readlines&quot;), 1+n, args);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-readlink">
+            
+              <a name="method-i-readlink"></a><b>readlink</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>File.readlink</code>.  Read symbolic link.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-readlink_source')" id="l_method-i-readlink_source">show</a>
+                
+              </p>
+              <div id="method-i-readlink_source" class="dyn-source">
+                <pre>static VALUE
+path_readlink(VALUE self)
+{
+    VALUE str;
+    str = rb_funcall(rb_cFile, rb_intern(&quot;readlink&quot;), 1, get_strpath(self));
+    return rb_class_new_instance(1, &amp;str, rb_obj_class(self));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-realdirpath">
+            
+              <a name="method-i-realdirpath"></a><b>realdirpath</b>(p1 = v1)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the real (absolute) pathname of <code>self</code> in the actual
+filesystem. The real pathname doesn’t contain symlinks or useless dots.</p>
+
+<p>The last component of the real pathname can be nonexistent.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-realdirpath_source')" id="l_method-i-realdirpath_source">show</a>
+                
+              </p>
+              <div id="method-i-realdirpath_source" class="dyn-source">
+                <pre>static VALUE
+path_realdirpath(int argc, VALUE *argv, VALUE self)
+{
+    VALUE basedir, str;
+    rb_scan_args(argc, argv, &quot;01&quot;, &amp;basedir);
+    str = rb_funcall(rb_cFile, rb_intern(&quot;realdirpath&quot;), 2, get_strpath(self), basedir);
+    return rb_class_new_instance(1, &amp;str, rb_obj_class(self));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-realpath">
+            
+              <a name="method-i-realpath"></a><b>realpath</b>(p1 = v1)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the real (absolute) pathname of <code>self</code> in the actual
+filesystem not containing symlinks or useless dots.</p>
+
+<p>All components of the pathname must exist when this method is called.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-realpath_source')" id="l_method-i-realpath_source">show</a>
+                
+              </p>
+              <div id="method-i-realpath_source" class="dyn-source">
+                <pre>static VALUE
+path_realpath(int argc, VALUE *argv, VALUE self)
+{
+    VALUE basedir, str;
+    rb_scan_args(argc, argv, &quot;01&quot;, &amp;basedir);
+    str = rb_funcall(rb_cFile, rb_intern(&quot;realpath&quot;), 2, get_strpath(self), basedir);
+    return rb_class_new_instance(1, &amp;str, rb_obj_class(self));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-relative-3F">
+            
+              <a name="method-i-relative-3F"></a><b>relative?</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>The opposite of <a href="Pathname.html#method-i-absolute-3F">#absolute?</a></p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-relative-3F_source')" id="l_method-i-relative-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-relative-3F_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/pathname/lib/pathname.rb, line 219</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">relative?</span>
+  <span class="ruby-identifier">path</span> = <span class="ruby-ivar">@path</span>
+  <span class="ruby-keyword">while</span> <span class="ruby-identifier">r</span> = <span class="ruby-identifier">chop_basename</span>(<span class="ruby-identifier">path</span>)
+    <span class="ruby-identifier">path</span>, = <span class="ruby-identifier">r</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">path</span> <span class="ruby-operator">==</span> <span class="ruby-string">''</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-relative_path_from">
+            
+              <a name="method-i-relative_path_from"></a><b>relative_path_from</b>(base_directory)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p><a href="Pathname.html#method-i-relative_path_from">#relative_path_from</a>
+returns a relative path from the argument to the receiver.  If
+<code>self</code> is absolute, the argument must be absolute too.  If
+<code>self</code> is relative, the argument must be relative too.</p>
+
+<p><a href="Pathname.html#method-i-relative_path_from">#relative_path_from</a>
+doesn’t access the filesystem.  It assumes no symlinks.</p>
+
+<p><a href="ArgumentError.html">ArgumentError</a> is raised when it cannot
+find a relative path.</p>
+
+<p>This method has existed since 1.8.1.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-relative_path_from_source')" id="l_method-i-relative_path_from_source">show</a>
+                
+              </p>
+              <div id="method-i-relative_path_from_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/pathname/lib/pathname.rb, line 449</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">relative_path_from</span>(<span class="ruby-identifier">base_directory</span>)
+  <span class="ruby-identifier">dest_directory</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">cleanpath</span>.<span class="ruby-identifier">to_s</span>
+  <span class="ruby-identifier">base_directory</span> = <span class="ruby-identifier">base_directory</span>.<span class="ruby-identifier">cleanpath</span>.<span class="ruby-identifier">to_s</span>
+  <span class="ruby-identifier">dest_prefix</span> = <span class="ruby-identifier">dest_directory</span>
+  <span class="ruby-identifier">dest_names</span> = []
+  <span class="ruby-keyword">while</span> <span class="ruby-identifier">r</span> = <span class="ruby-identifier">chop_basename</span>(<span class="ruby-identifier">dest_prefix</span>)
+    <span class="ruby-identifier">dest_prefix</span>, <span class="ruby-identifier">basename</span> = <span class="ruby-identifier">r</span>
+    <span class="ruby-identifier">dest_names</span>.<span class="ruby-identifier">unshift</span> <span class="ruby-identifier">basename</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">basename</span> <span class="ruby-operator">!=</span> <span class="ruby-string">'.'</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">base_prefix</span> = <span class="ruby-identifier">base_directory</span>
+  <span class="ruby-identifier">base_names</span> = []
+  <span class="ruby-keyword">while</span> <span class="ruby-identifier">r</span> = <span class="ruby-identifier">chop_basename</span>(<span class="ruby-identifier">base_prefix</span>)
+    <span class="ruby-identifier">base_prefix</span>, <span class="ruby-identifier">basename</span> = <span class="ruby-identifier">r</span>
+    <span class="ruby-identifier">base_names</span>.<span class="ruby-identifier">unshift</span> <span class="ruby-identifier">basename</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">basename</span> <span class="ruby-operator">!=</span> <span class="ruby-string">'.'</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">unless</span> <span class="ruby-constant">SAME_PATHS</span>[<span class="ruby-identifier">dest_prefix</span>, <span class="ruby-identifier">base_prefix</span>]
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;different prefix: #{dest_prefix.inspect} and #{base_directory.inspect}&quot;</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">while</span> <span class="ruby-operator">!</span><span class="ruby-identifier">dest_names</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-operator">&amp;&amp;</span>
+        <span class="ruby-operator">!</span><span class="ruby-identifier">base_names</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-operator">&amp;&amp;</span>
+        <span class="ruby-constant">SAME_PATHS</span>[<span class="ruby-identifier">dest_names</span>.<span class="ruby-identifier">first</span>, <span class="ruby-identifier">base_names</span>.<span class="ruby-identifier">first</span>]
+    <span class="ruby-identifier">dest_names</span>.<span class="ruby-identifier">shift</span>
+    <span class="ruby-identifier">base_names</span>.<span class="ruby-identifier">shift</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">base_names</span>.<span class="ruby-identifier">include?</span> <span class="ruby-string">'..'</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;base_directory has ..: #{base_directory.inspect}&quot;</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">base_names</span>.<span class="ruby-identifier">fill</span>(<span class="ruby-string">'..'</span>)
+  <span class="ruby-identifier">relpath_names</span> = <span class="ruby-identifier">base_names</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">dest_names</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">relpath_names</span>.<span class="ruby-identifier">empty?</span>
+    <span class="ruby-constant">Pathname</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">'.'</span>)
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-constant">Pathname</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(*<span class="ruby-identifier">relpath_names</span>))
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-rename">
+            
+              <a name="method-i-rename"></a><b>rename</b>(p1)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>File.rename</code>.  Rename the file.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-rename_source')" id="l_method-i-rename_source">show</a>
+                
+              </p>
+              <div id="method-i-rename_source" class="dyn-source">
+                <pre>static VALUE
+path_rename(VALUE self, VALUE to)
+{
+    return rb_funcall(rb_cFile, rb_intern(&quot;rename&quot;), 2, get_strpath(self), to);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-rmdir">
+            
+              <a name="method-i-rmdir"></a><b>rmdir</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>Dir.rmdir</code>.  Remove the referenced directory.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-rmdir_source')" id="l_method-i-rmdir_source">show</a>
+                
+              </p>
+              <div id="method-i-rmdir_source" class="dyn-source">
+                <pre>static VALUE
+path_rmdir(VALUE self)
+{
+    return rb_funcall(rb_cDir, rb_intern(&quot;rmdir&quot;), 1, get_strpath(self));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-rmtree">
+            
+              <a name="method-i-rmtree"></a><b>rmtree</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>FileUtils.rm_r</code>.  Deletes a directory and all beneath it.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-rmtree_source')" id="l_method-i-rmtree_source">show</a>
+                
+              </p>
+              <div id="method-i-rmtree_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/pathname/lib/pathname.rb, line 519</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">rmtree</span>
+  <span class="ruby-comment"># The name &quot;rmtree&quot; is borrowed from File::Path of Perl.</span>
+  <span class="ruby-comment"># File::Path provides &quot;mkpath&quot; and &quot;rmtree&quot;.</span>
+  <span class="ruby-identifier">require</span> <span class="ruby-string">'fileutils'</span>
+  <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">rm_r</span>(<span class="ruby-ivar">@path</span>)
+  <span class="ruby-keyword">nil</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-root-3F">
+            
+              <a name="method-i-root-3F"></a><b>root?</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p><a href="Pathname.html#method-i-root-3F">#root?</a> is a predicate for root
+directories.  I.e. it returns <code>true</code> if the pathname consists of
+consecutive slashes.</p>
+
+<p>It doesn’t access actual filesystem.  So it may return <code>false</code>
+for some pathnames which points to roots such as <code>/usr/..</code>.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-root-3F_source')" id="l_method-i-root-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-root-3F_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/pathname/lib/pathname.rb, line 208</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">root?</span>
+  <span class="ruby-operator">!</span><span class="ruby-operator">!</span>(<span class="ruby-identifier">chop_basename</span>(<span class="ruby-ivar">@path</span>) <span class="ruby-operator">==</span> <span class="ruby-keyword">nil</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-node">/#{SEPARATOR_PAT}/</span> <span class="ruby-operator">=~</span> <span class="ruby-ivar">@path</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-setgid-3F">
+            
+              <a name="method-i-setgid-3F"></a><b>setgid?</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>FileTest.setgid?</code>.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-setgid-3F_source')" id="l_method-i-setgid-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-setgid-3F_source" class="dyn-source">
+                <pre>static VALUE
+path_setgid_p(VALUE self)
+{
+    return rb_funcall(rb_mFileTest, rb_intern(&quot;setgid?&quot;), 1, get_strpath(self));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-setuid-3F">
+            
+              <a name="method-i-setuid-3F"></a><b>setuid?</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>FileTest.setuid?</code>.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-setuid-3F_source')" id="l_method-i-setuid-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-setuid-3F_source" class="dyn-source">
+                <pre>static VALUE
+path_setuid_p(VALUE self)
+{
+    return rb_funcall(rb_mFileTest, rb_intern(&quot;setuid?&quot;), 1, get_strpath(self));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-size">
+            
+              <a name="method-i-size"></a><b>size</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>FileTest.size</code>.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-size_source')" id="l_method-i-size_source">show</a>
+                
+              </p>
+              <div id="method-i-size_source" class="dyn-source">
+                <pre>static VALUE
+path_size(VALUE self)
+{
+    return rb_funcall(rb_mFileTest, rb_intern(&quot;size&quot;), 1, get_strpath(self));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-size-3F">
+            
+              <a name="method-i-size-3F"></a><b>size?</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>FileTest.size?</code>.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-size-3F_source')" id="l_method-i-size-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-size-3F_source" class="dyn-source">
+                <pre>static VALUE
+path_size_p(VALUE self)
+{
+    return rb_funcall(rb_mFileTest, rb_intern(&quot;size?&quot;), 1, get_strpath(self));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-socket-3F">
+            
+              <a name="method-i-socket-3F"></a><b>socket?</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>FileTest.socket?</code>.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-socket-3F_source')" id="l_method-i-socket-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-socket-3F_source" class="dyn-source">
+                <pre>static VALUE
+path_socket_p(VALUE self)
+{
+    return rb_funcall(rb_mFileTest, rb_intern(&quot;socket?&quot;), 1, get_strpath(self));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-split">
+            
+              <a name="method-i-split"></a><b>split</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>File.split</code>.  Returns the <a
+href="Pathname.html#method-i-dirname">#dirname</a> and the <a
+href="Pathname.html#method-i-basename">#basename</a> in an Array.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-split_source')" id="l_method-i-split_source">show</a>
+                
+              </p>
+              <div id="method-i-split_source" class="dyn-source">
+                <pre>static VALUE
+path_split(VALUE self)
+{
+    VALUE str = get_strpath(self);
+    VALUE ary, dirname, basename;
+    ary = rb_funcall(rb_cFile, rb_intern(&quot;split&quot;), 1, str);
+    ary = rb_check_array_type(ary);
+    dirname = rb_ary_entry(ary, 0);
+    basename = rb_ary_entry(ary, 1);
+    dirname = rb_class_new_instance(1, &amp;dirname, rb_obj_class(self));
+    basename = rb_class_new_instance(1, &amp;basename, rb_obj_class(self));
+    return rb_ary_new3(2, dirname, basename);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-stat">
+            
+              <a name="method-i-stat"></a><b>stat</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>File.stat</code>.  Returns a <code>File::Stat</code> object.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-stat_source')" id="l_method-i-stat_source">show</a>
+                
+              </p>
+              <div id="method-i-stat_source" class="dyn-source">
+                <pre>static VALUE
+path_stat(VALUE self)
+{
+    return rb_funcall(rb_cFile, rb_intern(&quot;stat&quot;), 1, get_strpath(self));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-sticky-3F">
+            
+              <a name="method-i-sticky-3F"></a><b>sticky?</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>FileTest.sticky?</code>.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-sticky-3F_source')" id="l_method-i-sticky-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-sticky-3F_source" class="dyn-source">
+                <pre>static VALUE
+path_sticky_p(VALUE self)
+{
+    return rb_funcall(rb_mFileTest, rb_intern(&quot;sticky?&quot;), 1, get_strpath(self));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-sub">
+            
+              <a name="method-i-sub"></a><b>sub</b>(*args)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Return a pathname which is substituted by <a
+href="String.html#method-i-sub">String#sub</a>.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-sub_source')" id="l_method-i-sub_source">show</a>
+                
+              </p>
+              <div id="method-i-sub_source" class="dyn-source">
+                <pre>static VALUE
+path_sub(int argc, VALUE *argv, VALUE self)
+{
+    VALUE str = get_strpath(self);
+
+    if (rb_block_given_p()) {
+        str = rb_block_call(str, rb_intern(&quot;sub&quot;), argc, argv, 0, 0);
+    }
+    else {
+        str = rb_funcall2(str, rb_intern(&quot;sub&quot;), argc, argv);
+    }
+    return rb_class_new_instance(1, &amp;str, rb_obj_class(self));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-sub_ext">
+            
+              <a name="method-i-sub_ext"></a><b>sub_ext</b>(p1)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Return a pathname which the extension of the basename is substituted by
+<em>repl</em>.</p>
+
+<p>If self has no extension part, <em>repl</em> is appended.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-sub_ext_source')" id="l_method-i-sub_ext_source">show</a>
+                
+              </p>
+              <div id="method-i-sub_ext_source" class="dyn-source">
+                <pre>static VALUE
+path_sub_ext(VALUE self, VALUE repl)
+{
+    VALUE str = get_strpath(self);
+    VALUE str2;
+    long extlen;
+    const char *ext;
+    const char *p;
+
+    StringValue(repl);
+    p = RSTRING_PTR(str);
+    ext = ruby_find_extname(p, &amp;extlen);
+    if (ext == NULL) {
+        ext = p + RSTRING_LEN(str);
+    }
+    else if (extlen &lt;= 1) {
+        ext += extlen;
+    }
+    str2 = rb_str_dup(str);
+    rb_str_resize(str2, ext-p);
+    rb_str_append(str2, repl);
+    OBJ_INFECT(str2, str);
+    return rb_class_new_instance(1, &amp;str2, rb_obj_class(self));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-symlink-3F">
+            
+              <a name="method-i-symlink-3F"></a><b>symlink?</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>FileTest.symlink?</code>.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-symlink-3F_source')" id="l_method-i-symlink-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-symlink-3F_source" class="dyn-source">
+                <pre>static VALUE
+path_symlink_p(VALUE self)
+{
+    return rb_funcall(rb_mFileTest, rb_intern(&quot;symlink?&quot;), 1, get_strpath(self));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-sysopen">
+            
+              <a name="method-i-sysopen"></a><b>pathname.sysopen([mode, [perm]])  &rarr; fixnum
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>IO.sysopen</code>.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-sysopen_source')" id="l_method-i-sysopen_source">show</a>
+                
+              </p>
+              <div id="method-i-sysopen_source" class="dyn-source">
+                <pre>static VALUE
+path_sysopen(int argc, VALUE *argv, VALUE self)
+{
+    VALUE args[3];
+    int n;
+
+    args[0] = get_strpath(self);
+    n = rb_scan_args(argc, argv, &quot;02&quot;, &amp;args[1], &amp;args[2]);
+    return rb_funcall2(rb_cIO, rb_intern(&quot;sysopen&quot;), 1+n, args);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-taint">
+            
+              <a name="method-i-taint"></a><b>taint</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-taint_source')" id="l_method-i-taint_source">show</a>
+                
+              </p>
+              <div id="method-i-taint_source" class="dyn-source">
+                <pre>static VALUE
+path_taint(VALUE self)
+{
+    rb_call_super(0, 0);
+    rb_obj_taint(get_strpath(self));
+    return self;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-to_path">
+            
+              <a name="method-i-to_path"></a><b>pathname.to_s             &rarr; string
+pathname.to_path          &rarr; string
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Return the path as a String.</p>
+
+<p><a href="Pathname.html#method-i-to_path">#to_path</a> is implemented so <a
+href="Pathname.html">Pathname</a> objects are usable with <a
+href="File.html#method-c-open">File.open</a>, etc.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-to_path_source')" id="l_method-i-to_path_source">show</a>
+                
+              </p>
+              <div id="method-i-to_path_source" class="dyn-source">
+                <pre>static VALUE
+path_to_s(VALUE self)
+{
+    return rb_obj_dup(get_strpath(self));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-to_s">
+            
+              <a name="method-i-to_s"></a><b>pathname.to_s             &rarr; string
+pathname.to_path          &rarr; string
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Return the path as a String.</p>
+
+<p><a href="Pathname.html#method-i-to_path">#to_path</a> is implemented so <a
+href="Pathname.html">Pathname</a> objects are usable with <a
+href="File.html#method-c-open">File.open</a>, etc.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-to_s_source')" id="l_method-i-to_s_source">show</a>
+                
+              </p>
+              <div id="method-i-to_s_source" class="dyn-source">
+                <pre>static VALUE
+path_to_s(VALUE self)
+{
+    return rb_obj_dup(get_strpath(self));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-truncate">
+            
+              <a name="method-i-truncate"></a><b>truncate</b>(p1)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>File.truncate</code>.  Truncate the file to <code>length</code>
+bytes.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-truncate_source')" id="l_method-i-truncate_source">show</a>
+                
+              </p>
+              <div id="method-i-truncate_source" class="dyn-source">
+                <pre>static VALUE
+path_truncate(VALUE self, VALUE length)
+{
+    return rb_funcall(rb_cFile, rb_intern(&quot;truncate&quot;), 2, get_strpath(self), length);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-unlink">
+            
+              <a name="method-i-unlink"></a><b>unlink</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Removes a file or directory, using <code>File.unlink</code> or
+<code>Dir.unlink</code> as necessary.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-unlink_source')" id="l_method-i-unlink_source">show</a>
+                
+              </p>
+              <div id="method-i-unlink_source" class="dyn-source">
+                <pre>static VALUE
+path_unlink(VALUE self)
+{
+    VALUE eENOTDIR = rb_const_get_at(rb_mErrno, rb_intern(&quot;ENOTDIR&quot;));
+    VALUE str = get_strpath(self);
+    return rb_rescue2(unlink_body, str, unlink_rescue, str, eENOTDIR, (VALUE)0);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-untaint">
+            
+              <a name="method-i-untaint"></a><b>untaint</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-untaint_source')" id="l_method-i-untaint_source">show</a>
+                
+              </p>
+              <div id="method-i-untaint_source" class="dyn-source">
+                <pre>static VALUE
+path_untaint(VALUE self)
+{
+    rb_call_super(0, 0);
+    rb_obj_untaint(get_strpath(self));
+    return self;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-utime">
+            
+              <a name="method-i-utime"></a><b>utime</b>(p1, p2)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>File.utime</code>.  Update the access and modification times.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-utime_source')" id="l_method-i-utime_source">show</a>
+                
+              </p>
+              <div id="method-i-utime_source" class="dyn-source">
+                <pre>static VALUE
+path_utime(VALUE self, VALUE atime, VALUE mtime)
+{
+    return rb_funcall(rb_cFile, rb_intern(&quot;utime&quot;), 3, atime, mtime, get_strpath(self));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-world_readable-3F">
+            
+              <a name="method-i-world_readable-3F"></a><b>world_readable?</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>FileTest.world_readable?</code>.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-world_readable-3F_source')" id="l_method-i-world_readable-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-world_readable-3F_source" class="dyn-source">
+                <pre>static VALUE
+path_world_readable_p(VALUE self)
+{
+    return rb_funcall(rb_mFileTest, rb_intern(&quot;world_readable?&quot;), 1, get_strpath(self));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-world_writable-3F">
+            
+              <a name="method-i-world_writable-3F"></a><b>world_writable?</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>FileTest.world_writable?</code>.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-world_writable-3F_source')" id="l_method-i-world_writable-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-world_writable-3F_source" class="dyn-source">
+                <pre>static VALUE
+path_world_writable_p(VALUE self)
+{
+    return rb_funcall(rb_mFileTest, rb_intern(&quot;world_writable?&quot;), 1, get_strpath(self));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-writable-3F">
+            
+              <a name="method-i-writable-3F"></a><b>writable?</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>FileTest.writable?</code>.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-writable-3F_source')" id="l_method-i-writable-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-writable-3F_source" class="dyn-source">
+                <pre>static VALUE
+path_writable_p(VALUE self)
+{
+    return rb_funcall(rb_mFileTest, rb_intern(&quot;writable?&quot;), 1, get_strpath(self));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-writable_real-3F">
+            
+              <a name="method-i-writable_real-3F"></a><b>writable_real?</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>FileTest.writable_real?</code>.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-writable_real-3F_source')" id="l_method-i-writable_real-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-writable_real-3F_source" class="dyn-source">
+                <pre>static VALUE
+path_writable_real_p(VALUE self)
+{
+    return rb_funcall(rb_mFileTest, rb_intern(&quot;writable_real?&quot;), 1, get_strpath(self));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-zero-3F">
+            
+              <a name="method-i-zero-3F"></a><b>zero?</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>FileTest.zero?</code>.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-zero-3F_source')" id="l_method-i-zero-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-zero-3F_source" class="dyn-source">
+                <pre>static VALUE
+path_zero_p(VALUE self)
+{
+    return rb_funcall(rb_mFileTest, rb_intern(&quot;zero?&quot;), 1, get_strpath(self));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    

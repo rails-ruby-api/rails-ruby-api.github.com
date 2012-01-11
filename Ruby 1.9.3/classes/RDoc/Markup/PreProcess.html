@@ -1,0 +1,576 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>RDoc::Markup::PreProcess</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/github.css" type="text/css" media="screen" />
+<script src="../../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            RDoc::Markup::PreProcess 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../../Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../../files/lib/rdoc/markup/pre_process_rb.html">lib/rdoc/markup/pre_process.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>Handle common directives that can occur in a block of text:</p>
+
+<pre>:include: filename</pre>
+
+<p>Directives can be escaped by preceding them with a backslash.</p>
+
+<p><a href="../RDoc.html">RDoc</a> plugin authors can register additional
+directives to be handled by using <a
+href="PreProcess.html#method-c-register">::register</a></p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>F</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-find_include_file">find_include_file</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>H</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-handle">handle</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-handle_directive">handle_directive</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>I</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-include_file">include_file</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>R</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-register">register</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-registered">registered</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+      <!-- Section attributes -->
+      <div class="sectiontitle">Attributes</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [RW]
+            </td>
+            <td class='attr-name'>options</td>
+            <td class='attr-desc'></td>
+          </tr>
+        
+      </table>
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <a name="method-c-new"></a><b>new</b>(input_file_name, include_path)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Creates a new pre-processor for <code>input_file_name</code> that will look
+for included files in <code>include_path</code></p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rdoc/markup/pre_process.rb, line 40</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">initialize</span>(<span class="ruby-identifier">input_file_name</span>, <span class="ruby-identifier">include_path</span>)
+  <span class="ruby-ivar">@input_file_name</span> = <span class="ruby-identifier">input_file_name</span>
+  <span class="ruby-ivar">@include_path</span> = <span class="ruby-identifier">include_path</span>
+  <span class="ruby-ivar">@options</span> = <span class="ruby-keyword">nil</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-register">
+            
+              <a name="method-c-register"></a><b>register</b>(directive, &amp;block)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Registers <code>directive</code> as one handled by <a
+href="../RDoc.html">RDoc</a>.  If a block is given the directive will be
+replaced by the result of the block, otherwise the directive will be
+removed from the processed text.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-register_source')" id="l_method-c-register_source">show</a>
+                
+              </p>
+              <div id="method-c-register_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rdoc/markup/pre_process.rb, line 25</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">self</span>.<span class="ruby-identifier">register</span> <span class="ruby-identifier">directive</span>, &amp;<span class="ruby-identifier">block</span>
+  <span class="ruby-ivar">@registered</span>[<span class="ruby-identifier">directive</span>] = <span class="ruby-identifier">block</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-registered">
+            
+              <a name="method-c-registered"></a><b>registered</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Registered directives</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-registered_source')" id="l_method-c-registered_source">show</a>
+                
+              </p>
+              <div id="method-c-registered_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rdoc/markup/pre_process.rb, line 32</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">self</span>.<span class="ruby-identifier">registered</span>
+  <span class="ruby-ivar">@registered</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-find_include_file">
+            
+              <a name="method-i-find_include_file"></a><b>find_include_file</b>(name)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Look for the given file in the directory containing the current file, and
+then in each of the directories specified in the RDOC_INCLUDE path</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-find_include_file_source')" id="l_method-i-find_include_file_source">show</a>
+                
+              </p>
+              <div id="method-i-find_include_file_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rdoc/markup/pre_process.rb, line 216</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">find_include_file</span>(<span class="ruby-identifier">name</span>)
+  <span class="ruby-identifier">to_search</span> = [<span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-ivar">@input_file_name</span>)].<span class="ruby-identifier">concat</span> <span class="ruby-ivar">@include_path</span>
+  <span class="ruby-identifier">to_search</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">dir</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">full_name</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">dir</span>, <span class="ruby-identifier">name</span>)
+    <span class="ruby-identifier">stat</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">stat</span>(<span class="ruby-identifier">full_name</span>) <span class="ruby-keyword">rescue</span> <span class="ruby-keyword">next</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-identifier">full_name</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">stat</span>.<span class="ruby-identifier">readable?</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">nil</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-handle">
+            
+              <a name="method-i-handle"></a><b>handle</b>(text, code_object = nil, &amp;block)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Look for directives in a chunk of <code>text</code>.</p>
+
+<p><a href="../Options.html">Options</a> that we don’t handle are yielded.  If
+the block returns false the directive is restored to the text.  If the
+block returns nil or no block was given the directive is handled according
+to the registered directives. If a String was returned the directive is
+replaced with the string.</p>
+
+<p>If no matching directive was registered the directive is restored to the
+text.</p>
+
+<p>If <code>code_object</code> is given and the param is set as metadata on
+the <code>code_object</code>.  See <a
+href="../CodeObject.html#attribute-i-metadata">RDoc::CodeObject#metadata</a></p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-handle_source')" id="l_method-i-handle_source">show</a>
+                
+              </p>
+              <div id="method-i-handle_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rdoc/markup/pre_process.rb, line 60</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">handle</span> <span class="ruby-identifier">text</span>, <span class="ruby-identifier">code_object</span> = <span class="ruby-keyword">nil</span>, &amp;<span class="ruby-identifier">block</span>
+  <span class="ruby-identifier">encoding</span> = <span class="ruby-keyword">if</span> <span class="ruby-keyword">defined?</span>(<span class="ruby-constant">Encoding</span>) <span class="ruby-keyword">then</span> <span class="ruby-identifier">text</span>.<span class="ruby-identifier">encoding</span> <span class="ruby-keyword">else</span> <span class="ruby-keyword">nil</span> <span class="ruby-keyword">end</span>
+  <span class="ruby-comment"># regexp helper (square brackets for optional)</span>
+  <span class="ruby-comment"># $1      $2  $3        $4      $5</span>
+  <span class="ruby-comment"># [prefix][\]:directive:[spaces][param]newline</span>
+  <span class="ruby-identifier">text</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-node">/^([ \t]*(?:#|\/?\*)?[ \t]*)(\\?):(\w+):([ \t]*)(.+)?\n/</span>) <span class="ruby-keyword">do</span>
+    <span class="ruby-comment"># skip something like ':toto::'</span>
+    <span class="ruby-keyword">next</span> <span class="ruby-node">$&amp;</span> <span class="ruby-keyword">if</span> <span class="ruby-node">$4</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-keyword">and</span> <span class="ruby-node">$5</span> <span class="ruby-keyword">and</span> <span class="ruby-node">$5</span>[<span class="ruby-number">0</span>, <span class="ruby-number">1</span>] <span class="ruby-operator">==</span> <span class="ruby-string">':'</span>
+
+    <span class="ruby-comment"># skip if escaped</span>
+    <span class="ruby-keyword">next</span> <span class="ruby-node">&quot;#$1:#$3:#$4#$5\n&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-node">$2</span>.<span class="ruby-identifier">empty?</span>
+
+    <span class="ruby-identifier">handle_directive</span> <span class="ruby-node">$1</span>, <span class="ruby-node">$3</span>, <span class="ruby-node">$5</span>, <span class="ruby-identifier">code_object</span>, <span class="ruby-identifier">encoding</span>, &amp;<span class="ruby-identifier">block</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">text</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-handle_directive">
+            
+              <a name="method-i-handle_directive"></a><b>handle_directive</b>(prefix, directive, param, code_object = nil, encoding = nil)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-handle_directive_source')" id="l_method-i-handle_directive_source">show</a>
+                
+              </p>
+              <div id="method-i-handle_directive_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rdoc/markup/pre_process.rb, line 81</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">handle_directive</span> <span class="ruby-identifier">prefix</span>, <span class="ruby-identifier">directive</span>, <span class="ruby-identifier">param</span>, <span class="ruby-identifier">code_object</span> = <span class="ruby-keyword">nil</span>,
+                     <span class="ruby-identifier">encoding</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-identifier">blankline</span> = <span class="ruby-node">&quot;#{prefix.strip}\n&quot;</span>
+  <span class="ruby-identifier">directive</span> = <span class="ruby-identifier">directive</span>.<span class="ruby-identifier">downcase</span>
+
+  <span class="ruby-keyword">case</span> <span class="ruby-identifier">directive</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-string">'arg'</span>, <span class="ruby-string">'args'</span> <span class="ruby-keyword">then</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-identifier">blankline</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">code_object</span>
+
+    <span class="ruby-identifier">code_object</span>.<span class="ruby-identifier">params</span> = <span class="ruby-identifier">param</span>
+
+    <span class="ruby-identifier">blankline</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-string">'category'</span> <span class="ruby-keyword">then</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">Context</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">code_object</span> <span class="ruby-keyword">then</span>
+      <span class="ruby-identifier">section</span> = <span class="ruby-identifier">code_object</span>.<span class="ruby-identifier">add_section</span> <span class="ruby-identifier">param</span>, <span class="ruby-string">''</span>
+      <span class="ruby-identifier">code_object</span>.<span class="ruby-identifier">temporary_section</span> = <span class="ruby-identifier">section</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-identifier">blankline</span> <span class="ruby-comment"># ignore category if we're not on an RDoc::Context</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-string">'doc'</span> <span class="ruby-keyword">then</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-identifier">blankline</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">code_object</span>
+    <span class="ruby-identifier">code_object</span>.<span class="ruby-identifier">document_self</span> = <span class="ruby-keyword">true</span>
+    <span class="ruby-identifier">code_object</span>.<span class="ruby-identifier">force_documentation</span> = <span class="ruby-keyword">true</span>
+
+    <span class="ruby-identifier">blankline</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-string">'enddoc'</span> <span class="ruby-keyword">then</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-identifier">blankline</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">code_object</span>
+    <span class="ruby-identifier">code_object</span>.<span class="ruby-identifier">done_documenting</span> = <span class="ruby-keyword">true</span>
+
+    <span class="ruby-identifier">blankline</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-string">'include'</span> <span class="ruby-keyword">then</span>
+    <span class="ruby-identifier">filename</span> = <span class="ruby-identifier">param</span>.<span class="ruby-identifier">split</span>.<span class="ruby-identifier">first</span>
+    <span class="ruby-identifier">include_file</span> <span class="ruby-identifier">filename</span>, <span class="ruby-identifier">prefix</span>, <span class="ruby-identifier">encoding</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-string">'main'</span> <span class="ruby-keyword">then</span>
+    <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">main_page</span> = <span class="ruby-identifier">param</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">respond_to?</span> <span class="ruby-value">:main_page</span>
+
+    <span class="ruby-identifier">blankline</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-string">'nodoc'</span> <span class="ruby-keyword">then</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-identifier">blankline</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">code_object</span>
+    <span class="ruby-identifier">code_object</span>.<span class="ruby-identifier">document_self</span> = <span class="ruby-keyword">nil</span> <span class="ruby-comment"># notify nodoc</span>
+    <span class="ruby-identifier">code_object</span>.<span class="ruby-identifier">document_children</span> = <span class="ruby-identifier">param</span> <span class="ruby-operator">!~</span> <span class="ruby-regexp">/all/</span>
+
+    <span class="ruby-identifier">blankline</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-string">'notnew'</span>, <span class="ruby-string">'not_new'</span>, <span class="ruby-string">'not-new'</span> <span class="ruby-keyword">then</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-identifier">blankline</span> <span class="ruby-keyword">unless</span> <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">AnyMethod</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">code_object</span>
+
+    <span class="ruby-identifier">code_object</span>.<span class="ruby-identifier">dont_rename_initialize</span> = <span class="ruby-keyword">true</span>
+
+    <span class="ruby-identifier">blankline</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-string">'startdoc'</span> <span class="ruby-keyword">then</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-identifier">blankline</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">code_object</span>
+
+    <span class="ruby-identifier">code_object</span>.<span class="ruby-identifier">start_doc</span>
+    <span class="ruby-identifier">code_object</span>.<span class="ruby-identifier">force_documentation</span> = <span class="ruby-keyword">true</span>
+
+    <span class="ruby-identifier">blankline</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-string">'stopdoc'</span> <span class="ruby-keyword">then</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-identifier">blankline</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">code_object</span>
+
+    <span class="ruby-identifier">code_object</span>.<span class="ruby-identifier">stop_doc</span>
+
+    <span class="ruby-identifier">blankline</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-string">'title'</span> <span class="ruby-keyword">then</span>
+    <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">default_title</span> = <span class="ruby-identifier">param</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@options</span>.<span class="ruby-identifier">respond_to?</span> <span class="ruby-value">:default_title=</span>
+
+    <span class="ruby-identifier">blankline</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-string">'yield'</span>, <span class="ruby-string">'yields'</span> <span class="ruby-keyword">then</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-identifier">blankline</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">code_object</span>
+    <span class="ruby-comment"># remove parameter &amp;block</span>
+    <span class="ruby-identifier">code_object</span>.<span class="ruby-identifier">params</span>.<span class="ruby-identifier">sub!</span>(<span class="ruby-regexp">/,?\s*&amp;\w+/</span>, <span class="ruby-string">''</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">code_object</span>.<span class="ruby-identifier">params</span>
+
+    <span class="ruby-identifier">code_object</span>.<span class="ruby-identifier">block_params</span> = <span class="ruby-identifier">param</span>
+
+    <span class="ruby-identifier">blankline</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">result</span> = <span class="ruby-keyword">yield</span> <span class="ruby-identifier">directive</span>, <span class="ruby-identifier">param</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">block_given?</span>
+
+    <span class="ruby-keyword">case</span> <span class="ruby-identifier">result</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-keyword">nil</span> <span class="ruby-keyword">then</span>
+      <span class="ruby-identifier">code_object</span>.<span class="ruby-identifier">metadata</span>[<span class="ruby-identifier">directive</span>] = <span class="ruby-identifier">param</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">code_object</span>
+
+      <span class="ruby-keyword">if</span> <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">Markup</span><span class="ruby-operator">::</span><span class="ruby-constant">PreProcess</span>.<span class="ruby-identifier">registered</span>.<span class="ruby-identifier">include?</span> <span class="ruby-identifier">directive</span> <span class="ruby-keyword">then</span>
+        <span class="ruby-identifier">handler</span> = <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">Markup</span><span class="ruby-operator">::</span><span class="ruby-constant">PreProcess</span>.<span class="ruby-identifier">registered</span>[<span class="ruby-identifier">directive</span>]
+        <span class="ruby-identifier">result</span> = <span class="ruby-identifier">handler</span>.<span class="ruby-identifier">call</span> <span class="ruby-identifier">directive</span>, <span class="ruby-identifier">param</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">handler</span>
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-identifier">result</span> = <span class="ruby-node">&quot;#{prefix}:#{directive}: #{param}\n&quot;</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-keyword">false</span> <span class="ruby-keyword">then</span>
+      <span class="ruby-identifier">result</span> = <span class="ruby-node">&quot;#{prefix}:#{directive}: #{param}\n&quot;</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-identifier">result</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-include_file">
+            
+              <a name="method-i-include_file"></a><b>include_file</b>(name, indent, encoding)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Handles the <code>:include: <em>filename</em></code> directive.</p>
+
+<p>If the first line of the included file starts with ‘#’, and contains an
+encoding information in the form ‘coding:’ or ‘coding=’, it is removed.</p>
+
+<p>If all lines in the included file start with a ‘#’, this leading ‘#’ is
+removed before inclusion. The included content is indented like the
+<code>:include:</code> directive.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-include_file_source')" id="l_method-i-include_file_source">show</a>
+                
+              </p>
+              <div id="method-i-include_file_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rdoc/markup/pre_process.rb, line 191</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">include_file</span> <span class="ruby-identifier">name</span>, <span class="ruby-identifier">indent</span>, <span class="ruby-identifier">encoding</span>
+  <span class="ruby-identifier">full_name</span> = <span class="ruby-identifier">find_include_file</span> <span class="ruby-identifier">name</span>
+
+  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">full_name</span> <span class="ruby-keyword">then</span>
+    <span class="ruby-identifier">warn</span> <span class="ruby-node">&quot;Couldn't find file to include '#{name}' from #{@input_file_name}&quot;</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-string">''</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">content</span> = <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">Encoding</span>.<span class="ruby-identifier">read_file</span> <span class="ruby-identifier">full_name</span>, <span class="ruby-identifier">encoding</span>, <span class="ruby-keyword">true</span>
+
+  <span class="ruby-comment"># strip magic comment</span>
+  <span class="ruby-identifier">content</span> = <span class="ruby-identifier">content</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-node">/\A# .*coding[=:].*$/</span>, <span class="ruby-string">''</span>).<span class="ruby-identifier">lstrip</span>
+
+  <span class="ruby-comment"># strip leading '#'s, but only if all lines start with them</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">content</span> <span class="ruby-operator">=~</span> <span class="ruby-node">/^[^#]/</span> <span class="ruby-keyword">then</span>
+    <span class="ruby-identifier">content</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">/^/</span>, <span class="ruby-identifier">indent</span>)
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">content</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-node">/^#?/</span>, <span class="ruby-identifier">indent</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    

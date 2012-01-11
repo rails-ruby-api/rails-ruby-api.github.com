@@ -1,0 +1,1283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>ActiveRecord::QueryMethods</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Module</span> 
+            ActiveRecord::QueryMethods 
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/activerecord/lib/active_record/relation/query_methods_rb.html">activerecord/lib/active_record/relation/query_methods.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>A</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-arel">arel</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>B</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-bind">bind</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-build_arel">build_arel</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>C</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-create_with">create_with</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>E</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-eager_load">eager_load</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-extending">extending</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>F</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-from">from</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>G</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-group">group</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>H</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-having">having</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>I</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-includes">includes</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>J</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-joins">joins</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>L</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-limit">limit</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-lock">lock</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>O</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-offset">offset</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-order">order</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>P</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-preload">preload</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>R</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-readonly">readonly</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-reorder">reorder</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-reverse_order">reverse_order</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>S</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-select">select</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>W</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-where">where</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+      <!-- Section attributes -->
+      <div class="sectiontitle">Attributes</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [RW]
+            </td>
+            <td class='attr-name'>bind_values</td>
+            <td class='attr-desc'></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [RW]
+            </td>
+            <td class='attr-name'>create_with_value</td>
+            <td class='attr-desc'></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [RW]
+            </td>
+            <td class='attr-name'>eager_load_values</td>
+            <td class='attr-desc'></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [RW]
+            </td>
+            <td class='attr-name'>from_value</td>
+            <td class='attr-desc'></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [RW]
+            </td>
+            <td class='attr-name'>group_values</td>
+            <td class='attr-desc'></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [RW]
+            </td>
+            <td class='attr-name'>having_values</td>
+            <td class='attr-desc'></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [RW]
+            </td>
+            <td class='attr-name'>includes_values</td>
+            <td class='attr-desc'></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [RW]
+            </td>
+            <td class='attr-name'>joins_values</td>
+            <td class='attr-desc'></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [RW]
+            </td>
+            <td class='attr-name'>limit_value</td>
+            <td class='attr-desc'></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [RW]
+            </td>
+            <td class='attr-name'>lock_value</td>
+            <td class='attr-desc'></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [RW]
+            </td>
+            <td class='attr-name'>offset_value</td>
+            <td class='attr-desc'></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [RW]
+            </td>
+            <td class='attr-name'>order_values</td>
+            <td class='attr-desc'></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [RW]
+            </td>
+            <td class='attr-name'>preload_values</td>
+            <td class='attr-desc'></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [RW]
+            </td>
+            <td class='attr-name'>readonly_value</td>
+            <td class='attr-desc'></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [RW]
+            </td>
+            <td class='attr-name'>reorder_value</td>
+            <td class='attr-desc'></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [RW]
+            </td>
+            <td class='attr-name'>reverse_order_value</td>
+            <td class='attr-desc'></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [RW]
+            </td>
+            <td class='attr-name'>select_values</td>
+            <td class='attr-desc'></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [RW]
+            </td>
+            <td class='attr-name'>where_values</td>
+            <td class='attr-desc'></td>
+          </tr>
+        
+      </table>
+    
+
+
+    <!-- Methods -->
+        
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-arel">
+            
+              <a name="method-i-arel"></a><b>arel</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-arel_source')" id="l_method-i-arel_source">show</a>
+                
+              </p>
+              <div id="method-i-arel_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/lib/active_record/relation/query_methods.rb, line 195</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">arel</span>
+  <span class="ruby-ivar">@arel</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">with_default_scope</span>.<span class="ruby-identifier">build_arel</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-bind">
+            
+              <a name="method-i-bind"></a><b>bind</b>(value)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-bind_source')" id="l_method-i-bind_source">show</a>
+                
+              </p>
+              <div id="method-i-bind_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/lib/active_record/relation/query_methods.rb, line 114</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">bind</span>(<span class="ruby-identifier">value</span>)
+  <span class="ruby-identifier">relation</span> = <span class="ruby-identifier">clone</span>
+  <span class="ruby-identifier">relation</span>.<span class="ruby-identifier">bind_values</span> <span class="ruby-operator">+=</span> [<span class="ruby-identifier">value</span>]
+  <span class="ruby-identifier">relation</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-build_arel">
+            
+              <a name="method-i-build_arel"></a><b>build_arel</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-build_arel_source')" id="l_method-i-build_arel_source">show</a>
+                
+              </p>
+              <div id="method-i-build_arel_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/lib/active_record/relation/query_methods.rb, line 199</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">build_arel</span>
+  <span class="ruby-identifier">arel</span> = <span class="ruby-identifier">table</span>.<span class="ruby-identifier">from</span> <span class="ruby-identifier">table</span>
+
+  <span class="ruby-identifier">build_joins</span>(<span class="ruby-identifier">arel</span>, <span class="ruby-ivar">@joins_values</span>) <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@joins_values</span>.<span class="ruby-identifier">empty?</span>
+
+  <span class="ruby-identifier">collapse_wheres</span>(<span class="ruby-identifier">arel</span>, (<span class="ruby-ivar">@where_values</span> <span class="ruby-operator">-</span> [<span class="ruby-string">''</span>]).<span class="ruby-identifier">uniq</span>)
+
+  <span class="ruby-identifier">arel</span>.<span class="ruby-identifier">having</span>(*<span class="ruby-ivar">@having_values</span>.<span class="ruby-identifier">uniq</span>.<span class="ruby-identifier">reject</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">h</span><span class="ruby-operator">|</span> <span class="ruby-identifier">h</span>.<span class="ruby-identifier">blank?</span>}) <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@having_values</span>.<span class="ruby-identifier">empty?</span>
+
+  <span class="ruby-identifier">arel</span>.<span class="ruby-identifier">take</span>(<span class="ruby-identifier">connection</span>.<span class="ruby-identifier">sanitize_limit</span>(<span class="ruby-ivar">@limit_value</span>)) <span class="ruby-keyword">if</span> <span class="ruby-ivar">@limit_value</span>
+  <span class="ruby-identifier">arel</span>.<span class="ruby-identifier">skip</span>(<span class="ruby-ivar">@offset_value</span>) <span class="ruby-keyword">if</span> <span class="ruby-ivar">@offset_value</span>
+
+  <span class="ruby-identifier">arel</span>.<span class="ruby-identifier">group</span>(*<span class="ruby-ivar">@group_values</span>.<span class="ruby-identifier">uniq</span>.<span class="ruby-identifier">reject</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">g</span><span class="ruby-operator">|</span> <span class="ruby-identifier">g</span>.<span class="ruby-identifier">blank?</span>}) <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@group_values</span>.<span class="ruby-identifier">empty?</span>
+
+  <span class="ruby-identifier">order</span> = <span class="ruby-ivar">@reorder_value</span> <span class="ruby-operator">?</span> <span class="ruby-ivar">@reorder_value</span> <span class="ruby-operator">:</span> <span class="ruby-ivar">@order_values</span>
+  <span class="ruby-identifier">order</span> = <span class="ruby-identifier">reverse_sql_order</span>(<span class="ruby-identifier">order</span>) <span class="ruby-keyword">if</span> <span class="ruby-ivar">@reverse_order_value</span>
+  <span class="ruby-identifier">arel</span>.<span class="ruby-identifier">order</span>(*<span class="ruby-identifier">order</span>.<span class="ruby-identifier">uniq</span>.<span class="ruby-identifier">reject</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">o</span><span class="ruby-operator">|</span> <span class="ruby-identifier">o</span>.<span class="ruby-identifier">blank?</span>}) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">order</span>.<span class="ruby-identifier">empty?</span>
+
+  <span class="ruby-identifier">build_select</span>(<span class="ruby-identifier">arel</span>, <span class="ruby-ivar">@select_values</span>.<span class="ruby-identifier">uniq</span>)
+
+  <span class="ruby-identifier">arel</span>.<span class="ruby-identifier">from</span>(<span class="ruby-ivar">@from_value</span>) <span class="ruby-keyword">if</span> <span class="ruby-ivar">@from_value</span>
+  <span class="ruby-identifier">arel</span>.<span class="ruby-identifier">lock</span>(<span class="ruby-ivar">@lock_value</span>) <span class="ruby-keyword">if</span> <span class="ruby-ivar">@lock_value</span>
+
+  <span class="ruby-identifier">arel</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-create_with">
+            
+              <a name="method-i-create_with"></a><b>create_with</b>(value)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-create_with_source')" id="l_method-i-create_with_source">show</a>
+                
+              </p>
+              <div id="method-i-create_with_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/lib/active_record/relation/query_methods.rb, line 167</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">create_with</span>(<span class="ruby-identifier">value</span>)
+  <span class="ruby-identifier">relation</span> = <span class="ruby-identifier">clone</span>
+  <span class="ruby-identifier">relation</span>.<span class="ruby-identifier">create_with_value</span> = <span class="ruby-identifier">value</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">create_with_value</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">value</span>) <span class="ruby-operator">:</span> {}
+  <span class="ruby-identifier">relation</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-eager_load">
+            
+              <a name="method-i-eager_load"></a><b>eager_load</b>(*args)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-eager_load_source')" id="l_method-i-eager_load_source">show</a>
+                
+              </p>
+              <div id="method-i-eager_load_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/lib/active_record/relation/query_methods.rb, line 24</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">eager_load</span>(*<span class="ruby-identifier">args</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">self</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">blank?</span>
+
+  <span class="ruby-identifier">relation</span> = <span class="ruby-identifier">clone</span>
+  <span class="ruby-identifier">relation</span>.<span class="ruby-identifier">eager_load_values</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">args</span>
+  <span class="ruby-identifier">relation</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-extending">
+            
+              <a name="method-i-extending"></a><b>extending</b>(*modules)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-extending_source')" id="l_method-i-extending_source">show</a>
+                
+              </p>
+              <div id="method-i-extending_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/lib/active_record/relation/query_methods.rb, line 179</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">extending</span>(*<span class="ruby-identifier">modules</span>)
+  <span class="ruby-identifier">modules</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Module</span>.<span class="ruby-identifier">new</span>(&amp;<span class="ruby-constant">Proc</span>.<span class="ruby-identifier">new</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">block_given?</span>
+
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">self</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">modules</span>.<span class="ruby-identifier">empty?</span>
+
+  <span class="ruby-identifier">relation</span> = <span class="ruby-identifier">clone</span>
+  <span class="ruby-identifier">relation</span>.<span class="ruby-identifier">send</span>(<span class="ruby-value">:apply_modules</span>, <span class="ruby-identifier">modules</span>.<span class="ruby-identifier">flatten</span>)
+  <span class="ruby-identifier">relation</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-from">
+            
+              <a name="method-i-from"></a><b>from</b>(value)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-from_source')" id="l_method-i-from_source">show</a>
+                
+              </p>
+              <div id="method-i-from_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/lib/active_record/relation/query_methods.rb, line 173</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">from</span>(<span class="ruby-identifier">value</span>)
+  <span class="ruby-identifier">relation</span> = <span class="ruby-identifier">clone</span>
+  <span class="ruby-identifier">relation</span>.<span class="ruby-identifier">from_value</span> = <span class="ruby-identifier">value</span>
+  <span class="ruby-identifier">relation</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-group">
+            
+              <a name="method-i-group"></a><b>group</b>(*args)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-group_source')" id="l_method-i-group_source">show</a>
+                
+              </p>
+              <div id="method-i-group_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/lib/active_record/relation/query_methods.rb, line 79</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">group</span>(*<span class="ruby-identifier">args</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">self</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">blank?</span>
+
+  <span class="ruby-identifier">relation</span> = <span class="ruby-identifier">clone</span>
+  <span class="ruby-identifier">relation</span>.<span class="ruby-identifier">group_values</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">flatten</span>
+  <span class="ruby-identifier">relation</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-having">
+            
+              <a name="method-i-having"></a><b>having</b>(opts, *rest)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-having_source')" id="l_method-i-having_source">show</a>
+                
+              </p>
+              <div id="method-i-having_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/lib/active_record/relation/query_methods.rb, line 128</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">having</span>(<span class="ruby-identifier">opts</span>, *<span class="ruby-identifier">rest</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">self</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">blank?</span>
+
+  <span class="ruby-identifier">relation</span> = <span class="ruby-identifier">clone</span>
+  <span class="ruby-identifier">relation</span>.<span class="ruby-identifier">having_values</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">build_where</span>(<span class="ruby-identifier">opts</span>, <span class="ruby-identifier">rest</span>)
+  <span class="ruby-identifier">relation</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-includes">
+            
+              <a name="method-i-includes"></a><b>includes</b>(*args)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-includes_source')" id="l_method-i-includes_source">show</a>
+                
+              </p>
+              <div id="method-i-includes_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/lib/active_record/relation/query_methods.rb, line 14</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">includes</span>(*<span class="ruby-identifier">args</span>)
+  <span class="ruby-identifier">args</span>.<span class="ruby-identifier">reject!</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">a</span><span class="ruby-operator">|</span> <span class="ruby-identifier">a</span>.<span class="ruby-identifier">blank?</span> }
+
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">self</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">empty?</span>
+
+  <span class="ruby-identifier">relation</span> = <span class="ruby-identifier">clone</span>
+  <span class="ruby-identifier">relation</span>.<span class="ruby-identifier">includes_values</span> = (<span class="ruby-identifier">relation</span>.<span class="ruby-identifier">includes_values</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">args</span>).<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">uniq</span>
+  <span class="ruby-identifier">relation</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-joins">
+            
+              <a name="method-i-joins"></a><b>joins</b>(*args)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-joins_source')" id="l_method-i-joins_source">show</a>
+                
+              </p>
+              <div id="method-i-joins_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/lib/active_record/relation/query_methods.rb, line 103</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">joins</span>(*<span class="ruby-identifier">args</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">self</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">compact</span>.<span class="ruby-identifier">blank?</span>
+
+  <span class="ruby-identifier">relation</span> = <span class="ruby-identifier">clone</span>
+
+  <span class="ruby-identifier">args</span>.<span class="ruby-identifier">flatten!</span>
+  <span class="ruby-identifier">relation</span>.<span class="ruby-identifier">joins_values</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">args</span>
+
+  <span class="ruby-identifier">relation</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-limit">
+            
+              <a name="method-i-limit"></a><b>limit</b>(value)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-limit_source')" id="l_method-i-limit_source">show</a>
+                
+              </p>
+              <div id="method-i-limit_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/lib/active_record/relation/query_methods.rb, line 136</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">limit</span>(<span class="ruby-identifier">value</span>)
+  <span class="ruby-identifier">relation</span> = <span class="ruby-identifier">clone</span>
+  <span class="ruby-identifier">relation</span>.<span class="ruby-identifier">limit_value</span> = <span class="ruby-identifier">value</span>
+  <span class="ruby-identifier">relation</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-lock">
+            
+              <a name="method-i-lock"></a><b>lock</b>(locks = true)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-lock_source')" id="l_method-i-lock_source">show</a>
+                
+              </p>
+              <div id="method-i-lock_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/lib/active_record/relation/query_methods.rb, line 148</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">lock</span>(<span class="ruby-identifier">locks</span> = <span class="ruby-keyword">true</span>)
+  <span class="ruby-identifier">relation</span> = <span class="ruby-identifier">clone</span>
+
+  <span class="ruby-keyword">case</span> <span class="ruby-identifier">locks</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-constant">String</span>, <span class="ruby-constant">TrueClass</span>, <span class="ruby-constant">NilClass</span>
+    <span class="ruby-identifier">relation</span>.<span class="ruby-identifier">lock_value</span> = <span class="ruby-identifier">locks</span> <span class="ruby-operator">||</span> <span class="ruby-keyword">true</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">relation</span>.<span class="ruby-identifier">lock_value</span> = <span class="ruby-keyword">false</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">relation</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-offset">
+            
+              <a name="method-i-offset"></a><b>offset</b>(value)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-offset_source')" id="l_method-i-offset_source">show</a>
+                
+              </p>
+              <div id="method-i-offset_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/lib/active_record/relation/query_methods.rb, line 142</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">offset</span>(<span class="ruby-identifier">value</span>)
+  <span class="ruby-identifier">relation</span> = <span class="ruby-identifier">clone</span>
+  <span class="ruby-identifier">relation</span>.<span class="ruby-identifier">offset_value</span> = <span class="ruby-identifier">value</span>
+  <span class="ruby-identifier">relation</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-order">
+            
+              <a name="method-i-order"></a><b>order</b>(*args)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-order_source')" id="l_method-i-order_source">show</a>
+                
+              </p>
+              <div id="method-i-order_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/lib/active_record/relation/query_methods.rb, line 87</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">order</span>(*<span class="ruby-identifier">args</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">self</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">blank?</span>
+
+  <span class="ruby-identifier">relation</span> = <span class="ruby-identifier">clone</span>
+  <span class="ruby-identifier">relation</span>.<span class="ruby-identifier">order_values</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">flatten</span>
+  <span class="ruby-identifier">relation</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-preload">
+            
+              <a name="method-i-preload"></a><b>preload</b>(*args)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-preload_source')" id="l_method-i-preload_source">show</a>
+                
+              </p>
+              <div id="method-i-preload_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/lib/active_record/relation/query_methods.rb, line 32</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">preload</span>(*<span class="ruby-identifier">args</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">self</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">blank?</span>
+
+  <span class="ruby-identifier">relation</span> = <span class="ruby-identifier">clone</span>
+  <span class="ruby-identifier">relation</span>.<span class="ruby-identifier">preload_values</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">args</span>
+  <span class="ruby-identifier">relation</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-readonly">
+            
+              <a name="method-i-readonly"></a><b>readonly</b>(value = true)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-readonly_source')" id="l_method-i-readonly_source">show</a>
+                
+              </p>
+              <div id="method-i-readonly_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/lib/active_record/relation/query_methods.rb, line 161</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">readonly</span>(<span class="ruby-identifier">value</span> = <span class="ruby-keyword">true</span>)
+  <span class="ruby-identifier">relation</span> = <span class="ruby-identifier">clone</span>
+  <span class="ruby-identifier">relation</span>.<span class="ruby-identifier">readonly_value</span> = <span class="ruby-identifier">value</span>
+  <span class="ruby-identifier">relation</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-reorder">
+            
+              <a name="method-i-reorder"></a><b>reorder</b>(*args)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-reorder_source')" id="l_method-i-reorder_source">show</a>
+                
+              </p>
+              <div id="method-i-reorder_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/lib/active_record/relation/query_methods.rb, line 95</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">reorder</span>(*<span class="ruby-identifier">args</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">self</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">blank?</span>
+
+  <span class="ruby-identifier">relation</span> = <span class="ruby-identifier">clone</span>
+  <span class="ruby-identifier">relation</span>.<span class="ruby-identifier">reorder_value</span> = <span class="ruby-identifier">args</span>.<span class="ruby-identifier">flatten</span>
+  <span class="ruby-identifier">relation</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-reverse_order">
+            
+              <a name="method-i-reverse_order"></a><b>reverse_order</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-reverse_order_source')" id="l_method-i-reverse_order_source">show</a>
+                
+              </p>
+              <div id="method-i-reverse_order_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/lib/active_record/relation/query_methods.rb, line 189</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">reverse_order</span>
+  <span class="ruby-identifier">relation</span> = <span class="ruby-identifier">clone</span>
+  <span class="ruby-identifier">relation</span>.<span class="ruby-identifier">reverse_order_value</span> = <span class="ruby-operator">!</span><span class="ruby-identifier">relation</span>.<span class="ruby-identifier">reverse_order_value</span>
+  <span class="ruby-identifier">relation</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-select">
+            
+              <a name="method-i-select"></a><b>select</b>(value = Proc.new)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Works in two unique ways.</p>
+
+<p>First: takes a block so it can be used just like Array#select.</p>
+
+<pre class="ruby"><span class="ruby-constant">Model</span>.<span class="ruby-identifier">scoped</span>.<span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">m</span><span class="ruby-operator">|</span> <span class="ruby-identifier">m</span>.<span class="ruby-identifier">field</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">value</span> }
+</pre>
+
+<p>This will build an array of objects from the database for the scope,
+converting them into an array and iterating through them using
+Array#select.</p>
+
+<p>Second: Modifies the SELECT statement for the query so that only certain
+fields are retrieved:</p>
+
+<pre class="ruby"><span class="ruby-operator">&gt;&gt;</span> <span class="ruby-constant">Model</span>.<span class="ruby-identifier">select</span>(:<span class="ruby-identifier">field</span>)
+=<span class="ruby-operator">&gt;</span> [<span class="ruby-comment">#&lt;Model field:value&gt;]</span>
+</pre>
+
+<p>Although in the above example it looks as though this method returns an
+array, it actually returns a relation object and can have other query
+methods appended to it, such as the other methods in <a
+href="QueryMethods.html">ActiveRecord::QueryMethods</a>.</p>
+
+<p>This method will also take multiple parameters:</p>
+
+<pre class="ruby"><span class="ruby-operator">&gt;&gt;</span> <span class="ruby-constant">Model</span>.<span class="ruby-identifier">select</span>(:<span class="ruby-identifier">field</span>, :<span class="ruby-identifier">other_field</span>, :<span class="ruby-identifier">and_one_more</span>)
+=<span class="ruby-operator">&gt;</span> [<span class="ruby-comment">#&lt;Model field: &quot;value&quot;, other_field: &quot;value&quot;, and_one_more: &quot;value&quot;&gt;]</span>
+</pre>
+
+<p>Any attributes that do not have fields retrieved by a select will return
+`nil` when the getter method for that attribute is used:</p>
+
+<pre class="ruby"><span class="ruby-operator">&gt;&gt;</span> <span class="ruby-constant">Model</span>.<span class="ruby-identifier">select</span>(:<span class="ruby-identifier">field</span>).<span class="ruby-identifier">first</span>.<span class="ruby-identifier">other_field</span>
+=<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">nil</span>
+</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-select_source')" id="l_method-i-select_source">show</a>
+                
+              </p>
+              <div id="method-i-select_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/lib/active_record/relation/query_methods.rb, line 69</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">select</span>(<span class="ruby-identifier">value</span> = <span class="ruby-constant">Proc</span>.<span class="ruby-identifier">new</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">block_given?</span>
+    <span class="ruby-identifier">to_a</span>.<span class="ruby-identifier">select</span> {<span class="ruby-operator">|</span>*<span class="ruby-identifier">block_args</span><span class="ruby-operator">|</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">call</span>(*<span class="ruby-identifier">block_args</span>) }
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">relation</span> = <span class="ruby-identifier">clone</span>
+    <span class="ruby-identifier">relation</span>.<span class="ruby-identifier">select_values</span> <span class="ruby-operator">+=</span> <span class="ruby-constant">Array</span>.<span class="ruby-identifier">wrap</span>(<span class="ruby-identifier">value</span>)
+    <span class="ruby-identifier">relation</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-where">
+            
+              <a name="method-i-where"></a><b>where</b>(opts, *rest)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-where_source')" id="l_method-i-where_source">show</a>
+                
+              </p>
+              <div id="method-i-where_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/lib/active_record/relation/query_methods.rb, line 120</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">where</span>(<span class="ruby-identifier">opts</span>, *<span class="ruby-identifier">rest</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">self</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">blank?</span>
+
+  <span class="ruby-identifier">relation</span> = <span class="ruby-identifier">clone</span>
+  <span class="ruby-identifier">relation</span>.<span class="ruby-identifier">where_values</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">build_where</span>(<span class="ruby-identifier">opts</span>, <span class="ruby-identifier">rest</span>)
+  <span class="ruby-identifier">relation</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    

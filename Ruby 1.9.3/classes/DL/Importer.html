@@ -1,0 +1,963 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>DL::Importer</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Module</span> 
+            DL::Importer 
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/ext/dl/lib/dl/import_rb.html">ext/dl/lib/dl/import.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p><a href="Importer.html">DL::Importer</a> includes the means to dynamically
+load libraries and build modules around them including calling extern
+functions within the C library that has been loaded.</p>
+
+<h2 id="label-Example">Example</h2>
+
+<pre class="ruby"><span class="ruby-identifier">require</span> <span class="ruby-string">'dl'</span>
+<span class="ruby-identifier">require</span> <span class="ruby-string">'dl/import'</span>
+
+<span class="ruby-keyword">module</span> <span class="ruby-constant">LibSum</span>
+  <span class="ruby-identifier">extend</span> <span class="ruby-constant">DL</span><span class="ruby-operator">::</span><span class="ruby-constant">Importer</span>
+  <span class="ruby-identifier">dlload</span> <span class="ruby-string">'./libsum.so'</span>
+  <span class="ruby-identifier">extern</span> <span class="ruby-string">'double sum(double*, int)'</span>
+  <span class="ruby-identifier">extern</span> <span class="ruby-string">'double split(double)'</span>
+<span class="ruby-keyword">end</span>
+</pre>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>#</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-5B-5D">[]</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>B</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-bind">bind</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-bind_function">bind_function</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>C</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-create_carried_function">create_carried_function</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-create_temp_function">create_temp_function</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-create_value">create_value</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>D</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-dlload">dlload</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>E</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-extern">extern</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>H</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-handler">handler</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>I</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-import_function">import_function</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-import_symbol">import_symbol</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-import_value">import_value</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>S</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-sizeof">sizeof</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-struct">struct</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-typealias">typealias</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>U</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-union">union</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>V</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-value">value</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+    <!-- Includes -->
+    <div class="sectiontitle">Included Modules</div>
+    <ul>
+      
+        <li>
+          
+            <a href="../DL.html">
+              DL
+            </a>
+          
+        </li>
+      
+        <li>
+          
+            <a href="CParser.html">
+              DL::CParser
+            </a>
+          
+        </li>
+      
+    </ul>
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+        
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-5B-5D">
+            
+              <a name="method-i-5B-5D"></a><b>[]</b>(name)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-5B-5D_source')" id="l_method-i-5B-5D_source">show</a>
+                
+              </p>
+              <div id="method-i-5B-5D_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/dl/lib/dl/import.rb, line 192</span>
+<span class="ruby-keyword">def</span> <span class="ruby-operator">[]</span>(<span class="ruby-keyword ruby-title">name</span>)
+  <span class="ruby-ivar">@func_map</span>[<span class="ruby-identifier">name</span>]
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-bind">
+            
+              <a name="method-i-bind"></a><b>bind</b>(signature, *opts, &amp;blk)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-bind_source')" id="l_method-i-bind_source">show</a>
+                
+              </p>
+              <div id="method-i-bind_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/dl/lib/dl/import.rb, line 152</span>
+    <span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">bind</span>(<span class="ruby-identifier">signature</span>, *<span class="ruby-identifier">opts</span>, &amp;<span class="ruby-identifier">blk</span>)
+      <span class="ruby-identifier">name</span>, <span class="ruby-identifier">ctype</span>, <span class="ruby-identifier">argtype</span> = <span class="ruby-identifier">parse_signature</span>(<span class="ruby-identifier">signature</span>, <span class="ruby-ivar">@type_alias</span>)
+      <span class="ruby-identifier">h</span> = <span class="ruby-identifier">parse_bind_options</span>(<span class="ruby-identifier">opts</span>)
+      <span class="ruby-keyword">case</span> <span class="ruby-identifier">h</span>[<span class="ruby-value">:callback_type</span>]
+      <span class="ruby-keyword">when</span> <span class="ruby-value">:bind</span>, <span class="ruby-keyword">nil</span>
+        <span class="ruby-identifier">f</span> = <span class="ruby-identifier">bind_function</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">ctype</span>, <span class="ruby-identifier">argtype</span>, <span class="ruby-identifier">h</span>[<span class="ruby-value">:call_type</span>], &amp;<span class="ruby-identifier">blk</span>)
+      <span class="ruby-keyword">when</span> <span class="ruby-value">:temp</span>, <span class="ruby-value">:temporal</span>
+        <span class="ruby-identifier">f</span> = <span class="ruby-identifier">create_temp_function</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">ctype</span>, <span class="ruby-identifier">argtype</span>, <span class="ruby-identifier">h</span>[<span class="ruby-value">:call_type</span>])
+      <span class="ruby-keyword">when</span> <span class="ruby-value">:carried</span>
+        <span class="ruby-identifier">f</span> = <span class="ruby-identifier">create_carried_function</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">ctype</span>, <span class="ruby-identifier">argtype</span>, <span class="ruby-identifier">h</span>[<span class="ruby-value">:call_type</span>], <span class="ruby-identifier">h</span>[<span class="ruby-value">:carrier</span>])
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-identifier">raise</span>(<span class="ruby-constant">RuntimeError</span>, <span class="ruby-node">&quot;unknown callback type: #{h[:callback_type]}&quot;</span>)
+      <span class="ruby-keyword">end</span>
+      <span class="ruby-ivar">@func_map</span>[<span class="ruby-identifier">name</span>] = <span class="ruby-identifier">f</span>
+      <span class="ruby-comment">#define_method(name){|*args,&amp;block| f.call(*args,&amp;block)}</span>
+      <span class="ruby-keyword">begin</span>
+        <span class="ruby-regexp">/^(.+?):(\d+)/</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">caller</span>.<span class="ruby-identifier">first</span>
+        <span class="ruby-identifier">file</span>, <span class="ruby-identifier">line</span> = <span class="ruby-node">$1</span>, <span class="ruby-node">$2</span>.<span class="ruby-identifier">to_i</span>
+      <span class="ruby-keyword">rescue</span>
+        <span class="ruby-identifier">file</span>, <span class="ruby-identifier">line</span> = <span class="ruby-keyword">__FILE__</span>, <span class="ruby-keyword">__LINE__</span><span class="ruby-operator">+</span><span class="ruby-number">3</span>
+      <span class="ruby-keyword">end</span>
+      <span class="ruby-identifier">module_eval</span>(<span class="ruby-string">&quot;        def #{name}(*args,&amp;block)
+          @func_map['#{name}'].call(*args,&amp;block)
+        end
+&quot;</span>, <span class="ruby-identifier">file</span>, <span class="ruby-identifier">line</span>)
+      <span class="ruby-identifier">module_function</span>(<span class="ruby-identifier">name</span>)
+      <span class="ruby-identifier">f</span>
+    <span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-bind_function">
+            
+              <a name="method-i-bind_function"></a><b>bind_function</b>(name, ctype, argtype, call_type = nil, &amp;block)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-bind_function_source')" id="l_method-i-bind_function_source">show</a>
+                
+              </p>
+              <div id="method-i-bind_function_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/dl/lib/dl/import.rb, line 232</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">bind_function</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">ctype</span>, <span class="ruby-identifier">argtype</span>, <span class="ruby-identifier">call_type</span> = <span class="ruby-keyword">nil</span>, &amp;<span class="ruby-identifier">block</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-constant">DL</span>.<span class="ruby-identifier">fiddle?</span>
+    <span class="ruby-identifier">closure</span> = <span class="ruby-constant">Class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">Fiddle</span><span class="ruby-operator">::</span><span class="ruby-constant">Closure</span>) {
+      <span class="ruby-identifier">define_method</span>(<span class="ruby-value">:call</span>, <span class="ruby-identifier">block</span>)
+    }.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">ctype</span>, <span class="ruby-identifier">argtype</span>)
+
+    <span class="ruby-constant">Function</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">closure</span>, <span class="ruby-identifier">argtype</span>)
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">f</span> = <span class="ruby-constant">Function</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">CFunc</span>.<span class="ruby-identifier">new</span>(<span class="ruby-number">0</span>, <span class="ruby-identifier">ctype</span>, <span class="ruby-identifier">name</span>, <span class="ruby-identifier">call_type</span> <span class="ruby-operator">||</span> <span class="ruby-value">:cdecl</span>), <span class="ruby-identifier">argtype</span>)
+    <span class="ruby-identifier">f</span>.<span class="ruby-identifier">bind</span>(&amp;<span class="ruby-identifier">block</span>)
+    <span class="ruby-identifier">f</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-create_carried_function">
+            
+              <a name="method-i-create_carried_function"></a><b>create_carried_function</b>(name, ctype, argtype, call_type = nil, n = 0)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-create_carried_function_source')" id="l_method-i-create_carried_function_source">show</a>
+                
+              </p>
+              <div id="method-i-create_carried_function_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/dl/lib/dl/import.rb, line 250</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">create_carried_function</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">ctype</span>, <span class="ruby-identifier">argtype</span>, <span class="ruby-identifier">call_type</span> = <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">n</span> = <span class="ruby-number">0</span>)
+  <span class="ruby-constant">CarriedFunction</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">CFunc</span>.<span class="ruby-identifier">new</span>(<span class="ruby-number">0</span>, <span class="ruby-identifier">ctype</span>, <span class="ruby-identifier">name</span>, <span class="ruby-identifier">call_type</span> <span class="ruby-operator">||</span> <span class="ruby-value">:cdecl</span>), <span class="ruby-identifier">argtype</span>, <span class="ruby-identifier">n</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-create_temp_function">
+            
+              <a name="method-i-create_temp_function"></a><b>create_temp_function</b>(name, ctype, argtype, call_type = nil)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-create_temp_function_source')" id="l_method-i-create_temp_function_source">show</a>
+                
+              </p>
+              <div id="method-i-create_temp_function_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/dl/lib/dl/import.rb, line 246</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">create_temp_function</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">ctype</span>, <span class="ruby-identifier">argtype</span>, <span class="ruby-identifier">call_type</span> = <span class="ruby-keyword">nil</span>)
+  <span class="ruby-constant">TempFunction</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">CFunc</span>.<span class="ruby-identifier">new</span>(<span class="ruby-number">0</span>, <span class="ruby-identifier">ctype</span>, <span class="ruby-identifier">name</span>, <span class="ruby-identifier">call_type</span> <span class="ruby-operator">||</span> <span class="ruby-value">:cdecl</span>), <span class="ruby-identifier">argtype</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-create_value">
+            
+              <a name="method-i-create_value"></a><b>create_value</b>(ty, val=nil)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+            <div class="aka">
+              Also aliased as: <a href="Importer.html#method-i-value">value</a>
+            </div>
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-create_value_source')" id="l_method-i-create_value_source">show</a>
+                
+              </p>
+              <div id="method-i-create_value_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/dl/lib/dl/import.rb, line 196</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">create_value</span>(<span class="ruby-identifier">ty</span>, <span class="ruby-identifier">val</span>=<span class="ruby-keyword">nil</span>)
+  <span class="ruby-identifier">s</span> = <span class="ruby-identifier">struct</span>([<span class="ruby-identifier">ty</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot; value&quot;</span>])
+  <span class="ruby-identifier">ptr</span> = <span class="ruby-identifier">s</span>.<span class="ruby-identifier">malloc</span>()
+  <span class="ruby-keyword">if</span>( <span class="ruby-identifier">val</span> )
+    <span class="ruby-identifier">ptr</span>.<span class="ruby-identifier">value</span> = <span class="ruby-identifier">val</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">ptr</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-dlload">
+            
+              <a name="method-i-dlload"></a><b>dlload</b>(*libs)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-dlload_source')" id="l_method-i-dlload_source">show</a>
+                
+              </p>
+              <div id="method-i-dlload_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/dl/lib/dl/import.rb, line 55</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">dlload</span>(*<span class="ruby-identifier">libs</span>)
+  <span class="ruby-identifier">handles</span> = <span class="ruby-identifier">libs</span>.<span class="ruby-identifier">collect</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">lib</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">case</span> <span class="ruby-identifier">lib</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-keyword">nil</span>
+      <span class="ruby-keyword">nil</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-constant">Handle</span>
+      <span class="ruby-identifier">lib</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-constant">Importer</span>
+      <span class="ruby-identifier">lib</span>.<span class="ruby-identifier">handlers</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-keyword">begin</span>
+        <span class="ruby-constant">DL</span>.<span class="ruby-identifier">dlopen</span>(<span class="ruby-identifier">lib</span>)
+      <span class="ruby-keyword">rescue</span> <span class="ruby-constant">DLError</span>
+        <span class="ruby-identifier">raise</span>(<span class="ruby-constant">DLError</span>, <span class="ruby-node">&quot;can't load #{lib}&quot;</span>)
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+  }.<span class="ruby-identifier">flatten</span>()
+  <span class="ruby-ivar">@handler</span> = <span class="ruby-constant">CompositeHandler</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">handles</span>)
+  <span class="ruby-ivar">@func_map</span> = {}
+  <span class="ruby-ivar">@type_alias</span> = {}
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-extern">
+            
+              <a name="method-i-extern"></a><b>extern</b>(signature, *opts)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-extern_source')" id="l_method-i-extern_source">show</a>
+                
+              </p>
+              <div id="method-i-extern_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/dl/lib/dl/import.rb, line 130</span>
+    <span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">extern</span>(<span class="ruby-identifier">signature</span>, *<span class="ruby-identifier">opts</span>)
+      <span class="ruby-identifier">symname</span>, <span class="ruby-identifier">ctype</span>, <span class="ruby-identifier">argtype</span> = <span class="ruby-identifier">parse_signature</span>(<span class="ruby-identifier">signature</span>, <span class="ruby-ivar">@type_alias</span>)
+      <span class="ruby-identifier">opt</span> = <span class="ruby-identifier">parse_bind_options</span>(<span class="ruby-identifier">opts</span>)
+      <span class="ruby-identifier">f</span> = <span class="ruby-identifier">import_function</span>(<span class="ruby-identifier">symname</span>, <span class="ruby-identifier">ctype</span>, <span class="ruby-identifier">argtype</span>, <span class="ruby-identifier">opt</span>[<span class="ruby-value">:call_type</span>])
+      <span class="ruby-identifier">name</span> = <span class="ruby-identifier">symname</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">/@.+/</span>,<span class="ruby-string">''</span>)
+      <span class="ruby-ivar">@func_map</span>[<span class="ruby-identifier">name</span>] = <span class="ruby-identifier">f</span>
+      <span class="ruby-comment"># define_method(name){|*args,&amp;block| f.call(*args,&amp;block)}</span>
+      <span class="ruby-keyword">begin</span>
+        <span class="ruby-regexp">/^(.+?):(\d+)/</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">caller</span>.<span class="ruby-identifier">first</span>
+        <span class="ruby-identifier">file</span>, <span class="ruby-identifier">line</span> = <span class="ruby-node">$1</span>, <span class="ruby-node">$2</span>.<span class="ruby-identifier">to_i</span>
+      <span class="ruby-keyword">rescue</span>
+        <span class="ruby-identifier">file</span>, <span class="ruby-identifier">line</span> = <span class="ruby-keyword">__FILE__</span>, <span class="ruby-keyword">__LINE__</span><span class="ruby-operator">+</span><span class="ruby-number">3</span>
+      <span class="ruby-keyword">end</span>
+      <span class="ruby-identifier">module_eval</span>(<span class="ruby-string">&quot;        def #{name}(*args, &amp;block)
+          @func_map['#{name}'].call(*args,&amp;block)
+        end
+&quot;</span>, <span class="ruby-identifier">file</span>, <span class="ruby-identifier">line</span>)
+      <span class="ruby-identifier">module_function</span>(<span class="ruby-identifier">name</span>)
+      <span class="ruby-identifier">f</span>
+    <span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-handler">
+            
+              <a name="method-i-handler"></a><b>handler</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-handler_source')" id="l_method-i-handler_source">show</a>
+                
+              </p>
+              <div id="method-i-handler_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/dl/lib/dl/import.rb, line 212</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">handler</span>
+  <span class="ruby-ivar">@handler</span> <span class="ruby-keyword">or</span> <span class="ruby-identifier">raise</span> <span class="ruby-string">&quot;call dlload before importing symbols and functions&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-import_function">
+            
+              <a name="method-i-import_function"></a><b>import_function</b>(name, ctype, argtype, call_type = nil)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-import_function_source')" id="l_method-i-import_function_source">show</a>
+                
+              </p>
+              <div id="method-i-import_function_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/dl/lib/dl/import.rb, line 224</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">import_function</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">ctype</span>, <span class="ruby-identifier">argtype</span>, <span class="ruby-identifier">call_type</span> = <span class="ruby-keyword">nil</span>)
+  <span class="ruby-identifier">addr</span> = <span class="ruby-identifier">handler</span>.<span class="ruby-identifier">sym</span>(<span class="ruby-identifier">name</span>)
+  <span class="ruby-keyword">if</span>( <span class="ruby-operator">!</span><span class="ruby-identifier">addr</span> )
+    <span class="ruby-identifier">raise</span>(<span class="ruby-constant">DLError</span>, <span class="ruby-node">&quot;cannot find the function: #{name}()&quot;</span>)
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-constant">Function</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">CFunc</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">addr</span>, <span class="ruby-identifier">ctype</span>, <span class="ruby-identifier">name</span>, <span class="ruby-identifier">call_type</span> <span class="ruby-operator">||</span> <span class="ruby-value">:cdecl</span>), <span class="ruby-identifier">argtype</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-import_symbol">
+            
+              <a name="method-i-import_symbol"></a><b>import_symbol</b>(name)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-import_symbol_source')" id="l_method-i-import_symbol_source">show</a>
+                
+              </p>
+              <div id="method-i-import_symbol_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/dl/lib/dl/import.rb, line 216</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">import_symbol</span>(<span class="ruby-identifier">name</span>)
+  <span class="ruby-identifier">addr</span> = <span class="ruby-identifier">handler</span>.<span class="ruby-identifier">sym</span>(<span class="ruby-identifier">name</span>)
+  <span class="ruby-keyword">if</span>( <span class="ruby-operator">!</span><span class="ruby-identifier">addr</span> )
+    <span class="ruby-identifier">raise</span>(<span class="ruby-constant">DLError</span>, <span class="ruby-node">&quot;cannot find the symbol: #{name}&quot;</span>)
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-constant">CPtr</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">addr</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-import_value">
+            
+              <a name="method-i-import_value"></a><b>import_value</b>(ty, addr)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-import_value_source')" id="l_method-i-import_value_source">show</a>
+                
+              </p>
+              <div id="method-i-import_value_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/dl/lib/dl/import.rb, line 206</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">import_value</span>(<span class="ruby-identifier">ty</span>, <span class="ruby-identifier">addr</span>)
+  <span class="ruby-identifier">s</span> = <span class="ruby-identifier">struct</span>([<span class="ruby-identifier">ty</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot; value&quot;</span>])
+  <span class="ruby-identifier">ptr</span> = <span class="ruby-identifier">s</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">addr</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">ptr</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-sizeof">
+            
+              <a name="method-i-sizeof"></a><b>sizeof</b>(ty)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-sizeof_source')" id="l_method-i-sizeof_source">show</a>
+                
+              </p>
+              <div id="method-i-sizeof_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/dl/lib/dl/import.rb, line 81</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">sizeof</span>(<span class="ruby-identifier">ty</span>)
+  <span class="ruby-keyword">case</span> <span class="ruby-identifier">ty</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-constant">String</span>
+    <span class="ruby-identifier">ty</span> = <span class="ruby-identifier">parse_ctype</span>(<span class="ruby-identifier">ty</span>, <span class="ruby-ivar">@type_alias</span>).<span class="ruby-identifier">abs</span>()
+    <span class="ruby-keyword">case</span> <span class="ruby-identifier">ty</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-constant">TYPE_CHAR</span>
+      <span class="ruby-keyword">return</span> <span class="ruby-constant">SIZEOF_CHAR</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-constant">TYPE_SHORT</span>
+      <span class="ruby-keyword">return</span> <span class="ruby-constant">SIZEOF_SHORT</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-constant">TYPE_INT</span>
+      <span class="ruby-keyword">return</span> <span class="ruby-constant">SIZEOF_INT</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-constant">TYPE_LONG</span>
+      <span class="ruby-keyword">return</span> <span class="ruby-constant">SIZEOF_LONG</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-constant">TYPE_LONG_LONG</span>
+      <span class="ruby-keyword">return</span> <span class="ruby-constant">SIZEOF_LONG_LON</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-constant">TYPE_FLOAT</span>
+      <span class="ruby-keyword">return</span> <span class="ruby-constant">SIZEOF_FLOAT</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-constant">TYPE_DOUBLE</span>
+      <span class="ruby-keyword">return</span> <span class="ruby-constant">SIZEOF_DOUBLE</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-constant">TYPE_VOIDP</span>
+      <span class="ruby-keyword">return</span> <span class="ruby-constant">SIZEOF_VOIDP</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">raise</span>(<span class="ruby-constant">DLError</span>, <span class="ruby-node">&quot;unknown type: #{ty}&quot;</span>)
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-constant">Class</span>
+    <span class="ruby-keyword">if</span>( <span class="ruby-identifier">ty</span>.<span class="ruby-identifier">instance_methods</span>().<span class="ruby-identifier">include?</span>(<span class="ruby-value">:to_ptr</span>) )
+      <span class="ruby-keyword">return</span> <span class="ruby-identifier">ty</span>.<span class="ruby-identifier">size</span>()
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-constant">CPtr</span>[<span class="ruby-identifier">ty</span>].<span class="ruby-identifier">size</span>()
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-struct">
+            
+              <a name="method-i-struct"></a><b>struct</b>(signature)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-struct_source')" id="l_method-i-struct_source">show</a>
+                
+              </p>
+              <div id="method-i-struct_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/dl/lib/dl/import.rb, line 182</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">struct</span>(<span class="ruby-identifier">signature</span>)
+  <span class="ruby-identifier">tys</span>, <span class="ruby-identifier">mems</span> = <span class="ruby-identifier">parse_struct_signature</span>(<span class="ruby-identifier">signature</span>, <span class="ruby-ivar">@type_alias</span>)
+  <span class="ruby-constant">DL</span><span class="ruby-operator">::</span><span class="ruby-constant">CStructBuilder</span>.<span class="ruby-identifier">create</span>(<span class="ruby-constant">CStruct</span>, <span class="ruby-identifier">tys</span>, <span class="ruby-identifier">mems</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-typealias">
+            
+              <a name="method-i-typealias"></a><b>typealias</b>(alias_type, orig_type)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-typealias_source')" id="l_method-i-typealias_source">show</a>
+                
+              </p>
+              <div id="method-i-typealias_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/dl/lib/dl/import.rb, line 77</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">typealias</span>(<span class="ruby-identifier">alias_type</span>, <span class="ruby-identifier">orig_type</span>)
+  <span class="ruby-ivar">@type_alias</span>[<span class="ruby-identifier">alias_type</span>] = <span class="ruby-identifier">orig_type</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-union">
+            
+              <a name="method-i-union"></a><b>union</b>(signature)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-union_source')" id="l_method-i-union_source">show</a>
+                
+              </p>
+              <div id="method-i-union_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/dl/lib/dl/import.rb, line 187</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">union</span>(<span class="ruby-identifier">signature</span>)
+  <span class="ruby-identifier">tys</span>, <span class="ruby-identifier">mems</span> = <span class="ruby-identifier">parse_struct_signature</span>(<span class="ruby-identifier">signature</span>, <span class="ruby-ivar">@type_alias</span>)
+  <span class="ruby-constant">DL</span><span class="ruby-operator">::</span><span class="ruby-constant">CStructBuilder</span>.<span class="ruby-identifier">create</span>(<span class="ruby-constant">CUnion</span>, <span class="ruby-identifier">tys</span>, <span class="ruby-identifier">mems</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-value">
+            
+              <a name="method-i-value"></a><b>value</b>(ty, val=nil)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    

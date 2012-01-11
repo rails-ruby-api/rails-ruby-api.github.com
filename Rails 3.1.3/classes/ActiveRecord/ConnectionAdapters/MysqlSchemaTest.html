@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>ActiveRecord::ConnectionAdapters::MysqlSchemaTest</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/github.css" type="text/css" media="screen" />
+<script src="../../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            ActiveRecord::ConnectionAdapters::MysqlSchemaTest 
+            
+                <span class="parent">&lt; 
+                    
+                    ActiveRecord::TestCase
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../../files/activerecord/test/cases/adapters/mysql/schema_test_rb.html">activerecord/test/cases/adapters/mysql/schema_test.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-name">name</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>S</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-setup">setup</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-test_primary_key">test_primary_key</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_schema">test_schema</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_table_exists-3F">test_table_exists?</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_table_exists_wrong_schema">test_table_exists_wrong_schema</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-name">
+            
+              <a name="method-c-name"></a><b>name</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-name_source')" id="l_method-c-name_source">show</a>
+                
+              </p>
+              <div id="method-c-name_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/adapters/mysql/schema_test.rb, line 18</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">self</span>.<span class="ruby-identifier">name</span>; <span class="ruby-string">'Post'</span>; <span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-setup">
+            
+              <a name="method-i-setup"></a><b>setup</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-setup_source')" id="l_method-i-setup_source">show</a>
+                
+              </p>
+              <div id="method-i-setup_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/adapters/mysql/schema_test.rb, line 10</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">setup</span>
+  <span class="ruby-ivar">@connection</span> = <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">connection</span>
+  <span class="ruby-identifier">db</span>          = <span class="ruby-constant">Post</span>.<span class="ruby-identifier">connection_pool</span>.<span class="ruby-identifier">spec</span>.<span class="ruby-identifier">config</span>[<span class="ruby-value">:database</span>]
+  <span class="ruby-identifier">table</span>       = <span class="ruby-constant">Post</span>.<span class="ruby-identifier">table_name</span>
+  <span class="ruby-ivar">@db_name</span>    = <span class="ruby-identifier">db</span>
+
+  <span class="ruby-ivar">@omgpost</span> = <span class="ruby-constant">Class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>) <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">set_table_name</span> <span class="ruby-node">&quot;#{db}.#{table}&quot;</span>
+    <span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">self</span>.<span class="ruby-identifier">name</span>; <span class="ruby-string">'Post'</span>; <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_primary_key">
+            
+              <a name="method-i-test_primary_key"></a><b>test_primary_key</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_primary_key_source')" id="l_method-i-test_primary_key_source">show</a>
+                
+              </p>
+              <div id="method-i-test_primary_key_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/adapters/mysql/schema_test.rb, line 26</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_primary_key</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">'id'</span>, <span class="ruby-ivar">@omgpost</span>.<span class="ruby-identifier">primary_key</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_schema">
+            
+              <a name="method-i-test_schema"></a><b>test_schema</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_schema_source')" id="l_method-i-test_schema_source">show</a>
+                
+              </p>
+              <div id="method-i-test_schema_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/adapters/mysql/schema_test.rb, line 22</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_schema</span>
+  <span class="ruby-identifier">assert</span> <span class="ruby-ivar">@omgpost</span>.<span class="ruby-identifier">find</span>(<span class="ruby-value">:first</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_table_exists-3F">
+            
+              <a name="method-i-test_table_exists-3F"></a><b>test_table_exists?</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_table_exists-3F_source')" id="l_method-i-test_table_exists-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-test_table_exists-3F_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/adapters/mysql/schema_test.rb, line 30</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_table_exists?</span>
+  <span class="ruby-identifier">name</span> = <span class="ruby-ivar">@omgpost</span>.<span class="ruby-identifier">table_name</span>
+  <span class="ruby-identifier">assert</span> <span class="ruby-ivar">@connection</span>.<span class="ruby-identifier">table_exists?</span>(<span class="ruby-identifier">name</span>), <span class="ruby-node">&quot;#{name} table should exist&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_table_exists_wrong_schema">
+            
+              <a name="method-i-test_table_exists_wrong_schema"></a><b>test_table_exists_wrong_schema</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_table_exists_wrong_schema_source')" id="l_method-i-test_table_exists_wrong_schema_source">show</a>
+                
+              </p>
+              <div id="method-i-test_table_exists_wrong_schema_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/adapters/mysql/schema_test.rb, line 35</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_table_exists_wrong_schema</span>
+  <span class="ruby-identifier">assert</span>(<span class="ruby-operator">!</span><span class="ruby-ivar">@connection</span>.<span class="ruby-identifier">table_exists?</span>(<span class="ruby-node">&quot;#{@db_name}.zomg&quot;</span>), <span class="ruby-string">&quot;table should not exist&quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    

@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Psych::ScalarScanner</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            Psych::ScalarScanner 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/ext/psych/lib/psych/scalar_scanner_rb.html">ext/psych/lib/psych/scalar_scanner.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>Scan scalars for built in types</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>P</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-parse_time">parse_time</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-tokenize">tokenize</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+      <!-- Section constants -->
+      <div class="sectiontitle">Constants</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class="attr-name">TIME</td>
+            <td>=</td>
+            <td class="attr-value">/^\d{4}-\d{1,2}-\d{1,2}([Tt]|\s+)\d{1,2}:\d\d:\d\d(\.\d*)?(\s*Z|[-+]\d{1,2}(:\d\d)?)?/</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Taken from <a
+href="http://yaml.org/type/timestamp.html">yaml.org/type/timestamp.html</a></p></td>
+            </tr>
+          
+        
+      </table>
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <a name="method-c-new"></a><b>new</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Create a new scanner</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/psych/lib/psych/scalar_scanner.rb, line 11</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">initialize</span>
+  <span class="ruby-ivar">@string_cache</span> = {}
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-parse_time">
+            
+              <a name="method-i-parse_time"></a><b>parse_time</b>(string)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Parse and return a <a href="../Time.html">Time</a> from <code>string</code></p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-parse_time_source')" id="l_method-i-parse_time_source">show</a>
+                
+              </p>
+              <div id="method-i-parse_time_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/psych/lib/psych/scalar_scanner.rb, line 80</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">parse_time</span> <span class="ruby-identifier">string</span>
+  <span class="ruby-identifier">date</span>, <span class="ruby-identifier">time</span> = *(<span class="ruby-identifier">string</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp">/[ tT]/</span>, <span class="ruby-number">2</span>))
+  (<span class="ruby-identifier">yy</span>, <span class="ruby-identifier">m</span>, <span class="ruby-identifier">dd</span>) = <span class="ruby-identifier">date</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">'-'</span>).<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span> <span class="ruby-identifier">x</span>.<span class="ruby-identifier">to_i</span> }
+  <span class="ruby-identifier">md</span> = <span class="ruby-identifier">time</span>.<span class="ruby-identifier">match</span>(<span class="ruby-regexp">/(\d+:\d+:\d+)(?:\.(\d*))?\s*(Z|[-+]\d+(:\d\d)?)?/</span>)
+
+  (<span class="ruby-identifier">hh</span>, <span class="ruby-identifier">mm</span>, <span class="ruby-identifier">ss</span>) = <span class="ruby-identifier">md</span>[<span class="ruby-number">1</span>].<span class="ruby-identifier">split</span>(<span class="ruby-string">':'</span>).<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span> <span class="ruby-identifier">x</span>.<span class="ruby-identifier">to_i</span> }
+  <span class="ruby-identifier">us</span> = (<span class="ruby-identifier">md</span>[<span class="ruby-number">2</span>] <span class="ruby-operator">?</span> <span class="ruby-constant">Rational</span>(<span class="ruby-node">&quot;0.#{md[2]}&quot;</span>) <span class="ruby-operator">:</span> <span class="ruby-number">0</span>) * <span class="ruby-number">1000000</span>
+
+  <span class="ruby-identifier">time</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">utc</span>(<span class="ruby-identifier">yy</span>, <span class="ruby-identifier">m</span>, <span class="ruby-identifier">dd</span>, <span class="ruby-identifier">hh</span>, <span class="ruby-identifier">mm</span>, <span class="ruby-identifier">ss</span>, <span class="ruby-identifier">us</span>)
+
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">time</span> <span class="ruby-keyword">if</span> <span class="ruby-string">'Z'</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">md</span>[<span class="ruby-number">3</span>]
+  <span class="ruby-keyword">return</span> <span class="ruby-constant">Time</span>.<span class="ruby-identifier">at</span>(<span class="ruby-identifier">time</span>.<span class="ruby-identifier">to_i</span>, <span class="ruby-identifier">us</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">md</span>[<span class="ruby-number">3</span>]
+
+  <span class="ruby-identifier">tz</span> = <span class="ruby-identifier">md</span>[<span class="ruby-number">3</span>].<span class="ruby-identifier">match</span>(<span class="ruby-regexp">/^([+\-]?\d{1,2})\:?(\d{1,2})?$/</span>)[<span class="ruby-number">1</span><span class="ruby-operator">..</span><span class="ruby-number">-1</span>].<span class="ruby-identifier">compact</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">digit</span><span class="ruby-operator">|</span> <span class="ruby-constant">Integer</span>(<span class="ruby-identifier">digit</span>, <span class="ruby-number">10</span>) }
+  <span class="ruby-identifier">offset</span> = <span class="ruby-identifier">tz</span>.<span class="ruby-identifier">first</span> * <span class="ruby-number">3600</span>
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">offset</span> <span class="ruby-operator">&lt;</span> <span class="ruby-number">0</span>
+    <span class="ruby-identifier">offset</span> <span class="ruby-operator">-=</span> ((<span class="ruby-identifier">tz</span>[<span class="ruby-number">1</span>] <span class="ruby-operator">||</span> <span class="ruby-number">0</span>) * <span class="ruby-number">60</span>)
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">offset</span> <span class="ruby-operator">+=</span> ((<span class="ruby-identifier">tz</span>[<span class="ruby-number">1</span>] <span class="ruby-operator">||</span> <span class="ruby-number">0</span>) * <span class="ruby-number">60</span>)
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-constant">Time</span>.<span class="ruby-identifier">at</span>((<span class="ruby-identifier">time</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">offset</span>).<span class="ruby-identifier">to_i</span>, <span class="ruby-identifier">us</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-tokenize">
+            
+              <a name="method-i-tokenize"></a><b>tokenize</b>(string)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Tokenize <code>string</code> returning the ruby object</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-tokenize_source')" id="l_method-i-tokenize_source">show</a>
+                
+              </p>
+              <div id="method-i-tokenize_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/psych/lib/psych/scalar_scanner.rb, line 16</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">tokenize</span> <span class="ruby-identifier">string</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">string</span>.<span class="ruby-identifier">empty?</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">string</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@string_cache</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">string</span>)
+
+  <span class="ruby-keyword">case</span> <span class="ruby-identifier">string</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-regexp">/^[A-Za-z~]/</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">string</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">&gt;</span> <span class="ruby-number">5</span>
+      <span class="ruby-ivar">@string_cache</span>[<span class="ruby-identifier">string</span>] = <span class="ruby-keyword">true</span>
+      <span class="ruby-keyword">return</span> <span class="ruby-identifier">string</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-keyword">case</span> <span class="ruby-identifier">string</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-regexp">/^[^ytonf~]/</span>
+      <span class="ruby-ivar">@string_cache</span>[<span class="ruby-identifier">string</span>] = <span class="ruby-keyword">true</span>
+      <span class="ruby-identifier">string</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-string">'~'</span>, <span class="ruby-regexp">/^null$/</span>
+      <span class="ruby-keyword">nil</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-regexp">/^(yes|true|on)$/</span>
+      <span class="ruby-keyword">true</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-regexp">/^(no|false|off)$/</span>
+      <span class="ruby-keyword">false</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-ivar">@string_cache</span>[<span class="ruby-identifier">string</span>] = <span class="ruby-keyword">true</span>
+      <span class="ruby-identifier">string</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-constant">TIME</span>
+    <span class="ruby-identifier">parse_time</span> <span class="ruby-identifier">string</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-regexp">/^\d{4}-\d{1,2}-\d{1,2}$/</span>
+    <span class="ruby-identifier">require</span> <span class="ruby-string">'date'</span>
+    <span class="ruby-constant">Date</span>.<span class="ruby-identifier">strptime</span>(<span class="ruby-identifier">string</span>, <span class="ruby-string">'%Y-%m-%d'</span>)
+  <span class="ruby-keyword">when</span> <span class="ruby-regexp">/^\.inf$/</span>
+    <span class="ruby-number">1</span> <span class="ruby-operator">/</span> <span class="ruby-number">0.0</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-regexp">/^-\.inf$/</span>
+    <span class="ruby-number">-1</span> <span class="ruby-operator">/</span> <span class="ruby-number">0.0</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-regexp">/^\.nan$/</span>
+    <span class="ruby-number">0.0</span> <span class="ruby-operator">/</span> <span class="ruby-number">0.0</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-regexp">/^:./</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">string</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp">/^:([&quot;'])(.*)\11//</span>
+      <span class="ruby-node">$2</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-regexp">/^:/</span>, <span class="ruby-string">''</span>).<span class="ruby-identifier">to_sym</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">string</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-regexp">/^:/</span>, <span class="ruby-string">''</span>).<span class="ruby-identifier">to_sym</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-regexp">/^[-+]?[1-9][0-9_]*(:[0-5]?[0-9])+$/</span>
+    <span class="ruby-identifier">i</span> = <span class="ruby-number">0</span>
+    <span class="ruby-identifier">string</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">':'</span>).<span class="ruby-identifier">each_with_index</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">n</span>,<span class="ruby-identifier">e</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">i</span> <span class="ruby-operator">+=</span> (<span class="ruby-identifier">n</span>.<span class="ruby-identifier">to_i</span> * <span class="ruby-number">60</span> <span class="ruby-operator">**</span> (<span class="ruby-identifier">e</span> <span class="ruby-operator">-</span> <span class="ruby-number">2</span>).<span class="ruby-identifier">abs</span>)
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">i</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-regexp">/^[-+]?[0-9][0-9_]*(:[0-5]?[0-9])+\.[0-9_]*$/</span>
+    <span class="ruby-identifier">i</span> = <span class="ruby-number">0</span>
+    <span class="ruby-identifier">string</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">':'</span>).<span class="ruby-identifier">each_with_index</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">n</span>,<span class="ruby-identifier">e</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">i</span> <span class="ruby-operator">+=</span> (<span class="ruby-identifier">n</span>.<span class="ruby-identifier">to_f</span> * <span class="ruby-number">60</span> <span class="ruby-operator">**</span> (<span class="ruby-identifier">e</span> <span class="ruby-operator">-</span> <span class="ruby-number">2</span>).<span class="ruby-identifier">abs</span>)
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">i</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-constant">Integer</span>(<span class="ruby-identifier">string</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">/[,_]/</span>, <span class="ruby-string">''</span>)) <span class="ruby-keyword">rescue</span> <span class="ruby-constant">ArgumentError</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-constant">Float</span>(<span class="ruby-identifier">string</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">/[,_]/</span>, <span class="ruby-string">''</span>)) <span class="ruby-keyword">rescue</span> <span class="ruby-constant">ArgumentError</span>
+    <span class="ruby-ivar">@string_cache</span>[<span class="ruby-identifier">string</span>] = <span class="ruby-keyword">true</span>
+    <span class="ruby-identifier">string</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    

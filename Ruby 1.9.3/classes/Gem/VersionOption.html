@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Gem::VersionOption</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Module</span> 
+            Gem::VersionOption 
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/lib/rubygems/version_option_rb.html">lib/rubygems/version_option.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>Mixin methods for –version and –platform <a
+href="Command.html">Gem::Command</a> options.</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>A</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-add_platform_option">add_platform_option</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-add_prerelease_option">add_prerelease_option</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-add_version_option">add_version_option</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+        
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-add_platform_option">
+            
+              <a name="method-i-add_platform_option"></a><b>add_platform_option</b>(task = command, *wrap)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Add the –platform option to the option parser.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-add_platform_option_source')" id="l_method-i-add_platform_option_source">show</a>
+                
+              </p>
+              <div id="method-i-add_platform_option_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/version_option.rb, line 17</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">add_platform_option</span>(<span class="ruby-identifier">task</span> = <span class="ruby-identifier">command</span>, *<span class="ruby-identifier">wrap</span>)
+  <span class="ruby-constant">OptionParser</span>.<span class="ruby-identifier">accept</span> <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Platform</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">value</span> <span class="ruby-operator">==</span> <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Platform</span><span class="ruby-operator">::</span><span class="ruby-constant">RUBY</span> <span class="ruby-keyword">then</span>
+      <span class="ruby-identifier">value</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Platform</span>.<span class="ruby-identifier">new</span> <span class="ruby-identifier">value</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">add_option</span>(<span class="ruby-string">'--platform PLATFORM'</span>, <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Platform</span>,
+             <span class="ruby-node">&quot;Specify the platform of gem to #{task}&quot;</span>, *<span class="ruby-identifier">wrap</span>) <span class="ruby-keyword">do</span>
+               <span class="ruby-operator">|</span><span class="ruby-identifier">value</span>, <span class="ruby-identifier">options</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">unless</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:added_platform</span>] <span class="ruby-keyword">then</span>
+      <span class="ruby-constant">Gem</span>.<span class="ruby-identifier">platforms</span> = [<span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Platform</span><span class="ruby-operator">::</span><span class="ruby-constant">RUBY</span>]
+      <span class="ruby-identifier">options</span>[<span class="ruby-value">:added_platform</span>] = <span class="ruby-keyword">true</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-constant">Gem</span>.<span class="ruby-identifier">platforms</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">value</span> <span class="ruby-keyword">unless</span> <span class="ruby-constant">Gem</span>.<span class="ruby-identifier">platforms</span>.<span class="ruby-identifier">include?</span> <span class="ruby-identifier">value</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-add_prerelease_option">
+            
+              <a name="method-i-add_prerelease_option"></a><b>add_prerelease_option</b>(*wrap)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Add the –prerelease option to the option parser.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-add_prerelease_option_source')" id="l_method-i-add_prerelease_option_source">show</a>
+                
+              </p>
+              <div id="method-i-add_prerelease_option_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/version_option.rb, line 41</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">add_prerelease_option</span>(*<span class="ruby-identifier">wrap</span>)
+  <span class="ruby-identifier">add_option</span>(<span class="ruby-string">&quot;--[no-]prerelease&quot;</span>,
+             <span class="ruby-string">&quot;Allow prerelease versions of a gem&quot;</span>, *<span class="ruby-identifier">wrap</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">value</span>, <span class="ruby-identifier">options</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">options</span>[<span class="ruby-value">:prerelease</span>] = <span class="ruby-identifier">value</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-add_version_option">
+            
+              <a name="method-i-add_version_option"></a><b>add_version_option</b>(task = command, *wrap)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Add the –version option to the option parser.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-add_version_option_source')" id="l_method-i-add_version_option_source">show</a>
+                
+              </p>
+              <div id="method-i-add_version_option_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/version_option.rb, line 51</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">add_version_option</span>(<span class="ruby-identifier">task</span> = <span class="ruby-identifier">command</span>, *<span class="ruby-identifier">wrap</span>)
+  <span class="ruby-constant">OptionParser</span>.<span class="ruby-identifier">accept</span> <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Requirement</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
+    <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Requirement</span>.<span class="ruby-identifier">new</span> <span class="ruby-identifier">value</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">add_option</span>(<span class="ruby-string">'-v'</span>, <span class="ruby-string">'--version VERSION'</span>, <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Requirement</span>,
+             <span class="ruby-node">&quot;Specify version of gem to #{task}&quot;</span>, *<span class="ruby-identifier">wrap</span>) <span class="ruby-keyword">do</span>
+               <span class="ruby-operator">|</span><span class="ruby-identifier">value</span>, <span class="ruby-identifier">options</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">options</span>[<span class="ruby-value">:version</span>] = <span class="ruby-identifier">value</span>
+    <span class="ruby-identifier">options</span>[<span class="ruby-value">:prerelease</span>] = <span class="ruby-keyword">true</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">prerelease?</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    

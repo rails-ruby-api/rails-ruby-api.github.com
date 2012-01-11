@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>RDoc::Markup::Attribute</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/github.css" type="text/css" media="screen" />
+<script src="../../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            RDoc::Markup::Attribute 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../../Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../../files/lib/rdoc/markup/inline_rb.html">lib/rdoc/markup/inline.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>We manage a set of attributes. Each attribute has a symbol name and a bit
+value.</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>A</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-as_string">as_string</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>B</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-bitmap_for">bitmap_for</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>E</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-each_name_of">each_name_of</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+      <!-- Section constants -->
+      <div class="sectiontitle">Constants</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class="attr-name">SPECIAL</td>
+            <td>=</td>
+            <td class="attr-value">1</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Special.html">Special</a> attribute type.  See <a
+href="../Markup.html#method-i-add_special">RDoc::Markup#add_special</a></p></td>
+            </tr>
+          
+        
+      </table>
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-as_string">
+            
+              <a name="method-c-as_string"></a><b>as_string</b>(bitmap)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns a string representation of <code>bitmap</code></p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-as_string_source')" id="l_method-c-as_string_source">show</a>
+                
+              </p>
+              <div id="method-c-as_string_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rdoc/markup/inline.rb, line 34</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">self</span>.<span class="ruby-identifier">as_string</span>(<span class="ruby-identifier">bitmap</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-string">&quot;none&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">bitmap</span>.<span class="ruby-identifier">zero?</span>
+  <span class="ruby-identifier">res</span> = []
+  <span class="ruby-identifier">@@name_to_bitmap</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">name</span>, <span class="ruby-identifier">bit</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">res</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">name</span> <span class="ruby-keyword">if</span> (<span class="ruby-identifier">bitmap</span> &amp; <span class="ruby-identifier">bit</span>) <span class="ruby-operator">!=</span> <span class="ruby-number">0</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">res</span>.<span class="ruby-identifier">join</span>(<span class="ruby-string">&quot;,&quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-bitmap_for">
+            
+              <a name="method-c-bitmap_for"></a><b>bitmap_for</b>(name)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns a unique bit for <code>name</code></p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-bitmap_for_source')" id="l_method-c-bitmap_for_source">show</a>
+                
+              </p>
+              <div id="method-c-bitmap_for_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rdoc/markup/inline.rb, line 21</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">self</span>.<span class="ruby-identifier">bitmap_for</span>(<span class="ruby-identifier">name</span>)
+  <span class="ruby-identifier">bitmap</span> = <span class="ruby-identifier">@@name_to_bitmap</span>[<span class="ruby-identifier">name</span>]
+  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">bitmap</span> <span class="ruby-keyword">then</span>
+    <span class="ruby-identifier">bitmap</span> = <span class="ruby-identifier">@@next_bitmap</span>
+    <span class="ruby-identifier">@@next_bitmap</span> <span class="ruby-operator">&lt;&lt;=</span> <span class="ruby-number">1</span>
+    <span class="ruby-identifier">@@name_to_bitmap</span>[<span class="ruby-identifier">name</span>] = <span class="ruby-identifier">bitmap</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">bitmap</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-each_name_of">
+            
+              <a name="method-c-each_name_of"></a><b>each_name_of</b>(bitmap)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>yields each attribute name in <code>bitmap</code></p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-each_name_of_source')" id="l_method-c-each_name_of_source">show</a>
+                
+              </p>
+              <div id="method-c-each_name_of_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rdoc/markup/inline.rb, line 46</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">self</span>.<span class="ruby-identifier">each_name_of</span>(<span class="ruby-identifier">bitmap</span>)
+  <span class="ruby-identifier">@@name_to_bitmap</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">name</span>, <span class="ruby-identifier">bit</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">bit</span> <span class="ruby-operator">==</span> <span class="ruby-constant">SPECIAL</span>
+    <span class="ruby-keyword">yield</span> <span class="ruby-identifier">name</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-keyword">if</span> (<span class="ruby-identifier">bitmap</span> &amp; <span class="ruby-identifier">bit</span>) <span class="ruby-operator">!=</span> <span class="ruby-number">0</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                        </div>
+    </div>
+  </body>
+</html>    

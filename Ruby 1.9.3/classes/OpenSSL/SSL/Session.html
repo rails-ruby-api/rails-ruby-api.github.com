@@ -1,0 +1,669 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>OpenSSL::SSL::Session</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/github.css" type="text/css" media="screen" />
+<script src="../../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            OpenSSL::SSL::Session 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../../Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../../files/ext/openssl/ossl_ssl_c.html">ext/openssl/ossl_ssl.c</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+
+
+  
+
+
+  
+  
+
+
+  
+    <!-- Namespace -->
+    <div class="sectiontitle">Namespace</div>
+    <ul>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="Session/SessionError.html">OpenSSL::SSL::Session::SessionError</a>
+        </li>
+      
+    </ul>
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>#</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-3D-3D">==</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>I</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-id">id</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-time">time</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-time-3D">time=</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-timeout">timeout</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-timeout-3D">timeout=</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-to_der">to_der</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-to_pem">to_pem</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-to_text">to_text</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <a name="method-c-new"></a><b>Session.new(SSLSocket | string) => session
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <h3 id="method-c-new-label-Parameters">Parameters</h3>
+
+<p><code>SSLSocket</code> is an <a
+href="SSLSocket.html">OpenSSL::SSL::SSLSocket</a> <code>string</code> must
+be a DER or PEM encoded <a href="Session.html">Session</a>.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre>static VALUE ossl_ssl_session_initialize(VALUE self, VALUE arg1)
+{
+        SSL_SESSION *ctx = NULL;
+
+        if (RDATA(self)-&gt;data)
+                ossl_raise(eSSLSession, &quot;SSL Session already initialized&quot;);
+
+        if (rb_obj_is_instance_of(arg1, cSSLSocket)) {
+                SSL *ssl;
+
+                Data_Get_Struct(arg1, SSL, ssl);
+
+                if (!ssl || (ctx = SSL_get1_session(ssl)) == NULL)
+                        ossl_raise(eSSLSession, &quot;no session available&quot;);
+        } else {
+                BIO *in = ossl_obj2bio(arg1);
+
+                ctx = PEM_read_bio_SSL_SESSION(in, NULL, NULL, NULL);
+
+                if (!ctx) {
+                        OSSL_BIO_reset(in);
+                        ctx = d2i_SSL_SESSION_bio(in, NULL);
+                }
+
+                BIO_free(in);
+
+                if (!ctx)
+                        ossl_raise(rb_eArgError, &quot;unknown type&quot;);
+        }
+
+        /* should not happen */
+        if (ctx == NULL)
+                ossl_raise(eSSLSession, &quot;ctx not set - internal error&quot;);
+
+        RDATA(self)-&gt;data = ctx;
+
+        return self;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-3D-3D">
+            
+              <a name="method-i-3D-3D"></a><b>session1 == session2 &rarr; boolean</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-3D-3D_source')" id="l_method-i-3D-3D_source">show</a>
+                
+              </p>
+              <div id="method-i-3D-3D_source" class="dyn-source">
+                <pre>static VALUE ossl_ssl_session_eq(VALUE val1, VALUE val2)
+{
+        SSL_SESSION *ctx1, *ctx2;
+
+        GetSSLSession(val1, ctx1);
+        SafeGetSSLSession(val2, ctx2);
+
+        switch (SSL_SESSION_cmp(ctx1, ctx2)) {
+        case 0:                return Qtrue;
+        default:       return Qfalse;
+        }
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-id">
+            
+              <a name="method-i-id"></a><b>session.id &rarr; aString
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the <a href="Session.html">Session</a> ID.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-id_source')" id="l_method-i-id_source">show</a>
+                
+              </p>
+              <div id="method-i-id_source" class="dyn-source">
+                <pre>static VALUE ossl_ssl_session_get_id(VALUE self)
+{
+        SSL_SESSION *ctx;
+        const unsigned char *p = NULL;
+        unsigned int i = 0;
+
+        GetSSLSession(self, ctx);
+
+        p = SSL_SESSION_get_id(ctx, &amp;i);
+
+        return rb_str_new((const char *) p, i);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-time">
+            
+              <a name="method-i-time"></a><b>session.time &rarr; Time
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Gets start time of the session.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-time_source')" id="l_method-i-time_source">show</a>
+                
+              </p>
+              <div id="method-i-time_source" class="dyn-source">
+                <pre>static VALUE ossl_ssl_session_get_time(VALUE self)
+{
+        SSL_SESSION *ctx;
+        time_t t;
+
+        GetSSLSession(self, ctx);
+
+        t = SSL_SESSION_get_time(ctx);
+
+        if (t == 0)
+                return Qnil;
+
+        return rb_funcall(rb_cTime, rb_intern(&quot;at&quot;), 1, TIMET2NUM(t));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-time-3D">
+            
+              <a name="method-i-time-3D"></a><b>session.time=(Time) &rarr; Time
+session.time=(integer) &rarr; Time
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Sets start time of the session. <a href="../../Time.html">Time</a>
+resolution is in seconds.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-time-3D_source')" id="l_method-i-time-3D_source">show</a>
+                
+              </p>
+              <div id="method-i-time-3D_source" class="dyn-source">
+                <pre>static VALUE ossl_ssl_session_set_time(VALUE self, VALUE time_v)
+{
+        SSL_SESSION *ctx;
+        long t;
+
+        GetSSLSession(self, ctx);
+        if (rb_obj_is_instance_of(time_v, rb_cTime)) {
+                time_v = rb_funcall(time_v, rb_intern(&quot;to_i&quot;), 0);
+        }
+        t = NUM2LONG(time_v);
+        SSL_SESSION_set_time(ctx, t);
+        return ossl_ssl_session_get_time(self);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-timeout">
+            
+              <a name="method-i-timeout"></a><b>session.timeout &rarr; integer
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Gets how long until the session expires in seconds.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-timeout_source')" id="l_method-i-timeout_source">show</a>
+                
+              </p>
+              <div id="method-i-timeout_source" class="dyn-source">
+                <pre>static VALUE ossl_ssl_session_get_timeout(VALUE self)
+{
+        SSL_SESSION *ctx;
+        time_t t;
+
+        GetSSLSession(self, ctx);
+
+        t = SSL_SESSION_get_timeout(ctx);
+
+        return TIMET2NUM(t);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-timeout-3D">
+            
+              <a name="method-i-timeout-3D"></a><b>session.timeout=(integer) &rarr; integer
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Sets how long until the session expires in seconds.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-timeout-3D_source')" id="l_method-i-timeout-3D_source">show</a>
+                
+              </p>
+              <div id="method-i-timeout-3D_source" class="dyn-source">
+                <pre>static VALUE ossl_ssl_session_set_timeout(VALUE self, VALUE time_v)
+{
+        SSL_SESSION *ctx;
+        long t;
+
+        GetSSLSession(self, ctx);
+        t = NUM2LONG(time_v);
+        SSL_SESSION_set_timeout(ctx, t);
+        return ossl_ssl_session_get_timeout(self);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-to_der">
+            
+              <a name="method-i-to_der"></a><b>session.to_der &rarr; aString
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns an <a href="../ASN1.html">ASN1</a> encoded String that contains the
+<a href="Session.html">Session</a> object.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-to_der_source')" id="l_method-i-to_der_source">show</a>
+                
+              </p>
+              <div id="method-i-to_der_source" class="dyn-source">
+                <pre>static VALUE ossl_ssl_session_to_der(VALUE self)
+{
+        SSL_SESSION *ctx;
+        unsigned char *p;
+        int len;
+        VALUE str;
+
+        GetSSLSession(self, ctx);
+        len = i2d_SSL_SESSION(ctx, NULL);
+        if (len &lt;= 0) {
+                ossl_raise(eSSLSession, &quot;i2d_SSL_SESSION&quot;);
+        }
+
+        str = rb_str_new(0, len);
+        p = (unsigned char *)RSTRING_PTR(str);
+        i2d_SSL_SESSION(ctx, &amp;p);
+        ossl_str_adjust(str, p);
+        return str;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-to_pem">
+            
+              <a name="method-i-to_pem"></a><b>session.to_pem &rarr; String
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns a PEM encoded String that contains the <a
+href="Session.html">Session</a> object.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-to_pem_source')" id="l_method-i-to_pem_source">show</a>
+                
+              </p>
+              <div id="method-i-to_pem_source" class="dyn-source">
+                <pre>static VALUE ossl_ssl_session_to_pem(VALUE self)
+{
+        SSL_SESSION *ctx;
+        BIO *out;
+        BUF_MEM *buf;
+        VALUE str;
+        int i;
+
+        GetSSLSession(self, ctx);
+
+        if (!(out = BIO_new(BIO_s_mem()))) {
+                ossl_raise(eSSLSession, &quot;BIO_s_mem()&quot;);
+        }
+
+        if (!(i=PEM_write_bio_SSL_SESSION(out, ctx))) {
+                BIO_free(out);
+                ossl_raise(eSSLSession, &quot;SSL_SESSION_print()&quot;);
+        }
+
+        BIO_get_mem_ptr(out, &amp;buf);
+        str = rb_str_new(buf-&gt;data, buf-&gt;length);
+        BIO_free(out);
+
+        return str;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-to_text">
+            
+              <a name="method-i-to_text"></a><b>session.to_text &rarr; String
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Shows everything in the <a href="Session.html">Session</a> object.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-to_text_source')" id="l_method-i-to_text_source">show</a>
+                
+              </p>
+              <div id="method-i-to_text_source" class="dyn-source">
+                <pre>static VALUE ossl_ssl_session_to_text(VALUE self)
+{
+        SSL_SESSION *ctx;
+        BIO *out;
+        BUF_MEM *buf;
+        VALUE str;
+
+        GetSSLSession(self, ctx);
+
+        if (!(out = BIO_new(BIO_s_mem()))) {
+                ossl_raise(eSSLSession, &quot;BIO_s_mem()&quot;);
+        }
+
+        if (!SSL_SESSION_print(out, ctx)) {
+                BIO_free(out);
+                ossl_raise(eSSLSession, &quot;SSL_SESSION_print()&quot;);
+        }
+
+        BIO_get_mem_ptr(out, &amp;buf);
+        str = rb_str_new(buf-&gt;data, buf-&gt;length);
+        BIO_free(out);
+
+        return str;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    

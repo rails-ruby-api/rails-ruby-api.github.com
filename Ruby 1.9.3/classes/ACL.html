@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>ACL</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/github.css" type="text/css" media="screen" />
+<script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            ACL 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../files/lib/drb/acl_rb.html">lib/drb/acl.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>Simple Access Control Lists.</p>
+
+<p>Access control lists are composed of “allow” and “deny” halves to control
+access.  Use “all” or “*” to match any address.  To match a specific
+address use any address or address mask that <a
+href="IPAddr.html">IPAddr</a> can understand.</p>
+
+<p>Example:</p>
+
+<pre class="ruby"><span class="ruby-identifier">list</span> = <span class="ruby-node">]
+  deny all
+  allow 192.168.1.1
+  allow ::ffff:192.168.1.2
+  allow 192.168.1.3
+]</span>
+
+<span class="ruby-comment"># From Socket#peeraddr, see also ACL#allow_socket?</span>
+<span class="ruby-identifier">addr</span> = [<span class="ruby-string">&quot;AF_INET&quot;</span>, <span class="ruby-value">10</span>, <span class="ruby-string">&quot;lc630&quot;</span>, <span class="ruby-string">&quot;192.168.1.3&quot;</span>]
+
+<span class="ruby-identifier">acl</span> = <span class="ruby-constant">ACL</span>.<span class="ruby-identifier">new</span>
+<span class="ruby-identifier">p</span> <span class="ruby-identifier">acl</span>.<span class="ruby-identifier">allow_addr?</span>(<span class="ruby-identifier">addr</span>) <span class="ruby-comment"># =&gt; true</span>
+
+<span class="ruby-identifier">acl</span> = <span class="ruby-constant">ACL</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">list</span>, <span class="ruby-constant">ACL</span><span class="ruby-operator">::</span><span class="ruby-constant">DENY_ALLOW</span>)
+<span class="ruby-identifier">p</span> <span class="ruby-identifier">acl</span>.<span class="ruby-identifier">allow_addr?</span>(<span class="ruby-identifier">addr</span>) <span class="ruby-comment"># =&gt; true</span>
+</pre>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+    <!-- Namespace -->
+    <div class="sectiontitle">Namespace</div>
+    <ul>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="ACL/ACLEntry.html">ACL::ACLEntry</a>
+        </li>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="ACL/ACLList.html">ACL::ACLList</a>
+        </li>
+      
+    </ul>
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>A</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-allow_addr-3F">allow_addr?</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-allow_socket-3F">allow_socket?</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>I</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-install_list">install_list</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+      <!-- Section constants -->
+      <div class="sectiontitle">Constants</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class="attr-name">VERSION</td>
+            <td>=</td>
+            <td class="attr-value">[&quot;2.0.0&quot;]</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>The current version of <a href="ACL.html">ACL</a></p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">DENY_ALLOW</td>
+            <td>=</td>
+            <td class="attr-value">0</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Default to deny</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">ALLOW_DENY</td>
+            <td>=</td>
+            <td class="attr-value">1</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Default to allow</p></td>
+            </tr>
+          
+        
+      </table>
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <a name="method-c-new"></a><b>new</b>(list=nil, order = DENY_ALLOW)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Creates a new <a href="ACL.html">ACL</a> from <code>list</code> with an
+evaluation <code>order</code> of <a
+href="ACL.html#DENY_ALLOW">DENY_ALLOW</a> or <a
+href="ACL.html#ALLOW_DENY">ALLOW_DENY</a>.</p>
+
+<p>An <a href="ACL.html">ACL</a> <code>list</code> is an Array of “allow” or
+“deny” and an address or address mask or “all” or “*” to match any address:</p>
+
+<pre>%w[
+  deny all
+  allow 192.0.2.2
+  allow 192.0.2.128/26
+]</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/drb/acl.rb, line 172</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">initialize</span>(<span class="ruby-identifier">list</span>=<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">order</span> = <span class="ruby-constant">DENY_ALLOW</span>)
+  <span class="ruby-ivar">@order</span> = <span class="ruby-identifier">order</span>
+  <span class="ruby-ivar">@deny</span> = <span class="ruby-constant">ACLList</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-ivar">@allow</span> = <span class="ruby-constant">ACLList</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-identifier">install_list</span>(<span class="ruby-identifier">list</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">list</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-allow_addr-3F">
+            
+              <a name="method-i-allow_addr-3F"></a><b>allow_addr?</b>(addr)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Allow connections from addrinfo <code>addr</code>?  It must be formatted
+like Socket#peeraddr:</p>
+
+<pre>[&quot;AF_INET&quot;, 10, &quot;lc630&quot;, &quot;192.0.2.1&quot;]</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-allow_addr-3F_source')" id="l_method-i-allow_addr-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-allow_addr-3F_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/drb/acl.rb, line 196</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">allow_addr?</span>(<span class="ruby-identifier">addr</span>)
+  <span class="ruby-keyword">case</span> <span class="ruby-ivar">@order</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-constant">DENY_ALLOW</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@allow</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">addr</span>)
+    <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@deny</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">addr</span>)
+    <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-constant">ALLOW_DENY</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@deny</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">addr</span>)
+    <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@allow</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">addr</span>)
+    <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-keyword">false</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-allow_socket-3F">
+            
+              <a name="method-i-allow_socket-3F"></a><b>allow_socket?</b>(soc)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Allow connections from <a href="Socket.html">Socket</a> <code>soc</code>?</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-allow_socket-3F_source')" id="l_method-i-allow_socket-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-allow_socket-3F_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/drb/acl.rb, line 184</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">allow_socket?</span>(<span class="ruby-identifier">soc</span>)
+  <span class="ruby-identifier">allow_addr?</span>(<span class="ruby-identifier">soc</span>.<span class="ruby-identifier">peeraddr</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-install_list">
+            
+              <a name="method-i-install_list"></a><b>install_list</b>(list)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Adds <code>list</code> of <a href="ACL.html">ACL</a> entries to this <a
+href="ACL.html">ACL</a>.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-install_list_source')" id="l_method-i-install_list_source">show</a>
+                
+              </p>
+              <div id="method-i-install_list_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/drb/acl.rb, line 216</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">install_list</span>(<span class="ruby-identifier">list</span>)
+  <span class="ruby-identifier">i</span> = <span class="ruby-number">0</span>
+  <span class="ruby-keyword">while</span> <span class="ruby-identifier">i</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">list</span>.<span class="ruby-identifier">size</span>
+    <span class="ruby-identifier">permission</span>, <span class="ruby-identifier">domain</span> = <span class="ruby-identifier">list</span>.<span class="ruby-identifier">slice</span>(<span class="ruby-identifier">i</span>,<span class="ruby-number">2</span>)
+    <span class="ruby-keyword">case</span> <span class="ruby-identifier">permission</span>.<span class="ruby-identifier">downcase</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-string">'allow'</span>
+      <span class="ruby-ivar">@allow</span>.<span class="ruby-identifier">add</span>(<span class="ruby-identifier">domain</span>)
+    <span class="ruby-keyword">when</span> <span class="ruby-string">'deny'</span>
+      <span class="ruby-ivar">@deny</span>.<span class="ruby-identifier">add</span>(<span class="ruby-identifier">domain</span>)
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Invalid ACL entry #{list.to_s}&quot;</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">i</span> <span class="ruby-operator">+=</span> <span class="ruby-number">2</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    

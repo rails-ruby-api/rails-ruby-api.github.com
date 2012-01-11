@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>QueryCacheExpiryTest</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/github.css" type="text/css" media="screen" />
+<script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            QueryCacheExpiryTest 
+            
+                <span class="parent">&lt; 
+                    
+                    ActiveRecord::TestCase
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../files/activerecord/test/cases/query_cache_test_rb.html">activerecord/test/cases/query_cache_test.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-test_cache_gets_cleared_after_migration">test_cache_gets_cleared_after_migration</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_cache_is_expired_by_habtm_delete">test_cache_is_expired_by_habtm_delete</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_cache_is_expired_by_habtm_update">test_cache_is_expired_by_habtm_update</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_destroy">test_destroy</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_find">test_find</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_insert">test_insert</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_update">test_update</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+        
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-test_cache_gets_cleared_after_migration">
+            
+              <a name="method-i-test_cache_gets_cleared_after_migration"></a><b>test_cache_gets_cleared_after_migration</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_cache_gets_cleared_after_migration_source')" id="l_method-i-test_cache_gets_cleared_after_migration_source">show</a>
+                
+              </p>
+              <div id="method-i-test_cache_gets_cleared_after_migration_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/query_cache_test.rb, line 173</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_cache_gets_cleared_after_migration</span>
+  <span class="ruby-comment"># warm the cache</span>
+  <span class="ruby-constant">Post</span>.<span class="ruby-identifier">find</span>(<span class="ruby-number">1</span>)
+
+  <span class="ruby-comment"># change the column definition</span>
+  <span class="ruby-constant">Post</span>.<span class="ruby-identifier">connection</span>.<span class="ruby-identifier">change_column</span> <span class="ruby-value">:posts</span>, <span class="ruby-value">:title</span>, <span class="ruby-value">:string</span>, <span class="ruby-value">:limit</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-number">80</span>
+  <span class="ruby-identifier">assert_nothing_raised</span> { <span class="ruby-constant">Post</span>.<span class="ruby-identifier">find</span>(<span class="ruby-number">1</span>) }
+
+  <span class="ruby-comment"># restore the old definition</span>
+  <span class="ruby-constant">Post</span>.<span class="ruby-identifier">connection</span>.<span class="ruby-identifier">change_column</span> <span class="ruby-value">:posts</span>, <span class="ruby-value">:title</span>, <span class="ruby-value">:string</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_cache_is_expired_by_habtm_delete">
+            
+              <a name="method-i-test_cache_is_expired_by_habtm_delete"></a><b>test_cache_is_expired_by_habtm_delete</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_cache_is_expired_by_habtm_delete_source')" id="l_method-i-test_cache_is_expired_by_habtm_delete_source">show</a>
+                
+              </p>
+              <div id="method-i-test_cache_is_expired_by_habtm_delete_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/query_cache_test.rb, line 238</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_cache_is_expired_by_habtm_delete</span>
+  <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">connection</span>.<span class="ruby-identifier">expects</span>(<span class="ruby-value">:clear_query_cache</span>).<span class="ruby-identifier">times</span>(<span class="ruby-number">2</span>)
+  <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">cache</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">p</span> = <span class="ruby-constant">Post</span>.<span class="ruby-identifier">find</span>(<span class="ruby-number">1</span>)
+    <span class="ruby-identifier">assert</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">categories</span>.<span class="ruby-identifier">any?</span>
+    <span class="ruby-identifier">p</span>.<span class="ruby-identifier">categories</span>.<span class="ruby-identifier">delete_all</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_cache_is_expired_by_habtm_update">
+            
+              <a name="method-i-test_cache_is_expired_by_habtm_update"></a><b>test_cache_is_expired_by_habtm_update</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_cache_is_expired_by_habtm_update_source')" id="l_method-i-test_cache_is_expired_by_habtm_update_source">show</a>
+                
+              </p>
+              <div id="method-i-test_cache_is_expired_by_habtm_update_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/query_cache_test.rb, line 229</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_cache_is_expired_by_habtm_update</span>
+  <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">connection</span>.<span class="ruby-identifier">expects</span>(<span class="ruby-value">:clear_query_cache</span>).<span class="ruby-identifier">times</span>(<span class="ruby-number">2</span>)
+  <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">cache</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">c</span> = <span class="ruby-constant">Category</span>.<span class="ruby-identifier">find</span>(<span class="ruby-value">:first</span>)
+    <span class="ruby-identifier">p</span> = <span class="ruby-constant">Post</span>.<span class="ruby-identifier">find</span>(<span class="ruby-value">:first</span>)
+    <span class="ruby-identifier">p</span>.<span class="ruby-identifier">categories</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">c</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_destroy">
+            
+              <a name="method-i-test_destroy"></a><b>test_destroy</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_destroy_source')" id="l_method-i-test_destroy_source">show</a>
+                
+              </p>
+              <div id="method-i-test_destroy_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/query_cache_test.rb, line 213</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_destroy</span>
+  <span class="ruby-constant">Task</span>.<span class="ruby-identifier">connection</span>.<span class="ruby-identifier">expects</span>(<span class="ruby-value">:clear_query_cache</span>).<span class="ruby-identifier">times</span>(<span class="ruby-number">2</span>)
+
+  <span class="ruby-constant">Task</span>.<span class="ruby-identifier">cache</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-constant">Task</span>.<span class="ruby-identifier">find</span>(<span class="ruby-number">1</span>).<span class="ruby-identifier">destroy</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_find">
+            
+              <a name="method-i-test_find"></a><b>test_find</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_find_source')" id="l_method-i-test_find_source">show</a>
+                
+              </p>
+              <div id="method-i-test_find_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/query_cache_test.rb, line 185</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_find</span>
+  <span class="ruby-constant">Task</span>.<span class="ruby-identifier">connection</span>.<span class="ruby-identifier">expects</span>(<span class="ruby-value">:clear_query_cache</span>).<span class="ruby-identifier">times</span>(<span class="ruby-number">1</span>)
+
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-constant">Task</span>.<span class="ruby-identifier">connection</span>.<span class="ruby-identifier">query_cache_enabled</span>
+  <span class="ruby-constant">Task</span>.<span class="ruby-identifier">cache</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">assert</span> <span class="ruby-constant">Task</span>.<span class="ruby-identifier">connection</span>.<span class="ruby-identifier">query_cache_enabled</span>
+    <span class="ruby-constant">Task</span>.<span class="ruby-identifier">find</span>(<span class="ruby-number">1</span>)
+
+    <span class="ruby-constant">Task</span>.<span class="ruby-identifier">uncached</span> <span class="ruby-keyword">do</span>
+      <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-constant">Task</span>.<span class="ruby-identifier">connection</span>.<span class="ruby-identifier">query_cache_enabled</span>
+      <span class="ruby-constant">Task</span>.<span class="ruby-identifier">find</span>(<span class="ruby-number">1</span>)
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-identifier">assert</span> <span class="ruby-constant">Task</span>.<span class="ruby-identifier">connection</span>.<span class="ruby-identifier">query_cache_enabled</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-constant">Task</span>.<span class="ruby-identifier">connection</span>.<span class="ruby-identifier">query_cache_enabled</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_insert">
+            
+              <a name="method-i-test_insert"></a><b>test_insert</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_insert_source')" id="l_method-i-test_insert_source">show</a>
+                
+              </p>
+              <div id="method-i-test_insert_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/query_cache_test.rb, line 221</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_insert</span>
+  <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">connection</span>.<span class="ruby-identifier">expects</span>(<span class="ruby-value">:clear_query_cache</span>).<span class="ruby-identifier">times</span>(<span class="ruby-number">2</span>)
+
+  <span class="ruby-constant">Task</span>.<span class="ruby-identifier">cache</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-constant">Task</span>.<span class="ruby-identifier">create!</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_update">
+            
+              <a name="method-i-test_update"></a><b>test_update</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_update_source')" id="l_method-i-test_update_source">show</a>
+                
+              </p>
+              <div id="method-i-test_update_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/query_cache_test.rb, line 203</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_update</span>
+  <span class="ruby-constant">Task</span>.<span class="ruby-identifier">connection</span>.<span class="ruby-identifier">expects</span>(<span class="ruby-value">:clear_query_cache</span>).<span class="ruby-identifier">times</span>(<span class="ruby-number">2</span>)
+
+  <span class="ruby-constant">Task</span>.<span class="ruby-identifier">cache</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">task</span> = <span class="ruby-constant">Task</span>.<span class="ruby-identifier">find</span>(<span class="ruby-number">1</span>)
+    <span class="ruby-identifier">task</span>.<span class="ruby-identifier">starting</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>.<span class="ruby-identifier">utc</span>
+    <span class="ruby-identifier">task</span>.<span class="ruby-identifier">save!</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    

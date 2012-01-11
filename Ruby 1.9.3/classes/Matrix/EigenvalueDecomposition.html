@@ -1,0 +1,542 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Matrix::EigenvalueDecomposition</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            Matrix::EigenvalueDecomposition 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/lib/matrix/eigenvalue_decomposition_rb.html">lib/matrix/eigenvalue_decomposition.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>Eigenvalues and eigenvectors of a real matrix.</p>
+
+<p>Computes the eigenvalues and eigenvectors of a matrix A.</p>
+
+<p>If A is diagonalizable, this provides matrices V and D such that A =
+V*D*V.inv, where D is the diagonal matrix with entries equal to the
+eigenvalues and V is formed by the eigenvectors.</p>
+
+<p>If A is symmetric, then V is orthogonal and thus A = V*D*V.t</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>D</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-d">d</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>E</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-eigenvalue_matrix">eigenvalue_matrix</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-eigenvalues">eigenvalues</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-eigenvector_matrix">eigenvector_matrix</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-eigenvector_matrix_inv">eigenvector_matrix_inv</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-eigenvectors">eigenvectors</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-to_a">to_a</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-to_ary">to_ary</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>V</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-v">v</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-v_inv">v_inv</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <a name="method-c-new"></a><b>new</b>(a)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Constructs the eigenvalue decomposition for a square matrix <code>A</code></p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/matrix/eigenvalue_decomposition.rb, line 18</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">initialize</span>(<span class="ruby-identifier">a</span>)
+  <span class="ruby-comment"># @d, @e: Arrays for internal storage of eigenvalues.</span>
+  <span class="ruby-comment"># @v: Array for internal storage of eigenvectors.</span>
+  <span class="ruby-comment"># @h: Array for internal storage of nonsymmetric Hessenberg form.</span>
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">TypeError</span>, <span class="ruby-node">&quot;Expected Matrix but got #{a.class}&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">a</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Matrix</span>)
+  <span class="ruby-ivar">@size</span> = <span class="ruby-identifier">a</span>.<span class="ruby-identifier">row_size</span>
+  <span class="ruby-ivar">@d</span> = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@size</span>, <span class="ruby-number">0</span>)
+  <span class="ruby-ivar">@e</span> = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@size</span>, <span class="ruby-number">0</span>)
+
+  <span class="ruby-keyword">if</span> (<span class="ruby-ivar">@symmetric</span> = <span class="ruby-identifier">a</span>.<span class="ruby-identifier">symmetric?</span>)
+    <span class="ruby-ivar">@v</span> = <span class="ruby-identifier">a</span>.<span class="ruby-identifier">to_a</span>
+    <span class="ruby-identifier">tridiagonalize</span>
+    <span class="ruby-identifier">diagonalize</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-ivar">@v</span> = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@size</span>) { <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@size</span>, <span class="ruby-number">0</span>) }
+    <span class="ruby-ivar">@h</span> = <span class="ruby-identifier">a</span>.<span class="ruby-identifier">to_a</span>
+    <span class="ruby-ivar">@ort</span> = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@size</span>, <span class="ruby-number">0</span>)
+    <span class="ruby-identifier">reduce_to_hessenberg</span>
+    <span class="ruby-identifier">hessenberg_to_real_schur</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-d">
+            
+              <a name="method-i-d"></a><b>d</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-eigenvalue_matrix">
+            
+              <a name="method-i-eigenvalue_matrix"></a><b>eigenvalue_matrix</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the block diagonal eigenvalue matrix <code>D</code></p>
+            </div>
+          
+          
+          
+            <div class="aka">
+              Also aliased as: <a href="EigenvalueDecomposition.html#method-i-d">d</a>
+            </div>
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-eigenvalue_matrix_source')" id="l_method-i-eigenvalue_matrix_source">show</a>
+                
+              </p>
+              <div id="method-i-eigenvalue_matrix_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/matrix/eigenvalue_decomposition.rb, line 72</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">eigenvalue_matrix</span>
+  <span class="ruby-constant">Matrix</span>.<span class="ruby-identifier">diagonal</span>(*<span class="ruby-identifier">eigenvalues</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-eigenvalues">
+            
+              <a name="method-i-eigenvalues"></a><b>eigenvalues</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the eigenvalues in an array</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-eigenvalues_source')" id="l_method-i-eigenvalues_source">show</a>
+                
+              </p>
+              <div id="method-i-eigenvalues_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/matrix/eigenvalue_decomposition.rb, line 58</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">eigenvalues</span>
+  <span class="ruby-identifier">values</span> = <span class="ruby-ivar">@d</span>.<span class="ruby-identifier">dup</span>
+  <span class="ruby-ivar">@e</span>.<span class="ruby-identifier">each_with_index</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">imag</span>, <span class="ruby-identifier">i</span><span class="ruby-operator">|</span> <span class="ruby-identifier">values</span>[<span class="ruby-identifier">i</span>] = <span class="ruby-constant">Complex</span>(<span class="ruby-identifier">values</span>[<span class="ruby-identifier">i</span>], <span class="ruby-identifier">imag</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">imag</span> <span class="ruby-operator">==</span> <span class="ruby-number">0</span>}
+  <span class="ruby-identifier">values</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-eigenvector_matrix">
+            
+              <a name="method-i-eigenvector_matrix"></a><b>eigenvector_matrix</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the eigenvector matrix <code>V</code></p>
+            </div>
+          
+          
+          
+            <div class="aka">
+              Also aliased as: <a href="EigenvalueDecomposition.html#method-i-v">v</a>
+            </div>
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-eigenvector_matrix_source')" id="l_method-i-eigenvector_matrix_source">show</a>
+                
+              </p>
+              <div id="method-i-eigenvector_matrix_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/matrix/eigenvalue_decomposition.rb, line 42</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">eigenvector_matrix</span>
+  <span class="ruby-constant">Matrix</span>.<span class="ruby-identifier">send</span> <span class="ruby-value">:new</span>, <span class="ruby-identifier">build_eigenvectors</span>.<span class="ruby-identifier">transpose</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-eigenvector_matrix_inv">
+            
+              <a name="method-i-eigenvector_matrix_inv"></a><b>eigenvector_matrix_inv</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the inverse of the eigenvector matrix <code>V</code></p>
+            </div>
+          
+          
+          
+            <div class="aka">
+              Also aliased as: <a href="EigenvalueDecomposition.html#method-i-v_inv">v_inv</a>
+            </div>
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-eigenvector_matrix_inv_source')" id="l_method-i-eigenvector_matrix_inv_source">show</a>
+                
+              </p>
+              <div id="method-i-eigenvector_matrix_inv_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/matrix/eigenvalue_decomposition.rb, line 49</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">eigenvector_matrix_inv</span>
+  <span class="ruby-identifier">r</span> = <span class="ruby-constant">Matrix</span>.<span class="ruby-identifier">send</span> <span class="ruby-value">:new</span>, <span class="ruby-identifier">build_eigenvectors</span>
+  <span class="ruby-identifier">r</span> = <span class="ruby-identifier">r</span>.<span class="ruby-identifier">transpose</span>.<span class="ruby-identifier">inverse</span> <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@symmetric</span>
+  <span class="ruby-identifier">r</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-eigenvectors">
+            
+              <a name="method-i-eigenvectors"></a><b>eigenvectors</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns an array of the eigenvectors</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-eigenvectors_source')" id="l_method-i-eigenvectors_source">show</a>
+                
+              </p>
+              <div id="method-i-eigenvectors_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/matrix/eigenvalue_decomposition.rb, line 66</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">eigenvectors</span>
+  <span class="ruby-identifier">build_eigenvectors</span>.<span class="ruby-identifier">map</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">ev</span><span class="ruby-operator">|</span> <span class="ruby-constant">Vector</span>.<span class="ruby-identifier">send</span> <span class="ruby-value">:new</span>, <span class="ruby-identifier">ev</span>}
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-to_a">
+            
+              <a name="method-i-to_a"></a><b>to_a</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-to_ary">
+            
+              <a name="method-i-to_ary"></a><b>to_ary</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns [<a
+href="EigenvalueDecomposition.html#method-i-eigenvector_matrix">#eigenvector_matrix</a>,
+<a
+href="EigenvalueDecomposition.html#method-i-eigenvalue_matrix">#eigenvalue_matrix</a>,
+<a
+href="EigenvalueDecomposition.html#method-i-eigenvector_matrix_inv">#eigenvector_matrix_inv</a>]</p>
+            </div>
+          
+          
+          
+            <div class="aka">
+              Also aliased as: <a href="EigenvalueDecomposition.html#method-i-to_a">to_a</a>
+            </div>
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-to_ary_source')" id="l_method-i-to_ary_source">show</a>
+                
+              </p>
+              <div id="method-i-to_ary_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/matrix/eigenvalue_decomposition.rb, line 79</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">to_ary</span>
+  [<span class="ruby-identifier">v</span>, <span class="ruby-identifier">d</span>, <span class="ruby-identifier">v_inv</span>]
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-v">
+            
+              <a name="method-i-v"></a><b>v</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-v_inv">
+            
+              <a name="method-i-v_inv"></a><b>v_inv</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    

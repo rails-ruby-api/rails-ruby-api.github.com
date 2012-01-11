@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>TransactionsWithTransactionalFixturesTest</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/github.css" type="text/css" media="screen" />
+<script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            TransactionsWithTransactionalFixturesTest 
+            
+                <span class="parent">&lt; 
+                    
+                    ActiveRecord::TestCase
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../files/activerecord/test/cases/transactions_test_rb.html">activerecord/test/cases/transactions_test.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-test_automatic_savepoint_in_outer_transaction">test_automatic_savepoint_in_outer_transaction</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_no_automatic_savepoint_for_inner_transaction">test_no_automatic_savepoint_for_inner_transaction</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+        
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-test_automatic_savepoint_in_outer_transaction">
+            
+              <a name="method-i-test_automatic_savepoint_in_outer_transaction"></a><b>test_automatic_savepoint_in_outer_transaction</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_automatic_savepoint_in_outer_transaction_source')" id="l_method-i-test_automatic_savepoint_in_outer_transaction_source">show</a>
+                
+              </p>
+              <div id="method-i-test_automatic_savepoint_in_outer_transaction_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/transactions_test.rb, line 516</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_automatic_savepoint_in_outer_transaction</span>
+  <span class="ruby-ivar">@first</span> = <span class="ruby-constant">Topic</span>.<span class="ruby-identifier">find</span>(<span class="ruby-number">1</span>)
+
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-constant">Topic</span>.<span class="ruby-identifier">transaction</span> <span class="ruby-keyword">do</span>
+      <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">approved</span> = <span class="ruby-keyword">true</span>
+      <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">save!</span>
+      <span class="ruby-identifier">raise</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">rescue</span>
+    <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@first</span>.<span class="ruby-identifier">reload</span>.<span class="ruby-identifier">approved?</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_no_automatic_savepoint_for_inner_transaction">
+            
+              <a name="method-i-test_no_automatic_savepoint_for_inner_transaction"></a><b>test_no_automatic_savepoint_for_inner_transaction</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_no_automatic_savepoint_for_inner_transaction_source')" id="l_method-i-test_no_automatic_savepoint_for_inner_transaction_source">show</a>
+                
+              </p>
+              <div id="method-i-test_no_automatic_savepoint_for_inner_transaction_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/transactions_test.rb, line 530</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_no_automatic_savepoint_for_inner_transaction</span>
+  <span class="ruby-ivar">@first</span> = <span class="ruby-constant">Topic</span>.<span class="ruby-identifier">find</span>(<span class="ruby-number">1</span>)
+
+  <span class="ruby-constant">Topic</span>.<span class="ruby-identifier">transaction</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">approved</span> = <span class="ruby-keyword">true</span>
+    <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">save!</span>
+
+    <span class="ruby-keyword">begin</span>
+      <span class="ruby-constant">Topic</span>.<span class="ruby-identifier">transaction</span> <span class="ruby-keyword">do</span>
+        <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">approved</span> = <span class="ruby-keyword">false</span>
+        <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">save!</span>
+        <span class="ruby-identifier">raise</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">rescue</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@first</span>.<span class="ruby-identifier">reload</span>.<span class="ruby-identifier">approved?</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    

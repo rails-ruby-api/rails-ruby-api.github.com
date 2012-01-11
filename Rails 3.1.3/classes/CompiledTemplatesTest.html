@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>CompiledTemplatesTest</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/github.css" type="text/css" media="screen" />
+<script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            CompiledTemplatesTest 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="Test/Unit/TestCase.html">Test::Unit::TestCase</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../files/actionpack/test/template/compiled_templates_test_rb.html">actionpack/test/template/compiled_templates_test.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>S</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-setup">setup</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-test_template_changes_are_not_reflected_with_cached_templates">test_template_changes_are_not_reflected_with_cached_templates</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_template_changes_are_reflected_with_uncached_templates">test_template_changes_are_reflected_with_uncached_templates</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_template_gets_recompiled_when_using_different_keys_in_local_assigns">test_template_gets_recompiled_when_using_different_keys_in_local_assigns</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+        
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-setup">
+            
+              <a name="method-i-setup"></a><b>setup</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-setup_source')" id="l_method-i-setup_source">show</a>
+                
+              </p>
+              <div id="method-i-setup_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionpack/test/template/compiled_templates_test.rb, line 5</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">setup</span>
+  <span class="ruby-ivar">@compiled_templates</span> = <span class="ruby-constant">ActionView</span><span class="ruby-operator">::</span><span class="ruby-constant">CompiledTemplates</span>
+  <span class="ruby-ivar">@compiled_templates</span>.<span class="ruby-identifier">instance_methods</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">m</span><span class="ruby-operator">|</span>
+    <span class="ruby-ivar">@compiled_templates</span>.<span class="ruby-identifier">send</span>(<span class="ruby-value">:remove_method</span>, <span class="ruby-identifier">m</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">m</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp">/^_render_template_/</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_template_changes_are_not_reflected_with_cached_templates">
+            
+              <a name="method-i-test_template_changes_are_not_reflected_with_cached_templates"></a><b>test_template_changes_are_not_reflected_with_cached_templates</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_template_changes_are_not_reflected_with_cached_templates_source')" id="l_method-i-test_template_changes_are_not_reflected_with_cached_templates_source">show</a>
+                
+              </p>
+              <div id="method-i-test_template_changes_are_not_reflected_with_cached_templates_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionpack/test/template/compiled_templates_test.rb, line 17</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_template_changes_are_not_reflected_with_cached_templates</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&quot;Hello world!&quot;</span>, <span class="ruby-identifier">render</span>(<span class="ruby-value">:file</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;test/hello_world.erb&quot;</span>)
+  <span class="ruby-identifier">modify_template</span> <span class="ruby-string">&quot;test/hello_world.erb&quot;</span>, <span class="ruby-string">&quot;Goodbye world!&quot;</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&quot;Hello world!&quot;</span>, <span class="ruby-identifier">render</span>(<span class="ruby-value">:file</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;test/hello_world.erb&quot;</span>)
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&quot;Hello world!&quot;</span>, <span class="ruby-identifier">render</span>(<span class="ruby-value">:file</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;test/hello_world.erb&quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_template_changes_are_reflected_with_uncached_templates">
+            
+              <a name="method-i-test_template_changes_are_reflected_with_uncached_templates"></a><b>test_template_changes_are_reflected_with_uncached_templates</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_template_changes_are_reflected_with_uncached_templates_source')" id="l_method-i-test_template_changes_are_reflected_with_uncached_templates_source">show</a>
+                
+              </p>
+              <div id="method-i-test_template_changes_are_reflected_with_uncached_templates_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionpack/test/template/compiled_templates_test.rb, line 25</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_template_changes_are_reflected_with_uncached_templates</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&quot;Hello world!&quot;</span>, <span class="ruby-identifier">render_without_cache</span>(<span class="ruby-value">:file</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;test/hello_world.erb&quot;</span>)
+  <span class="ruby-identifier">modify_template</span> <span class="ruby-string">&quot;test/hello_world.erb&quot;</span>, <span class="ruby-string">&quot;Goodbye world!&quot;</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&quot;Goodbye world!&quot;</span>, <span class="ruby-identifier">render_without_cache</span>(<span class="ruby-value">:file</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;test/hello_world.erb&quot;</span>)
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&quot;Hello world!&quot;</span>, <span class="ruby-identifier">render_without_cache</span>(<span class="ruby-value">:file</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;test/hello_world.erb&quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_template_gets_recompiled_when_using_different_keys_in_local_assigns">
+            
+              <a name="method-i-test_template_gets_recompiled_when_using_different_keys_in_local_assigns"></a><b>test_template_gets_recompiled_when_using_different_keys_in_local_assigns</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_template_gets_recompiled_when_using_different_keys_in_local_assigns_source')" id="l_method-i-test_template_gets_recompiled_when_using_different_keys_in_local_assigns_source">show</a>
+                
+              </p>
+              <div id="method-i-test_template_gets_recompiled_when_using_different_keys_in_local_assigns_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionpack/test/template/compiled_templates_test.rb, line 12</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_template_gets_recompiled_when_using_different_keys_in_local_assigns</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&quot;one&quot;</span>, <span class="ruby-identifier">render</span>(<span class="ruby-value">:file</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;test/render_file_with_locals_and_default.erb&quot;</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&quot;two&quot;</span>, <span class="ruby-identifier">render</span>(<span class="ruby-value">:file</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;test/render_file_with_locals_and_default.erb&quot;</span>, <span class="ruby-value">:locals</span> =<span class="ruby-operator">&gt;</span> { <span class="ruby-value">:secret</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;two&quot;</span> })
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    

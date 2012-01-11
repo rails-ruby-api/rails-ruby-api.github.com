@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>OpenSSL::SSL</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Module</span> 
+            OpenSSL::SSL 
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/ext/openssl/lib/openssl/ssl-internal_rb.html">ext/openssl/lib/openssl/ssl-internal.rb</a></li>
+            
+            <li><a href="../../files/ext/openssl/ossl_c.html">ext/openssl/ossl.c</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+
+
+  
+
+
+  
+  
+
+
+  
+    <!-- Namespace -->
+    <div class="sectiontitle">Namespace</div>
+    <ul>
+      
+        <li>
+          <span class="type">MODULE</span>
+          <a href="SSL/Nonblock.html">OpenSSL::SSL::Nonblock</a>
+        </li>
+      
+        <li>
+          <span class="type">MODULE</span>
+          <a href="SSL/SocketForwarder.html">OpenSSL::SSL::SocketForwarder</a>
+        </li>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="SSL/SSLContext.html">OpenSSL::SSL::SSLContext</a>
+        </li>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="SSL/SSLError.html">OpenSSL::SSL::SSLError</a>
+        </li>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="SSL/SSLServer.html">OpenSSL::SSL::SSLServer</a>
+        </li>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="SSL/SSLSocket.html">OpenSSL::SSL::SSLSocket</a>
+        </li>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="SSL/Session.html">OpenSSL::SSL::Session</a>
+        </li>
+      
+    </ul>
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>V</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-verify_certificate_identity">verify_certificate_identity</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-verify_certificate_identity">
+            
+              <a name="method-c-verify_certificate_identity"></a><b>verify_certificate_identity</b>(cert, hostname)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-verify_certificate_identity_source')" id="l_method-c-verify_certificate_identity_source">show</a>
+                
+              </p>
+              <div id="method-c-verify_certificate_identity_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/openssl/lib/openssl/ssl-internal.rb, line 87</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">verify_certificate_identity</span>(<span class="ruby-identifier">cert</span>, <span class="ruby-identifier">hostname</span>)
+  <span class="ruby-identifier">should_verify_common_name</span> = <span class="ruby-keyword">true</span>
+  <span class="ruby-identifier">cert</span>.<span class="ruby-identifier">extensions</span>.<span class="ruby-identifier">each</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">ext</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">ext</span>.<span class="ruby-identifier">oid</span> <span class="ruby-operator">!=</span> <span class="ruby-string">&quot;subjectAltName&quot;</span>
+    <span class="ruby-identifier">ext</span>.<span class="ruby-identifier">value</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp">/,\s+/</span>).<span class="ruby-identifier">each</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">general_name</span><span class="ruby-operator">|</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-regexp">/\ADNS:(.*)/</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">general_name</span>
+        <span class="ruby-identifier">should_verify_common_name</span> = <span class="ruby-keyword">false</span>
+        <span class="ruby-identifier">reg</span> = <span class="ruby-constant">Regexp</span>.<span class="ruby-identifier">escape</span>(<span class="ruby-node">$1</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">/\\\*/</span>, <span class="ruby-string">&quot;[^.]+&quot;</span>)
+        <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span> <span class="ruby-keyword">if</span> <span class="ruby-node">/\A#{reg}\z/</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">hostname</span>
+      <span class="ruby-keyword">elsif</span> <span class="ruby-regexp">/\AIP Address:(.*)/</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">general_name</span>
+        <span class="ruby-identifier">should_verify_common_name</span> = <span class="ruby-keyword">false</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span> <span class="ruby-keyword">if</span> <span class="ruby-node">$1</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">hostname</span>
+      <span class="ruby-keyword">end</span>
+    }
+  }
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">should_verify_common_name</span>
+    <span class="ruby-identifier">cert</span>.<span class="ruby-identifier">subject</span>.<span class="ruby-identifier">to_a</span>.<span class="ruby-identifier">each</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">oid</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">oid</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;CN&quot;</span>
+        <span class="ruby-identifier">reg</span> = <span class="ruby-constant">Regexp</span>.<span class="ruby-identifier">escape</span>(<span class="ruby-identifier">value</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">/\\\*/</span>, <span class="ruby-string">&quot;[^.]+&quot;</span>)
+        <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span> <span class="ruby-keyword">if</span> <span class="ruby-node">/\A#{reg}\z/</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">hostname</span>
+      <span class="ruby-keyword">end</span>
+    }
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                        </div>
+    </div>
+  </body>
+</html>    

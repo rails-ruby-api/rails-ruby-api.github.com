@@ -1,0 +1,539 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>ReadOnlyTest</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/github.css" type="text/css" media="screen" />
+<script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            ReadOnlyTest 
+            
+                <span class="parent">&lt; 
+                    
+                    ActiveRecord::TestCase
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../files/activerecord/test/cases/readonly_test_rb.html">activerecord/test/cases/readonly_test.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-test_association_collection_method_missing_scoping_not_readonly">test_association_collection_method_missing_scoping_not_readonly</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_cant_save_readonly_record">test_cant_save_readonly_record</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_find_with_joins_option_implies_readonly">test_find_with_joins_option_implies_readonly</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_find_with_readonly_option">test_find_with_readonly_option</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_has_many_find_readonly">test_has_many_find_readonly</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_has_many_with_through_is_not_implicitly_marked_readonly">test_has_many_with_through_is_not_implicitly_marked_readonly</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_has_many_with_through_is_not_implicitly_marked_readonly_while_finding_by_id">test_has_many_with_through_is_not_implicitly_marked_readonly_while_finding_by_id</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_has_many_with_through_is_not_implicitly_marked_readonly_while_finding_first">test_has_many_with_through_is_not_implicitly_marked_readonly_while_finding_first</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_has_many_with_through_is_not_implicitly_marked_readonly_while_finding_last">test_has_many_with_through_is_not_implicitly_marked_readonly_while_finding_last</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_readonly_scoping">test_readonly_scoping</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+        
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-test_association_collection_method_missing_scoping_not_readonly">
+            
+              <a name="method-i-test_association_collection_method_missing_scoping_not_readonly"></a><b>test_association_collection_method_missing_scoping_not_readonly</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_association_collection_method_missing_scoping_not_readonly_source')" id="l_method-i-test_association_collection_method_missing_scoping_not_readonly_source">show</a>
+                
+              </p>
+              <div id="method-i-test_association_collection_method_missing_scoping_not_readonly_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/readonly_test.rb, line 102</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_association_collection_method_missing_scoping_not_readonly</span>
+  <span class="ruby-identifier">developer</span> = <span class="ruby-constant">Developer</span>.<span class="ruby-identifier">find</span>(<span class="ruby-number">1</span>)
+  <span class="ruby-identifier">project</span>   = <span class="ruby-constant">Post</span>.<span class="ruby-identifier">find</span>(<span class="ruby-number">1</span>)
+
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-identifier">developer</span>.<span class="ruby-identifier">projects</span>.<span class="ruby-identifier">all_as_method</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">readonly?</span>
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-identifier">developer</span>.<span class="ruby-identifier">projects</span>.<span class="ruby-identifier">all_as_scope</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">readonly?</span>
+
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-identifier">project</span>.<span class="ruby-identifier">comments</span>.<span class="ruby-identifier">all_as_method</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">readonly?</span>
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-identifier">project</span>.<span class="ruby-identifier">comments</span>.<span class="ruby-identifier">all_as_scope</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">readonly?</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_cant_save_readonly_record">
+            
+              <a name="method-i-test_cant_save_readonly_record"></a><b>test_cant_save_readonly_record</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_cant_save_readonly_record_source')" id="l_method-i-test_cant_save_readonly_record_source">show</a>
+                
+              </p>
+              <div id="method-i-test_cant_save_readonly_record_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/readonly_test.rb, line 12</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_cant_save_readonly_record</span>
+  <span class="ruby-identifier">dev</span> = <span class="ruby-constant">Developer</span>.<span class="ruby-identifier">find</span>(<span class="ruby-number">1</span>)
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-identifier">dev</span>.<span class="ruby-identifier">readonly?</span>
+
+  <span class="ruby-identifier">dev</span>.<span class="ruby-identifier">readonly!</span>
+  <span class="ruby-identifier">assert</span> <span class="ruby-identifier">dev</span>.<span class="ruby-identifier">readonly?</span>
+
+  <span class="ruby-identifier">assert_nothing_raised</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">dev</span>.<span class="ruby-identifier">name</span> = <span class="ruby-string">'Luscious forbidden fruit.'</span>
+    <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-identifier">dev</span>.<span class="ruby-identifier">save</span>
+    <span class="ruby-identifier">dev</span>.<span class="ruby-identifier">name</span> = <span class="ruby-string">'Forbidden.'</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">assert_raise</span>(<span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">ReadOnlyRecord</span>) { <span class="ruby-identifier">dev</span>.<span class="ruby-identifier">save</span>  }
+  <span class="ruby-identifier">assert_raise</span>(<span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">ReadOnlyRecord</span>) { <span class="ruby-identifier">dev</span>.<span class="ruby-identifier">save!</span> }
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_find_with_joins_option_implies_readonly">
+            
+              <a name="method-i-test_find_with_joins_option_implies_readonly"></a><b>test_find_with_joins_option_implies_readonly</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_find_with_joins_option_implies_readonly_source')" id="l_method-i-test_find_with_joins_option_implies_readonly_source">show</a>
+                
+              </p>
+              <div id="method-i-test_find_with_joins_option_implies_readonly_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/readonly_test.rb, line 37</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_find_with_joins_option_implies_readonly</span>
+  <span class="ruby-comment"># Blank joins don't count.</span>
+  <span class="ruby-constant">Developer</span>.<span class="ruby-identifier">joins</span>(<span class="ruby-string">'  '</span>).<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">d</span><span class="ruby-operator">|</span> <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-identifier">d</span>.<span class="ruby-identifier">readonly?</span> }
+  <span class="ruby-constant">Developer</span>.<span class="ruby-identifier">joins</span>(<span class="ruby-string">'  '</span>).<span class="ruby-identifier">readonly</span>(<span class="ruby-keyword">false</span>).<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">d</span><span class="ruby-operator">|</span> <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-identifier">d</span>.<span class="ruby-identifier">readonly?</span> }
+
+  <span class="ruby-comment"># Others do.</span>
+  <span class="ruby-constant">Developer</span>.<span class="ruby-identifier">joins</span>(<span class="ruby-string">', projects'</span>).<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">d</span><span class="ruby-operator">|</span> <span class="ruby-identifier">assert</span> <span class="ruby-identifier">d</span>.<span class="ruby-identifier">readonly?</span> }
+  <span class="ruby-constant">Developer</span>.<span class="ruby-identifier">joins</span>(<span class="ruby-string">', projects'</span>).<span class="ruby-identifier">readonly</span>(<span class="ruby-keyword">false</span>).<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">d</span><span class="ruby-operator">|</span> <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-identifier">d</span>.<span class="ruby-identifier">readonly?</span> }
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_find_with_readonly_option">
+            
+              <a name="method-i-test_find_with_readonly_option"></a><b>test_find_with_readonly_option</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_find_with_readonly_option_source')" id="l_method-i-test_find_with_readonly_option_source">show</a>
+                
+              </p>
+              <div id="method-i-test_find_with_readonly_option_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/readonly_test.rb, line 29</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_find_with_readonly_option</span>
+  <span class="ruby-constant">Developer</span>.<span class="ruby-identifier">find</span>(<span class="ruby-value">:all</span>).<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">d</span><span class="ruby-operator">|</span> <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-identifier">d</span>.<span class="ruby-identifier">readonly?</span> }
+  <span class="ruby-constant">Developer</span>.<span class="ruby-identifier">readonly</span>(<span class="ruby-keyword">false</span>).<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">d</span><span class="ruby-operator">|</span> <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-identifier">d</span>.<span class="ruby-identifier">readonly?</span> }
+  <span class="ruby-constant">Developer</span>.<span class="ruby-identifier">readonly</span>(<span class="ruby-keyword">true</span>).<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">d</span><span class="ruby-operator">|</span> <span class="ruby-identifier">assert</span> <span class="ruby-identifier">d</span>.<span class="ruby-identifier">readonly?</span> }
+  <span class="ruby-constant">Developer</span>.<span class="ruby-identifier">readonly</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">d</span><span class="ruby-operator">|</span> <span class="ruby-identifier">assert</span> <span class="ruby-identifier">d</span>.<span class="ruby-identifier">readonly?</span> }
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_has_many_find_readonly">
+            
+              <a name="method-i-test_has_many_find_readonly"></a><b>test_has_many_find_readonly</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_has_many_find_readonly_source')" id="l_method-i-test_has_many_find_readonly_source">show</a>
+                
+              </p>
+              <div id="method-i-test_has_many_find_readonly_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/readonly_test.rb, line 47</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_has_many_find_readonly</span>
+  <span class="ruby-identifier">post</span> = <span class="ruby-constant">Post</span>.<span class="ruby-identifier">find</span>(<span class="ruby-number">1</span>)
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-identifier">post</span>.<span class="ruby-identifier">comments</span>.<span class="ruby-identifier">empty?</span>
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-identifier">post</span>.<span class="ruby-identifier">comments</span>.<span class="ruby-identifier">any?</span>(&amp;<span class="ruby-value">:readonly?</span>)
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-identifier">post</span>.<span class="ruby-identifier">comments</span>.<span class="ruby-identifier">find</span>(<span class="ruby-value">:all</span>).<span class="ruby-identifier">any?</span>(&amp;<span class="ruby-value">:readonly?</span>)
+  <span class="ruby-identifier">assert</span> <span class="ruby-identifier">post</span>.<span class="ruby-identifier">comments</span>.<span class="ruby-identifier">readonly</span>(<span class="ruby-keyword">true</span>).<span class="ruby-identifier">all?</span>(&amp;<span class="ruby-value">:readonly?</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_has_many_with_through_is_not_implicitly_marked_readonly">
+            
+              <a name="method-i-test_has_many_with_through_is_not_implicitly_marked_readonly"></a><b>test_has_many_with_through_is_not_implicitly_marked_readonly</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_has_many_with_through_is_not_implicitly_marked_readonly_source')" id="l_method-i-test_has_many_with_through_is_not_implicitly_marked_readonly_source">show</a>
+                
+              </p>
+              <div id="method-i-test_has_many_with_through_is_not_implicitly_marked_readonly_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/readonly_test.rb, line 55</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_has_many_with_through_is_not_implicitly_marked_readonly</span>
+  <span class="ruby-identifier">assert</span> <span class="ruby-identifier">people</span> = <span class="ruby-constant">Post</span>.<span class="ruby-identifier">find</span>(<span class="ruby-number">1</span>).<span class="ruby-identifier">people</span>
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-identifier">people</span>.<span class="ruby-identifier">any?</span>(&amp;<span class="ruby-value">:readonly?</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_has_many_with_through_is_not_implicitly_marked_readonly_while_finding_by_id">
+            
+              <a name="method-i-test_has_many_with_through_is_not_implicitly_marked_readonly_while_finding_by_id"></a><b>test_has_many_with_through_is_not_implicitly_marked_readonly_while_finding_by_id</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_has_many_with_through_is_not_implicitly_marked_readonly_while_finding_by_id_source')" id="l_method-i-test_has_many_with_through_is_not_implicitly_marked_readonly_while_finding_by_id_source">show</a>
+                
+              </p>
+              <div id="method-i-test_has_many_with_through_is_not_implicitly_marked_readonly_while_finding_by_id_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/readonly_test.rb, line 60</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_has_many_with_through_is_not_implicitly_marked_readonly_while_finding_by_id</span>
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-identifier">posts</span>(<span class="ruby-value">:welcome</span>).<span class="ruby-identifier">people</span>.<span class="ruby-identifier">find</span>(<span class="ruby-number">1</span>).<span class="ruby-identifier">readonly?</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_has_many_with_through_is_not_implicitly_marked_readonly_while_finding_first">
+            
+              <a name="method-i-test_has_many_with_through_is_not_implicitly_marked_readonly_while_finding_first"></a><b>test_has_many_with_through_is_not_implicitly_marked_readonly_while_finding_first</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_has_many_with_through_is_not_implicitly_marked_readonly_while_finding_first_source')" id="l_method-i-test_has_many_with_through_is_not_implicitly_marked_readonly_while_finding_first_source">show</a>
+                
+              </p>
+              <div id="method-i-test_has_many_with_through_is_not_implicitly_marked_readonly_while_finding_first_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/readonly_test.rb, line 64</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_has_many_with_through_is_not_implicitly_marked_readonly_while_finding_first</span>
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-identifier">posts</span>(<span class="ruby-value">:welcome</span>).<span class="ruby-identifier">people</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">readonly?</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_has_many_with_through_is_not_implicitly_marked_readonly_while_finding_last">
+            
+              <a name="method-i-test_has_many_with_through_is_not_implicitly_marked_readonly_while_finding_last"></a><b>test_has_many_with_through_is_not_implicitly_marked_readonly_while_finding_last</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_has_many_with_through_is_not_implicitly_marked_readonly_while_finding_last_source')" id="l_method-i-test_has_many_with_through_is_not_implicitly_marked_readonly_while_finding_last_source">show</a>
+                
+              </p>
+              <div id="method-i-test_has_many_with_through_is_not_implicitly_marked_readonly_while_finding_last_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/readonly_test.rb, line 68</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_has_many_with_through_is_not_implicitly_marked_readonly_while_finding_last</span>
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-identifier">posts</span>(<span class="ruby-value">:welcome</span>).<span class="ruby-identifier">people</span>.<span class="ruby-identifier">last</span>.<span class="ruby-identifier">readonly?</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_readonly_scoping">
+            
+              <a name="method-i-test_readonly_scoping"></a><b>test_readonly_scoping</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_readonly_scoping_source')" id="l_method-i-test_readonly_scoping_source">show</a>
+                
+              </p>
+              <div id="method-i-test_readonly_scoping_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/readonly_test.rb, line 72</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_readonly_scoping</span>
+  <span class="ruby-constant">Post</span>.<span class="ruby-identifier">send</span>(<span class="ruby-value">:with_scope</span>, <span class="ruby-value">:find</span> =<span class="ruby-operator">&gt;</span> { <span class="ruby-value">:conditions</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'1=1'</span> }) <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-constant">Post</span>.<span class="ruby-identifier">find</span>(<span class="ruby-number">1</span>).<span class="ruby-identifier">readonly?</span>
+    <span class="ruby-identifier">assert</span> <span class="ruby-constant">Post</span>.<span class="ruby-identifier">readonly</span>(<span class="ruby-keyword">true</span>).<span class="ruby-identifier">find</span>(<span class="ruby-number">1</span>).<span class="ruby-identifier">readonly?</span>
+    <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-constant">Post</span>.<span class="ruby-identifier">readonly</span>(<span class="ruby-keyword">false</span>).<span class="ruby-identifier">find</span>(<span class="ruby-number">1</span>).<span class="ruby-identifier">readonly?</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-constant">Post</span>.<span class="ruby-identifier">send</span>(<span class="ruby-value">:with_scope</span>, <span class="ruby-value">:find</span> =<span class="ruby-operator">&gt;</span> { <span class="ruby-value">:joins</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'   '</span> }) <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-constant">Post</span>.<span class="ruby-identifier">find</span>(<span class="ruby-number">1</span>).<span class="ruby-identifier">readonly?</span>
+    <span class="ruby-identifier">assert</span> <span class="ruby-constant">Post</span>.<span class="ruby-identifier">readonly</span>.<span class="ruby-identifier">find</span>(<span class="ruby-number">1</span>).<span class="ruby-identifier">readonly?</span>
+    <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-constant">Post</span>.<span class="ruby-identifier">readonly</span>(<span class="ruby-keyword">false</span>).<span class="ruby-identifier">find</span>(<span class="ruby-number">1</span>).<span class="ruby-identifier">readonly?</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-comment"># Oracle barfs on this because the join includes unqualified and</span>
+  <span class="ruby-comment"># conflicting column names</span>
+  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">current_adapter?</span>(<span class="ruby-value">:OracleAdapter</span>)
+    <span class="ruby-constant">Post</span>.<span class="ruby-identifier">send</span>(<span class="ruby-value">:with_scope</span>, <span class="ruby-value">:find</span> =<span class="ruby-operator">&gt;</span> { <span class="ruby-value">:joins</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">', developers'</span> }) <span class="ruby-keyword">do</span>
+      <span class="ruby-identifier">assert</span> <span class="ruby-constant">Post</span>.<span class="ruby-identifier">find</span>(<span class="ruby-number">1</span>).<span class="ruby-identifier">readonly?</span>
+      <span class="ruby-identifier">assert</span> <span class="ruby-constant">Post</span>.<span class="ruby-identifier">readonly</span>.<span class="ruby-identifier">find</span>(<span class="ruby-number">1</span>).<span class="ruby-identifier">readonly?</span>
+      <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-constant">Post</span>.<span class="ruby-identifier">readonly</span>(<span class="ruby-keyword">false</span>).<span class="ruby-identifier">find</span>(<span class="ruby-number">1</span>).<span class="ruby-identifier">readonly?</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-constant">Post</span>.<span class="ruby-identifier">send</span>(<span class="ruby-value">:with_scope</span>, <span class="ruby-value">:find</span> =<span class="ruby-operator">&gt;</span> { <span class="ruby-value">:readonly</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span> }) <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">assert</span> <span class="ruby-constant">Post</span>.<span class="ruby-identifier">find</span>(<span class="ruby-number">1</span>).<span class="ruby-identifier">readonly?</span>
+    <span class="ruby-identifier">assert</span> <span class="ruby-constant">Post</span>.<span class="ruby-identifier">readonly</span>.<span class="ruby-identifier">find</span>(<span class="ruby-number">1</span>).<span class="ruby-identifier">readonly?</span>
+    <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-constant">Post</span>.<span class="ruby-identifier">readonly</span>(<span class="ruby-keyword">false</span>).<span class="ruby-identifier">find</span>(<span class="ruby-number">1</span>).<span class="ruby-identifier">readonly?</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    
