@@ -1,0 +1,2513 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Curses::Window</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            Curses::Window 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../Data.html">Data</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/Users/fschumac/_rvm/src/ruby-1_9_3-p0/ext/curses/curses_c.html">/Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/curses/curses.c</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<h2 id="label-Description">Description</h2>
+
+<p>The means by which to create and manage frames or windows. While there may
+be more than one window at a time, only one window will receive input.</p>
+
+<h2 id="label-Usage">Usage</h2>
+
+<pre class="ruby"><span class="ruby-identifier">require</span> <span class="ruby-string">'curses'</span>
+
+<span class="ruby-constant">Curses</span>.<span class="ruby-identifier">init_screen</span>()
+
+<span class="ruby-identifier">my_str</span> = <span class="ruby-string">&quot;LOOK! PONIES!&quot;</span>
+<span class="ruby-identifier">win</span> = <span class="ruby-constant">Curses</span><span class="ruby-operator">::</span><span class="ruby-constant">Window</span>.<span class="ruby-identifier">new</span>( <span class="ruby-value">8</span>, (<span class="ruby-identifier">my_str</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">+</span> <span class="ruby-value">10</span>),
+                          (<span class="ruby-constant">Curses</span>.<span class="ruby-identifier">lines</span> <span class="ruby-operator">-</span> <span class="ruby-value">8</span>) <span class="ruby-operator">/</span> <span class="ruby-value">2</span>,
+                          (<span class="ruby-constant">Curses</span>.<span class="ruby-identifier">cols</span> <span class="ruby-operator">-</span> (<span class="ruby-identifier">my_str</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">+</span> <span class="ruby-value">10</span>)) <span class="ruby-operator">/</span> <span class="ruby-value">2</span> )
+<span class="ruby-identifier">win</span>.<span class="ruby-identifier">box</span>(<span class="ruby-string">&quot;|&quot;</span>, <span class="ruby-string">&quot;-&quot;</span>)
+<span class="ruby-identifier">win</span>.<span class="ruby-identifier">setpos</span>(<span class="ruby-value">2</span>,<span class="ruby-value">3</span>)
+<span class="ruby-identifier">win</span>.<span class="ruby-identifier">addstr</span>(<span class="ruby-identifier">my_str</span>)
+<span class="ruby-comment"># or even</span>
+<span class="ruby-identifier">win</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&quot;\nORLY&quot;</span>
+<span class="ruby-identifier">win</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&quot;\nYES!! &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">my_str</span>
+<span class="ruby-identifier">win</span>.<span class="ruby-identifier">refresh</span>
+<span class="ruby-identifier">win</span>.<span class="ruby-identifier">getch</span>
+<span class="ruby-identifier">win</span>.<span class="ruby-identifier">close</span>
+</pre>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>#</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-3C-3C">&lt;&lt;</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>A</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-addch">addch</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-addstr">addstr</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-attroff">attroff</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-attron">attron</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-attrset">attrset</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>B</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-begx">begx</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-begy">begy</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-bkgd">bkgd</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-bkgdset">bkgdset</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-box">box</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>C</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-clear">clear</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-close">close</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-clrtoeol">clrtoeol</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-color_set">color_set</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-curx">curx</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-cury">cury</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>D</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-delch">delch</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-deleteln">deleteln</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>G</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-getbkgd">getbkgd</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-getch">getch</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-getstr">getstr</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>I</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-idlok">idlok</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-inch">inch</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-insch">insch</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-insertln">insertln</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>K</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-keypad">keypad</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-keypad-3D">keypad=</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>M</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-maxx">maxx</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-maxy">maxy</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-move">move</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-nodelay-3D">nodelay=</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-noutrefresh">noutrefresh</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>R</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-refresh">refresh</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-resize">resize</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>S</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-scrl">scrl</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-scroll">scroll</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-scrollok">scrollok</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-setpos">setpos</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-setscrreg">setscrreg</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-standend">standend</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-standout">standout</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-subwin">subwin</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-timeout-3D">timeout=</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <a name="method-c-new"></a><b>new(height, width, top, left)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Contruct a new <a href="Window.html">Curses::Window</a> with constraints of
+<code>height</code> lines, <code>width</code> columns, begin at
+<code>top</code> line, and begin <code>left</code> most column.</p>
+
+<p>A new window using full screen is called as</p>
+
+<pre>Curses::Window.new(0,0,0,0)</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre>static VALUE
+window_initialize(VALUE obj, VALUE h, VALUE w, VALUE top, VALUE left)
+{
+    struct windata *winp;
+    WINDOW *window;
+
+    rb_secure(4);
+    curses_init_screen();
+    Data_Get_Struct(obj, struct windata, winp);
+    if (winp-&gt;window) delwin(winp-&gt;window);
+    window = newwin(NUM2INT(h), NUM2INT(w), NUM2INT(top), NUM2INT(left));
+    wclear(window);
+    winp-&gt;window = window;
+
+    return obj;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-3C-3C">
+            
+              <a name="method-i-3C-3C"></a><b><<(str)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>&lt;&lt;</p>
+
+<p>Add String <code>str</code> to the current string.</p>
+
+<p>See also <a href="Window.html#method-i-addstr">#addstr</a></p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-3C-3C_source')" id="l_method-i-3C-3C_source">show</a>
+                
+              </p>
+              <div id="method-i-3C-3C_source" class="dyn-source">
+                <pre>static VALUE
+window_addstr2(VALUE obj, VALUE str)
+{
+    window_addstr(obj, str);
+    return obj;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-addch">
+            
+              <a name="method-i-addch"></a><b>addch(ch)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Add a character <code>ch</code>, with attributes, to the window, then
+advance the cursor.</p>
+
+<p>see also the system manual for curs_addch(3)</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-addch_source')" id="l_method-i-addch_source">show</a>
+                
+              </p>
+              <div id="method-i-addch_source" class="dyn-source">
+                <pre>static VALUE
+window_addch(VALUE obj, VALUE ch)
+{
+    struct windata *winp;
+
+    GetWINDOW(obj, winp);
+    waddch(winp-&gt;window, NUM2CH(ch));
+
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-addstr">
+            
+              <a name="method-i-addstr"></a><b>addstr(str)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>add a string of characters <code>str</code>, to the window and advance
+cursor</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-addstr_source')" id="l_method-i-addstr_source">show</a>
+                
+              </p>
+              <div id="method-i-addstr_source" class="dyn-source">
+                <pre>static VALUE
+window_addstr(VALUE obj, VALUE str)
+{
+    if (!NIL_P(str)) {
+        struct windata *winp;
+
+        StringValue(str);
+        str = rb_str_export_locale(str);
+        GetWINDOW(obj, winp);
+        waddstr(winp-&gt;window, StringValueCStr(str));
+    }
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-attroff">
+            
+              <a name="method-i-attroff"></a><b>attroff(attrs)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Turns on the named attributes <code>attrs</code> without affecting any
+others.</p>
+
+<p>See also <a href="Window.html#method-i-attrset">#attrset</a></p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-attroff_source')" id="l_method-i-attroff_source">show</a>
+                
+              </p>
+              <div id="method-i-attroff_source" class="dyn-source">
+                <pre>static VALUE
+window_attroff(VALUE obj, VALUE attrs)
+{
+#ifdef HAVE_WATTROFF
+    struct windata *winp;
+
+    GetWINDOW(obj,winp);
+    return INT2FIX(wattroff(winp-&gt;window,NUM2INT(attrs)));
+#else
+    return Qtrue;
+#endif
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-attron">
+            
+              <a name="method-i-attron"></a><b>attron(attrs)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Turns off the named attributes <code>attrs</code> without turning any other
+attributes on or off.</p>
+
+<p>See also <a href="Window.html#method-i-attrset">#attrset</a></p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-attron_source')" id="l_method-i-attron_source">show</a>
+                
+              </p>
+              <div id="method-i-attron_source" class="dyn-source">
+                <pre>static VALUE
+window_attron(VALUE obj, VALUE attrs)
+{
+#ifdef HAVE_WATTRON
+    struct windata *winp;
+    VALUE val;
+
+    GetWINDOW(obj,winp);
+    val = INT2FIX(wattron(winp-&gt;window,NUM2INT(attrs)));
+    if (rb_block_given_p()) {
+        rb_yield(val);
+        wattroff(winp-&gt;window,NUM2INT(attrs));
+        return val;
+    }
+    else{
+        return val;
+    }
+#else
+    return Qtrue;
+#endif
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-attrset">
+            
+              <a name="method-i-attrset"></a><b>attrset(attrs)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Sets the current attributes of the given window to <code>attrs</code>.</p>
+
+<p>The following video attributes, defined in &lt;curses.h&gt;, can be passed
+to the routines <a href="Window.html#method-i-attron">#attron</a>, <a
+href="Window.html#method-i-attroff">#attroff</a>, and <a
+href="Window.html#method-i-attrset">#attrset</a>, or OR’d with the
+characters passed to addch.</p>
+
+<pre>A_NORMAL        Normal display (no highlight)
+A_STANDOUT      Best highlighting mode of the terminal.
+A_UNDERLINE     Underlining
+A_REVERSE       Reverse video
+A_BLINK         Blinking
+A_DIM           Half bright
+A_BOLD          Extra bright or bold
+A_PROTECT       Protected mode
+A_INVIS         Invisible or blank mode
+A_ALTCHARSET    Alternate character set
+A_CHARTEXT      Bit-mask to extract a character
+COLOR_PAIR(n)   Color-pair number n</pre>
+
+<p>TODO: provide some examples here.</p>
+
+<p>see also system manual curs_attr(3)</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-attrset_source')" id="l_method-i-attrset_source">show</a>
+                
+              </p>
+              <div id="method-i-attrset_source" class="dyn-source">
+                <pre>static VALUE
+window_attrset(VALUE obj, VALUE attrs)
+{
+#ifdef HAVE_WATTRSET
+    struct windata *winp;
+
+    GetWINDOW(obj,winp);
+    return INT2FIX(wattrset(winp-&gt;window,NUM2INT(attrs)));
+#else
+    return Qtrue;
+#endif
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-begx">
+            
+              <a name="method-i-begx"></a><b>begx</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>A getter for the beginning column (X coord) of the window</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-begx_source')" id="l_method-i-begx_source">show</a>
+                
+              </p>
+              <div id="method-i-begx_source" class="dyn-source">
+                <pre>static VALUE
+window_begx(VALUE obj)
+{
+    struct windata *winp;
+    int x, y;
+
+    GetWINDOW(obj, winp);
+#ifdef getbegyx
+    getbegyx(winp-&gt;window, y, x);
+    return INT2FIX(x);
+#else
+    return INT2FIX(winp-&gt;window-&gt;_begx);
+#endif
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-begy">
+            
+              <a name="method-i-begy"></a><b>begy</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>A getter for the beginning line (Y coord) of the window</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-begy_source')" id="l_method-i-begy_source">show</a>
+                
+              </p>
+              <div id="method-i-begy_source" class="dyn-source">
+                <pre>static VALUE
+window_begy(VALUE obj)
+{
+    struct windata *winp;
+    int x, y;
+
+    GetWINDOW(obj, winp);
+#ifdef getbegyx
+    getbegyx(winp-&gt;window, y, x);
+    return INT2FIX(y);
+#else
+    return INT2FIX(winp-&gt;window-&gt;_begy);
+#endif
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-bkgd">
+            
+              <a name="method-i-bkgd"></a><b>bkgd(ch)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p><a href="../Set.html">Set</a> the background of the current window and
+apply character <a href="../Integer.html">Integer</a> <code>ch</code> to
+every character.</p>
+
+<p>see also <a href="../Curses.html#method-c-bkgd">Curses.bkgd</a></p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-bkgd_source')" id="l_method-i-bkgd_source">show</a>
+                
+              </p>
+              <div id="method-i-bkgd_source" class="dyn-source">
+                <pre>static VALUE
+window_bkgd(VALUE obj, VALUE ch)
+{
+#ifdef HAVE_WBKGD
+    struct windata *winp;
+
+    GetWINDOW(obj,winp);
+    return (wbkgd(winp-&gt;window, NUM2CH(ch)) == OK) ? Qtrue : Qfalse;
+#else
+    return Qfalse;
+#endif
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-bkgdset">
+            
+              <a name="method-i-bkgdset"></a><b>bkgdset(ch)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Manipulate the background of the current window with character <a
+href="../Integer.html">Integer</a> <code>ch</code></p>
+
+<p>see also <a href="../Curses.html#method-c-bkgdset">Curses.bkgdset</a></p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-bkgdset_source')" id="l_method-i-bkgdset_source">show</a>
+                
+              </p>
+              <div id="method-i-bkgdset_source" class="dyn-source">
+                <pre>static VALUE
+window_bkgdset(VALUE obj, VALUE ch)
+{
+#ifdef HAVE_WBKGDSET
+    struct windata *winp;
+
+    GetWINDOW(obj,winp);
+    wbkgdset(winp-&gt;window, NUM2CH(ch));
+#endif
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-box">
+            
+              <a name="method-i-box"></a><b>box(vert, hor)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>set the characters to frame the window in. The vertical <code>vert</code>
+and horizontal <code>hor</code> character.</p>
+
+<pre>win = Curses::Window.new(5,5,5,5)
+win.box(?|, ?-)</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-box_source')" id="l_method-i-box_source">show</a>
+                
+              </p>
+              <div id="method-i-box_source" class="dyn-source">
+                <pre>static VALUE
+window_box(int argc, VALUE *argv, VALUE self)
+{
+    struct windata *winp;
+    VALUE vert, hor, corn;
+
+    rb_scan_args(argc, argv, &quot;21&quot;, &amp;vert, &amp;hor, &amp;corn);
+
+    GetWINDOW(self, winp);
+    box(winp-&gt;window, NUM2CH(vert), NUM2CH(hor));
+
+    if (!NIL_P(corn)) {
+        int cur_x, cur_y, x, y;
+        chtype c;
+
+        c = NUM2CH(corn);
+        getyx(winp-&gt;window, cur_y, cur_x);
+        x = NUM2INT(window_maxx(self)) - 1;
+        y = NUM2INT(window_maxy(self)) - 1;
+        wmove(winp-&gt;window, 0, 0);
+        waddch(winp-&gt;window, c);
+        wmove(winp-&gt;window, y, 0);
+        waddch(winp-&gt;window, c);
+        wmove(winp-&gt;window, y, x);
+        waddch(winp-&gt;window, c);
+        wmove(winp-&gt;window, 0, x);
+        waddch(winp-&gt;window, c);
+        wmove(winp-&gt;window, cur_y, cur_x);
+    }
+
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-clear">
+            
+              <a name="method-i-clear"></a><b>clear</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Clear the window.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-clear_source')" id="l_method-i-clear_source">show</a>
+                
+              </p>
+              <div id="method-i-clear_source" class="dyn-source">
+                <pre>static VALUE
+window_clear(VALUE obj)
+{
+    struct windata *winp;
+
+    GetWINDOW(obj, winp);
+    wclear(winp-&gt;window);
+
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-close">
+            
+              <a name="method-i-close"></a><b>close</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Deletes the window, and frees the memory</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-close_source')" id="l_method-i-close_source">show</a>
+                
+              </p>
+              <div id="method-i-close_source" class="dyn-source">
+                <pre>static VALUE
+window_close(VALUE obj)
+{
+    struct windata *winp;
+
+    GetWINDOW(obj, winp);
+    delwin(winp-&gt;window);
+    winp-&gt;window = 0;
+
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-clrtoeol">
+            
+              <a name="method-i-clrtoeol"></a><b>clrtoeol</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Clear the window to the end of line, that the cursor is currently on.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-clrtoeol_source')" id="l_method-i-clrtoeol_source">show</a>
+                
+              </p>
+              <div id="method-i-clrtoeol_source" class="dyn-source">
+                <pre>static VALUE
+window_clrtoeol(VALUE obj)
+{
+    struct windata *winp;
+
+    GetWINDOW(obj, winp);
+    wclrtoeol(winp-&gt;window);
+
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-color_set">
+            
+              <a name="method-i-color_set"></a><b>color_set(col)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Sets the current color of the given window to the foreground/background
+combination described by the Fixnum <code>col</code>.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-color_set_source')" id="l_method-i-color_set_source">show</a>
+                
+              </p>
+              <div id="method-i-color_set_source" class="dyn-source">
+                <pre>static VALUE
+window_color_set(VALUE obj, VALUE col)
+{
+    struct windata *winp;
+    int res;
+
+    GetWINDOW(obj, winp);
+    res = wcolor_set(winp-&gt;window, NUM2INT(col), NULL);
+    return (res == OK) ? Qtrue : Qfalse;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-curx">
+            
+              <a name="method-i-curx"></a><b>curx</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>A getter for the current column (X coord) of the window</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-curx_source')" id="l_method-i-curx_source">show</a>
+                
+              </p>
+              <div id="method-i-curx_source" class="dyn-source">
+                <pre>static VALUE
+window_curx(VALUE obj)
+{
+    struct windata *winp;
+    int x, y;
+
+    GetWINDOW(obj, winp);
+    getyx(winp-&gt;window, y, x);
+    return INT2FIX(x);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-cury">
+            
+              <a name="method-i-cury"></a><b>cury</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>A getter for the current line (Y coord) of the window</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-cury_source')" id="l_method-i-cury_source">show</a>
+                
+              </p>
+              <div id="method-i-cury_source" class="dyn-source">
+                <pre>static VALUE
+window_cury(VALUE obj)
+{
+    struct windata *winp;
+    int x, y;
+
+    GetWINDOW(obj, winp);
+    getyx(winp-&gt;window, y, x);
+    return INT2FIX(y);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-delch">
+            
+              <a name="method-i-delch"></a><b>delch</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Delete the character under the cursor</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-delch_source')" id="l_method-i-delch_source">show</a>
+                
+              </p>
+              <div id="method-i-delch_source" class="dyn-source">
+                <pre>static VALUE
+window_delch(VALUE obj)
+{
+    struct windata *winp;
+
+    GetWINDOW(obj, winp);
+    wdelch(winp-&gt;window);
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-deleteln">
+            
+              <a name="method-i-deleteln"></a><b>deleteln</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Delete the line under the cursor.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-deleteln_source')" id="l_method-i-deleteln_source">show</a>
+                
+              </p>
+              <div id="method-i-deleteln_source" class="dyn-source">
+                <pre>static VALUE
+window_deleteln(VALUE obj)
+{
+#if defined(HAVE_WDELETELN) || defined(wdeleteln)
+    struct windata *winp;
+
+    GetWINDOW(obj, winp);
+    wdeleteln(winp-&gt;window);
+#endif
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-getbkgd">
+            
+              <a name="method-i-getbkgd"></a><b>getbkgd</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns an Interer (<code>ch</code>) for the character property in the
+current window.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-getbkgd_source')" id="l_method-i-getbkgd_source">show</a>
+                
+              </p>
+              <div id="method-i-getbkgd_source" class="dyn-source">
+                <pre>static VALUE
+window_getbkgd(VALUE obj)
+{
+#ifdef HAVE_WGETBKGD
+    chtype c;
+    struct windata *winp;
+
+    GetWINDOW(obj,winp);
+    return (c = getbkgd(winp-&gt;window) != ERR) ? CH2FIX(c) : Qnil;
+#else
+    return Qnil;
+#endif
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-getch">
+            
+              <a name="method-i-getch"></a><b>getch</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Read and returns a character from the window.</p>
+
+<p>See <a href="Key.html">Curses::Key</a> to all the function KEY_* available</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-getch_source')" id="l_method-i-getch_source">show</a>
+                
+              </p>
+              <div id="method-i-getch_source" class="dyn-source">
+                <pre>static VALUE
+window_getch(VALUE obj)
+{
+    struct windata *winp;
+    struct wgetch_arg arg;
+    int c;
+
+    GetWINDOW(obj, winp);
+    arg.win = winp-&gt;window;
+    rb_thread_blocking_region(wgetch_func, (void *)&amp;arg, RUBY_UBF_IO, 0);
+    c = arg.c;
+    if (c == EOF) return Qnil;
+    if (rb_isprint(c)) {
+        char ch = (char)c;
+
+        return rb_locale_str_new(&amp;ch, 1);
+    }
+    return UINT2NUM(c);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-getstr">
+            
+              <a name="method-i-getstr"></a><b>getstr</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>This is equivalent to a series f <a
+href="Window.html#method-i-getch">#getch</a> calls</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-getstr_source')" id="l_method-i-getstr_source">show</a>
+                
+              </p>
+              <div id="method-i-getstr_source" class="dyn-source">
+                <pre>static VALUE
+window_getstr(VALUE obj)
+{
+    struct windata *winp;
+    struct wgetstr_arg arg;
+
+    GetWINDOW(obj, winp);
+    arg.win = winp-&gt;window;
+    rb_thread_blocking_region(wgetstr_func, (void *)&amp;arg, RUBY_UBF_IO, 0);
+    return rb_locale_str_new_cstr(arg.rtn);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-idlok">
+            
+              <a name="method-i-idlok"></a><b>idlok(bool)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>If <code>bool</code> is <code>true</code> curses considers using the
+hardware insert/delete line feature of terminals so equipped.</p>
+
+<p>If <code>bool</code> is <code>false</code>, disables use of line insertion
+and deletion. This option should be enabled only if the application needs
+insert/delete line, for example, for a screen editor.</p>
+
+<p>It is disabled by default because insert/delete line tends to be visually
+annoying when used in applications where it is not really needed. If
+insert/delete line cannot be used, curses redraws the changed portions of
+all lines.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-idlok_source')" id="l_method-i-idlok_source">show</a>
+                
+              </p>
+              <div id="method-i-idlok_source" class="dyn-source">
+                <pre>static VALUE
+window_idlok(VALUE obj, VALUE bf)
+{
+    struct windata *winp;
+
+    GetWINDOW(obj, winp);
+    idlok(winp-&gt;window, RTEST(bf) ? TRUE : FALSE);
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-inch">
+            
+              <a name="method-i-inch"></a><b>inch</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the character at the current position of the window.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-inch_source')" id="l_method-i-inch_source">show</a>
+                
+              </p>
+              <div id="method-i-inch_source" class="dyn-source">
+                <pre>static VALUE
+window_inch(VALUE obj)
+{
+    struct windata *winp;
+
+    GetWINDOW(obj, winp);
+    return CH2FIX(winch(winp-&gt;window));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-insch">
+            
+              <a name="method-i-insch"></a><b>insch(ch)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Insert a character <code>ch</code>, before the cursor, in the current
+window</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-insch_source')" id="l_method-i-insch_source">show</a>
+                
+              </p>
+              <div id="method-i-insch_source" class="dyn-source">
+                <pre>static VALUE
+window_insch(VALUE obj, VALUE ch)
+{
+    struct windata *winp;
+
+    GetWINDOW(obj, winp);
+    winsch(winp-&gt;window, NUM2CH(ch));
+
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-insertln">
+            
+              <a name="method-i-insertln"></a><b>insertln</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Inserts a line above the cursor, and the bottom line is lost</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-insertln_source')" id="l_method-i-insertln_source">show</a>
+                
+              </p>
+              <div id="method-i-insertln_source" class="dyn-source">
+                <pre>static VALUE
+window_insertln(VALUE obj)
+{
+#if defined(HAVE_WINSERTLN) || defined(winsertln)
+    struct windata *winp;
+
+    GetWINDOW(obj, winp);
+    winsertln(winp-&gt;window);
+#endif
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-keypad">
+            
+              <a name="method-i-keypad"></a><b>keypad(bool)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Enables the keypad of the user’s terminal.</p>
+
+<p>If enabled (<code>bool</code> is <code>true</code>), the user can press a
+function key (such as an arrow key) and wgetch returns a single value
+representing the function key, as in KEY_LEFT.  If disabled
+(<code>bool</code> is <code>false</code>), curses does not treat function
+keys specially and the program has to interpret the escape sequences
+itself.  If the keypad in the terminal can be turned on (made to transmit)
+and off (made to work locally), turning on this option causes the terminal
+keypad to be turned on when <a href="Window.html#method-i-getch">#getch</a>
+is called.</p>
+
+<p>The default value for keypad is false.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-keypad_source')" id="l_method-i-keypad_source">show</a>
+                
+              </p>
+              <div id="method-i-keypad_source" class="dyn-source">
+                <pre>static VALUE
+window_keypad(VALUE obj, VALUE val)
+{
+    struct windata *winp;
+
+    GetWINDOW(obj,winp);
+    /* keypad() of NetBSD's libcurses returns no value */
+#if defined(__NetBSD__) &amp;&amp; !defined(NCURSES_VERSION)
+    keypad(winp-&gt;window,(RTEST(val) ? TRUE : FALSE));
+    return Qnil;
+#else
+    /* may have to raise exception on ERR */
+    return (keypad(winp-&gt;window,RTEST(val) ? TRUE : FALSE)) == OK ?
+        Qtrue : Qfalse;
+#endif
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-keypad-3D">
+            
+              <a name="method-i-keypad-3D"></a><b>keypad(bool)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Enables the keypad of the user’s terminal.</p>
+
+<p>If enabled (<code>bool</code> is <code>true</code>), the user can press a
+function key (such as an arrow key) and wgetch returns a single value
+representing the function key, as in KEY_LEFT.  If disabled
+(<code>bool</code> is <code>false</code>), curses does not treat function
+keys specially and the program has to interpret the escape sequences
+itself.  If the keypad in the terminal can be turned on (made to transmit)
+and off (made to work locally), turning on this option causes the terminal
+keypad to be turned on when <a href="Window.html#method-i-getch">#getch</a>
+is called.</p>
+
+<p>The default value for keypad is false.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-keypad-3D_source')" id="l_method-i-keypad-3D_source">show</a>
+                
+              </p>
+              <div id="method-i-keypad-3D_source" class="dyn-source">
+                <pre>static VALUE
+window_keypad(VALUE obj, VALUE val)
+{
+    struct windata *winp;
+
+    GetWINDOW(obj,winp);
+    /* keypad() of NetBSD's libcurses returns no value */
+#if defined(__NetBSD__) &amp;&amp; !defined(NCURSES_VERSION)
+    keypad(winp-&gt;window,(RTEST(val) ? TRUE : FALSE));
+    return Qnil;
+#else
+    /* may have to raise exception on ERR */
+    return (keypad(winp-&gt;window,RTEST(val) ? TRUE : FALSE)) == OK ?
+        Qtrue : Qfalse;
+#endif
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-maxx">
+            
+              <a name="method-i-maxx"></a><b>maxx</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>A getter for the maximum columns for the window</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-maxx_source')" id="l_method-i-maxx_source">show</a>
+                
+              </p>
+              <div id="method-i-maxx_source" class="dyn-source">
+                <pre>static VALUE
+window_maxx(VALUE obj)
+{
+    struct windata *winp;
+
+    GetWINDOW(obj, winp);
+#if defined(getmaxx)
+    return INT2FIX(getmaxx(winp-&gt;window));
+#elif defined(getmaxyx)
+    {
+        int x, y;
+        getmaxyx(winp-&gt;window, y, x);
+        return INT2FIX(x);
+    }
+#else
+    return INT2FIX(winp-&gt;window-&gt;_maxx+1);
+#endif
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-maxy">
+            
+              <a name="method-i-maxy"></a><b>maxy</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>A getter for the maximum lines for the window</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-maxy_source')" id="l_method-i-maxy_source">show</a>
+                
+              </p>
+              <div id="method-i-maxy_source" class="dyn-source">
+                <pre>static VALUE
+window_maxy(VALUE obj)
+{
+    struct windata *winp;
+
+    GetWINDOW(obj, winp);
+#if defined(getmaxy)
+    return INT2FIX(getmaxy(winp-&gt;window));
+#elif defined(getmaxyx)
+    {
+        int x, y;
+        getmaxyx(winp-&gt;window, y, x);
+        return INT2FIX(y);
+    }
+#else
+    return INT2FIX(winp-&gt;window-&gt;_maxy+1);
+#endif
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-move">
+            
+              <a name="method-i-move"></a><b>move(y,x)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Moves the window so that the upper left-hand corner is at position
+(<code>y</code>, <code>x</code>)</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-move_source')" id="l_method-i-move_source">show</a>
+                
+              </p>
+              <div id="method-i-move_source" class="dyn-source">
+                <pre>static VALUE
+window_move(VALUE obj, VALUE y, VALUE x)
+{
+    struct windata *winp;
+
+    GetWINDOW(obj, winp);
+    mvwin(winp-&gt;window, NUM2INT(y), NUM2INT(x));
+
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-nodelay-3D">
+            
+              <a name="method-i-nodelay-3D"></a><b>nodelay(bool)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Causes <a href="Window.html#method-i-getch">#getch</a> to be a non-blocking
+call.  If no input is ready, getch returns ERR.</p>
+
+<p>If disabled (<code>bool</code> is <code>false</code>), <a
+href="Window.html#method-i-getch">#getch</a> waits until a key is pressed.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-nodelay-3D_source')" id="l_method-i-nodelay-3D_source">show</a>
+                
+              </p>
+              <div id="method-i-nodelay-3D_source" class="dyn-source">
+                <pre>static VALUE
+window_nodelay(VALUE obj, VALUE val)
+{
+    struct windata *winp;
+    GetWINDOW(obj,winp);
+
+    /* nodelay() of NetBSD's libcurses returns no value */
+#if defined(__NetBSD__) &amp;&amp; !defined(NCURSES_VERSION)
+    nodelay(winp-&gt;window, RTEST(val) ? TRUE : FALSE);
+    return Qnil;
+#else
+    return nodelay(winp-&gt;window,RTEST(val) ? TRUE : FALSE) == OK ? Qtrue : Qfalse;
+#endif
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-noutrefresh">
+            
+              <a name="method-i-noutrefresh"></a><b>noutrefresh</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Refreshes the windows and lines.</p>
+
+<p><a href="Window.html#method-i-noutrefresh">#noutrefresh</a> allows multiple
+updates with more efficiency than <a
+href="Window.html#method-i-refresh">#refresh</a> alone.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-noutrefresh_source')" id="l_method-i-noutrefresh_source">show</a>
+                
+              </p>
+              <div id="method-i-noutrefresh_source" class="dyn-source">
+                <pre>static VALUE
+window_noutrefresh(VALUE obj)
+{
+    struct windata *winp;
+
+    GetWINDOW(obj, winp);
+#ifdef HAVE_DOUPDATE
+    wnoutrefresh(winp-&gt;window);
+#else
+    wrefresh(winp-&gt;window);
+#endif
+
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-refresh">
+            
+              <a name="method-i-refresh"></a><b>refresh</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Refreshes the windows and lines.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-refresh_source')" id="l_method-i-refresh_source">show</a>
+                
+              </p>
+              <div id="method-i-refresh_source" class="dyn-source">
+                <pre>static VALUE
+window_refresh(VALUE obj)
+{
+    struct windata *winp;
+
+    GetWINDOW(obj, winp);
+    wrefresh(winp-&gt;window);
+
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-resize">
+            
+              <a name="method-i-resize"></a><b>resize(lines, cols)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Resize the current window to Fixnum <code>lines</code> and Fixnum
+<code>cols</code></p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-resize_source')" id="l_method-i-resize_source">show</a>
+                
+              </p>
+              <div id="method-i-resize_source" class="dyn-source">
+                <pre>static VALUE
+window_resize(VALUE obj, VALUE lin, VALUE col)
+{
+#if defined(HAVE_WRESIZE)
+    struct windata *winp;
+
+    GetWINDOW(obj,winp);
+    return wresize(winp-&gt;window, NUM2INT(lin), NUM2INT(col)) == OK ? Qtrue : Qfalse;
+#else
+    return Qnil;
+#endif
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-scrl">
+            
+              <a name="method-i-scrl"></a><b>scrl(num)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Scrolls the current window Fixnum <code>num</code> lines. The current
+cursor position is not changed.</p>
+
+<p>For positive <code>num</code>, it scrolls up.</p>
+
+<p>For negative <code>num</code>, it scrolls down.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-scrl_source')" id="l_method-i-scrl_source">show</a>
+                
+              </p>
+              <div id="method-i-scrl_source" class="dyn-source">
+                <pre>static VALUE
+window_scrl(VALUE obj, VALUE n)
+{
+#ifdef HAVE_WSCRL
+    struct windata *winp;
+
+    GetWINDOW(obj, winp);
+    /* may have to raise exception on ERR */
+    return (wscrl(winp-&gt;window,NUM2INT(n)) == OK) ? Qtrue : Qfalse;
+#else
+    return Qfalse;
+#endif
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-scroll">
+            
+              <a name="method-i-scroll"></a><b>scroll</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Scrolls the current window up one line.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-scroll_source')" id="l_method-i-scroll_source">show</a>
+                
+              </p>
+              <div id="method-i-scroll_source" class="dyn-source">
+                <pre>static VALUE
+window_scroll(VALUE obj)
+{
+    struct windata *winp;
+
+    GetWINDOW(obj, winp);
+    /* may have to raise exception on ERR */
+    return (scroll(winp-&gt;window) == OK) ? Qtrue : Qfalse;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-scrollok">
+            
+              <a name="method-i-scrollok"></a><b>scrollok(bool)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Controls what happens when the cursor of a window is moved off the edge of
+the window or scrolling region, either as a result of a newline action on
+the bottom line, or typing the last character of the last line.</p>
+
+<p>If disabled, (<code>bool</code> is false), the cursor is left on the bottom
+line.</p>
+
+<p>If enabled, (<code>bool</code> is true), the window is scrolled up one line
+(Note that to get the physical scrolling effect on the terminal, it is also
+necessary to call <a href="Window.html#method-i-idlok">#idlok</a>)</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-scrollok_source')" id="l_method-i-scrollok_source">show</a>
+                
+              </p>
+              <div id="method-i-scrollok_source" class="dyn-source">
+                <pre>static VALUE
+window_scrollok(VALUE obj, VALUE bf)
+{
+    struct windata *winp;
+
+    GetWINDOW(obj, winp);
+    scrollok(winp-&gt;window, RTEST(bf) ? TRUE : FALSE);
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-setpos">
+            
+              <a name="method-i-setpos"></a><b>setpos(y, x)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>A setter for the position of the cursor in the current window, using
+coordinates <code>x</code> and <code>y</code></p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-setpos_source')" id="l_method-i-setpos_source">show</a>
+                
+              </p>
+              <div id="method-i-setpos_source" class="dyn-source">
+                <pre>static VALUE
+window_setpos(VALUE obj, VALUE y, VALUE x)
+{
+    struct windata *winp;
+
+    GetWINDOW(obj, winp);
+    wmove(winp-&gt;window, NUM2INT(y), NUM2INT(x));
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-setscrreg">
+            
+              <a name="method-i-setscrreg"></a><b>setscrreg(top, bottom)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p><a href="../Set.html">Set</a> a software scrolling region in a window.
+<code>top</code> and <code>bottom</code> are lines numbers of the margin.</p>
+
+<p>If this option and <a href="Window.html#method-i-scrollok">#scrollok</a>
+are enabled, an attempt to move off the bottom margin line causes all lines
+in the scrolling region to scroll one line in the direction of the first
+line.  Only the text of the window is scrolled.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-setscrreg_source')" id="l_method-i-setscrreg_source">show</a>
+                
+              </p>
+              <div id="method-i-setscrreg_source" class="dyn-source">
+                <pre>static VALUE
+window_setscrreg(VALUE obj, VALUE top, VALUE bottom)
+{
+#ifdef HAVE_WSETSCRREG
+    struct windata *winp;
+    int res;
+
+    GetWINDOW(obj, winp);
+    res = wsetscrreg(winp-&gt;window, NUM2INT(top), NUM2INT(bottom));
+    /* may have to raise exception on ERR */
+    return (res == OK) ? Qtrue : Qfalse;
+#else
+    return Qfalse;
+#endif
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-standend">
+            
+              <a name="method-i-standend"></a><b>standend</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Enables the Normal display (no highlight)</p>
+
+<p>This is equivalent to <a href="Window.html#method-i-attron">#attron</a></p>
+
+<p>see also <a href="Window.html#method-i-attrset">#attrset</a></p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-standend_source')" id="l_method-i-standend_source">show</a>
+                
+              </p>
+              <div id="method-i-standend_source" class="dyn-source">
+                <pre>static VALUE
+window_standend(VALUE obj)
+{
+    struct windata *winp;
+
+    GetWINDOW(obj, winp);
+    wstandend(winp-&gt;window);
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-standout">
+            
+              <a name="method-i-standout"></a><b>standout</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Enables the best highlighting mode of the terminal.</p>
+
+<p>This is equivalent to <a href="Window.html#method-i-attron">#attron</a></p>
+
+<p>see also <a href="Window.html#method-i-attrset">#attrset</a></p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-standout_source')" id="l_method-i-standout_source">show</a>
+                
+              </p>
+              <div id="method-i-standout_source" class="dyn-source">
+                <pre>static VALUE
+window_standout(VALUE obj)
+{
+    struct windata *winp;
+
+    GetWINDOW(obj, winp);
+    wstandout(winp-&gt;window);
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-subwin">
+            
+              <a name="method-i-subwin"></a><b>subwin(height, width, top, left)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Contruct a new subwindow with constraints of <code>height</code> lines,
+<code>width</code> columns, begin at <code>top</code> line, and begin
+<code>left</code> most column.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-subwin_source')" id="l_method-i-subwin_source">show</a>
+                
+              </p>
+              <div id="method-i-subwin_source" class="dyn-source">
+                <pre>static VALUE
+window_subwin(VALUE obj, VALUE height, VALUE width, VALUE top, VALUE left)
+{
+    struct windata *winp;
+    WINDOW *window;
+    VALUE win;
+    int h, w, t, l;
+
+    h = NUM2INT(height);
+    w = NUM2INT(width);
+    t = NUM2INT(top);
+    l = NUM2INT(left);
+    GetWINDOW(obj, winp);
+    window = subwin(winp-&gt;window, h, w, t, l);
+    win = prep_window(rb_obj_class(obj), window);
+
+    return win;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-timeout-3D">
+            
+              <a name="method-i-timeout-3D"></a><b>timeout=(delay)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Sets block and non-blocking reads for the window.</p>
+<ul><li>
+<p>If delay is negative, blocking read is used (i.e., waits indefinitely for
+input).</p>
+</li><li>
+<p>If delay is zero, then non-blocking read is used (i.e., read returns ERR if
+no input is waiting).</p>
+</li><li>
+<p>If delay is positive, then read blocks for delay milliseconds, and returns
+ERR if there is still no input.</p>
+</li></ul>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-timeout-3D_source')" id="l_method-i-timeout-3D_source">show</a>
+                
+              </p>
+              <div id="method-i-timeout-3D_source" class="dyn-source">
+                <pre>static VALUE
+window_timeout(VALUE obj, VALUE delay)
+{
+    struct windata *winp;
+    GetWINDOW(obj,winp);
+
+    wtimeout(winp-&gt;window,NUM2INT(delay));
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    

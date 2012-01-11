@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>PP::ObjectMixin</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Module</span> 
+            PP::ObjectMixin 
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/Users/fschumac/_rvm/src/ruby-1_9_3-p0/lib/pp_rb.html">/Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/pp.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>P</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-pretty_print">pretty_print</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-pretty_print_cycle">pretty_print_cycle</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-pretty_print_inspect">pretty_print_inspect</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-pretty_print_instance_variables">pretty_print_instance_variables</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+        
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-pretty_print">
+            
+              <a name="method-i-pretty_print"></a><b>pretty_print</b>(q)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>A default pretty printing method for general objects. It calls <a
+href="ObjectMixin.html#method-i-pretty_print_instance_variables">pretty_print_instance_variables</a>
+to list instance variables.</p>
+
+<p>If <code>self</code> has a customized (redefined) inspect method, the
+result of self.inspect is used but it obviously has no line break hints.</p>
+
+<p>This module provides predefined <a
+href="ObjectMixin.html#method-i-pretty_print">pretty_print</a> methods for
+some of the most commonly used built-in classes for convenience.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-pretty_print_source')" id="l_method-i-pretty_print_source">show</a>
+                
+              </p>
+              <div id="method-i-pretty_print_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/pp.rb, line 279</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">pretty_print</span>(<span class="ruby-identifier">q</span>)
+  <span class="ruby-identifier">method_method</span> = <span class="ruby-constant">Object</span>.<span class="ruby-identifier">instance_method</span>(<span class="ruby-value">:method</span>).<span class="ruby-identifier">bind</span>(<span class="ruby-keyword">self</span>)
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-identifier">inspect_method</span> = <span class="ruby-identifier">method_method</span>.<span class="ruby-identifier">call</span>(<span class="ruby-value">:inspect</span>)
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">NameError</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-identifier">to_s_method</span> = <span class="ruby-identifier">method_method</span>.<span class="ruby-identifier">call</span>(<span class="ruby-value">:to_s</span>)
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">NameError</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">inspect_method</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-node">%r\(Kernel\)#/</span> <span class="ruby-operator">!~</span> <span class="ruby-identifier">inspect_method</span>.<span class="ruby-identifier">inspect</span>
+    <span class="ruby-identifier">q</span>.<span class="ruby-identifier">text</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">inspect</span>
+  <span class="ruby-keyword">elsif</span> <span class="ruby-operator">!</span><span class="ruby-identifier">inspect_method</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-value">:inspect</span>)
+    <span class="ruby-identifier">q</span>.<span class="ruby-identifier">text</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">inspect</span>
+  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">to_s_method</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-node">%r\(Kernel\)#/</span> <span class="ruby-operator">!~</span> <span class="ruby-identifier">to_s_method</span>.<span class="ruby-identifier">inspect</span>
+    <span class="ruby-identifier">q</span>.<span class="ruby-identifier">text</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">to_s</span>
+  <span class="ruby-keyword">elsif</span> <span class="ruby-operator">!</span><span class="ruby-identifier">to_s_method</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-value">:to_s</span>)
+    <span class="ruby-identifier">q</span>.<span class="ruby-identifier">text</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">to_s</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">q</span>.<span class="ruby-identifier">pp_object</span>(<span class="ruby-keyword">self</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-pretty_print_cycle">
+            
+              <a name="method-i-pretty_print_cycle"></a><b>pretty_print_cycle</b>(q)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>A default pretty printing method for general objects that are detected as
+part of a cycle.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-pretty_print_cycle_source')" id="l_method-i-pretty_print_cycle_source">show</a>
+                
+              </p>
+              <div id="method-i-pretty_print_cycle_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/pp.rb, line 304</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">pretty_print_cycle</span>(<span class="ruby-identifier">q</span>)
+  <span class="ruby-identifier">q</span>.<span class="ruby-identifier">object_address_group</span>(<span class="ruby-keyword">self</span>) {
+    <span class="ruby-identifier">q</span>.<span class="ruby-identifier">breakable</span>
+    <span class="ruby-identifier">q</span>.<span class="ruby-identifier">text</span> <span class="ruby-string">'...'</span>
+  }
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-pretty_print_inspect">
+            
+              <a name="method-i-pretty_print_inspect"></a><b>pretty_print_inspect</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Is inspect implementation using <a
+href="ObjectMixin.html#method-i-pretty_print">pretty_print</a>. If you
+implement <a
+href="ObjectMixin.html#method-i-pretty_print">pretty_print</a>, it can be
+used as follows.</p>
+
+<pre>alias inspect pretty_print_inspect</pre>
+
+<p>However, doing this requires that every class that inspect is called on
+implement <a
+href="ObjectMixin.html#method-i-pretty_print">pretty_print</a>, or a <a
+href="../RuntimeError.html">RuntimeError</a> will be raised.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-pretty_print_inspect_source')" id="l_method-i-pretty_print_inspect_source">show</a>
+                
+              </p>
+              <div id="method-i-pretty_print_inspect_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/pp.rb, line 326</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">pretty_print_inspect</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-node">%r\(PP::ObjectMixin\)#/</span> <span class="ruby-operator">=~</span> <span class="ruby-constant">Object</span>.<span class="ruby-identifier">instance_method</span>(<span class="ruby-value">:method</span>).<span class="ruby-identifier">bind</span>(<span class="ruby-keyword">self</span>).<span class="ruby-identifier">call</span>(<span class="ruby-value">:pretty_print</span>).<span class="ruby-identifier">inspect</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;pretty_print is not overridden for #{self.class}&quot;</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-constant">PP</span>.<span class="ruby-identifier">singleline_pp</span>(<span class="ruby-keyword">self</span>, <span class="ruby-string">''</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-pretty_print_instance_variables">
+            
+              <a name="method-i-pretty_print_instance_variables"></a><b>pretty_print_instance_variables</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns a sorted array of instance variable names.</p>
+
+<p>This method should return an array of names of instance variables as
+symbols or strings as: +[:@a, :@b]+.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-pretty_print_instance_variables_source')" id="l_method-i-pretty_print_instance_variables_source">show</a>
+                
+              </p>
+              <div id="method-i-pretty_print_instance_variables_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/pp.rb, line 315</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">pretty_print_instance_variables</span>
+  <span class="ruby-identifier">instance_variables</span>.<span class="ruby-identifier">sort</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    

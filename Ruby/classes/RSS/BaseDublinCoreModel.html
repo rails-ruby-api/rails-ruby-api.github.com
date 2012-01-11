@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>RSS::BaseDublinCoreModel</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Module</span> 
+            RSS::BaseDublinCoreModel 
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/Users/fschumac/_rvm/src/ruby-1_9_3-p0/lib/rss/dublincore_rb.html">/Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/rss/dublincore.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>A</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-append_features">append_features</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+        
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-append_features">
+            
+              <a name="method-i-append_features"></a><b>append_features</b>(klass)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-append_features_source')" id="l_method-i-append_features_source">show</a>
+                
+              </p>
+              <div id="method-i-append_features_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/rss/dublincore.rb, line 8</span>
+    <span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">append_features</span>(<span class="ruby-identifier">klass</span>)
+      <span class="ruby-keyword">super</span>
+
+      <span class="ruby-keyword">return</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">instance_of?</span>(<span class="ruby-constant">Module</span>)
+      <span class="ruby-constant">DublinCoreModel</span><span class="ruby-operator">::</span><span class="ruby-constant">ELEMENT_NAME_INFOS</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">name</span>, <span class="ruby-identifier">plural_name</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">plural</span> = <span class="ruby-identifier">plural_name</span> <span class="ruby-operator">||</span> <span class="ruby-node">&quot;#{name}s&quot;</span>
+        <span class="ruby-identifier">full_name</span> = <span class="ruby-node">&quot;#{DC_PREFIX}_#{name}&quot;</span>
+        <span class="ruby-identifier">full_plural_name</span> = <span class="ruby-node">&quot;#{DC_PREFIX}_#{plural}&quot;</span>
+        <span class="ruby-identifier">klass_name</span> = <span class="ruby-node">&quot;DublinCore#{Utils.to_class_name(name)}&quot;</span>
+        <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">install_must_call_validator</span>(<span class="ruby-constant">DC_PREFIX</span>, <span class="ruby-constant">DC_URI</span>)
+        <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">install_have_children_element</span>(<span class="ruby-identifier">name</span>, <span class="ruby-constant">DC_URI</span>, <span class="ruby-string">&quot;*&quot;</span>,
+                                            <span class="ruby-identifier">full_name</span>, <span class="ruby-identifier">full_plural_name</span>)
+        <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">module_eval</span>(<span class="ruby-string">&quot;          remove_method :#{full_name}
+          remove_method :#{full_name}=
+          remove_method :set_#{full_name}
+
+          def #{full_name}
+            @#{full_name}.first and @#{full_name}.first.value
+          end
+
+          def #{full_name}=(new_value)
+            @#{full_name}[0] = Utils.new_with_value_if_need(#{klass_name}, new_value)
+          end
+          alias set_#{full_name} #{full_name}=
+&quot;</span>, *<span class="ruby-identifier">get_file_and_line_from_caller</span>(<span class="ruby-number">0</span>))
+      <span class="ruby-keyword">end</span>
+      <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">module_eval</span>(<span class="ruby-string">&quot;        if method_defined?(:date)
+          alias date_without_#{DC_PREFIX}_date= date=
+
+          def date=(value)
+            self.date_without_#{DC_PREFIX}_date = value
+            self.#{DC_PREFIX}_date = value
+          end
+        else
+          alias date #{DC_PREFIX}_date
+          alias date= #{DC_PREFIX}_date=
+        end
+
+        # For backward compatibility
+        alias #{DC_PREFIX}_rightses #{DC_PREFIX}_rights_list
+&quot;</span>, *<span class="ruby-identifier">get_file_and_line_from_caller</span>(<span class="ruby-number">0</span>))
+    <span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    

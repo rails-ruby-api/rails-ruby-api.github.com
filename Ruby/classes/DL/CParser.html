@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>DL::CParser</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Module</span> 
+            DL::CParser 
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/Users/fschumac/_rvm/src/ruby-1_9_3-p0/ext/dl/lib/dl/cparser_rb.html">/Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/dl/lib/dl/cparser.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>P</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-parse_ctype">parse_ctype</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-parse_signature">parse_signature</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-parse_struct_signature">parse_struct_signature</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+        
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-parse_ctype">
+            
+              <a name="method-i-parse_ctype"></a><b>parse_ctype</b>(ty, tymap=nil)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-parse_ctype_source')" id="l_method-i-parse_ctype_source">show</a>
+                
+              </p>
+              <div id="method-i-parse_ctype_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/dl/lib/dl/cparser.rb, line 59</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">parse_ctype</span>(<span class="ruby-identifier">ty</span>, <span class="ruby-identifier">tymap</span>=<span class="ruby-keyword">nil</span>)
+  <span class="ruby-identifier">tymap</span> <span class="ruby-operator">||=</span> {}
+  <span class="ruby-keyword">case</span> <span class="ruby-identifier">ty</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-constant">Array</span>
+    <span class="ruby-keyword">return</span> [<span class="ruby-identifier">parse_ctype</span>(<span class="ruby-identifier">ty</span>[<span class="ruby-number">0</span>], <span class="ruby-identifier">tymap</span>), <span class="ruby-identifier">ty</span>[<span class="ruby-number">1</span>]]
+  <span class="ruby-keyword">when</span> <span class="ruby-string">&quot;void&quot;</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-constant">TYPE_VOID</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-string">&quot;char&quot;</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-constant">TYPE_CHAR</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-string">&quot;unsigned char&quot;</span>
+    <span class="ruby-keyword">return</span>  <span class="ruby-operator">-</span><span class="ruby-constant">TYPE_CHAR</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-string">&quot;short&quot;</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-constant">TYPE_SHORT</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-string">&quot;unsigned short&quot;</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-operator">-</span><span class="ruby-constant">TYPE_SHORT</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-string">&quot;int&quot;</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-constant">TYPE_INT</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-string">&quot;unsigned int&quot;</span>, <span class="ruby-string">'uint'</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-operator">-</span><span class="ruby-constant">TYPE_INT</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-string">&quot;long&quot;</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-constant">TYPE_LONG</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-string">&quot;unsigned long&quot;</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-operator">-</span><span class="ruby-constant">TYPE_LONG</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-string">&quot;long long&quot;</span>
+    <span class="ruby-keyword">if</span>( <span class="ruby-keyword">defined?</span>(<span class="ruby-constant">TYPE_LONG_LONG</span>) )
+      <span class="ruby-keyword">return</span> <span class="ruby-constant">TYPE_LONG_LONG</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">raise</span>(<span class="ruby-constant">RuntimeError</span>, <span class="ruby-node">&quot;unsupported type: #{ty}&quot;</span>)
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-string">&quot;unsigned long long&quot;</span>
+    <span class="ruby-keyword">if</span>( <span class="ruby-keyword">defined?</span>(<span class="ruby-constant">TYPE_LONG_LONG</span>) )
+      <span class="ruby-keyword">return</span> <span class="ruby-operator">-</span><span class="ruby-constant">TYPE_LONG_LONG</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">raise</span>(<span class="ruby-constant">RuntimeError</span>, <span class="ruby-node">&quot;unsupported type: #{ty}&quot;</span>)
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-string">&quot;float&quot;</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-constant">TYPE_FLOAT</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-string">&quot;double&quot;</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-constant">TYPE_DOUBLE</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-regexp">%r\*/</span>, <span class="ruby-regexp">%r\[\s*\]/</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-constant">TYPE_VOIDP</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-keyword">if</span>( <span class="ruby-identifier">tymap</span>[<span class="ruby-identifier">ty</span>] )
+      <span class="ruby-keyword">return</span> <span class="ruby-identifier">parse_ctype</span>(<span class="ruby-identifier">tymap</span>[<span class="ruby-identifier">ty</span>], <span class="ruby-identifier">tymap</span>)
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">raise</span>(<span class="ruby-constant">DLError</span>, <span class="ruby-node">&quot;unknown type: #{ty}&quot;</span>)
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-parse_signature">
+            
+              <a name="method-i-parse_signature"></a><b>parse_signature</b>(signature, tymap=nil)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-parse_signature_source')" id="l_method-i-parse_signature_source">show</a>
+                
+              </p>
+              <div id="method-i-parse_signature_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/dl/lib/dl/cparser.rb, line 38</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">parse_signature</span>(<span class="ruby-identifier">signature</span>, <span class="ruby-identifier">tymap</span>=<span class="ruby-keyword">nil</span>)
+  <span class="ruby-identifier">tymap</span> <span class="ruby-operator">||=</span> {}
+  <span class="ruby-identifier">signature</span> = <span class="ruby-identifier">signature</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">%r\s+/</span>, <span class="ruby-string">&quot; &quot;</span>).<span class="ruby-identifier">strip</span>
+  <span class="ruby-keyword">case</span> <span class="ruby-identifier">signature</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-regexp">%r^([\w@\*\s]+)\(([\w\*\s\,\[\]]*)\)$/</span>
+    <span class="ruby-identifier">ret</span> = <span class="ruby-node">$1</span>
+    (<span class="ruby-identifier">args</span> = <span class="ruby-node">$2</span>).<span class="ruby-identifier">strip!</span>
+    <span class="ruby-identifier">ret</span> = <span class="ruby-identifier">ret</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp">%r\s+/</span>)
+    <span class="ruby-identifier">args</span> = <span class="ruby-identifier">args</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp">%r\s*,\s*/</span>)
+    <span class="ruby-identifier">func</span> = <span class="ruby-identifier">ret</span>.<span class="ruby-identifier">pop</span>
+    <span class="ruby-keyword">if</span>( <span class="ruby-identifier">func</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp">%r^\*/</span> )
+      <span class="ruby-identifier">func</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp">%r^\*+/</span>,<span class="ruby-string">&quot;&quot;</span>)
+      <span class="ruby-identifier">ret</span>.<span class="ruby-identifier">push</span>(<span class="ruby-string">&quot;*&quot;</span>)
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">ret</span>  = <span class="ruby-identifier">ret</span>.<span class="ruby-identifier">join</span>(<span class="ruby-string">&quot; &quot;</span>)
+    <span class="ruby-keyword">return</span> [<span class="ruby-identifier">func</span>, <span class="ruby-identifier">parse_ctype</span>(<span class="ruby-identifier">ret</span>, <span class="ruby-identifier">tymap</span>), <span class="ruby-identifier">args</span>.<span class="ruby-identifier">collect</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">arg</span><span class="ruby-operator">|</span> <span class="ruby-identifier">parse_ctype</span>(<span class="ruby-identifier">arg</span>, <span class="ruby-identifier">tymap</span>)}]
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">raise</span>(<span class="ruby-constant">RuntimeError</span>,<span class="ruby-node">&quot;can't parse the function prototype: #{signature}&quot;</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-parse_struct_signature">
+            
+              <a name="method-i-parse_struct_signature"></a><b>parse_struct_signature</b>(signature, tymap=nil)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-parse_struct_signature_source')" id="l_method-i-parse_struct_signature_source">show</a>
+                
+              </p>
+              <div id="method-i-parse_struct_signature_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/dl/lib/dl/cparser.rb, line 3</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">parse_struct_signature</span>(<span class="ruby-identifier">signature</span>, <span class="ruby-identifier">tymap</span>=<span class="ruby-keyword">nil</span>)
+  <span class="ruby-keyword">if</span>( <span class="ruby-identifier">signature</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">String</span>) )
+    <span class="ruby-identifier">signature</span> = <span class="ruby-identifier">signature</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp">%r\s*,\s*/</span>)
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">mems</span> = []
+  <span class="ruby-identifier">tys</span>  = []
+  <span class="ruby-identifier">signature</span>.<span class="ruby-identifier">each</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">msig</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">tks</span> = <span class="ruby-identifier">msig</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp">%r\s+(\*)?/</span>)
+    <span class="ruby-identifier">ty</span> = <span class="ruby-identifier">tks</span>[<span class="ruby-number">0</span><span class="ruby-operator">..</span><span class="ruby-number">-2</span>].<span class="ruby-identifier">join</span>(<span class="ruby-string">&quot; &quot;</span>)
+    <span class="ruby-identifier">member</span> = <span class="ruby-identifier">tks</span>[<span class="ruby-number">-1</span>]
+
+    <span class="ruby-keyword">case</span> <span class="ruby-identifier">ty</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-regexp">%r\[(\d+)\]/</span>
+      <span class="ruby-identifier">n</span> = <span class="ruby-node">$1</span>.<span class="ruby-identifier">to_i</span>
+      <span class="ruby-identifier">ty</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp">%r\s*\[\d+\]/</span>,<span class="ruby-string">&quot;&quot;</span>)
+      <span class="ruby-identifier">ty</span> = [<span class="ruby-identifier">ty</span>, <span class="ruby-identifier">n</span>]
+    <span class="ruby-keyword">when</span> <span class="ruby-regexp">%r\[\]/</span>
+      <span class="ruby-identifier">ty</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp">%r\s*\[\]/</span>, <span class="ruby-string">&quot;*&quot;</span>)
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-keyword">case</span> <span class="ruby-identifier">member</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-regexp">%r\[(\d+)\]/</span>
+      <span class="ruby-identifier">ty</span> = [<span class="ruby-identifier">ty</span>, <span class="ruby-node">$1</span>.<span class="ruby-identifier">to_i</span>]
+      <span class="ruby-identifier">member</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp">%r\s*\[\d+\]/</span>,<span class="ruby-string">&quot;&quot;</span>)
+    <span class="ruby-keyword">when</span> <span class="ruby-regexp">%r\[\]/</span>
+      <span class="ruby-identifier">ty</span> = <span class="ruby-identifier">ty</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;*&quot;</span>
+      <span class="ruby-identifier">member</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp">%r\s*\[\]/</span>, <span class="ruby-string">&quot;&quot;</span>)
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-identifier">mems</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">member</span>)
+    <span class="ruby-identifier">tys</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">parse_ctype</span>(<span class="ruby-identifier">ty</span>,<span class="ruby-identifier">tymap</span>))
+  }
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">tys</span>, <span class="ruby-identifier">mems</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    

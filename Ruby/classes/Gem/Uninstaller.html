@@ -1,0 +1,756 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Gem::Uninstaller</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            Gem::Uninstaller 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/Users/fschumac/_rvm/src/ruby-1_9_3-p0/lib/rubygems/uninstaller_rb.html">/Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/rubygems/uninstaller.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>An <a href="Uninstaller.html">Uninstaller</a>.</p>
+
+<p>The uninstaller fires pre and post uninstall hooks.  Hooks can be added
+either through a rubygems_plugin.rb file in an installed gem or via a
+rubygems/defaults/#{RUBY_ENGINE}.rb or
+rubygems/defaults/operating_system.rb file.  See <a
+href="../Gem.html#method-c-pre_uninstall">Gem.pre_uninstall</a> and <a
+href="../Gem.html#method-c-post_uninstall">Gem.post_uninstall</a> for
+details.</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>A</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-ask_if_ok">ask_if_ok</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>D</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-dependencies_ok-3F">dependencies_ok?</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>F</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-formatted_program_filename">formatted_program_filename</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>P</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-path_ok-3F">path_ok?</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>R</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-remove">remove</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-remove_all">remove_all</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-remove_executables">remove_executables</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>U</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-uninstall">uninstall</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-uninstall_gem">uninstall_gem</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+    <!-- Includes -->
+    <div class="sectiontitle">Included Modules</div>
+    <ul>
+      
+        <li>
+          
+            <a href="UserInteraction.html">
+              Gem::UserInteraction
+            </a>
+          
+        </li>
+      
+    </ul>
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+      <!-- Section attributes -->
+      <div class="sectiontitle">Attributes</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [R]
+            </td>
+            <td class='attr-name'>bin_dir</td>
+            <td class='attr-desc'><p>The directory a gem’s executables will be installed into</p></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [R]
+            </td>
+            <td class='attr-name'>gem_home</td>
+            <td class='attr-desc'><p>The gem repository the gem will be installed into</p></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [R]
+            </td>
+            <td class='attr-name'>spec</td>
+            <td class='attr-desc'><p>The <a href="Specification.html">Gem::Specification</a> for the gem being
+uninstalled, only set during <a
+href="Uninstaller.html#method-i-uninstall_gem">uninstall_gem</a></p></td>
+          </tr>
+        
+      </table>
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <a name="method-c-new"></a><b>new</b>(gem, options = {})
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Constructs an uninstaller that will uninstall <code>gem</code></p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/rubygems/uninstaller.rb, line 44</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">initialize</span>(<span class="ruby-identifier">gem</span>, <span class="ruby-identifier">options</span> = {})
+  <span class="ruby-ivar">@gem</span>               = <span class="ruby-identifier">gem</span>
+  <span class="ruby-ivar">@version</span>           = <span class="ruby-identifier">options</span>[<span class="ruby-value">:version</span>] <span class="ruby-operator">||</span> <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Requirement</span>.<span class="ruby-identifier">default</span>
+  <span class="ruby-ivar">@gem_home</span>          = <span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span>(<span class="ruby-identifier">options</span>[<span class="ruby-value">:install_dir</span>] <span class="ruby-operator">||</span> <span class="ruby-constant">Gem</span>.<span class="ruby-identifier">dir</span>)
+  <span class="ruby-ivar">@force_executables</span> = <span class="ruby-identifier">options</span>[<span class="ruby-value">:executables</span>]
+  <span class="ruby-ivar">@force_all</span>         = <span class="ruby-identifier">options</span>[<span class="ruby-value">:all</span>]
+  <span class="ruby-ivar">@force_ignore</span>      = <span class="ruby-identifier">options</span>[<span class="ruby-value">:ignore</span>]
+  <span class="ruby-ivar">@bin_dir</span>           = <span class="ruby-identifier">options</span>[<span class="ruby-value">:bin_dir</span>]
+  <span class="ruby-ivar">@format_executable</span> = <span class="ruby-identifier">options</span>[<span class="ruby-value">:format_executable</span>]
+
+  <span class="ruby-comment"># only add user directory if install_dir is not set</span>
+  <span class="ruby-ivar">@user_install</span> = <span class="ruby-keyword">false</span>
+  <span class="ruby-ivar">@user_install</span> = <span class="ruby-identifier">options</span>[<span class="ruby-value">:user_install</span>] <span class="ruby-keyword">unless</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:install_dir</span>]
+
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@user_install</span> <span class="ruby-keyword">then</span>
+    <span class="ruby-constant">Gem</span>.<span class="ruby-identifier">use_paths</span> <span class="ruby-constant">Gem</span>.<span class="ruby-identifier">user_dir</span>, <span class="ruby-ivar">@gem_home</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-constant">Gem</span>.<span class="ruby-identifier">use_paths</span> <span class="ruby-ivar">@gem_home</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-ask_if_ok">
+            
+              <a name="method-i-ask_if_ok"></a><b>ask_if_ok</b>(spec)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-ask_if_ok_source')" id="l_method-i-ask_if_ok_source">show</a>
+                
+              </p>
+              <div id="method-i-ask_if_ok_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/rubygems/uninstaller.rb, line 247</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">ask_if_ok</span>(<span class="ruby-identifier">spec</span>)
+  <span class="ruby-identifier">msg</span> = [<span class="ruby-string">''</span>]
+  <span class="ruby-identifier">msg</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">'You have requested to uninstall the gem:'</span>
+  <span class="ruby-identifier">msg</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;\t#{spec.full_name}&quot;</span>
+
+  <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">dependent_gems</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">dep_spec</span>, <span class="ruby-identifier">dep</span>, <span class="ruby-identifier">satlist</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">msg</span> <span class="ruby-operator">&lt;&lt;</span>
+      (<span class="ruby-node">&quot;#{dep_spec.name}-#{dep_spec.version} depends on &quot;</span> <span class="ruby-operator">+</span>
+       <span class="ruby-node">&quot;[#{dep.name} (#{dep.requirement})]&quot;</span>)
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">msg</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">'If you remove this gems, one or more dependencies will not be met.'</span>
+  <span class="ruby-identifier">msg</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">'Continue with Uninstall?'</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">ask_yes_no</span>(<span class="ruby-identifier">msg</span>.<span class="ruby-identifier">join</span>(<span class="ruby-string">&quot;\n&quot;</span>), <span class="ruby-keyword">true</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-dependencies_ok-3F">
+            
+              <a name="method-i-dependencies_ok-3F"></a><b>dependencies_ok?</b>(spec)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-dependencies_ok-3F_source')" id="l_method-i-dependencies_ok-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-dependencies_ok-3F_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/rubygems/uninstaller.rb, line 240</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">dependencies_ok?</span>(<span class="ruby-identifier">spec</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@force_ignore</span>
+
+  <span class="ruby-identifier">deplist</span> = <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">DependencyList</span>.<span class="ruby-identifier">from_specs</span>
+  <span class="ruby-identifier">deplist</span>.<span class="ruby-identifier">ok_to_remove?</span>(<span class="ruby-identifier">spec</span>.<span class="ruby-identifier">full_name</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-formatted_program_filename">
+            
+              <a name="method-i-formatted_program_filename"></a><b>formatted_program_filename</b>(filename)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-formatted_program_filename_source')" id="l_method-i-formatted_program_filename_source">show</a>
+                
+              </p>
+              <div id="method-i-formatted_program_filename_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/rubygems/uninstaller.rb, line 263</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">formatted_program_filename</span>(<span class="ruby-identifier">filename</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@format_executable</span> <span class="ruby-keyword">then</span>
+    <span class="ruby-identifier">require</span> <span class="ruby-string">'rubygems/installer'</span>
+    <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Installer</span>.<span class="ruby-identifier">exec_format</span> <span class="ruby-operator">%</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">filename</span>)
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">filename</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-path_ok-3F">
+            
+              <a name="method-i-path_ok-3F"></a><b>path_ok?</b>(gem_dir, spec)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Is <code>spec</code> in <code>gem_dir</code>?</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-path_ok-3F_source')" id="l_method-i-path_ok-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-path_ok-3F_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/rubygems/uninstaller.rb, line 233</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">path_ok?</span>(<span class="ruby-identifier">gem_dir</span>, <span class="ruby-identifier">spec</span>)
+  <span class="ruby-identifier">full_path</span>     = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span> <span class="ruby-identifier">gem_dir</span>, <span class="ruby-string">'gems'</span>, <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">full_name</span>
+  <span class="ruby-identifier">original_path</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span> <span class="ruby-identifier">gem_dir</span>, <span class="ruby-string">'gems'</span>, <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">original_name</span>
+
+  <span class="ruby-identifier">full_path</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">full_gem_path</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">original_path</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">full_gem_path</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-remove">
+            
+              <a name="method-i-remove"></a><b>remove</b>(spec)
+            
+          </div>
+          
+          
+            <div class="description">
+              <dl class="rdoc-list note-list"><dt>spec
+<dd>
+<p>the spec of the gem to be uninstalled</p>
+</dd><dt>list
+<dd>
+<p>the list of all such gems</p>
+</dd></dl>
+
+<p>Warning: this method modifies the <code>list</code> parameter.  Once it has
+uninstalled a gem, it is removed from that list.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-remove_source')" id="l_method-i-remove_source">show</a>
+                
+              </p>
+              <div id="method-i-remove_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/rubygems/uninstaller.rb, line 189</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">remove</span>(<span class="ruby-identifier">spec</span>)
+  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">path_ok?</span>(<span class="ruby-ivar">@gem_home</span>, <span class="ruby-identifier">spec</span>) <span class="ruby-keyword">or</span>
+         (<span class="ruby-ivar">@user_install</span> <span class="ruby-keyword">and</span> <span class="ruby-identifier">path_ok?</span>(<span class="ruby-constant">Gem</span>.<span class="ruby-identifier">user_dir</span>, <span class="ruby-identifier">spec</span>)) <span class="ruby-keyword">then</span>
+    <span class="ruby-identifier">e</span> = <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">GemNotInHomeException</span>.<span class="ruby-identifier">new</span>              <span class="ruby-node">&quot;Gem is not installed in directory #{@gem_home}&quot;</span>
+    <span class="ruby-identifier">e</span>.<span class="ruby-identifier">spec</span> = <span class="ruby-identifier">spec</span>
+
+    <span class="ruby-identifier">raise</span> <span class="ruby-identifier">e</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">FilePermissionError</span>, <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">base_dir</span> <span class="ruby-keyword">unless</span>
+    <span class="ruby-constant">File</span>.<span class="ruby-identifier">writable?</span>(<span class="ruby-identifier">spec</span>.<span class="ruby-identifier">base_dir</span>)
+
+  <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">rm_rf</span> <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">full_gem_path</span>
+
+  <span class="ruby-comment"># TODO: should this be moved to spec?... I vote eww (also exists in docmgr)</span>
+  <span class="ruby-identifier">old_platform_name</span> = [<span class="ruby-identifier">spec</span>.<span class="ruby-identifier">name</span>,
+                       <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">version</span>,
+                       <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">original_platform</span>].<span class="ruby-identifier">join</span> <span class="ruby-string">'-'</span>
+
+  <span class="ruby-identifier">gemspec</span> = <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">spec_file</span>
+
+  <span class="ruby-keyword">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span> <span class="ruby-identifier">gemspec</span> <span class="ruby-keyword">then</span>
+    <span class="ruby-identifier">gemspec</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-identifier">gemspec</span>), <span class="ruby-node">&quot;#{old_platform_name}.gemspec&quot;</span>)
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">rm_rf</span> <span class="ruby-identifier">gemspec</span>
+
+  <span class="ruby-identifier">gem</span> = <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">cache_file</span>
+  <span class="ruby-identifier">gem</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">spec</span>.<span class="ruby-identifier">cache_dir</span>, <span class="ruby-node">&quot;#{old_platform_name}.gem&quot;</span>) <span class="ruby-keyword">unless</span>
+    <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span> <span class="ruby-identifier">gem</span>
+
+  <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">rm_rf</span> <span class="ruby-identifier">gem</span>
+
+  <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">DocManager</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">spec</span>).<span class="ruby-identifier">uninstall_doc</span>
+
+  <span class="ruby-identifier">say</span> <span class="ruby-node">&quot;Successfully uninstalled #{spec.full_name}&quot;</span>
+
+  <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Specification</span>.<span class="ruby-identifier">remove_spec</span> <span class="ruby-identifier">spec</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-remove_all">
+            
+              <a name="method-i-remove_all"></a><b>remove_all</b>(list)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Removes all gems in <code>list</code>.</p>
+
+<p>NOTE: removes uninstalled gems from <code>list</code>.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-remove_all_source')" id="l_method-i-remove_all_source">show</a>
+                
+              </p>
+              <div id="method-i-remove_all_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/rubygems/uninstaller.rb, line 178</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">remove_all</span>(<span class="ruby-identifier">list</span>)
+  <span class="ruby-identifier">list</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">spec</span><span class="ruby-operator">|</span> <span class="ruby-identifier">uninstall_gem</span> <span class="ruby-identifier">spec</span> }
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-remove_executables">
+            
+              <a name="method-i-remove_executables"></a><b>remove_executables</b>(spec)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Removes installed executables and batch files (windows only) for
+<code>gemspec</code>.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-remove_executables_source')" id="l_method-i-remove_executables_source">show</a>
+                
+              </p>
+              <div id="method-i-remove_executables_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/rubygems/uninstaller.rb, line 127</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">remove_executables</span>(<span class="ruby-identifier">spec</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword">or</span> <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">executables</span>.<span class="ruby-identifier">empty?</span>
+
+  <span class="ruby-identifier">list</span> = <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Specification</span>.<span class="ruby-identifier">find_all</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">s</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">s</span>.<span class="ruby-identifier">version</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">version</span>
+  }
+
+  <span class="ruby-identifier">executables</span> = <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">executables</span>.<span class="ruby-identifier">clone</span>
+
+  <span class="ruby-identifier">list</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">s</span>.<span class="ruby-identifier">executables</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">exe_name</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">executables</span>.<span class="ruby-identifier">delete</span> <span class="ruby-identifier">exe_name</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">executables</span>.<span class="ruby-identifier">empty?</span>
+
+  <span class="ruby-identifier">executables</span> = <span class="ruby-identifier">executables</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">exec</span><span class="ruby-operator">|</span> <span class="ruby-identifier">formatted_program_filename</span> <span class="ruby-identifier">exec</span> }
+
+  <span class="ruby-identifier">remove</span> = <span class="ruby-keyword">if</span> <span class="ruby-ivar">@force_executables</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword">then</span>
+             <span class="ruby-identifier">ask_yes_no</span>(<span class="ruby-string">&quot;Remove executables:\n&quot;</span>                            <span class="ruby-node">&quot;\t#{executables.join ', '}\n\n&quot;</span>                            <span class="ruby-string">&quot;in addition to the gem?&quot;</span>,
+                        <span class="ruby-keyword">true</span>)
+           <span class="ruby-keyword">else</span>
+             <span class="ruby-ivar">@force_executables</span>
+           <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">remove</span> <span class="ruby-keyword">then</span>
+    <span class="ruby-identifier">say</span> <span class="ruby-string">&quot;Executables and scripts will remain installed.&quot;</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">bin_dir</span> = <span class="ruby-ivar">@bin_dir</span> <span class="ruby-operator">||</span> <span class="ruby-constant">Gem</span>.<span class="ruby-identifier">bindir</span>(<span class="ruby-identifier">spec</span>.<span class="ruby-identifier">base_dir</span>)
+
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">FilePermissionError</span>, <span class="ruby-identifier">bin_dir</span> <span class="ruby-keyword">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">writable?</span> <span class="ruby-identifier">bin_dir</span>
+
+    <span class="ruby-identifier">executables</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">exe_name</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">say</span> <span class="ruby-node">&quot;Removing #{exe_name}&quot;</span>
+
+      <span class="ruby-identifier">exe_file</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span> <span class="ruby-identifier">bin_dir</span>, <span class="ruby-identifier">exe_name</span>
+
+      <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">rm_f</span> <span class="ruby-identifier">exe_file</span>
+      <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">rm_f</span> <span class="ruby-node">&quot;#{exe_file}.bat&quot;</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-uninstall">
+            
+              <a name="method-i-uninstall"></a><b>uninstall</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Performs the uninstall of the gem.  This removes the spec, the <a
+href="../Gem.html">Gem</a> directory, and the cached .gem file.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-uninstall_source')" id="l_method-i-uninstall_source">show</a>
+                
+              </p>
+              <div id="method-i-uninstall_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/rubygems/uninstaller.rb, line 69</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">uninstall</span>
+  <span class="ruby-identifier">list</span> = <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Specification</span>.<span class="ruby-identifier">find_all_by_name</span>(<span class="ruby-ivar">@gem</span>, <span class="ruby-ivar">@version</span>)
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">list</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-keyword">then</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">InstallError</span>, <span class="ruby-node">&quot;gem #{@gem.inspect} is not installed&quot;</span>
+
+  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">list</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-number">1</span> <span class="ruby-keyword">and</span> <span class="ruby-ivar">@force_all</span> <span class="ruby-keyword">then</span>
+    <span class="ruby-identifier">remove_all</span> <span class="ruby-identifier">list</span>
+
+  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">list</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-number">1</span> <span class="ruby-keyword">then</span>
+    <span class="ruby-identifier">gem_names</span> = <span class="ruby-identifier">list</span>.<span class="ruby-identifier">collect</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">gem</span><span class="ruby-operator">|</span> <span class="ruby-identifier">gem</span>.<span class="ruby-identifier">full_name</span>} <span class="ruby-operator">+</span> [<span class="ruby-string">&quot;All versions&quot;</span>]
+
+    <span class="ruby-identifier">say</span>
+    <span class="ruby-identifier">_</span>, <span class="ruby-identifier">index</span> = <span class="ruby-identifier">choose_from_list</span> <span class="ruby-string">&quot;Select gem to uninstall:&quot;</span>, <span class="ruby-identifier">gem_names</span>
+
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">index</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">list</span>.<span class="ruby-identifier">size</span> <span class="ruby-keyword">then</span>
+      <span class="ruby-identifier">remove_all</span> <span class="ruby-identifier">list</span>
+    <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">index</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-number">0</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">index</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">list</span>.<span class="ruby-identifier">size</span> <span class="ruby-keyword">then</span>
+      <span class="ruby-identifier">uninstall_gem</span> <span class="ruby-identifier">list</span>[<span class="ruby-identifier">index</span>]
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">say</span> <span class="ruby-node">&quot;Error: must enter a number [1-#{list.size+1}]&quot;</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">uninstall_gem</span> <span class="ruby-identifier">list</span>.<span class="ruby-identifier">first</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-uninstall_gem">
+            
+              <a name="method-i-uninstall_gem"></a><b>uninstall_gem</b>(spec)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Uninstalls gem <code>spec</code></p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-uninstall_gem_source')" id="l_method-i-uninstall_gem_source">show</a>
+                
+              </p>
+              <div id="method-i-uninstall_gem_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/rubygems/uninstaller.rb, line 99</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">uninstall_gem</span>(<span class="ruby-identifier">spec</span>)
+  <span class="ruby-ivar">@spec</span> = <span class="ruby-identifier">spec</span>
+
+  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">dependencies_ok?</span> <span class="ruby-identifier">spec</span>
+    <span class="ruby-keyword">unless</span> <span class="ruby-identifier">ask_if_ok</span>(<span class="ruby-identifier">spec</span>)
+      <span class="ruby-identifier">raise</span> <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">DependencyRemovalException</span>,
+        <span class="ruby-string">&quot;Uninstallation aborted due to dependent gem(s)&quot;</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-constant">Gem</span>.<span class="ruby-identifier">pre_uninstall_hooks</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">hook</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">hook</span>.<span class="ruby-identifier">call</span> <span class="ruby-keyword">self</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">remove_executables</span> <span class="ruby-ivar">@spec</span>
+  <span class="ruby-identifier">remove</span> <span class="ruby-ivar">@spec</span>
+
+  <span class="ruby-constant">Gem</span>.<span class="ruby-identifier">post_uninstall_hooks</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">hook</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">hook</span>.<span class="ruby-identifier">call</span> <span class="ruby-keyword">self</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-ivar">@spec</span> = <span class="ruby-keyword">nil</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    

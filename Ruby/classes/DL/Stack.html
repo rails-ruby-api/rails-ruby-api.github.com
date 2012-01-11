@@ -1,0 +1,441 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>DL::Stack</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            DL::Stack 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/Users/fschumac/_rvm/src/ruby-1_9_3-p0/ext/dl/lib/dl/stack_rb.html">/Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/dl/lib/dl/stack.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>#</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-5B-5D">[]</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>P</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-pack">pack</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>S</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-size">size</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-types">types</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>U</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-unpack">unpack</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+      <!-- Section constants -->
+      <div class="sectiontitle">Constants</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class="attr-name">ALIGN_MAP</td>
+            <td>=</td>
+            <td class="attr-value">{
+TYPE_VOIDP =&gt; ALIGN_VOIDP,
+TYPE_CHAR  =&gt; ALIGN_VOIDP,
+TYPE_SHORT =&gt; ALIGN_VOIDP,
+TYPE_INT   =&gt; ALIGN_VOIDP,
+TYPE_LONG  =&gt; ALIGN_VOIDP,
+TYPE_FLOAT =&gt; ALIGN_FLOAT,
+TYPE_DOUBLE =&gt; ALIGN_DOUBLE,
+}</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">PACK_MAP</td>
+            <td>=</td>
+            <td class="attr-value">{
+TYPE_VOIDP =&gt; ((SIZEOF_VOIDP == SIZEOF_LONG_LONG)? &quot;q&quot; : &quot;l!&quot;),
+TYPE_CHAR  =&gt; &quot;c&quot;,
+TYPE_SHORT =&gt; &quot;s!&quot;,
+TYPE_INT   =&gt; &quot;i!&quot;,
+TYPE_LONG  =&gt; &quot;l!&quot;,
+TYPE_FLOAT =&gt; &quot;f&quot;,
+TYPE_DOUBLE =&gt; &quot;d&quot;,
+}</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">SIZE_MAP</td>
+            <td>=</td>
+            <td class="attr-value">{
+TYPE_VOIDP =&gt; SIZEOF_VOIDP,
+TYPE_CHAR  =&gt; SIZEOF_CHAR,
+TYPE_SHORT =&gt; SIZEOF_SHORT,
+TYPE_INT   =&gt; SIZEOF_INT,
+TYPE_LONG  =&gt; SIZEOF_LONG,
+TYPE_FLOAT =&gt; SIZEOF_FLOAT,
+TYPE_DOUBLE =&gt; SIZEOF_DOUBLE,
+}</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+      </table>
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-5B-5D">
+            
+              <a name="method-c-5B-5D"></a><b>[]</b>(*types)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-5B-5D_source')" id="l_method-c-5B-5D_source">show</a>
+                
+              </p>
+              <div id="method-c-5B-5D_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/dl/lib/dl/stack.rb, line 5</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">self</span>.<span class="ruby-operator">[]</span>(*<span class="ruby-identifier">types</span>)
+  <span class="ruby-identifier">new</span>(<span class="ruby-identifier">types</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <a name="method-c-new"></a><b>new</b>(types)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/dl/lib/dl/stack.rb, line 9</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">initialize</span>(<span class="ruby-identifier">types</span>)
+  <span class="ruby-identifier">parse_types</span>(<span class="ruby-identifier">types</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-pack">
+            
+              <a name="method-i-pack"></a><b>pack</b>(ary)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-pack_source')" id="l_method-i-pack_source">show</a>
+                
+              </p>
+              <div id="method-i-pack_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/dl/lib/dl/stack.rb, line 21</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">pack</span>(<span class="ruby-identifier">ary</span>)
+  <span class="ruby-keyword">case</span> <span class="ruby-constant">SIZEOF_VOIDP</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-constant">SIZEOF_LONG</span>
+    <span class="ruby-identifier">ary</span>.<span class="ruby-identifier">pack</span>(<span class="ruby-ivar">@template</span>).<span class="ruby-identifier">unpack</span>(<span class="ruby-string">'l!*'</span>)
+  <span class="ruby-keyword">when</span> <span class="ruby-constant">SIZEOF_LONG_LONG</span>
+    <span class="ruby-identifier">ary</span>.<span class="ruby-identifier">pack</span>(<span class="ruby-ivar">@template</span>).<span class="ruby-identifier">unpack</span>(<span class="ruby-string">'q*'</span>)
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">raise</span>(<span class="ruby-constant">RuntimeError</span>, <span class="ruby-string">&quot;sizeof(void*)?&quot;</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-size">
+            
+              <a name="method-i-size"></a><b>size</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-size_source')" id="l_method-i-size_source">show</a>
+                
+              </p>
+              <div id="method-i-size_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/dl/lib/dl/stack.rb, line 13</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">size</span>()
+  <span class="ruby-ivar">@size</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-types">
+            
+              <a name="method-i-types"></a><b>types</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-types_source')" id="l_method-i-types_source">show</a>
+                
+              </p>
+              <div id="method-i-types_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/dl/lib/dl/stack.rb, line 17</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">types</span>()
+  <span class="ruby-ivar">@types</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-unpack">
+            
+              <a name="method-i-unpack"></a><b>unpack</b>(ary)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-unpack_source')" id="l_method-i-unpack_source">show</a>
+                
+              </p>
+              <div id="method-i-unpack_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/dl/lib/dl/stack.rb, line 32</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">unpack</span>(<span class="ruby-identifier">ary</span>)
+  <span class="ruby-keyword">case</span> <span class="ruby-constant">SIZEOF_VOIDP</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-constant">SIZEOF_LONG</span>
+    <span class="ruby-identifier">ary</span>.<span class="ruby-identifier">pack</span>(<span class="ruby-string">'l!*'</span>).<span class="ruby-identifier">unpack</span>(<span class="ruby-ivar">@template</span>)
+  <span class="ruby-keyword">when</span> <span class="ruby-constant">SIZEOF_LONG_LONG</span>
+    <span class="ruby-identifier">ary</span>.<span class="ruby-identifier">pack</span>(<span class="ruby-string">'q*'</span>).<span class="ruby-identifier">unpack</span>(<span class="ruby-ivar">@template</span>)
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">raise</span>(<span class="ruby-constant">RuntimeError</span>, <span class="ruby-string">&quot;sizeof(void*)?&quot;</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    

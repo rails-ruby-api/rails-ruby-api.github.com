@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Resolv::Hosts</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            Resolv::Hosts 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/Users/fschumac/_rvm/src/ruby-1_9_3-p0/lib/resolv_rb.html">/Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/resolv.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p><a href="Hosts.html">Resolv::Hosts</a> is a hostname resolver that uses the
+system hosts file.</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>E</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-each_address">each_address</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-each_name">each_name</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>G</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-getaddress">getaddress</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-getaddresses">getaddresses</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-getname">getname</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-getnames">getnames</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+      <!-- Section constants -->
+      <div class="sectiontitle">Constants</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class="attr-name">DefaultFileName</td>
+            <td>=</td>
+            <td class="attr-value">Win32::Resolv.get_hosts_path</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+      </table>
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <a name="method-c-new"></a><b>new</b>(filename = DefaultFileName)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Creates a new <a href="Hosts.html">Resolv::Hosts</a>, using
+<code>filename</code> for its data source.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/resolv.rb, line 178</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">initialize</span>(<span class="ruby-identifier">filename</span> = <span class="ruby-constant">DefaultFileName</span>)
+  <span class="ruby-ivar">@filename</span> = <span class="ruby-identifier">filename</span>
+  <span class="ruby-ivar">@mutex</span> = <span class="ruby-constant">Mutex</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-ivar">@initialized</span> = <span class="ruby-keyword">nil</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-each_address">
+            
+              <a name="method-i-each_address"></a><b>each_address</b>(name, &amp;proc)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Iterates over all IP addresses for <code>name</code> retrieved from the
+hosts file.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-each_address_source')" id="l_method-i-each_address_source">show</a>
+                
+              </p>
+              <div id="method-i-each_address_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/resolv.rb, line 235</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">each_address</span>(<span class="ruby-identifier">name</span>, &amp;<span class="ruby-identifier">proc</span>)
+  <span class="ruby-identifier">lazy_initialize</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@name2addr</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">name</span>)
+    <span class="ruby-ivar">@name2addr</span>[<span class="ruby-identifier">name</span>].<span class="ruby-identifier">each</span>(&amp;<span class="ruby-identifier">proc</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-each_name">
+            
+              <a name="method-i-each_name"></a><b>each_name</b>(address, &amp;proc)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Iterates over all hostnames for <code>address</code> retrieved from the
+hosts file.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-each_name_source')" id="l_method-i-each_name_source">show</a>
+                
+              </p>
+              <div id="method-i-each_name_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/resolv.rb, line 262</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">each_name</span>(<span class="ruby-identifier">address</span>, &amp;<span class="ruby-identifier">proc</span>)
+  <span class="ruby-identifier">lazy_initialize</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@addr2name</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">address</span>)
+    <span class="ruby-ivar">@addr2name</span>[<span class="ruby-identifier">address</span>].<span class="ruby-identifier">each</span>(&amp;<span class="ruby-identifier">proc</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-getaddress">
+            
+              <a name="method-i-getaddress"></a><b>getaddress</b>(name)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Gets the IP address of <code>name</code> from the hosts file.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-getaddress_source')" id="l_method-i-getaddress_source">show</a>
+                
+              </p>
+              <div id="method-i-getaddress_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/resolv.rb, line 218</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">getaddress</span>(<span class="ruby-identifier">name</span>)
+  <span class="ruby-identifier">each_address</span>(<span class="ruby-identifier">name</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">address</span><span class="ruby-operator">|</span> <span class="ruby-keyword">return</span> <span class="ruby-identifier">address</span>}
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">ResolvError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;#{@filename} has no name: #{name}&quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-getaddresses">
+            
+              <a name="method-i-getaddresses"></a><b>getaddresses</b>(name)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Gets all IP addresses for <code>name</code> from the hosts file.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-getaddresses_source')" id="l_method-i-getaddresses_source">show</a>
+                
+              </p>
+              <div id="method-i-getaddresses_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/resolv.rb, line 226</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">getaddresses</span>(<span class="ruby-identifier">name</span>)
+  <span class="ruby-identifier">ret</span> = []
+  <span class="ruby-identifier">each_address</span>(<span class="ruby-identifier">name</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">address</span><span class="ruby-operator">|</span> <span class="ruby-identifier">ret</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">address</span>}
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">ret</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-getname">
+            
+              <a name="method-i-getname"></a><b>getname</b>(address)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Gets the hostname of <code>address</code> from the hosts file.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-getname_source')" id="l_method-i-getname_source">show</a>
+                
+              </p>
+              <div id="method-i-getname_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/resolv.rb, line 245</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">getname</span>(<span class="ruby-identifier">address</span>)
+  <span class="ruby-identifier">each_name</span>(<span class="ruby-identifier">address</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">name</span><span class="ruby-operator">|</span> <span class="ruby-keyword">return</span> <span class="ruby-identifier">name</span>}
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">ResolvError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;#{@filename} has no address: #{address}&quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-getnames">
+            
+              <a name="method-i-getnames"></a><b>getnames</b>(address)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Gets all hostnames for <code>address</code> from the hosts file.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-getnames_source')" id="l_method-i-getnames_source">show</a>
+                
+              </p>
+              <div id="method-i-getnames_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/resolv.rb, line 253</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">getnames</span>(<span class="ruby-identifier">address</span>)
+  <span class="ruby-identifier">ret</span> = []
+  <span class="ruby-identifier">each_name</span>(<span class="ruby-identifier">address</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">name</span><span class="ruby-operator">|</span> <span class="ruby-identifier">ret</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">name</span>}
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">ret</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    

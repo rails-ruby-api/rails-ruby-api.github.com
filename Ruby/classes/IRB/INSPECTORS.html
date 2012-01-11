@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>IRB::INSPECTORS</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Module</span> 
+            IRB::INSPECTORS 
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/Users/fschumac/_rvm/src/ruby-1_9_3-p0/lib/irb/inspector_rb.html">/Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/irb/inspector.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>D</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-def_inspector">def_inspector</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>K</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-keys_with_inspector">keys_with_inspector</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-def_inspector">
+            
+              <a name="method-c-def_inspector"></a><b>def_inspector</b>(key, arg=nil, &amp;block)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>ex) <a
+href="INSPECTORS.html#method-c-def_inspector">::def_inspector</a>(key,
+init_p=nil){|v| v.inspect} <a
+href="INSPECTORS.html#method-c-def_inspector">::def_inspector</a>,
+init_p=nil){|v| v.inspect} <a
+href="INSPECTORS.html#method-c-def_inspector">::def_inspector</a>(key,
+inspector) <a
+href="INSPECTORS.html#method-c-def_inspector">::def_inspector</a>,
+inspector)</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-def_inspector_source')" id="l_method-c-def_inspector_source">show</a>
+                
+              </p>
+              <div id="method-c-def_inspector_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/irb/inspector.rb, line 46</span>
+  <span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">INSPECTORS</span>.<span class="ruby-identifier">def_inspector</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">arg</span>=<span class="ruby-keyword">nil</span>, &amp;<span class="ruby-identifier">block</span>)
+<span class="ruby-comment">#     if !block_given?</span>
+<span class="ruby-comment">#       case arg</span>
+<span class="ruby-comment">#       when nil, Proc</span>
+<span class="ruby-comment">#       inspector = IRB::Inspector(init_p)</span>
+<span class="ruby-comment">#       when Inspector</span>
+<span class="ruby-comment">#       inspector = init_p</span>
+<span class="ruby-comment">#       else</span>
+<span class="ruby-comment">#       IRB.Raise IllegalParameter, init_p</span>
+<span class="ruby-comment">#       end</span>
+<span class="ruby-comment">#       init_p = nil</span>
+<span class="ruby-comment">#     else</span>
+<span class="ruby-comment">#       inspector = IRB::Inspector(block, init_p)</span>
+<span class="ruby-comment">#     end</span>
+
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">block_given?</span>
+      <span class="ruby-identifier">inspector</span> = <span class="ruby-constant">IRB</span><span class="ruby-operator">::</span><span class="ruby-constant">Inspector</span>(<span class="ruby-identifier">block</span>, <span class="ruby-identifier">arg</span>)
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">inspector</span> = <span class="ruby-identifier">arg</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-keyword">case</span> <span class="ruby-identifier">key</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-constant">Array</span>
+      <span class="ruby-keyword">for</span> <span class="ruby-identifier">k</span> <span class="ruby-keyword">in</span> <span class="ruby-identifier">key</span>
+        <span class="ruby-identifier">def_inspector</span>(<span class="ruby-identifier">k</span>, <span class="ruby-identifier">inspector</span>)
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-constant">Symbol</span>
+      <span class="ruby-keyword">self</span>[<span class="ruby-identifier">key</span>] = <span class="ruby-identifier">inspector</span>
+      <span class="ruby-keyword">self</span>[<span class="ruby-identifier">key</span>.<span class="ruby-identifier">to_s</span>] = <span class="ruby-identifier">inspector</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-constant">String</span>
+      <span class="ruby-keyword">self</span>[<span class="ruby-identifier">key</span>] = <span class="ruby-identifier">inspector</span>
+      <span class="ruby-keyword">self</span>[<span class="ruby-identifier">key</span>.<span class="ruby-identifier">intern</span>] = <span class="ruby-identifier">inspector</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-keyword">self</span>[<span class="ruby-identifier">key</span>] = <span class="ruby-identifier">inspector</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-keys_with_inspector">
+            
+              <a name="method-c-keys_with_inspector"></a><b>keys_with_inspector</b>(inspector)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-keys_with_inspector_source')" id="l_method-c-keys_with_inspector_source">show</a>
+                
+              </p>
+              <div id="method-c-keys_with_inspector_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/irb/inspector.rb, line 36</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">INSPECTORS</span>.<span class="ruby-identifier">keys_with_inspector</span>(<span class="ruby-identifier">inspector</span>)
+  <span class="ruby-identifier">select</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">k</span>,<span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">v</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">inspector</span>}.<span class="ruby-identifier">collect</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">k</span>}
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                        </div>
+    </div>
+  </body>
+</html>    

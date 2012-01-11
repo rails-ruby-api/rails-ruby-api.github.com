@@ -1,0 +1,2455 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>DBM</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/github.css" type="text/css" media="screen" />
+<script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            DBM 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../files/Users/fschumac/_rvm/src/ruby-1_9_3-p0/ext/dbm/dbm_c.html">/Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/dbm/dbm.c</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>Documented by mathew meta@pobox.com.</p>
+
+<h1 id="label-Introduction">Introduction</h1>
+
+<p>The <a href="DBM.html">DBM</a> class provides a wrapper to a Unix-style <a
+href="http://en.wikipedia.org/wiki/Dbm">dbm</a> or Database Manager
+library.</p>
+
+<p>Dbm databases do not have tables or columns; they are simple key-value data
+stores, like a Ruby <a href="Hash.html">Hash</a> except not resident in
+RAM. Keys and values must be strings.</p>
+
+<p>The exact library used depends on how Ruby was compiled. It could be any of
+the following:</p>
+<ul><li>
+<p><a href="http://en.wikipedia.org/wiki/Berkeley_DB">Berkeley DB</a> versions
+1 thru 5, also known as BDB and Sleepycat DB, now owned by Oracle
+Corporation.</p>
+</li><li>
+<p>ndbm, aka Berkeley DB 1.x, still found in FreeBSD and OpenBSD.</p>
+</li><li>
+<p><a href="http://www.gnu.org/software/gdbm/">gdbm</a>, the GNU
+implementation of dbm.</p>
+</li><li>
+<p><a href="http://fallabs.com/qdbm/index.html">qdbm</a>, another open source
+reimplementation of dbm.</p>
+</li></ul>
+
+<p>All of these dbm implementations have their own Ruby interfaces available,
+which provide richer (but varying) APIs.</p>
+
+<h1 id="label-Cautions">Cautions</h1>
+
+<p>Before you decide to use <a href="DBM.html">DBM</a>, there are some issues
+you should consider:</p>
+<ul><li>
+<p>Each implementation of dbm has its own file format. Generally, dbm
+libraries will not read each other’s files. This makes dbm files a bad
+choice for data exchange.</p>
+</li><li>
+<p>Even running the same OS and the same dbm implementation, the database file
+format may depend on the CPU architecture. For example, files may not be
+portable between PowerPC and 386, or between 32 and 64 bit Linux.</p>
+</li><li>
+<p>Different versions of Berkeley DB use different file formats. A change to
+the OS may therefore break <a href="DBM.html">DBM</a> access to existing
+files.</p>
+</li><li>
+<p><a href="Data.html">Data</a> size limits vary between implementations.
+Original Berkeley DB was limited to 2GB of data. Dbm libraries also
+sometimes limit the total size of a key/value pair, and the total size of
+all the keys that hash to the same value. These limits can be as little as
+512 bytes. That said, gdbm and recent versions of Berkeley DB do away with
+these limits.</p>
+</li></ul>
+
+<p>Given the above cautions, <a href="DBM.html">DBM</a> is not a good choice
+for long term storage of important data. It is probably best used as a fast
+and easy alternative to a <a href="Hash.html">Hash</a> for processing large
+amounts of data.</p>
+
+<h1 id="label-Example">Example</h1>
+
+<pre class="ruby"><span class="ruby-identifier">require</span> <span class="ruby-string">'dbm'</span>
+<span class="ruby-identifier">db</span> = <span class="ruby-constant">DBM</span>.<span class="ruby-identifier">open</span>(<span class="ruby-string">'rfcs'</span>, <span class="ruby-value">666</span>, <span class="ruby-constant">DBM</span><span class="ruby-operator">::</span><span class="ruby-constant">CREATRW</span>)
+<span class="ruby-identifier">db</span>[<span class="ruby-string">'822'</span>] = <span class="ruby-string">'Standard for the Format of ARPA Internet Text Messages'</span>
+<span class="ruby-identifier">db</span>[<span class="ruby-string">'1123'</span>] = <span class="ruby-string">'Requirements for Internet Hosts - Application and Support'</span>
+<span class="ruby-identifier">db</span>[<span class="ruby-string">'3068'</span>] = <span class="ruby-string">'An Anycast Prefix for 6to4 Relay Routers'</span>
+<span class="ruby-identifier">puts</span> <span class="ruby-identifier">db</span>[<span class="ruby-string">'822'</span>]
+</pre>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>#</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-5B-5D">[]</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-5B-5D-3D">[]=</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>C</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-clear">clear</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-close">close</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-closed-3F">closed?</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>D</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-delete">delete</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-delete_if">delete_if</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>E</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-each">each</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-each_key">each_key</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-each_pair">each_pair</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-each_value">each_value</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-empty-3F">empty?</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>F</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-fetch">fetch</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>H</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-has_key-3F">has_key?</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-has_value-3F">has_value?</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>I</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-include-3F">include?</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-invert">invert</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>K</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-key">key</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-key-3F">key?</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-keys">keys</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>L</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-length">length</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>M</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-member-3F">member?</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>O</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-open">open</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>R</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-reject">reject</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-reject-21">reject!</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-replace">replace</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>S</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-select">select</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-shift">shift</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-size">size</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-store">store</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-to_a">to_a</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-to_hash">to_hash</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>U</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-update">update</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>V</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-value-3F">value?</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-values">values</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-values_at">values_at</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+    <!-- Includes -->
+    <div class="sectiontitle">Included Modules</div>
+    <ul>
+      
+        <li>
+          
+            <a href="Enumerable.html">
+              Enumerable
+            </a>
+          
+        </li>
+      
+    </ul>
+  
+
+
+
+  
+
+    
+
+    
+
+    
+      <!-- Section constants -->
+      <div class="sectiontitle">Constants</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class="attr-name">READER</td>
+            <td>=</td>
+            <td class="attr-value">INT2FIX(O_RDONLY|RUBY_DBM_RW_BIT)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Indicates that dbm_open() should open the database in read-only mode</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">WRITER</td>
+            <td>=</td>
+            <td class="attr-value">INT2FIX(O_RDWR|RUBY_DBM_RW_BIT)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Indicates that dbm_open() should open the database in read/write mode</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">WRCREAT</td>
+            <td>=</td>
+            <td class="attr-value">INT2FIX(O_RDWR|O_CREAT|RUBY_DBM_RW_BIT)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Indicates that dbm_open() should open the database in read/write mode, and
+create it if it does not already exist</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">NEWDB</td>
+            <td>=</td>
+            <td class="attr-value">INT2FIX(O_RDWR|O_CREAT|O_TRUNC|RUBY_DBM_RW_BIT)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Indicates that dbm_open() should open the database in read/write mode,
+create it if it does not already exist, and delete all contents if it does
+already exist.</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">VERSION</td>
+            <td>=</td>
+            <td class="attr-value">rb_str_new2(DB_VERSION_STRING)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>The version of the dbm library, if using Berkeley DB</p></td>
+            </tr>
+          
+        
+      </table>
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <a name="method-c-new"></a><b>DBM.new(filename[, mode[, flags]]) &rarr; dbm
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Open a dbm database with the specified name, which can include a directory
+path. Any file extensions needed will be supplied automatically by the dbm
+library. For example, Berkeley DB appends ‘.db’, and GNU gdbm uses two
+physical files with extensions ‘.dir’ and ‘.pag’.</p>
+
+<p>The mode should be an integer, as for Unix chmod.</p>
+
+<p>Flags should be one of <a href="DBM.html#READER">READER</a>, <a
+href="DBM.html#WRITER">WRITER</a>, <a href="DBM.html#WRCREAT">WRCREAT</a>
+or <a href="DBM.html#NEWDB">NEWDB</a>.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre>static VALUE
+fdbm_initialize(int argc, VALUE *argv, VALUE obj)
+{
+    volatile VALUE file;
+    VALUE vmode, vflags;
+    DBM *dbm;
+    struct dbmdata *dbmp;
+    int mode, flags = 0;
+
+    if (rb_scan_args(argc, argv, &quot;12&quot;, &amp;file, &amp;vmode, &amp;vflags) == 1) {
+        mode = 0666;           /* default value */
+    }
+    else if (NIL_P(vmode)) {
+        mode = -1;             /* return nil if DB not exist */
+    }
+    else {
+        mode = NUM2INT(vmode);
+    }
+
+    if (!NIL_P(vflags))
+        flags = NUM2INT(vflags);
+
+    FilePathValue(file);
+
+    if (flags &amp; RUBY_DBM_RW_BIT) {
+        flags &amp;= ~RUBY_DBM_RW_BIT;
+        dbm = dbm_open(RSTRING_PTR(file), flags, mode);
+    }
+    else {
+        dbm = 0;
+        if (mode &gt;= 0) {
+            dbm = dbm_open(RSTRING_PTR(file), O_RDWR|O_CREAT, mode);
+        }
+        if (!dbm) {
+            dbm = dbm_open(RSTRING_PTR(file), O_RDWR, 0);
+        }
+        if (!dbm) {
+            dbm = dbm_open(RSTRING_PTR(file), O_RDONLY, 0);
+        }
+    }
+
+    if (!dbm) {
+        if (mode == -1) return Qnil;
+        rb_sys_fail(RSTRING_PTR(file));
+    }
+
+    dbmp = ALLOC(struct dbmdata);
+    DATA_PTR(obj) = dbmp;
+    dbmp-&gt;di_dbm = dbm;
+    dbmp-&gt;di_size = -1;
+
+    return obj;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-open">
+            
+              <a name="method-c-open"></a><b>DBM.open(filename[, mode[, flags]]) &rarr; dbm
+DBM.open(filename[, mode[, flags]]) {|dbm| block}
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Open a dbm database and yields it if a block is given. See also
+<code>DBM.new</code>.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-open_source')" id="l_method-c-open_source">show</a>
+                
+              </p>
+              <div id="method-c-open_source" class="dyn-source">
+                <pre>static VALUE
+fdbm_s_open(int argc, VALUE *argv, VALUE klass)
+{
+    VALUE obj = Data_Wrap_Struct(klass, 0, free_dbm, 0);
+
+    if (NIL_P(fdbm_initialize(argc, argv, obj))) {
+        return Qnil;
+    }
+
+    if (rb_block_given_p()) {
+        return rb_ensure(rb_yield, obj, fdbm_close, obj);
+    }
+
+    return obj;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-5B-5D">
+            
+              <a name="method-i-5B-5D"></a><b>dbm[key] &rarr; string value or nil
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Return a value from the database by locating the key string provided.  If
+the key is not found, returns nil.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-5B-5D_source')" id="l_method-i-5B-5D_source">show</a>
+                
+              </p>
+              <div id="method-i-5B-5D_source" class="dyn-source">
+                <pre>static VALUE
+fdbm_aref(VALUE obj, VALUE keystr)
+{
+    return fdbm_fetch(obj, keystr, Qnil);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-5B-5D-3D">
+            
+              <a name="method-i-5B-5D-3D"></a><b>dbm.store(key, value) &rarr; value
+dbm[key] = value
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Stores the specified string value in the database, indexed via the string
+key provided.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-5B-5D-3D_source')" id="l_method-i-5B-5D-3D_source">show</a>
+                
+              </p>
+              <div id="method-i-5B-5D-3D_source" class="dyn-source">
+                <pre>static VALUE
+fdbm_store(VALUE obj, VALUE keystr, VALUE valstr)
+{
+    datum key, val;
+    struct dbmdata *dbmp;
+    DBM *dbm;
+
+    fdbm_modify(obj);
+    keystr = rb_obj_as_string(keystr);
+    valstr = rb_obj_as_string(valstr);
+
+    key.dptr = RSTRING_PTR(keystr);
+    key.dsize = (int)RSTRING_LEN(keystr);
+
+    val.dptr = RSTRING_PTR(valstr);
+    val.dsize = (int)RSTRING_LEN(valstr);
+
+    GetDBM2(obj, dbmp, dbm);
+    dbmp-&gt;di_size = -1;
+    if (dbm_store(dbm, key, val, DBM_REPLACE)) {
+#ifdef HAVE_DBM_CLEARERR
+        dbm_clearerr(dbm);
+#endif
+        if (errno == EPERM) rb_sys_fail(0);
+        rb_raise(rb_eDBMError, &quot;dbm_store failed&quot;);
+    }
+
+    return valstr;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-clear">
+            
+              <a name="method-i-clear"></a><b>dbm.clear
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Deletes all data from the database.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-clear_source')" id="l_method-i-clear_source">show</a>
+                
+              </p>
+              <div id="method-i-clear_source" class="dyn-source">
+                <pre>static VALUE
+fdbm_clear(VALUE obj)
+{
+    datum key;
+    struct dbmdata *dbmp;
+    DBM *dbm;
+
+    fdbm_modify(obj);
+    GetDBM2(obj, dbmp, dbm);
+    dbmp-&gt;di_size = -1;
+    while (key = dbm_firstkey(dbm), key.dptr) {
+        if (dbm_delete(dbm, key)) {
+            rb_raise(rb_eDBMError, &quot;dbm_delete failed&quot;);
+        }
+    }
+    dbmp-&gt;di_size = 0;
+
+    return obj;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-close">
+            
+              <a name="method-i-close"></a><b>dbm.close
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Closes the database.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-close_source')" id="l_method-i-close_source">show</a>
+                
+              </p>
+              <div id="method-i-close_source" class="dyn-source">
+                <pre>static VALUE
+fdbm_close(VALUE obj)
+{
+    struct dbmdata *dbmp;
+
+    GetDBM(obj, dbmp);
+    dbm_close(dbmp-&gt;di_dbm);
+    dbmp-&gt;di_dbm = 0;
+
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-closed-3F">
+            
+              <a name="method-i-closed-3F"></a><b>dbm.closed? &rarr; true or false
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns true if the database is closed, false otherwise.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-closed-3F_source')" id="l_method-i-closed-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-closed-3F_source" class="dyn-source">
+                <pre>static VALUE
+fdbm_closed(VALUE obj)
+{
+    struct dbmdata *dbmp;
+
+    Data_Get_Struct(obj, struct dbmdata, dbmp);
+    if (dbmp == 0)
+        return Qtrue;
+    if (dbmp-&gt;di_dbm == 0)
+        return Qtrue;
+
+    return Qfalse;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-delete">
+            
+              <a name="method-i-delete"></a><b>dbm.delete(key)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Deletes an entry from the database.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-delete_source')" id="l_method-i-delete_source">show</a>
+                
+              </p>
+              <div id="method-i-delete_source" class="dyn-source">
+                <pre>static VALUE
+fdbm_delete(VALUE obj, VALUE keystr)
+{
+    datum key, value;
+    struct dbmdata *dbmp;
+    DBM *dbm;
+    VALUE valstr;
+
+    fdbm_modify(obj);
+    ExportStringValue(keystr);
+    key.dptr = RSTRING_PTR(keystr);
+    key.dsize = (int)RSTRING_LEN(keystr);
+
+    GetDBM2(obj, dbmp, dbm);
+
+    value = dbm_fetch(dbm, key);
+    if (value.dptr == 0) {
+        if (rb_block_given_p()) return rb_yield(keystr);
+        return Qnil;
+    }
+
+    /* need to save value before dbm_delete() */
+    valstr = rb_tainted_str_new(value.dptr, value.dsize);
+
+    if (dbm_delete(dbm, key)) {
+        dbmp-&gt;di_size = -1;
+        rb_raise(rb_eDBMError, &quot;dbm_delete failed&quot;);
+    }
+    else if (dbmp-&gt;di_size &gt;= 0) {
+        dbmp-&gt;di_size--;
+    }
+    return valstr;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-delete_if">
+            
+              <a name="method-i-delete_if"></a><b>dbm.reject! {|key, value| block} &rarr; self
+dbm.delete_if {|key, value| block} &rarr; self
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Deletes all entries for which the code block returns true. Returns self.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-delete_if_source')" id="l_method-i-delete_if_source">show</a>
+                
+              </p>
+              <div id="method-i-delete_if_source" class="dyn-source">
+                <pre>static VALUE
+fdbm_delete_if(VALUE obj)
+{
+    datum key, val;
+    struct dbmdata *dbmp;
+    DBM *dbm;
+    VALUE keystr, valstr;
+    VALUE ret, ary = rb_ary_new();
+    int i, status = 0;
+    long n;
+
+    fdbm_modify(obj);
+    GetDBM2(obj, dbmp, dbm);
+    n = dbmp-&gt;di_size;
+    dbmp-&gt;di_size = -1;
+
+    for (key = dbm_firstkey(dbm); key.dptr; key = dbm_nextkey(dbm)) {
+        val = dbm_fetch(dbm, key);
+        keystr = rb_tainted_str_new(key.dptr, key.dsize);
+        valstr = rb_tainted_str_new(val.dptr, val.dsize);
+        ret = rb_protect(rb_yield, rb_assoc_new(rb_str_dup(keystr), valstr), &amp;status);
+        if (status != 0) break;
+        if (RTEST(ret)) rb_ary_push(ary, keystr);
+        GetDBM2(obj, dbmp, dbm);
+    }
+
+    for (i = 0; i &lt; RARRAY_LEN(ary); i++) {
+        keystr = RARRAY_PTR(ary)[i];
+        ExportStringValue(keystr);
+        key.dptr = RSTRING_PTR(keystr);
+        key.dsize = (int)RSTRING_LEN(keystr);
+        if (dbm_delete(dbm, key)) {
+            rb_raise(rb_eDBMError, &quot;dbm_delete failed&quot;);
+        }
+    }
+    if (status) rb_jump_tag(status);
+    if (n &gt; 0) dbmp-&gt;di_size = n - RARRAY_LEN(ary);
+
+    return obj;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-each">
+            
+              <a name="method-i-each"></a><b>dbm.each_pair {|key,value| block} &rarr; self
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Calls the block once for each [key, value] pair in the database. Returns
+self.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-each_source')" id="l_method-i-each_source">show</a>
+                
+              </p>
+              <div id="method-i-each_source" class="dyn-source">
+                <pre>static VALUE
+fdbm_each_pair(VALUE obj)
+{
+    datum key, val;
+    DBM *dbm;
+    struct dbmdata *dbmp;
+    VALUE keystr, valstr;
+
+    RETURN_ENUMERATOR(obj, 0, 0);
+
+    GetDBM2(obj, dbmp, dbm);
+
+    for (key = dbm_firstkey(dbm); key.dptr; key = dbm_nextkey(dbm)) {
+        val = dbm_fetch(dbm, key);
+        keystr = rb_tainted_str_new(key.dptr, key.dsize);
+        valstr = rb_tainted_str_new(val.dptr, val.dsize);
+        rb_yield(rb_assoc_new(keystr, valstr));
+        GetDBM2(obj, dbmp, dbm);
+    }
+
+    return obj;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-each_key">
+            
+              <a name="method-i-each_key"></a><b>dbm.each_key {|key| block} &rarr; self
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Calls the block once for each key string in the database. Returns self.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-each_key_source')" id="l_method-i-each_key_source">show</a>
+                
+              </p>
+              <div id="method-i-each_key_source" class="dyn-source">
+                <pre>static VALUE
+fdbm_each_key(VALUE obj)
+{
+    datum key;
+    struct dbmdata *dbmp;
+    DBM *dbm;
+
+    RETURN_ENUMERATOR(obj, 0, 0);
+
+    GetDBM2(obj, dbmp, dbm);
+    for (key = dbm_firstkey(dbm); key.dptr; key = dbm_nextkey(dbm)) {
+        rb_yield(rb_tainted_str_new(key.dptr, key.dsize));
+        GetDBM2(obj, dbmp, dbm);
+    }
+    return obj;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-each_pair">
+            
+              <a name="method-i-each_pair"></a><b>dbm.each_pair {|key,value| block} &rarr; self
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Calls the block once for each [key, value] pair in the database. Returns
+self.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-each_pair_source')" id="l_method-i-each_pair_source">show</a>
+                
+              </p>
+              <div id="method-i-each_pair_source" class="dyn-source">
+                <pre>static VALUE
+fdbm_each_pair(VALUE obj)
+{
+    datum key, val;
+    DBM *dbm;
+    struct dbmdata *dbmp;
+    VALUE keystr, valstr;
+
+    RETURN_ENUMERATOR(obj, 0, 0);
+
+    GetDBM2(obj, dbmp, dbm);
+
+    for (key = dbm_firstkey(dbm); key.dptr; key = dbm_nextkey(dbm)) {
+        val = dbm_fetch(dbm, key);
+        keystr = rb_tainted_str_new(key.dptr, key.dsize);
+        valstr = rb_tainted_str_new(val.dptr, val.dsize);
+        rb_yield(rb_assoc_new(keystr, valstr));
+        GetDBM2(obj, dbmp, dbm);
+    }
+
+    return obj;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-each_value">
+            
+              <a name="method-i-each_value"></a><b>dbm.each_value {|value| block} &rarr; self
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Calls the block once for each value string in the database. Returns self.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-each_value_source')" id="l_method-i-each_value_source">show</a>
+                
+              </p>
+              <div id="method-i-each_value_source" class="dyn-source">
+                <pre>static VALUE
+fdbm_each_value(VALUE obj)
+{
+    datum key, val;
+    struct dbmdata *dbmp;
+    DBM *dbm;
+
+    RETURN_ENUMERATOR(obj, 0, 0);
+
+    GetDBM2(obj, dbmp, dbm);
+    for (key = dbm_firstkey(dbm); key.dptr; key = dbm_nextkey(dbm)) {
+        val = dbm_fetch(dbm, key);
+        rb_yield(rb_tainted_str_new(val.dptr, val.dsize));
+        GetDBM2(obj, dbmp, dbm);
+    }
+    return obj;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-empty-3F">
+            
+              <a name="method-i-empty-3F"></a><b>dbm.empty?
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns true if the database is empty, false otherwise.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-empty-3F_source')" id="l_method-i-empty-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-empty-3F_source" class="dyn-source">
+                <pre>static VALUE
+fdbm_empty_p(VALUE obj)
+{
+    datum key;
+    struct dbmdata *dbmp;
+    DBM *dbm;
+    int i = 0;
+
+    GetDBM2(obj, dbmp, dbm);
+    if (dbmp-&gt;di_size &lt; 0) {
+        dbm = dbmp-&gt;di_dbm;
+
+        for (key = dbm_firstkey(dbm); key.dptr; key = dbm_nextkey(dbm)) {
+            i++;
+        }
+    }
+    else {
+        i = (int)dbmp-&gt;di_size;
+    }
+    if (i == 0) return Qtrue;
+    return Qfalse;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-fetch">
+            
+              <a name="method-i-fetch"></a><b>dbm.fetch(key[, ifnone]) &rarr; value
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Return a value from the database by locating the key string provided.  If
+the key is not found, returns <code>ifnone</code>. If <code>ifnone</code>
+is not given, raises <a href="IndexError.html">IndexError</a>.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-fetch_source')" id="l_method-i-fetch_source">show</a>
+                
+              </p>
+              <div id="method-i-fetch_source" class="dyn-source">
+                <pre>static VALUE
+fdbm_fetch_m(int argc, VALUE *argv, VALUE obj)
+{
+    VALUE keystr, valstr, ifnone;
+
+    rb_scan_args(argc, argv, &quot;11&quot;, &amp;keystr, &amp;ifnone);
+    valstr = fdbm_fetch(obj, keystr, ifnone);
+    if (argc == 1 &amp;&amp; !rb_block_given_p() &amp;&amp; NIL_P(valstr))
+        rb_raise(rb_eIndexError, &quot;key not found&quot;);
+
+    return valstr;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-has_key-3F">
+            
+              <a name="method-i-has_key-3F"></a><b>dbm.has_key?(key) &rarr; boolean
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns true if the database contains the specified key, false otherwise.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-has_key-3F_source')" id="l_method-i-has_key-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-has_key-3F_source" class="dyn-source">
+                <pre>static VALUE
+fdbm_has_key(VALUE obj, VALUE keystr)
+{
+    datum key, val;
+    struct dbmdata *dbmp;
+    DBM *dbm;
+
+    ExportStringValue(keystr);
+    key.dptr = RSTRING_PTR(keystr);
+    key.dsize = (int)RSTRING_LEN(keystr);
+
+    GetDBM2(obj, dbmp, dbm);
+    val = dbm_fetch(dbm, key);
+    if (val.dptr) return Qtrue;
+    return Qfalse;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-has_value-3F">
+            
+              <a name="method-i-has_value-3F"></a><b>dbm.has_value?(value) &rarr; boolean
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns true if the database contains the specified string value, false
+otherwise.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-has_value-3F_source')" id="l_method-i-has_value-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-has_value-3F_source" class="dyn-source">
+                <pre>static VALUE
+fdbm_has_value(VALUE obj, VALUE valstr)
+{
+    datum key, val;
+    struct dbmdata *dbmp;
+    DBM *dbm;
+
+    ExportStringValue(valstr);
+    val.dptr = RSTRING_PTR(valstr);
+    val.dsize = (int)RSTRING_LEN(valstr);
+
+    GetDBM2(obj, dbmp, dbm);
+    for (key = dbm_firstkey(dbm); key.dptr; key = dbm_nextkey(dbm)) {
+        val = dbm_fetch(dbm, key);
+        if (val.dsize == (int)RSTRING_LEN(valstr) &amp;&amp;
+            memcmp(val.dptr, RSTRING_PTR(valstr), val.dsize) == 0)
+            return Qtrue;
+    }
+    return Qfalse;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-include-3F">
+            
+              <a name="method-i-include-3F"></a><b>dbm.has_key?(key) &rarr; boolean
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns true if the database contains the specified key, false otherwise.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-include-3F_source')" id="l_method-i-include-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-include-3F_source" class="dyn-source">
+                <pre>static VALUE
+fdbm_has_key(VALUE obj, VALUE keystr)
+{
+    datum key, val;
+    struct dbmdata *dbmp;
+    DBM *dbm;
+
+    ExportStringValue(keystr);
+    key.dptr = RSTRING_PTR(keystr);
+    key.dsize = (int)RSTRING_LEN(keystr);
+
+    GetDBM2(obj, dbmp, dbm);
+    val = dbm_fetch(dbm, key);
+    if (val.dptr) return Qtrue;
+    return Qfalse;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-invert">
+            
+              <a name="method-i-invert"></a><b>dbm.invert &rarr; hash
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns a <a href="Hash.html">Hash</a> (not a <a href="DBM.html">DBM</a>
+database) created by using each value in the database as a key, with the
+corresponding key as its value.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-invert_source')" id="l_method-i-invert_source">show</a>
+                
+              </p>
+              <div id="method-i-invert_source" class="dyn-source">
+                <pre>static VALUE
+fdbm_invert(VALUE obj)
+{
+    datum key, val;
+    struct dbmdata *dbmp;
+    DBM *dbm;
+    VALUE keystr, valstr;
+    VALUE hash = rb_hash_new();
+
+    GetDBM2(obj, dbmp, dbm);
+    for (key = dbm_firstkey(dbm); key.dptr; key = dbm_nextkey(dbm)) {
+        val = dbm_fetch(dbm, key);
+        keystr = rb_tainted_str_new(key.dptr, key.dsize);
+        valstr = rb_tainted_str_new(val.dptr, val.dsize);
+        rb_hash_aset(hash, valstr, keystr);
+    }
+    return hash;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-key">
+            
+              <a name="method-i-key"></a><b>dbm.key(value) &rarr; string
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the key for the specified value.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-key_source')" id="l_method-i-key_source">show</a>
+                
+              </p>
+              <div id="method-i-key_source" class="dyn-source">
+                <pre>static VALUE
+fdbm_key(VALUE obj, VALUE valstr)
+{
+    datum key, val;
+    struct dbmdata *dbmp;
+    DBM *dbm;
+
+    ExportStringValue(valstr);
+    val.dptr = RSTRING_PTR(valstr);
+    val.dsize = (int)RSTRING_LEN(valstr);
+
+    GetDBM2(obj, dbmp, dbm);
+    for (key = dbm_firstkey(dbm); key.dptr; key = dbm_nextkey(dbm)) {
+        val = dbm_fetch(dbm, key);
+        if ((long)val.dsize == (int)RSTRING_LEN(valstr) &amp;&amp;
+            memcmp(val.dptr, RSTRING_PTR(valstr), val.dsize) == 0) {
+            return rb_tainted_str_new(key.dptr, key.dsize);
+        }
+    }
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-key-3F">
+            
+              <a name="method-i-key-3F"></a><b>dbm.has_key?(key) &rarr; boolean
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns true if the database contains the specified key, false otherwise.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-key-3F_source')" id="l_method-i-key-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-key-3F_source" class="dyn-source">
+                <pre>static VALUE
+fdbm_has_key(VALUE obj, VALUE keystr)
+{
+    datum key, val;
+    struct dbmdata *dbmp;
+    DBM *dbm;
+
+    ExportStringValue(keystr);
+    key.dptr = RSTRING_PTR(keystr);
+    key.dsize = (int)RSTRING_LEN(keystr);
+
+    GetDBM2(obj, dbmp, dbm);
+    val = dbm_fetch(dbm, key);
+    if (val.dptr) return Qtrue;
+    return Qfalse;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-keys">
+            
+              <a name="method-i-keys"></a><b>dbm.keys &rarr; array
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns an array of all the string keys in the database.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-keys_source')" id="l_method-i-keys_source">show</a>
+                
+              </p>
+              <div id="method-i-keys_source" class="dyn-source">
+                <pre>static VALUE
+fdbm_keys(VALUE obj)
+{
+    datum key;
+    struct dbmdata *dbmp;
+    DBM *dbm;
+    VALUE ary;
+
+    GetDBM2(obj, dbmp, dbm);
+
+    ary = rb_ary_new();
+    for (key = dbm_firstkey(dbm); key.dptr; key = dbm_nextkey(dbm)) {
+        rb_ary_push(ary, rb_tainted_str_new(key.dptr, key.dsize));
+    }
+
+    return ary;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-length">
+            
+              <a name="method-i-length"></a><b>dbm.length &rarr; integer
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the number of entries in the database.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-length_source')" id="l_method-i-length_source">show</a>
+                
+              </p>
+              <div id="method-i-length_source" class="dyn-source">
+                <pre>static VALUE
+fdbm_length(VALUE obj)
+{
+    datum key;
+    struct dbmdata *dbmp;
+    DBM *dbm;
+    int i = 0;
+
+    GetDBM2(obj, dbmp, dbm);
+    if (dbmp-&gt;di_size &gt; 0) return INT2FIX(dbmp-&gt;di_size);
+
+    for (key = dbm_firstkey(dbm); key.dptr; key = dbm_nextkey(dbm)) {
+        i++;
+    }
+    dbmp-&gt;di_size = i;
+
+    return INT2FIX(i);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-member-3F">
+            
+              <a name="method-i-member-3F"></a><b>dbm.has_key?(key) &rarr; boolean
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns true if the database contains the specified key, false otherwise.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-member-3F_source')" id="l_method-i-member-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-member-3F_source" class="dyn-source">
+                <pre>static VALUE
+fdbm_has_key(VALUE obj, VALUE keystr)
+{
+    datum key, val;
+    struct dbmdata *dbmp;
+    DBM *dbm;
+
+    ExportStringValue(keystr);
+    key.dptr = RSTRING_PTR(keystr);
+    key.dsize = (int)RSTRING_LEN(keystr);
+
+    GetDBM2(obj, dbmp, dbm);
+    val = dbm_fetch(dbm, key);
+    if (val.dptr) return Qtrue;
+    return Qfalse;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-reject">
+            
+              <a name="method-i-reject"></a><b>dbm.reject {|key,value| block} &rarr; Hash
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Converts the contents of the database to an in-memory <a
+href="Hash.html">Hash</a>, then calls <a
+href="Hash.html#method-i-reject">Hash#reject</a> with the specified code
+block, returning a new <a href="Hash.html">Hash</a>.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-reject_source')" id="l_method-i-reject_source">show</a>
+                
+              </p>
+              <div id="method-i-reject_source" class="dyn-source">
+                <pre>static VALUE
+fdbm_reject(VALUE obj)
+{
+    return rb_hash_delete_if(fdbm_to_hash(obj));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-reject-21">
+            
+              <a name="method-i-reject-21"></a><b>dbm.reject! {|key, value| block} &rarr; self
+dbm.delete_if {|key, value| block} &rarr; self
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Deletes all entries for which the code block returns true. Returns self.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-reject-21_source')" id="l_method-i-reject-21_source">show</a>
+                
+              </p>
+              <div id="method-i-reject-21_source" class="dyn-source">
+                <pre>static VALUE
+fdbm_delete_if(VALUE obj)
+{
+    datum key, val;
+    struct dbmdata *dbmp;
+    DBM *dbm;
+    VALUE keystr, valstr;
+    VALUE ret, ary = rb_ary_new();
+    int i, status = 0;
+    long n;
+
+    fdbm_modify(obj);
+    GetDBM2(obj, dbmp, dbm);
+    n = dbmp-&gt;di_size;
+    dbmp-&gt;di_size = -1;
+
+    for (key = dbm_firstkey(dbm); key.dptr; key = dbm_nextkey(dbm)) {
+        val = dbm_fetch(dbm, key);
+        keystr = rb_tainted_str_new(key.dptr, key.dsize);
+        valstr = rb_tainted_str_new(val.dptr, val.dsize);
+        ret = rb_protect(rb_yield, rb_assoc_new(rb_str_dup(keystr), valstr), &amp;status);
+        if (status != 0) break;
+        if (RTEST(ret)) rb_ary_push(ary, keystr);
+        GetDBM2(obj, dbmp, dbm);
+    }
+
+    for (i = 0; i &lt; RARRAY_LEN(ary); i++) {
+        keystr = RARRAY_PTR(ary)[i];
+        ExportStringValue(keystr);
+        key.dptr = RSTRING_PTR(keystr);
+        key.dsize = (int)RSTRING_LEN(keystr);
+        if (dbm_delete(dbm, key)) {
+            rb_raise(rb_eDBMError, &quot;dbm_delete failed&quot;);
+        }
+    }
+    if (status) rb_jump_tag(status);
+    if (n &gt; 0) dbmp-&gt;di_size = n - RARRAY_LEN(ary);
+
+    return obj;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-replace">
+            
+              <a name="method-i-replace"></a><b>dbm.replace(obj)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Replaces the contents of the database with the contents of the specified
+object. Takes any object which implements the <a
+href="DBM.html#method-i-each_pair">#each_pair</a> method, including <a
+href="Hash.html">Hash</a> and <a href="DBM.html">DBM</a> objects.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-replace_source')" id="l_method-i-replace_source">show</a>
+                
+              </p>
+              <div id="method-i-replace_source" class="dyn-source">
+                <pre>static VALUE
+fdbm_replace(VALUE obj, VALUE other)
+{
+    fdbm_clear(obj);
+    rb_block_call(other, rb_intern(&quot;each_pair&quot;), 0, 0, update_i, obj);
+    return obj;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-select">
+            
+              <a name="method-i-select"></a><b>dbm.select {|key, value| block} &rarr; array
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns a new array consisting of the [key, value] pairs for which the code
+block returns true.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-select_source')" id="l_method-i-select_source">show</a>
+                
+              </p>
+              <div id="method-i-select_source" class="dyn-source">
+                <pre>static VALUE
+fdbm_select(VALUE obj)
+{
+    VALUE new = rb_ary_new();
+    datum key, val;
+    DBM *dbm;
+    struct dbmdata *dbmp;
+
+    GetDBM2(obj, dbmp, dbm);
+    for (key = dbm_firstkey(dbm); key.dptr; key = dbm_nextkey(dbm)) {
+        VALUE assoc, v;
+        val = dbm_fetch(dbm, key);
+        assoc = rb_assoc_new(rb_tainted_str_new(key.dptr, key.dsize),
+                             rb_tainted_str_new(val.dptr, val.dsize));
+        v = rb_yield(assoc);
+        if (RTEST(v)) {
+            rb_ary_push(new, assoc);
+        }
+        GetDBM2(obj, dbmp, dbm);
+    }
+
+    return new;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-shift">
+            
+              <a name="method-i-shift"></a><b>dbm.shift() &rarr; [key, value]
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Removes a [key, value] pair from the database, and returns it. If the
+database is empty, returns nil. The order in which values are
+removed/returned is not guaranteed.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-shift_source')" id="l_method-i-shift_source">show</a>
+                
+              </p>
+              <div id="method-i-shift_source" class="dyn-source">
+                <pre>static VALUE
+fdbm_shift(VALUE obj)
+{
+    datum key, val;
+    struct dbmdata *dbmp;
+    DBM *dbm;
+    VALUE keystr, valstr;
+
+    fdbm_modify(obj);
+    GetDBM2(obj, dbmp, dbm);
+    dbmp-&gt;di_size = -1;
+
+    key = dbm_firstkey(dbm);
+    if (!key.dptr) return Qnil;
+    val = dbm_fetch(dbm, key);
+    keystr = rb_tainted_str_new(key.dptr, key.dsize);
+    valstr = rb_tainted_str_new(val.dptr, val.dsize);
+    dbm_delete(dbm, key);
+
+    return rb_assoc_new(keystr, valstr);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-size">
+            
+              <a name="method-i-size"></a><b>dbm.length &rarr; integer
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the number of entries in the database.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-size_source')" id="l_method-i-size_source">show</a>
+                
+              </p>
+              <div id="method-i-size_source" class="dyn-source">
+                <pre>static VALUE
+fdbm_length(VALUE obj)
+{
+    datum key;
+    struct dbmdata *dbmp;
+    DBM *dbm;
+    int i = 0;
+
+    GetDBM2(obj, dbmp, dbm);
+    if (dbmp-&gt;di_size &gt; 0) return INT2FIX(dbmp-&gt;di_size);
+
+    for (key = dbm_firstkey(dbm); key.dptr; key = dbm_nextkey(dbm)) {
+        i++;
+    }
+    dbmp-&gt;di_size = i;
+
+    return INT2FIX(i);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-store">
+            
+              <a name="method-i-store"></a><b>dbm.store(key, value) &rarr; value
+dbm[key] = value
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Stores the specified string value in the database, indexed via the string
+key provided.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-store_source')" id="l_method-i-store_source">show</a>
+                
+              </p>
+              <div id="method-i-store_source" class="dyn-source">
+                <pre>static VALUE
+fdbm_store(VALUE obj, VALUE keystr, VALUE valstr)
+{
+    datum key, val;
+    struct dbmdata *dbmp;
+    DBM *dbm;
+
+    fdbm_modify(obj);
+    keystr = rb_obj_as_string(keystr);
+    valstr = rb_obj_as_string(valstr);
+
+    key.dptr = RSTRING_PTR(keystr);
+    key.dsize = (int)RSTRING_LEN(keystr);
+
+    val.dptr = RSTRING_PTR(valstr);
+    val.dsize = (int)RSTRING_LEN(valstr);
+
+    GetDBM2(obj, dbmp, dbm);
+    dbmp-&gt;di_size = -1;
+    if (dbm_store(dbm, key, val, DBM_REPLACE)) {
+#ifdef HAVE_DBM_CLEARERR
+        dbm_clearerr(dbm);
+#endif
+        if (errno == EPERM) rb_sys_fail(0);
+        rb_raise(rb_eDBMError, &quot;dbm_store failed&quot;);
+    }
+
+    return valstr;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-to_a">
+            
+              <a name="method-i-to_a"></a><b>dbm.to_a &rarr; array
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Converts the contents of the database to an array of [key, value] arrays,
+and returns it.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-to_a_source')" id="l_method-i-to_a_source">show</a>
+                
+              </p>
+              <div id="method-i-to_a_source" class="dyn-source">
+                <pre>static VALUE
+fdbm_to_a(VALUE obj)
+{
+    datum key, val;
+    struct dbmdata *dbmp;
+    DBM *dbm;
+    VALUE ary;
+
+    GetDBM2(obj, dbmp, dbm);
+    ary = rb_ary_new();
+    for (key = dbm_firstkey(dbm); key.dptr; key = dbm_nextkey(dbm)) {
+        val = dbm_fetch(dbm, key);
+        rb_ary_push(ary, rb_assoc_new(rb_tainted_str_new(key.dptr, key.dsize),
+                                      rb_tainted_str_new(val.dptr, val.dsize)));
+    }
+
+    return ary;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-to_hash">
+            
+              <a name="method-i-to_hash"></a><b>dbm.to_hash &rarr; hash
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Converts the contents of the database to an in-memory <a
+href="Hash.html">Hash</a> object, and returns it.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-to_hash_source')" id="l_method-i-to_hash_source">show</a>
+                
+              </p>
+              <div id="method-i-to_hash_source" class="dyn-source">
+                <pre>static VALUE
+fdbm_to_hash(VALUE obj)
+{
+    datum key, val;
+    struct dbmdata *dbmp;
+    DBM *dbm;
+    VALUE hash;
+
+    GetDBM2(obj, dbmp, dbm);
+    hash = rb_hash_new();
+    for (key = dbm_firstkey(dbm); key.dptr; key = dbm_nextkey(dbm)) {
+        val = dbm_fetch(dbm, key);
+        rb_hash_aset(hash, rb_tainted_str_new(key.dptr, key.dsize),
+                           rb_tainted_str_new(val.dptr, val.dsize));
+    }
+
+    return hash;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-update">
+            
+              <a name="method-i-update"></a><b>dbm.update(obj)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Updates the database with multiple values from the specified object. Takes
+any object which implements the <a
+href="DBM.html#method-i-each_pair">#each_pair</a> method, including <a
+href="Hash.html">Hash</a> and <a href="DBM.html">DBM</a> objects.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-update_source')" id="l_method-i-update_source">show</a>
+                
+              </p>
+              <div id="method-i-update_source" class="dyn-source">
+                <pre>static VALUE
+fdbm_update(VALUE obj, VALUE other)
+{
+    rb_block_call(other, rb_intern(&quot;each_pair&quot;), 0, 0, update_i, obj);
+    return obj;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-value-3F">
+            
+              <a name="method-i-value-3F"></a><b>dbm.has_value?(value) &rarr; boolean
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns true if the database contains the specified string value, false
+otherwise.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-value-3F_source')" id="l_method-i-value-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-value-3F_source" class="dyn-source">
+                <pre>static VALUE
+fdbm_has_value(VALUE obj, VALUE valstr)
+{
+    datum key, val;
+    struct dbmdata *dbmp;
+    DBM *dbm;
+
+    ExportStringValue(valstr);
+    val.dptr = RSTRING_PTR(valstr);
+    val.dsize = (int)RSTRING_LEN(valstr);
+
+    GetDBM2(obj, dbmp, dbm);
+    for (key = dbm_firstkey(dbm); key.dptr; key = dbm_nextkey(dbm)) {
+        val = dbm_fetch(dbm, key);
+        if (val.dsize == (int)RSTRING_LEN(valstr) &amp;&amp;
+            memcmp(val.dptr, RSTRING_PTR(valstr), val.dsize) == 0)
+            return Qtrue;
+    }
+    return Qfalse;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-values">
+            
+              <a name="method-i-values"></a><b>dbm.values &rarr; array
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns an array of all the string values in the database.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-values_source')" id="l_method-i-values_source">show</a>
+                
+              </p>
+              <div id="method-i-values_source" class="dyn-source">
+                <pre>static VALUE
+fdbm_values(VALUE obj)
+{
+    datum key, val;
+    struct dbmdata *dbmp;
+    DBM *dbm;
+    VALUE ary;
+
+    GetDBM2(obj, dbmp, dbm);
+    ary = rb_ary_new();
+    for (key = dbm_firstkey(dbm); key.dptr; key = dbm_nextkey(dbm)) {
+        val = dbm_fetch(dbm, key);
+        rb_ary_push(ary, rb_tainted_str_new(val.dptr, val.dsize));
+    }
+
+    return ary;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-values_at">
+            
+              <a name="method-i-values_at"></a><b>dbm.values_at(key, ...) &rarr; Array
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns an array containing the values associated with the given keys.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-values_at_source')" id="l_method-i-values_at_source">show</a>
+                
+              </p>
+              <div id="method-i-values_at_source" class="dyn-source">
+                <pre>static VALUE
+fdbm_values_at(int argc, VALUE *argv, VALUE obj)
+{
+    VALUE new = rb_ary_new2(argc);
+    int i;
+
+    for (i=0; i&lt;argc; i++) {
+        rb_ary_push(new, fdbm_fetch(obj, argv[i], Qnil));
+    }
+
+    return new;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    

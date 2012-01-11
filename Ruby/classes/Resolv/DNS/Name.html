@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Resolv::DNS::Name</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/github.css" type="text/css" media="screen" />
+<script src="../../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            Resolv::DNS::Name 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../../Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../../files/Users/fschumac/_rvm/src/ruby-1_9_3-p0/lib/resolv_rb.html">/Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/resolv.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>A representation of a <a href="../DNS.html">DNS</a> name.</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>A</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-absolute-3F">absolute?</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>C</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-create">create</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>S</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-subdomain_of-3F">subdomain_of?</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-to_s">to_s</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-create">
+            
+              <a name="method-c-create"></a><b>create</b>(arg)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Creates a new <a href="../DNS.html">DNS</a> name from <code>arg</code>. 
+<code>arg</code> can be:</p>
+<dl class="rdoc-list note-list"><dt><a href="Name.html">Name</a>
+<dd>
+<p>returns <code>arg</code>.</p>
+</dd><dt>String
+<dd>
+<p>Creates a new <a href="Name.html">Name</a>.</p>
+</dd></dl>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-create_source')" id="l_method-c-create_source">show</a>
+                
+              </p>
+              <div id="method-c-create_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/resolv.rb, line 1137</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">self</span>.<span class="ruby-identifier">create</span>(<span class="ruby-identifier">arg</span>)
+  <span class="ruby-keyword">case</span> <span class="ruby-identifier">arg</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-constant">Name</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-identifier">arg</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-constant">String</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-constant">Name</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">Label</span>.<span class="ruby-identifier">split</span>(<span class="ruby-identifier">arg</span>), <span class="ruby-regexp">%r\.\z/</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">arg</span> <span class="ruby-operator">?</span> <span class="ruby-keyword">true</span> <span class="ruby-operator">:</span> <span class="ruby-keyword">false</span>)
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;cannot interpret as DNS name: #{arg.inspect}&quot;</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-absolute-3F">
+            
+              <a name="method-i-absolute-3F"></a><b>absolute?</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>True if this name is absolute.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-absolute-3F_source')" id="l_method-i-absolute-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-absolute-3F_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/resolv.rb, line 1160</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">absolute?</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-ivar">@absolute</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-subdomain_of-3F">
+            
+              <a name="method-i-subdomain_of-3F"></a><b>subdomain_of?</b>(other)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns true if <code>other</code> is a subdomain.</p>
+
+<p>Example:</p>
+
+<pre class="ruby"><span class="ruby-identifier">domain</span> = <span class="ruby-constant">Resolv</span><span class="ruby-operator">::</span><span class="ruby-constant">DNS</span><span class="ruby-operator">::</span><span class="ruby-constant">Name</span>.<span class="ruby-identifier">create</span>(<span class="ruby-string">&quot;y.z&quot;</span>)
+<span class="ruby-identifier">p</span> <span class="ruby-constant">Resolv</span><span class="ruby-operator">::</span><span class="ruby-constant">DNS</span><span class="ruby-operator">::</span><span class="ruby-constant">Name</span>.<span class="ruby-identifier">create</span>(<span class="ruby-string">&quot;w.x.y.z&quot;</span>).<span class="ruby-identifier">subdomain_of?</span>(<span class="ruby-identifier">domain</span>) <span class="ruby-comment">#=&gt; true</span>
+<span class="ruby-identifier">p</span> <span class="ruby-constant">Resolv</span><span class="ruby-operator">::</span><span class="ruby-constant">DNS</span><span class="ruby-operator">::</span><span class="ruby-constant">Name</span>.<span class="ruby-identifier">create</span>(<span class="ruby-string">&quot;x.y.z&quot;</span>).<span class="ruby-identifier">subdomain_of?</span>(<span class="ruby-identifier">domain</span>) <span class="ruby-comment">#=&gt; true</span>
+<span class="ruby-identifier">p</span> <span class="ruby-constant">Resolv</span><span class="ruby-operator">::</span><span class="ruby-constant">DNS</span><span class="ruby-operator">::</span><span class="ruby-constant">Name</span>.<span class="ruby-identifier">create</span>(<span class="ruby-string">&quot;y.z&quot;</span>).<span class="ruby-identifier">subdomain_of?</span>(<span class="ruby-identifier">domain</span>) <span class="ruby-comment">#=&gt; false</span>
+<span class="ruby-identifier">p</span> <span class="ruby-constant">Resolv</span><span class="ruby-operator">::</span><span class="ruby-constant">DNS</span><span class="ruby-operator">::</span><span class="ruby-constant">Name</span>.<span class="ruby-identifier">create</span>(<span class="ruby-string">&quot;z&quot;</span>).<span class="ruby-identifier">subdomain_of?</span>(<span class="ruby-identifier">domain</span>) <span class="ruby-comment">#=&gt; false</span>
+<span class="ruby-identifier">p</span> <span class="ruby-constant">Resolv</span><span class="ruby-operator">::</span><span class="ruby-constant">DNS</span><span class="ruby-operator">::</span><span class="ruby-constant">Name</span>.<span class="ruby-identifier">create</span>(<span class="ruby-string">&quot;x.y.z.&quot;</span>).<span class="ruby-identifier">subdomain_of?</span>(<span class="ruby-identifier">domain</span>) <span class="ruby-comment">#=&gt; false</span>
+<span class="ruby-identifier">p</span> <span class="ruby-constant">Resolv</span><span class="ruby-operator">::</span><span class="ruby-constant">DNS</span><span class="ruby-operator">::</span><span class="ruby-constant">Name</span>.<span class="ruby-identifier">create</span>(<span class="ruby-string">&quot;w.z&quot;</span>).<span class="ruby-identifier">subdomain_of?</span>(<span class="ruby-identifier">domain</span>) <span class="ruby-comment">#=&gt; false</span>
+</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-subdomain_of-3F_source')" id="l_method-i-subdomain_of-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-subdomain_of-3F_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/resolv.rb, line 1185</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">subdomain_of?</span>(<span class="ruby-identifier">other</span>)
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;not a domain name: #{other.inspect}&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-constant">Name</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">other</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@absolute</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">other</span>.<span class="ruby-identifier">absolute?</span>
+  <span class="ruby-identifier">other_len</span> = <span class="ruby-identifier">other</span>.<span class="ruby-identifier">length</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@labels</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">&lt;=</span> <span class="ruby-identifier">other_len</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-ivar">@labels</span>[<span class="ruby-operator">-</span><span class="ruby-identifier">other_len</span>, <span class="ruby-identifier">other_len</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">other</span>.<span class="ruby-identifier">to_a</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-to_s">
+            
+              <a name="method-i-to_s"></a><b>to_s</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>returns the domain name as a string.</p>
+
+<p>The domain name doesn’t have a trailing dot even if the name object is
+absolute.</p>
+
+<p>Example:</p>
+
+<pre class="ruby"><span class="ruby-identifier">p</span> <span class="ruby-constant">Resolv</span><span class="ruby-operator">::</span><span class="ruby-constant">DNS</span><span class="ruby-operator">::</span><span class="ruby-constant">Name</span>.<span class="ruby-identifier">create</span>(<span class="ruby-string">&quot;x.y.z.&quot;</span>).<span class="ruby-identifier">to_s</span> <span class="ruby-comment">#=&gt; &quot;x.y.z&quot;</span>
+<span class="ruby-identifier">p</span> <span class="ruby-constant">Resolv</span><span class="ruby-operator">::</span><span class="ruby-constant">DNS</span><span class="ruby-operator">::</span><span class="ruby-constant">Name</span>.<span class="ruby-identifier">create</span>(<span class="ruby-string">&quot;x.y.z&quot;</span>).<span class="ruby-identifier">to_s</span> <span class="ruby-comment">#=&gt; &quot;x.y.z&quot;</span>
+</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-to_s_source')" id="l_method-i-to_s_source">show</a>
+                
+              </p>
+              <div id="method-i-to_s_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/resolv.rb, line 1220</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">to_s</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-ivar">@labels</span>.<span class="ruby-identifier">join</span>(<span class="ruby-string">'.'</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    

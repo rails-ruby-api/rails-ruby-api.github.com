@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>InverseAssociationTests</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/github.css" type="text/css" media="screen" />
+<script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            InverseAssociationTests 
+            
+                <span class="parent">&lt; 
+                    
+                    ActiveRecord::TestCase
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../files/rails/activerecord/test/cases/associations/inverse_associations_test_rb.html">rails/activerecord/test/cases/associations/inverse_associations_test.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-test_associations_with_no_inverse_of_should_return_nil">test_associations_with_no_inverse_of_should_return_nil</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_inverse_of_method_should_supply_the_actual_reflection_instance_it_is_the_inverse_of">test_inverse_of_method_should_supply_the_actual_reflection_instance_it_is_the_inverse_of</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_should_allow_for_inverse_of_options_in_associations">test_should_allow_for_inverse_of_options_in_associations</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_should_be_able_to_ask_a_reflection_if_it_has_an_inverse">test_should_be_able_to_ask_a_reflection_if_it_has_an_inverse</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_should_be_able_to_ask_a_reflection_what_it_is_the_inverse_of">test_should_be_able_to_ask_a_reflection_what_it_is_the_inverse_of</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+        
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-test_associations_with_no_inverse_of_should_return_nil">
+            
+              <a name="method-i-test_associations_with_no_inverse_of_should_return_nil"></a><b>test_associations_with_no_inverse_of_should_return_nil</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_associations_with_no_inverse_of_should_return_nil_source')" id="l_method-i-test_associations_with_no_inverse_of_should_return_nil_source">show</a>
+                
+              </p>
+              <div id="method-i-test_associations_with_no_inverse_of_should_return_nil_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File rails/activerecord/test/cases/associations/inverse_associations_test.rb, line 72</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_associations_with_no_inverse_of_should_return_nil</span>
+  <span class="ruby-identifier">has_one_ref</span> = <span class="ruby-constant">Club</span>.<span class="ruby-identifier">reflect_on_association</span>(<span class="ruby-value">:sponsor</span>)
+  <span class="ruby-identifier">assert_nil</span> <span class="ruby-identifier">has_one_ref</span>.<span class="ruby-identifier">inverse_of</span>
+
+  <span class="ruby-identifier">has_many_ref</span> = <span class="ruby-constant">Club</span>.<span class="ruby-identifier">reflect_on_association</span>(<span class="ruby-value">:memberships</span>)
+  <span class="ruby-identifier">assert_nil</span> <span class="ruby-identifier">has_many_ref</span>.<span class="ruby-identifier">inverse_of</span>
+
+  <span class="ruby-identifier">belongs_to_ref</span> = <span class="ruby-constant">Sponsor</span>.<span class="ruby-identifier">reflect_on_association</span>(<span class="ruby-value">:sponsor_club</span>)
+  <span class="ruby-identifier">assert_nil</span> <span class="ruby-identifier">belongs_to_ref</span>.<span class="ruby-identifier">inverse_of</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_inverse_of_method_should_supply_the_actual_reflection_instance_it_is_the_inverse_of">
+            
+              <a name="method-i-test_inverse_of_method_should_supply_the_actual_reflection_instance_it_is_the_inverse_of"></a><b>test_inverse_of_method_should_supply_the_actual_reflection_instance_it_is_the_inverse_of</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_inverse_of_method_should_supply_the_actual_reflection_instance_it_is_the_inverse_of_source')" id="l_method-i-test_inverse_of_method_should_supply_the_actual_reflection_instance_it_is_the_inverse_of_source">show</a>
+                
+              </p>
+              <div id="method-i-test_inverse_of_method_should_supply_the_actual_reflection_instance_it_is_the_inverse_of_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File rails/activerecord/test/cases/associations/inverse_associations_test.rb, line 61</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_inverse_of_method_should_supply_the_actual_reflection_instance_it_is_the_inverse_of</span>
+  <span class="ruby-identifier">has_one_ref</span> = <span class="ruby-constant">Man</span>.<span class="ruby-identifier">reflect_on_association</span>(<span class="ruby-value">:face</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-constant">Face</span>.<span class="ruby-identifier">reflect_on_association</span>(<span class="ruby-value">:man</span>), <span class="ruby-identifier">has_one_ref</span>.<span class="ruby-identifier">inverse_of</span>
+
+  <span class="ruby-identifier">has_many_ref</span> = <span class="ruby-constant">Man</span>.<span class="ruby-identifier">reflect_on_association</span>(<span class="ruby-value">:interests</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-constant">Interest</span>.<span class="ruby-identifier">reflect_on_association</span>(<span class="ruby-value">:man</span>), <span class="ruby-identifier">has_many_ref</span>.<span class="ruby-identifier">inverse_of</span>
+
+  <span class="ruby-identifier">belongs_to_ref</span> = <span class="ruby-constant">Face</span>.<span class="ruby-identifier">reflect_on_association</span>(<span class="ruby-value">:man</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-constant">Man</span>.<span class="ruby-identifier">reflect_on_association</span>(<span class="ruby-value">:face</span>), <span class="ruby-identifier">belongs_to_ref</span>.<span class="ruby-identifier">inverse_of</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_should_allow_for_inverse_of_options_in_associations">
+            
+              <a name="method-i-test_should_allow_for_inverse_of_options_in_associations"></a><b>test_should_allow_for_inverse_of_options_in_associations</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_should_allow_for_inverse_of_options_in_associations_source')" id="l_method-i-test_should_allow_for_inverse_of_options_in_associations_source">show</a>
+                
+              </p>
+              <div id="method-i-test_should_allow_for_inverse_of_options_in_associations_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File rails/activerecord/test/cases/associations/inverse_associations_test.rb, line 10</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_should_allow_for_inverse_of_options_in_associations</span>
+  <span class="ruby-identifier">assert_nothing_raised</span>(<span class="ruby-constant">ArgumentError</span>, <span class="ruby-string">'ActiveRecord should allow the inverse_of options on has_many'</span>) <span class="ruby-keyword">do</span>
+    <span class="ruby-constant">Class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>).<span class="ruby-identifier">has_many</span>(<span class="ruby-value">:wheels</span>, <span class="ruby-value">:inverse_of</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:car</span>)
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">assert_nothing_raised</span>(<span class="ruby-constant">ArgumentError</span>, <span class="ruby-string">'ActiveRecord should allow the inverse_of options on has_one'</span>) <span class="ruby-keyword">do</span>
+    <span class="ruby-constant">Class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>).<span class="ruby-identifier">has_one</span>(<span class="ruby-value">:engine</span>, <span class="ruby-value">:inverse_of</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:car</span>)
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">assert_nothing_raised</span>(<span class="ruby-constant">ArgumentError</span>, <span class="ruby-string">'ActiveRecord should allow the inverse_of options on belongs_to'</span>) <span class="ruby-keyword">do</span>
+    <span class="ruby-constant">Class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>).<span class="ruby-identifier">belongs_to</span>(<span class="ruby-value">:car</span>, <span class="ruby-value">:inverse_of</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:driver</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_should_be_able_to_ask_a_reflection_if_it_has_an_inverse">
+            
+              <a name="method-i-test_should_be_able_to_ask_a_reflection_if_it_has_an_inverse"></a><b>test_should_be_able_to_ask_a_reflection_if_it_has_an_inverse</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_should_be_able_to_ask_a_reflection_if_it_has_an_inverse_source')" id="l_method-i-test_should_be_able_to_ask_a_reflection_if_it_has_an_inverse_source">show</a>
+                
+              </p>
+              <div id="method-i-test_should_be_able_to_ask_a_reflection_if_it_has_an_inverse_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File rails/activerecord/test/cases/associations/inverse_associations_test.rb, line 24</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_should_be_able_to_ask_a_reflection_if_it_has_an_inverse</span>
+  <span class="ruby-identifier">has_one_with_inverse_ref</span> = <span class="ruby-constant">Man</span>.<span class="ruby-identifier">reflect_on_association</span>(<span class="ruby-value">:face</span>)
+  <span class="ruby-identifier">assert_respond_to</span> <span class="ruby-identifier">has_one_with_inverse_ref</span>, <span class="ruby-value">:has_inverse?</span>
+  <span class="ruby-identifier">assert</span> <span class="ruby-identifier">has_one_with_inverse_ref</span>.<span class="ruby-identifier">has_inverse?</span>
+
+  <span class="ruby-identifier">has_many_with_inverse_ref</span> = <span class="ruby-constant">Man</span>.<span class="ruby-identifier">reflect_on_association</span>(<span class="ruby-value">:interests</span>)
+  <span class="ruby-identifier">assert_respond_to</span> <span class="ruby-identifier">has_many_with_inverse_ref</span>, <span class="ruby-value">:has_inverse?</span>
+  <span class="ruby-identifier">assert</span> <span class="ruby-identifier">has_many_with_inverse_ref</span>.<span class="ruby-identifier">has_inverse?</span>
+
+  <span class="ruby-identifier">belongs_to_with_inverse_ref</span> = <span class="ruby-constant">Face</span>.<span class="ruby-identifier">reflect_on_association</span>(<span class="ruby-value">:man</span>)
+  <span class="ruby-identifier">assert_respond_to</span> <span class="ruby-identifier">belongs_to_with_inverse_ref</span>, <span class="ruby-value">:has_inverse?</span>
+  <span class="ruby-identifier">assert</span> <span class="ruby-identifier">belongs_to_with_inverse_ref</span>.<span class="ruby-identifier">has_inverse?</span>
+
+  <span class="ruby-identifier">has_one_without_inverse_ref</span> = <span class="ruby-constant">Club</span>.<span class="ruby-identifier">reflect_on_association</span>(<span class="ruby-value">:sponsor</span>)
+  <span class="ruby-identifier">assert_respond_to</span> <span class="ruby-identifier">has_one_without_inverse_ref</span>, <span class="ruby-value">:has_inverse?</span>
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-identifier">has_one_without_inverse_ref</span>.<span class="ruby-identifier">has_inverse?</span>
+
+  <span class="ruby-identifier">has_many_without_inverse_ref</span> = <span class="ruby-constant">Club</span>.<span class="ruby-identifier">reflect_on_association</span>(<span class="ruby-value">:memberships</span>)
+  <span class="ruby-identifier">assert_respond_to</span> <span class="ruby-identifier">has_many_without_inverse_ref</span>, <span class="ruby-value">:has_inverse?</span>
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-identifier">has_many_without_inverse_ref</span>.<span class="ruby-identifier">has_inverse?</span>
+
+  <span class="ruby-identifier">belongs_to_without_inverse_ref</span> = <span class="ruby-constant">Sponsor</span>.<span class="ruby-identifier">reflect_on_association</span>(<span class="ruby-value">:sponsor_club</span>)
+  <span class="ruby-identifier">assert_respond_to</span> <span class="ruby-identifier">belongs_to_without_inverse_ref</span>, <span class="ruby-value">:has_inverse?</span>
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-identifier">belongs_to_without_inverse_ref</span>.<span class="ruby-identifier">has_inverse?</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_should_be_able_to_ask_a_reflection_what_it_is_the_inverse_of">
+            
+              <a name="method-i-test_should_be_able_to_ask_a_reflection_what_it_is_the_inverse_of"></a><b>test_should_be_able_to_ask_a_reflection_what_it_is_the_inverse_of</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_should_be_able_to_ask_a_reflection_what_it_is_the_inverse_of_source')" id="l_method-i-test_should_be_able_to_ask_a_reflection_what_it_is_the_inverse_of_source">show</a>
+                
+              </p>
+              <div id="method-i-test_should_be_able_to_ask_a_reflection_what_it_is_the_inverse_of_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File rails/activerecord/test/cases/associations/inverse_associations_test.rb, line 50</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_should_be_able_to_ask_a_reflection_what_it_is_the_inverse_of</span>
+  <span class="ruby-identifier">has_one_ref</span> = <span class="ruby-constant">Man</span>.<span class="ruby-identifier">reflect_on_association</span>(<span class="ruby-value">:face</span>)
+  <span class="ruby-identifier">assert_respond_to</span> <span class="ruby-identifier">has_one_ref</span>, <span class="ruby-value">:inverse_of</span>
+
+  <span class="ruby-identifier">has_many_ref</span> = <span class="ruby-constant">Man</span>.<span class="ruby-identifier">reflect_on_association</span>(<span class="ruby-value">:interests</span>)
+  <span class="ruby-identifier">assert_respond_to</span> <span class="ruby-identifier">has_many_ref</span>, <span class="ruby-value">:inverse_of</span>
+
+  <span class="ruby-identifier">belongs_to_ref</span> = <span class="ruby-constant">Face</span>.<span class="ruby-identifier">reflect_on_association</span>(<span class="ruby-value">:man</span>)
+  <span class="ruby-identifier">assert_respond_to</span> <span class="ruby-identifier">belongs_to_ref</span>, <span class="ruby-value">:inverse_of</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    

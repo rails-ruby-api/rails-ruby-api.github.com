@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>OpenSSL::PKCS5</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Module</span> 
+            OpenSSL::PKCS5 
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/Users/fschumac/_rvm/src/ruby-1_9_3-p0/ext/openssl/ossl_c.html">/Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/openssl/ossl.c</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>Password-based Encryption</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+    <!-- Namespace -->
+    <div class="sectiontitle">Namespace</div>
+    <ul>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="PKCS5/PKCS5Error.html">OpenSSL::PKCS5::PKCS5Error</a>
+        </li>
+      
+    </ul>
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>P</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-pbkdf2_hmac">pbkdf2_hmac</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-pbkdf2_hmac_sha1">pbkdf2_hmac_sha1</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-pbkdf2_hmac">
+            
+              <a name="method-c-pbkdf2_hmac"></a><b>PKCS5.pbkdf2_hmac(pass, salt, iter, keylen, digest) => string
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <h3 id="method-c-pbkdf2_hmac-label-Parameters">Parameters</h3>
+<ul><li>
+<p><code>pass</code> - string</p>
+</li><li>
+<p><code>salt</code> - string</p>
+</li><li>
+<p><code>iter</code> - integer - should be greater than 1000.  2000 is better.</p>
+</li><li>
+<p><code>keylen</code> - integer</p>
+</li><li>
+<p><code>digest</code> - a string or <a href="Digest.html">OpenSSL::Digest</a>
+object.</p>
+</li></ul>
+
+<p>Available in <a href="../OpenSSL.html">OpenSSL</a> 0.9.9?.</p>
+
+<p>Digests other than SHA1 may not be supported by other cryptography
+libraries.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-pbkdf2_hmac_source')" id="l_method-c-pbkdf2_hmac_source">show</a>
+                
+              </p>
+              <div id="method-c-pbkdf2_hmac_source" class="dyn-source">
+                <pre>static VALUE
+ossl_pkcs5_pbkdf2_hmac(VALUE self, VALUE pass, VALUE salt, VALUE iter, VALUE keylen, VALUE digest)
+{
+    VALUE str;
+    const EVP_MD *md;
+    int len = NUM2INT(keylen);
+
+    StringValue(pass);
+    StringValue(salt);
+    md = GetDigestPtr(digest);
+
+    str = rb_str_new(0, len);
+
+    if (PKCS5_PBKDF2_HMAC(RSTRING_PTR(pass), RSTRING_LEN(pass),
+                          (unsigned char *)RSTRING_PTR(salt), RSTRING_LEN(salt),
+                          NUM2INT(iter), md, len,
+                          (unsigned char *)RSTRING_PTR(str)) != 1)
+        ossl_raise(ePKCS5, &quot;PKCS5_PBKDF2_HMAC&quot;);
+
+    return str;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-pbkdf2_hmac_sha1">
+            
+              <a name="method-c-pbkdf2_hmac_sha1"></a><b>PKCS5.pbkdf2_hmac_sha1(pass, salt, iter, keylen) => string
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <h3 id="method-c-pbkdf2_hmac_sha1-label-Parameters">Parameters</h3>
+<ul><li>
+<p><code>pass</code> - string</p>
+</li><li>
+<p><code>salt</code> - string</p>
+</li><li>
+<p><code>iter</code> - integer - should be greater than 1000.  2000 is better.</p>
+</li><li>
+<p><code>keylen</code> - integer</p>
+</li></ul>
+
+<p>This method is available almost any version <a
+href="../OpenSSL.html">OpenSSL</a>.</p>
+
+<p>Conforms to rfc2898.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-pbkdf2_hmac_sha1_source')" id="l_method-c-pbkdf2_hmac_sha1_source">show</a>
+                
+              </p>
+              <div id="method-c-pbkdf2_hmac_sha1_source" class="dyn-source">
+                <pre>static VALUE
+ossl_pkcs5_pbkdf2_hmac_sha1(VALUE self, VALUE pass, VALUE salt, VALUE iter, VALUE keylen)
+{
+    VALUE str;
+    int len = NUM2INT(keylen);
+
+    StringValue(pass);
+    StringValue(salt);
+
+    str = rb_str_new(0, len);
+
+    if (PKCS5_PBKDF2_HMAC_SHA1(RSTRING_PTR(pass), RSTRING_LENINT(pass),
+                               (const unsigned char *)RSTRING_PTR(salt), RSTRING_LENINT(salt), NUM2INT(iter),
+                               len, (unsigned char *)RSTRING_PTR(str)) != 1)
+        ossl_raise(ePKCS5, &quot;PKCS5_PBKDF2_HMAC_SHA1&quot;);
+
+    return str;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+                        </div>
+    </div>
+  </body>
+</html>    

@@ -1,0 +1,5424 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Curses</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/github.css" type="text/css" media="screen" />
+<script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Module</span> 
+            Curses 
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../files/Users/fschumac/_rvm/src/ruby-1_9_3-p0/ext/curses/curses_c.html">/Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/curses/curses.c</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<h2 id="label-Description">Description</h2>
+
+<p>An implementation of the CRT screen handling and optimization library.</p>
+
+<h2 id="label-Structures+and+such">Structures and such</h2>
+
+<h3 id="label-Classes">Classes</h3>
+<ul><li>
+<p><a href="Curses/Window.html">Curses::Window</a> - class with the means to
+draw a window or box</p>
+</li><li>
+<p><a href="Curses/MouseEvent.html">Curses::MouseEvent</a> - class for
+collecting mouse events</p>
+</li></ul>
+
+<h3 id="label-Modules">Modules</h3>
+<dl class="rdoc-list note-list"><dt><a href="Curses.html">Curses</a>
+<dd>
+<p>The curses implementation</p>
+</dd><dt><a href="Curses/Key.html">Curses::Key</a>
+<dd>
+<p>Collection of constants for keypress events</p>
+</dd></dl>
+
+<h2 id="label-Examples">Examples</h2>
+<ul><li>
+<p>hello.rb</p>
+
+<pre class="ruby"><span class="ruby-comment">#!/usr/local/bin/ruby</span>
+
+<span class="ruby-identifier">require</span> <span class="ruby-string">&quot;curses&quot;</span>
+<span class="ruby-identifier">include</span> <span class="ruby-constant">Curses</span>
+
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">show_message</span>(<span class="ruby-identifier">message</span>)
+  <span class="ruby-identifier">width</span> = <span class="ruby-identifier">message</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">+</span> <span class="ruby-value">6</span>
+  <span class="ruby-identifier">win</span> = <span class="ruby-constant">Window</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">5</span>, <span class="ruby-identifier">width</span>,
+               (<span class="ruby-identifier">lines</span> <span class="ruby-operator">-</span> <span class="ruby-value">5</span>) <span class="ruby-operator">/</span> <span class="ruby-value">2</span>, (<span class="ruby-identifier">cols</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">width</span>) <span class="ruby-operator">/</span> <span class="ruby-value">2</span>)
+  <span class="ruby-identifier">win</span>.<span class="ruby-identifier">box</span>(<span class="ruby-value">||</span>, <span class="ruby-value">--</span>)
+  <span class="ruby-identifier">win</span>.<span class="ruby-identifier">setpos</span>(<span class="ruby-value">2</span>, <span class="ruby-value">3</span>)
+  <span class="ruby-identifier">win</span>.<span class="ruby-identifier">addstr</span>(<span class="ruby-identifier">message</span>)
+  <span class="ruby-identifier">win</span>.<span class="ruby-identifier">refresh</span>
+  <span class="ruby-identifier">win</span>.<span class="ruby-identifier">getch</span>
+  <span class="ruby-identifier">win</span>.<span class="ruby-identifier">close</span>
+<span class="ruby-keyword">end</span>
+
+<span class="ruby-identifier">init_screen</span>
+<span class="ruby-keyword">begin</span>
+  <span class="ruby-identifier">crmode</span>
+<span class="ruby-comment">#  show_message(&quot;Hit any key&quot;)</span>
+  <span class="ruby-identifier">setpos</span>((<span class="ruby-identifier">lines</span> <span class="ruby-operator">-</span> <span class="ruby-value">5</span>) <span class="ruby-operator">/</span> <span class="ruby-value">2</span>, (<span class="ruby-identifier">cols</span> <span class="ruby-operator">-</span> <span class="ruby-value">10</span>) <span class="ruby-operator">/</span> <span class="ruby-value">2</span>)
+  <span class="ruby-identifier">addstr</span>(<span class="ruby-string">&quot;Hit any key&quot;</span>)
+  <span class="ruby-identifier">refresh</span>
+  <span class="ruby-identifier">getch</span>
+  <span class="ruby-identifier">show_message</span>(<span class="ruby-string">&quot;Hello, World!&quot;</span>)
+  <span class="ruby-identifier">refresh</span>
+<span class="ruby-keyword">ensure</span>
+  <span class="ruby-identifier">close_screen</span>
+<span class="ruby-keyword">end</span>
+</pre>
+</li><li>
+<p>rain.rb</p>
+
+<pre class="ruby"><span class="ruby-comment">#!/usr/local/bin/ruby</span>
+<span class="ruby-comment"># rain for a curses test</span>
+
+<span class="ruby-identifier">require</span> <span class="ruby-string">&quot;curses&quot;</span>
+<span class="ruby-identifier">include</span> <span class="ruby-constant">Curses</span>
+
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">onsig</span>(<span class="ruby-identifier">sig</span>)
+  <span class="ruby-identifier">close_screen</span>
+  <span class="ruby-identifier">exit</span> <span class="ruby-identifier">sig</span>
+<span class="ruby-keyword">end</span>
+
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">ranf</span>
+  <span class="ruby-identifier">rand</span>(<span class="ruby-value">32767</span>).<span class="ruby-identifier">to_f</span> <span class="ruby-operator">/</span> <span class="ruby-value">32767</span>
+<span class="ruby-keyword">end</span>
+
+<span class="ruby-comment"># main #</span>
+<span class="ruby-keyword">for</span> <span class="ruby-identifier">i</span> <span class="ruby-keyword">in</span> <span class="ruby-value">1</span> <span class="ruby-operator">..</span> <span class="ruby-value">15</span>  <span class="ruby-comment"># SIGHUP .. SIGTERM</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">trap</span>(<span class="ruby-identifier">i</span>, <span class="ruby-string">&quot;SIG_IGN&quot;</span>) <span class="ruby-operator">!=</span> <span class="ruby-value">0</span> <span class="ruby-keyword">then</span>  <span class="ruby-comment"># 0 for SIG_IGN</span>
+    <span class="ruby-identifier">trap</span>(<span class="ruby-identifier">i</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">sig</span><span class="ruby-operator">|</span> <span class="ruby-identifier">onsig</span>(<span class="ruby-identifier">sig</span>) }
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span>
+
+<span class="ruby-identifier">init_screen</span>
+<span class="ruby-identifier">nl</span>
+<span class="ruby-identifier">noecho</span>
+<span class="ruby-identifier">srand</span>
+
+<span class="ruby-identifier">xpos</span> = {}
+<span class="ruby-identifier">ypos</span> = {}
+<span class="ruby-identifier">r</span> = <span class="ruby-identifier">lines</span> <span class="ruby-operator">-</span> <span class="ruby-value">4</span>
+<span class="ruby-identifier">c</span> = <span class="ruby-identifier">cols</span> <span class="ruby-operator">-</span> <span class="ruby-value">4</span>
+<span class="ruby-keyword">for</span> <span class="ruby-identifier">i</span> <span class="ruby-keyword">in</span> <span class="ruby-value">0</span> <span class="ruby-operator">..</span> <span class="ruby-value">4</span>
+  <span class="ruby-identifier">xpos</span>[<span class="ruby-identifier">i</span>] = (<span class="ruby-identifier">c</span> * <span class="ruby-identifier">ranf</span>).<span class="ruby-identifier">to_i</span> <span class="ruby-operator">+</span> <span class="ruby-value">2</span>
+  <span class="ruby-identifier">ypos</span>[<span class="ruby-identifier">i</span>] = (<span class="ruby-identifier">r</span> * <span class="ruby-identifier">ranf</span>).<span class="ruby-identifier">to_i</span> <span class="ruby-operator">+</span> <span class="ruby-value">2</span>
+<span class="ruby-keyword">end</span>
+
+<span class="ruby-identifier">i</span> = <span class="ruby-value">0</span>
+<span class="ruby-keyword">while</span> <span class="ruby-constant">TRUE</span>
+  <span class="ruby-identifier">x</span> = (<span class="ruby-identifier">c</span> * <span class="ruby-identifier">ranf</span>).<span class="ruby-identifier">to_i</span> <span class="ruby-operator">+</span> <span class="ruby-value">2</span>
+  <span class="ruby-identifier">y</span> = (<span class="ruby-identifier">r</span> * <span class="ruby-identifier">ranf</span>).<span class="ruby-identifier">to_i</span> <span class="ruby-operator">+</span> <span class="ruby-value">2</span>
+
+  <span class="ruby-identifier">setpos</span>(<span class="ruby-identifier">y</span>, <span class="ruby-identifier">x</span>); <span class="ruby-identifier">addstr</span>(<span class="ruby-string">&quot;.&quot;</span>)
+
+  <span class="ruby-identifier">setpos</span>(<span class="ruby-identifier">ypos</span>[<span class="ruby-identifier">i</span>], <span class="ruby-identifier">xpos</span>[<span class="ruby-identifier">i</span>]); <span class="ruby-identifier">addstr</span>(<span class="ruby-string">&quot;o&quot;</span>)
+
+  <span class="ruby-identifier">i</span> = <span class="ruby-keyword">if</span> <span class="ruby-identifier">i</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span> <span class="ruby-keyword">then</span> <span class="ruby-value">4</span> <span class="ruby-keyword">else</span> <span class="ruby-identifier">i</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span> <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">setpos</span>(<span class="ruby-identifier">ypos</span>[<span class="ruby-identifier">i</span>], <span class="ruby-identifier">xpos</span>[<span class="ruby-identifier">i</span>]); <span class="ruby-identifier">addstr</span>(<span class="ruby-string">&quot;O&quot;</span>)
+
+  <span class="ruby-identifier">i</span> = <span class="ruby-keyword">if</span> <span class="ruby-identifier">i</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span> <span class="ruby-keyword">then</span> <span class="ruby-value">4</span> <span class="ruby-keyword">else</span> <span class="ruby-identifier">i</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span> <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">setpos</span>(<span class="ruby-identifier">ypos</span>[<span class="ruby-identifier">i</span>] <span class="ruby-operator">-</span> <span class="ruby-value">1</span>, <span class="ruby-identifier">xpos</span>[<span class="ruby-identifier">i</span>]);      <span class="ruby-identifier">addstr</span>(<span class="ruby-string">&quot;-&quot;</span>)
+  <span class="ruby-identifier">setpos</span>(<span class="ruby-identifier">ypos</span>[<span class="ruby-identifier">i</span>],     <span class="ruby-identifier">xpos</span>[<span class="ruby-identifier">i</span>] <span class="ruby-operator">-</span> <span class="ruby-value">1</span>); <span class="ruby-identifier">addstr</span>(<span class="ruby-string">&quot;|.|&quot;</span>)
+  <span class="ruby-identifier">setpos</span>(<span class="ruby-identifier">ypos</span>[<span class="ruby-identifier">i</span>] <span class="ruby-operator">+</span> <span class="ruby-value">1</span>, <span class="ruby-identifier">xpos</span>[<span class="ruby-identifier">i</span>]);      <span class="ruby-identifier">addstr</span>(<span class="ruby-string">&quot;-&quot;</span>)
+
+  <span class="ruby-identifier">i</span> = <span class="ruby-keyword">if</span> <span class="ruby-identifier">i</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span> <span class="ruby-keyword">then</span> <span class="ruby-value">4</span> <span class="ruby-keyword">else</span> <span class="ruby-identifier">i</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span> <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">setpos</span>(<span class="ruby-identifier">ypos</span>[<span class="ruby-identifier">i</span>] <span class="ruby-operator">-</span> <span class="ruby-value">2</span>, <span class="ruby-identifier">xpos</span>[<span class="ruby-identifier">i</span>]);       <span class="ruby-identifier">addstr</span>(<span class="ruby-string">&quot;-&quot;</span>)
+  <span class="ruby-identifier">setpos</span>(<span class="ruby-identifier">ypos</span>[<span class="ruby-identifier">i</span>] <span class="ruby-operator">-</span> <span class="ruby-value">1</span>, <span class="ruby-identifier">xpos</span>[<span class="ruby-identifier">i</span>] <span class="ruby-operator">-</span> <span class="ruby-value">1</span>);  <span class="ruby-identifier">addstr</span>(<span class="ruby-string">&quot;/ \\&quot;</span>)
+  <span class="ruby-identifier">setpos</span>(<span class="ruby-identifier">ypos</span>[<span class="ruby-identifier">i</span>],     <span class="ruby-identifier">xpos</span>[<span class="ruby-identifier">i</span>] <span class="ruby-operator">-</span> <span class="ruby-value">2</span>); <span class="ruby-identifier">addstr</span>(<span class="ruby-string">&quot;| O |&quot;</span>)
+  <span class="ruby-identifier">setpos</span>(<span class="ruby-identifier">ypos</span>[<span class="ruby-identifier">i</span>] <span class="ruby-operator">+</span> <span class="ruby-value">1</span>, <span class="ruby-identifier">xpos</span>[<span class="ruby-identifier">i</span>] <span class="ruby-operator">-</span> <span class="ruby-value">1</span>); <span class="ruby-identifier">addstr</span>(<span class="ruby-string">&quot;\\ /&quot;</span>)
+  <span class="ruby-identifier">setpos</span>(<span class="ruby-identifier">ypos</span>[<span class="ruby-identifier">i</span>] <span class="ruby-operator">+</span> <span class="ruby-value">2</span>, <span class="ruby-identifier">xpos</span>[<span class="ruby-identifier">i</span>]);       <span class="ruby-identifier">addstr</span>(<span class="ruby-string">&quot;-&quot;</span>)
+
+  <span class="ruby-identifier">i</span> = <span class="ruby-keyword">if</span> <span class="ruby-identifier">i</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span> <span class="ruby-keyword">then</span> <span class="ruby-value">4</span> <span class="ruby-keyword">else</span> <span class="ruby-identifier">i</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span> <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">setpos</span>(<span class="ruby-identifier">ypos</span>[<span class="ruby-identifier">i</span>] <span class="ruby-operator">-</span> <span class="ruby-value">2</span>, <span class="ruby-identifier">xpos</span>[<span class="ruby-identifier">i</span>]);       <span class="ruby-identifier">addstr</span>(<span class="ruby-string">&quot; &quot;</span>)
+  <span class="ruby-identifier">setpos</span>(<span class="ruby-identifier">ypos</span>[<span class="ruby-identifier">i</span>] <span class="ruby-operator">-</span> <span class="ruby-value">1</span>, <span class="ruby-identifier">xpos</span>[<span class="ruby-identifier">i</span>] <span class="ruby-operator">-</span> <span class="ruby-value">1</span>);  <span class="ruby-identifier">addstr</span>(<span class="ruby-string">&quot;   &quot;</span>)
+  <span class="ruby-identifier">setpos</span>(<span class="ruby-identifier">ypos</span>[<span class="ruby-identifier">i</span>],     <span class="ruby-identifier">xpos</span>[<span class="ruby-identifier">i</span>] <span class="ruby-operator">-</span> <span class="ruby-value">2</span>); <span class="ruby-identifier">addstr</span>(<span class="ruby-string">&quot;     &quot;</span>)
+  <span class="ruby-identifier">setpos</span>(<span class="ruby-identifier">ypos</span>[<span class="ruby-identifier">i</span>] <span class="ruby-operator">+</span> <span class="ruby-value">1</span>, <span class="ruby-identifier">xpos</span>[<span class="ruby-identifier">i</span>] <span class="ruby-operator">-</span> <span class="ruby-value">1</span>);  <span class="ruby-identifier">addstr</span>(<span class="ruby-string">&quot;   &quot;</span>)
+  <span class="ruby-identifier">setpos</span>(<span class="ruby-identifier">ypos</span>[<span class="ruby-identifier">i</span>] <span class="ruby-operator">+</span> <span class="ruby-value">2</span>, <span class="ruby-identifier">xpos</span>[<span class="ruby-identifier">i</span>]);       <span class="ruby-identifier">addstr</span>(<span class="ruby-string">&quot; &quot;</span>)
+
+  <span class="ruby-identifier">xpos</span>[<span class="ruby-identifier">i</span>] = <span class="ruby-identifier">x</span>
+  <span class="ruby-identifier">ypos</span>[<span class="ruby-identifier">i</span>] = <span class="ruby-identifier">y</span>
+  <span class="ruby-identifier">refresh</span>
+  <span class="ruby-identifier">sleep</span>(<span class="ruby-value">0.5</span>)
+<span class="ruby-keyword">end</span>
+
+<span class="ruby-comment"># end of main</span>
+</pre>
+</li></ul>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+    <!-- Namespace -->
+    <div class="sectiontitle">Namespace</div>
+    <ul>
+      
+        <li>
+          <span class="type">MODULE</span>
+          <a href="Curses/Key.html">Curses::Key</a>
+        </li>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="Curses/MouseEvent.html">Curses::MouseEvent</a>
+        </li>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="Curses/Window.html">Curses::Window</a>
+        </li>
+      
+    </ul>
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>E</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-ESCDELAY">ESCDELAY</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-ESCDELAY-3D">ESCDELAY=</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-TABSIZE">TABSIZE</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-TABSIZE-3D">TABSIZE=</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>A</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-addch">addch</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-addstr">addstr</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-attroff">attroff</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-attron">attron</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-attrset">attrset</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>B</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-beep">beep</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-bkgd">bkgd</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-bkgdset">bkgdset</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>C</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-can_change_color-3F">can_change_color?</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-cbreak">cbreak</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-clear">clear</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-close_screen">close_screen</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-closed-3F">closed?</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-clrtoeol">clrtoeol</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-color_content">color_content</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-color_pair">color_pair</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-color_pairs">color_pairs</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-colors">colors</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-cols">cols</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-crmode">crmode</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-curs_set">curs_set</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>D</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-def_prog_mode">def_prog_mode</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-delch">delch</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-deleteln">deleteln</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-doupdate">doupdate</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>E</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-echo">echo</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>F</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-flash">flash</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>G</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-getch">getch</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-getmouse">getmouse</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-getstr">getstr</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>H</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-has_colors-3F">has_colors?</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>I</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-inch">inch</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-init_color">init_color</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-init_pair">init_pair</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-init_screen">init_screen</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-insch">insch</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-insertln">insertln</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>K</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-keyname">keyname</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>L</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-lines">lines</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>M</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-mouseinterval">mouseinterval</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-mousemask">mousemask</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-nl">nl</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-nocbreak">nocbreak</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-nocrmode">nocrmode</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-noecho">noecho</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-nonl">nonl</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-noraw">noraw</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>P</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-pair_content">pair_content</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-pair_number">pair_number</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>R</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-raw">raw</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-refresh">refresh</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-reset_prog_mode">reset_prog_mode</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-resize">resize</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-resizeterm">resizeterm</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>S</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-scrl">scrl</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-setpos">setpos</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-setscrreg">setscrreg</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-standend">standend</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-standout">standout</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-start_color">start_color</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-stdscr">stdscr</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-timeout-3D">timeout=</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>U</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-ungetch">ungetch</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-ungetmouse">ungetmouse</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-use_default_colors">use_default_colors</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+      <!-- Section constants -->
+      <div class="sectiontitle">Constants</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class="attr-name">A_ATTRIBUTES</td>
+            <td>=</td>
+            <td class="attr-value">Character attribute mask:
+Bit-mask to extract attributes
+
+See Curses.inch or Curses:</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Curses/Window.html#method-i-inch">Curses::Window#inch</a></p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">A_NORMAL</td>
+            <td>=</td>
+            <td class="attr-value">Attribute mask</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Normal display (no highlight)</p>
+
+<p>See <a href="Curses.html#method-c-attrset">::attrset</a></p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">A_STANDOUT</td>
+            <td>=</td>
+            <td class="attr-value">Attribute mask</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Best highlighting mode of the terminal.</p>
+
+<p>See <a href="Curses.html#method-c-attrset">::attrset</a></p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">A_UNDERLINE</td>
+            <td>=</td>
+            <td class="attr-value">Attribute mask</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Underlining</p>
+
+<p>See <a href="Curses.html#method-c-attrset">::attrset</a></p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">A_REVERSE</td>
+            <td>=</td>
+            <td class="attr-value">Attribute mask</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Reverse video</p>
+
+<p>See <a href="Curses.html#method-c-attrset">::attrset</a></p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">A_BLINK</td>
+            <td>=</td>
+            <td class="attr-value">Attribute mask</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Blinking</p>
+
+<p>See <a href="Curses.html#method-c-attrset">::attrset</a></p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">A_DIM</td>
+            <td>=</td>
+            <td class="attr-value">Attribute mask</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Half bright</p>
+
+<p>See <a href="Curses.html#method-c-attrset">::attrset</a></p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">A_BOLD</td>
+            <td>=</td>
+            <td class="attr-value">Attribute mask</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Extra bright or bold</p>
+
+<p>See <a href="Curses.html#method-c-attrset">::attrset</a></p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">A_PROTECT</td>
+            <td>=</td>
+            <td class="attr-value">Attribute mask</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Protected mode</p>
+
+<p>See <a href="Curses.html#method-c-attrset">::attrset</a></p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">A_INVIS</td>
+            <td>=</td>
+            <td class="attr-value">Attribute mask</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Invisible or blank mode</p>
+
+<p>See <a href="Curses.html#method-c-attrset">::attrset</a></p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">A_ALTCHARSET</td>
+            <td>=</td>
+            <td class="attr-value">Attribute mask</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Alternate character set</p>
+
+<p>See <a href="Curses.html#method-c-attrset">::attrset</a></p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">A_CHARTEXT</td>
+            <td>=</td>
+            <td class="attr-value">Attribute mask</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Bit-mask to extract a character</p>
+
+<p>See <a href="Curses.html#method-c-attrset">::attrset</a></p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">A_HORIZONTAL</td>
+            <td>=</td>
+            <td class="attr-value">Attribute mask</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>horizontal highlight</p>
+
+<p>Check system curs_attr(3x) for support</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">A_LEFT</td>
+            <td>=</td>
+            <td class="attr-value">Attribute mask</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>left highlight</p>
+
+<p>Check system curs_attr(3x) for support</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">A_LOW</td>
+            <td>=</td>
+            <td class="attr-value">Attribute mask</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>low highlight</p>
+
+<p>Check system curs_attr(3x) for support</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">A_RIGHT</td>
+            <td>=</td>
+            <td class="attr-value">Attribute mask</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>right highlight</p>
+
+<p>Check system curs_attr(3x) for support</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">A_TOP</td>
+            <td>=</td>
+            <td class="attr-value">Attribute mask</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>top highlight</p>
+
+<p>Check system curs_attr(3x) for support</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">A_VERTICAL</td>
+            <td>=</td>
+            <td class="attr-value">Attribute mask</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>vertical highlight</p>
+
+<p>Check system curs_attr(3x) for support</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">A_COLOR</td>
+            <td>=</td>
+            <td class="attr-value">Character attribute mask:
+Bit-mask to extract color-pair field information
+
+See Curses.inch or Curses:</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Curses/Window.html#method-i-inch">Curses::Window#inch</a></p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">COLORS</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(COLORS)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Number of the colors available</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">COLOR_BLACK</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(COLOR_BLACK)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Value of the color black</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">COLOR_RED</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(COLOR_RED)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Value of the color red</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">COLOR_GREEN</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(COLOR_GREEN)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Value of the color green</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">COLOR_YELLOW</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(COLOR_YELLOW)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Value of the color yellow</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">COLOR_BLUE</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(COLOR_BLUE)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Value of the color blue</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">COLOR_MAGENTA</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(COLOR_MAGENTA)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Value of the color magenta</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">COLOR_CYAN</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(COLOR_CYAN)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Value of the color cyan</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">COLOR_WHITE</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(COLOR_WHITE)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Value of the color white</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">BUTTON1_PRESSED</td>
+            <td>=</td>
+            <td class="attr-value">Mouse event mask</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>mouse button 1 down</p>
+
+<p>See <a href="Curses.html#method-c-getmouse">::getmouse</a></p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">BUTTON1_RELEASED</td>
+            <td>=</td>
+            <td class="attr-value">Mouse event mask</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>mouse button 1 up</p>
+
+<p>See <a href="Curses.html#method-c-getmouse">::getmouse</a></p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">BUTTON1_CLICKED</td>
+            <td>=</td>
+            <td class="attr-value">Mouse event mask</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>mouse button 1 clicked</p>
+
+<p>See <a href="Curses.html#method-c-getmouse">::getmouse</a></p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">BUTTON1_DOUBLE_CLICKED</td>
+            <td>=</td>
+            <td class="attr-value">Mouse event mask</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>mouse button 1 double clicked</p>
+
+<p>See <a href="Curses.html#method-c-getmouse">::getmouse</a></p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">BUTTON1_TRIPLE_CLICKED</td>
+            <td>=</td>
+            <td class="attr-value">Mouse event mask</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>mouse button 1 triple clicked</p>
+
+<p>See <a href="Curses.html#method-c-getmouse">::getmouse</a></p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">BUTTON2_PRESSED</td>
+            <td>=</td>
+            <td class="attr-value">Mouse event mask</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>mouse button 2 down</p>
+
+<p>See <a href="Curses.html#method-c-getmouse">::getmouse</a></p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">BUTTON2_RELEASED</td>
+            <td>=</td>
+            <td class="attr-value">Mouse event mask</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>mouse button 2 up</p>
+
+<p>See <a href="Curses.html#method-c-getmouse">::getmouse</a></p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">BUTTON2_CLICKED</td>
+            <td>=</td>
+            <td class="attr-value">Mouse event mask</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>mouse button 2 clicked</p>
+
+<p>See <a href="Curses.html#method-c-getmouse">::getmouse</a></p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">BUTTON2_DOUBLE_CLICKED</td>
+            <td>=</td>
+            <td class="attr-value">Mouse event mask</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>mouse button 2 double clicked</p>
+
+<p>See <a href="Curses.html#method-c-getmouse">::getmouse</a></p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">BUTTON2_TRIPLE_CLICKED</td>
+            <td>=</td>
+            <td class="attr-value">Mouse event mask</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>mouse button 2 triple clicked</p>
+
+<p>See <a href="Curses.html#method-c-getmouse">::getmouse</a></p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">BUTTON3_PRESSED</td>
+            <td>=</td>
+            <td class="attr-value">Mouse event mask</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>mouse button 3 down</p>
+
+<p>See <a href="Curses.html#method-c-getmouse">::getmouse</a></p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">BUTTON3_RELEASED</td>
+            <td>=</td>
+            <td class="attr-value">Mouse event mask</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>mouse button 3 up</p>
+
+<p>See <a href="Curses.html#method-c-getmouse">::getmouse</a></p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">BUTTON3_CLICKED</td>
+            <td>=</td>
+            <td class="attr-value">Mouse event mask</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>mouse button 3 clicked</p>
+
+<p>See <a href="Curses.html#method-c-getmouse">::getmouse</a></p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">BUTTON3_DOUBLE_CLICKED</td>
+            <td>=</td>
+            <td class="attr-value">Mouse event mask</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>mouse button 3 double clicked</p>
+
+<p>See <a href="Curses.html#method-c-getmouse">::getmouse</a></p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">BUTTON3_TRIPLE_CLICKED</td>
+            <td>=</td>
+            <td class="attr-value">Mouse event mask</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>mouse button 3 triple clicked</p>
+
+<p>See <a href="Curses.html#method-c-getmouse">::getmouse</a></p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">BUTTON4_PRESSED</td>
+            <td>=</td>
+            <td class="attr-value">Mouse event mask</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>mouse button 4 down</p>
+
+<p>See <a href="Curses.html#method-c-getmouse">::getmouse</a></p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">BUTTON4_RELEASED</td>
+            <td>=</td>
+            <td class="attr-value">Mouse event mask</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>mouse button 4 up</p>
+
+<p>See <a href="Curses.html#method-c-getmouse">::getmouse</a></p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">BUTTON4_CLICKED</td>
+            <td>=</td>
+            <td class="attr-value">Mouse event mask</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>mouse button 4 clicked</p>
+
+<p>See <a href="Curses.html#method-c-getmouse">::getmouse</a></p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">BUTTON4_DOUBLE_CLICKED</td>
+            <td>=</td>
+            <td class="attr-value">Mouse event mask</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>mouse button 4 double clicked</p>
+
+<p>See <a href="Curses.html#method-c-getmouse">::getmouse</a></p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">BUTTON4_TRIPLE_CLICKED</td>
+            <td>=</td>
+            <td class="attr-value">Mouse event mask</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>mouse button 4 triple clicked</p>
+
+<p>See <a href="Curses.html#method-c-getmouse">::getmouse</a></p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">BUTTON_SHIFT</td>
+            <td>=</td>
+            <td class="attr-value">Mouse event mask</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>shift was down during button state change</p>
+
+<p>See <a href="Curses.html#method-c-getmouse">::getmouse</a></p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">BUTTON_CTRL</td>
+            <td>=</td>
+            <td class="attr-value">Mouse event mask</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>control was down during button state change</p>
+
+<p>See <a href="Curses.html#method-c-getmouse">::getmouse</a></p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">BUTTON_ALT</td>
+            <td>=</td>
+            <td class="attr-value">Mouse event mask</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>alt was down during button state change</p>
+
+<p>See <a href="Curses.html#method-c-getmouse">::getmouse</a></p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">ALL_MOUSE_EVENTS</td>
+            <td>=</td>
+            <td class="attr-value">Mouse event mask</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>report all button state changes</p>
+
+<p>See <a href="Curses.html#method-c-getmouse">::getmouse</a></p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">REPORT_MOUSE_POSITION</td>
+            <td>=</td>
+            <td class="attr-value">Mouse event mask</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>report mouse movement</p>
+
+<p>See <a href="Curses.html#method-c-getmouse">::getmouse</a></p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_MOUSE</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_MOUSE)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Mouse event read</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_MIN</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_MIN)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>The minimum allowed curses key value.</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_BREAK</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_BREAK)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Break key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_DOWN</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_DOWN)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>the down arrow key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_UP</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_UP)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>the up arrow key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_LEFT</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_LEFT)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>the left arrow key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_RIGHT</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_RIGHT)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>the right arrow key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_HOME</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_HOME)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Home key (upward+left arrow)</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_BACKSPACE</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_BACKSPACE)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Backspace</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_DL</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_DL)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Delete line</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_IL</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_IL)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Insert line</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_DC</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_DC)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Delete character</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_IC</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_IC)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Insert char or enter insert mode</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_EIC</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_EIC)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Enter insert char mode</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_CLEAR</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_CLEAR)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Clear Screen</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_EOS</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_EOS)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Clear to end of screen</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_EOL</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_EOL)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Clear to end of line</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_SF</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_SF)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Scroll 1 line forward</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_SR</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_SR)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Scroll 1 line backware (reverse)</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_NPAGE</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_NPAGE)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Next page</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_PPAGE</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_PPAGE)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Previous page</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_STAB</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_STAB)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Set.html">Set</a> tab</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_CTAB</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_CTAB)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Clear tab</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_CATAB</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_CATAB)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Clear all tabs</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_ENTER</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_ENTER)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Enter or send</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_SRESET</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_SRESET)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Soft (partial) reset</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_RESET</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_RESET)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Reset or hard reset</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_PRINT</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_PRINT)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Print or copy</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_LL</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_LL)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Home down or bottom (lower left)</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_A1</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_A1)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Upper left of keypad</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_A3</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_A3)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Upper right of keypad</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_B2</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_B2)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Center of keypad</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_C1</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_C1)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Lower left of keypad</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_C3</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_C3)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Lower right of keypad</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_BTAB</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_BTAB)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Back tab key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_BEG</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_BEG)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Beginning key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_CANCEL</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_CANCEL)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Cancel key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_CLOSE</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_CLOSE)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Close key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_COMMAND</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_COMMAND)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Cmd (command) key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_COPY</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_COPY)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Copy key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_CREATE</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_CREATE)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Create key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_END</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_END)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>End key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_EXIT</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_EXIT)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Exit key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_FIND</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_FIND)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Find.html">Find</a> key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_HELP</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_HELP)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Help key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_MARK</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_MARK)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Mark key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_MESSAGE</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_MESSAGE)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Message key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_MOVE</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_MOVE)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Move key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_NEXT</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_NEXT)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Next object key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_OPEN</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_OPEN)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Open key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_OPTIONS</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_OPTIONS)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Options key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_PREVIOUS</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_PREVIOUS)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Previous object key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_REDO</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_REDO)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Redo key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_REFERENCE</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_REFERENCE)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Reference key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_REFRESH</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_REFRESH)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Refresh key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_REPLACE</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_REPLACE)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Replace key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_RESTART</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_RESTART)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Restart key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_RESUME</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_RESUME)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Resume key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_SAVE</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_SAVE)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Save key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_SBEG</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_SBEG)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Shifted beginning key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_SCANCEL</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_SCANCEL)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Shifted cancel key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_SCOMMAND</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_SCOMMAND)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Shifted command key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_SCOPY</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_SCOPY)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Shifted copy key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_SCREATE</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_SCREATE)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Shifted create key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_SDC</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_SDC)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Shifted delete char key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_SDL</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_SDL)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Shifted delete line key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_SELECT</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_SELECT)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Select key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_SEND</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_SEND)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Shifted end key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_SEOL</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_SEOL)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Shifted clear line key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_SEXIT</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_SEXIT)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Shifted exit key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_SFIND</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_SFIND)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Shifted find key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_SHELP</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_SHELP)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Shifted help key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_SHOME</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_SHOME)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Shifted home key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_SIC</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_SIC)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Shifted input key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_SLEFT</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_SLEFT)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Shifted left arrow key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_SMESSAGE</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_SMESSAGE)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Shifted message key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_SMOVE</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_SMOVE)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Shifted move key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_SNEXT</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_SNEXT)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Shifted next key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_SOPTIONS</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_SOPTIONS)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Shifted options key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_SPREVIOUS</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_SPREVIOUS)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Shifted previous key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_SPRINT</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_SPRINT)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Shifted print key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_SREDO</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_SREDO)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Shifted redo key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_SREPLACE</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_SREPLACE)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Shifted replace key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_SRIGHT</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_SRIGHT)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Shifted right arrow key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_SRSUME</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_SRSUME)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Shifted resume key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_SSAVE</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_SSAVE)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Shifted save key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_SSUSPEND</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_SSUSPEND)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Shifted suspend key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_SUNDO</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_SUNDO)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Shifted undo key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_SUSPEND</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_SUSPEND)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Suspend key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_UNDO</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_UNDO)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Undo key</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_RESIZE</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_RESIZE)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Screen Resized</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_MAX</td>
+            <td>=</td>
+            <td class="attr-value">UINT2NUM(KEY_MAX)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>The maximum allowed curses key value.</p></td>
+            </tr>
+          
+        
+      </table>
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-ESCDELAY">
+            
+              <a name="method-c-ESCDELAY"></a><b>ESCDELAY</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the total time, in milliseconds, for which curses will await a
+character sequence, e.g., a function key</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-ESCDELAY_source')" id="l_method-c-ESCDELAY_source">show</a>
+                
+              </p>
+              <div id="method-c-ESCDELAY_source" class="dyn-source">
+                <pre>static VALUE
+curses_escdelay_get(VALUE obj)
+{
+    return INT2NUM(ESCDELAY);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-ESCDELAY-3D">
+            
+              <a name="method-c-ESCDELAY-3D"></a><b>Curses.ESCDELAY=(value)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Sets the <a href="Curses.html#method-c-ESCDELAY">::ESCDELAY</a> to <a
+href="Integer.html">Integer</a> <code>value</code></p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-ESCDELAY-3D_source')" id="l_method-c-ESCDELAY-3D_source">show</a>
+                
+              </p>
+              <div id="method-c-ESCDELAY-3D_source" class="dyn-source">
+                <pre>static VALUE
+curses_escdelay_set(VALUE obj, VALUE val)
+{
+    ESCDELAY = NUM2INT(val);
+    return INT2NUM(ESCDELAY);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-TABSIZE">
+            
+              <a name="method-c-TABSIZE"></a><b>TABSIZE</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the number of positions in a tab.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-TABSIZE_source')" id="l_method-c-TABSIZE_source">show</a>
+                
+              </p>
+              <div id="method-c-TABSIZE_source" class="dyn-source">
+                <pre>static VALUE
+curses_tabsize_get(VALUE ojb)
+{
+    return INT2NUM(TABSIZE);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-TABSIZE-3D">
+            
+              <a name="method-c-TABSIZE-3D"></a><b>TABSIZE=(value)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Sets the <a href="Curses.html#method-c-TABSIZE">::TABSIZE</a> to <a
+href="Integer.html">Integer</a> <code>value</code></p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-TABSIZE-3D_source')" id="l_method-c-TABSIZE-3D_source">show</a>
+                
+              </p>
+              <div id="method-c-TABSIZE-3D_source" class="dyn-source">
+                <pre>static VALUE
+curses_tabsize_set(VALUE obj, VALUE val)
+{
+    TABSIZE = NUM2INT(val);
+    return INT2NUM(TABSIZE);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-addch">
+            
+              <a name="method-c-addch"></a><b>addch(ch)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Add a character <code>ch</code>, with attributes, then advance the cursor.</p>
+
+<p>see also the system manual for curs_addch(3)</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-addch_source')" id="l_method-c-addch_source">show</a>
+                
+              </p>
+              <div id="method-c-addch_source" class="dyn-source">
+                <pre>static VALUE
+curses_addch(VALUE obj, VALUE ch)
+{
+    curses_stdscr();
+    addch(NUM2CH(ch));
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-addstr">
+            
+              <a name="method-c-addstr"></a><b>addstr(str)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>add a string of characters <code>str</code>, to the window and advance
+cursor</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-addstr_source')" id="l_method-c-addstr_source">show</a>
+                
+              </p>
+              <div id="method-c-addstr_source" class="dyn-source">
+                <pre>static VALUE
+curses_addstr(VALUE obj, VALUE str)
+{
+    StringValue(str);
+    str = rb_str_export_locale(str);
+    curses_stdscr();
+    if (!NIL_P(str)) {
+        addstr(StringValueCStr(str));
+    }
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-attroff">
+            
+              <a name="method-c-attroff"></a><b>attroff(attrs)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Turns on the named attributes <code>attrs</code> without affecting any
+others.</p>
+
+<p>See also <a
+href="Curses/Window.html#method-i-attrset">Curses::Window#attrset</a> for
+additional information.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-attroff_source')" id="l_method-c-attroff_source">show</a>
+                
+              </p>
+              <div id="method-c-attroff_source" class="dyn-source">
+                <pre>static VALUE
+curses_attroff(VALUE obj, VALUE attrs)
+{
+    curses_stdscr();
+    return window_attroff(rb_stdscr,attrs);
+    /* return INT2FIX(attroff(NUM2INT(attrs))); */
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-attron">
+            
+              <a name="method-c-attron"></a><b>attron(attrs)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Turns off the named attributes <code>attrs</code> without turning any other
+attributes on or off.</p>
+
+<p>See also <a
+href="Curses/Window.html#method-i-attrset">Curses::Window#attrset</a> for
+additional information.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-attron_source')" id="l_method-c-attron_source">show</a>
+                
+              </p>
+              <div id="method-c-attron_source" class="dyn-source">
+                <pre>static VALUE
+curses_attron(VALUE obj, VALUE attrs)
+{
+    curses_stdscr();
+    return window_attron(rb_stdscr,attrs);
+    /* return INT2FIX(attroff(NUM2INT(attrs))); */
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-attrset">
+            
+              <a name="method-c-attrset"></a><b>attrset(attrs)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Sets the current attributes of the given window to <code>attrs</code>.</p>
+
+<p>see also <a
+href="Curses/Window.html#method-i-attrset">Curses::Window#attrset</a></p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-attrset_source')" id="l_method-c-attrset_source">show</a>
+                
+              </p>
+              <div id="method-c-attrset_source" class="dyn-source">
+                <pre>static VALUE
+curses_attrset(VALUE obj, VALUE attrs)
+{
+    curses_stdscr();
+    return window_attrset(rb_stdscr,attrs);
+    /* return INT2FIX(attroff(NUM2INT(attrs))); */
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-beep">
+            
+              <a name="method-c-beep"></a><b>beep</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Sounds an audible alarm on the terminal, if possible; otherwise it flashes
+the screen (visual bell).</p>
+
+<p>see also <a href="Curses.html#method-c-flash">::flash</a></p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-beep_source')" id="l_method-c-beep_source">show</a>
+                
+              </p>
+              <div id="method-c-beep_source" class="dyn-source">
+                <pre>static VALUE
+curses_beep(VALUE obj)
+{
+#ifdef HAVE_BEEP
+    curses_stdscr();
+    beep();
+#endif
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-bkgd">
+            
+              <a name="method-c-bkgd"></a><b>bkgd(ch)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p><a href="Curses/Window.html">Window</a> background manipulation routines.</p>
+
+<p><a href="Set.html">Set</a> the background property of the current and then
+apply the character <a href="Integer.html">Integer</a> <code>ch</code>
+setting to every character position in that window.</p>
+
+<p>see also the system manual for curs_bkgd(3)</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-bkgd_source')" id="l_method-c-bkgd_source">show</a>
+                
+              </p>
+              <div id="method-c-bkgd_source" class="dyn-source">
+                <pre>static VALUE
+curses_bkgd(VALUE obj, VALUE ch)
+{
+#ifdef HAVE_BKGD
+    curses_stdscr();
+    return (bkgd(NUM2CH(ch)) == OK) ? Qtrue : Qfalse;
+#else
+    return Qfalse;
+#endif
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-bkgdset">
+            
+              <a name="method-c-bkgdset"></a><b>bkgdset(ch)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Manipulate the background of the named window with character <a
+href="Integer.html">Integer</a> <code>ch</code></p>
+
+<p>The background becomes a property of the character and moves with the
+character through any scrolling and insert/delete line/character
+operations.</p>
+
+<p>see also the system manual for curs_bkgd(3)</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-bkgdset_source')" id="l_method-c-bkgdset_source">show</a>
+                
+              </p>
+              <div id="method-c-bkgdset_source" class="dyn-source">
+                <pre>static VALUE
+curses_bkgdset(VALUE obj, VALUE ch)
+{
+#ifdef HAVE_BKGDSET
+    curses_stdscr();
+    bkgdset(NUM2CH(ch));
+#endif
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-can_change_color-3F">
+            
+              <a name="method-c-can_change_color-3F"></a><b>can_change_color?</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns <code>true</code> or <code>false</code> depending on whether the
+terminal can change color attributes</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-can_change_color-3F_source')" id="l_method-c-can_change_color-3F_source">show</a>
+                
+              </p>
+              <div id="method-c-can_change_color-3F_source" class="dyn-source">
+                <pre>static VALUE
+curses_can_change_color(VALUE obj)
+{
+    curses_stdscr();
+    return can_change_color() ? Qtrue : Qfalse;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-cbreak">
+            
+              <a name="method-c-cbreak"></a><b>cbreak</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Put the terminal into cbreak mode.</p>
+
+<p>Normally, the tty driver buffers typed characters until a newline or
+carriage return is typed. The <a
+href="Curses.html#method-c-cbreak">::cbreak</a> routine disables line
+buffering and erase/kill character-processing (interrupt and flow control
+characters are unaffected), making characters typed by the user immediately
+available to the program.</p>
+
+<p>The <a href="Curses.html#method-c-nocbreak">::nocbreak</a> routine returns
+the terminal to normal (cooked) mode.</p>
+
+<p>Initially the terminal may or may not be in cbreak mode, as the mode is
+inherited; therefore, a program should call <a
+href="Curses.html#method-c-cbreak">::cbreak</a> or <a
+href="Curses.html#method-c-nocbreak">::nocbreak</a> explicitly. Most
+interactive programs using curses set the cbreak mode. Note that <a
+href="Curses.html#method-c-cbreak">::cbreak</a> overrides <a
+href="Curses.html#method-c-raw">::raw</a>.</p>
+
+<p>see also <a href="Curses.html#method-c-raw">::raw</a></p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-cbreak_source')" id="l_method-c-cbreak_source">show</a>
+                
+              </p>
+              <div id="method-c-cbreak_source" class="dyn-source">
+                <pre>static VALUE
+curses_cbreak(VALUE obj)
+{
+    curses_stdscr();
+    cbreak();
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-clear">
+            
+              <a name="method-c-clear"></a><b>clear</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Clears every position on the screen completely, so that a subsequent call
+by <a href="Curses.html#method-c-refresh">::refresh</a> for the
+screen/window will be repainted from scratch.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-clear_source')" id="l_method-c-clear_source">show</a>
+                
+              </p>
+              <div id="method-c-clear_source" class="dyn-source">
+                <pre>static VALUE
+curses_clear(VALUE obj)
+{
+    curses_stdscr();
+    wclear(stdscr);
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-close_screen">
+            
+              <a name="method-c-close_screen"></a><b>close_screen</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>A program should always call <a
+href="Curses.html#method-c-close_screen">::close_screen</a> before exiting
+or escaping from curses mode temporarily. This routine restores tty modes,
+moves the cursor to the lower left-hand corner of the screen and resets the
+terminal into the proper non-visual mode.</p>
+
+<p>Calling <a href="Curses.html#method-c-refresh">::refresh</a> or <a
+href="Curses.html#method-c-doupdate">::doupdate</a> after a temporary
+escape causes the program to resume visual mode.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-close_screen_source')" id="l_method-c-close_screen_source">show</a>
+                
+              </p>
+              <div id="method-c-close_screen_source" class="dyn-source">
+                <pre>static VALUE
+curses_close_screen(void)
+{
+    curses_stdscr();
+#ifdef HAVE_ISENDWIN
+    if (!isendwin())
+#endif
+        endwin();
+    rb_stdscr = 0;
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-closed-3F">
+            
+              <a name="method-c-closed-3F"></a><b>closed?</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns <code>true</code> if the window/screen has been closed, without any
+subsequent <a href="Curses.html#method-c-refresh">::refresh</a> calls,
+returns <code>false</code> otherwise.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-closed-3F_source')" id="l_method-c-closed-3F_source">show</a>
+                
+              </p>
+              <div id="method-c-closed-3F_source" class="dyn-source">
+                <pre>static VALUE
+curses_closed(void)
+{
+    curses_stdscr();
+    if (isendwin()) {
+        return Qtrue;
+    }
+    return Qfalse;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-clrtoeol">
+            
+              <a name="method-c-clrtoeol"></a><b>clrtoeol</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Clears to the end of line, that the cursor is currently on.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-clrtoeol_source')" id="l_method-c-clrtoeol_source">show</a>
+                
+              </p>
+              <div id="method-c-clrtoeol_source" class="dyn-source">
+                <pre>static VALUE
+curses_clrtoeol(void)
+{
+    curses_stdscr();
+    clrtoeol();
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-color_content">
+            
+              <a name="method-c-color_content"></a><b>color_content(color)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns an 3 item Array of the RGB values in <code>color</code></p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-color_content_source')" id="l_method-c-color_content_source">show</a>
+                
+              </p>
+              <div id="method-c-color_content_source" class="dyn-source">
+                <pre>static VALUE
+curses_color_content(VALUE obj, VALUE color)
+{
+    short r,g,b;
+
+    curses_stdscr();
+    color_content(NUM2INT(color),&amp;r,&amp;g,&amp;b);
+    return rb_ary_new3(3,INT2FIX(r),INT2FIX(g),INT2FIX(b));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-color_pair">
+            
+              <a name="method-c-color_pair"></a><b>color_pair(attrs)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Sets the color pair attributes to <code>attrs</code>.</p>
+
+<p>This should be equivalent to <a
+href="Curses.html#method-c-attrset">::attrset</a>(COLOR_PAIR(<code>attrs</code>))</p>
+
+<p>TODO: validate that equivalency</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-color_pair_source')" id="l_method-c-color_pair_source">show</a>
+                
+              </p>
+              <div id="method-c-color_pair_source" class="dyn-source">
+                <pre>static VALUE
+curses_color_pair(VALUE obj, VALUE attrs)
+{
+    return INT2FIX(COLOR_PAIR(NUM2INT(attrs)));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-color_pairs">
+            
+              <a name="method-c-color_pairs"></a><b>color_pairs</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the COLOR_PAIRS available, if the curses library supports it.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-color_pairs_source')" id="l_method-c-color_pairs_source">show</a>
+                
+              </p>
+              <div id="method-c-color_pairs_source" class="dyn-source">
+                <pre>static VALUE
+curses_color_pairs(VALUE obj)
+{
+    return INT2FIX(COLOR_PAIRS);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-colors">
+            
+              <a name="method-c-colors"></a><b>colors</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>returns <a href="Curses.html#COLORS">COLORS</a></p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-colors_source')" id="l_method-c-colors_source">show</a>
+                
+              </p>
+              <div id="method-c-colors_source" class="dyn-source">
+                <pre>static VALUE
+curses_colors(VALUE obj)
+{
+    return INT2FIX(COLORS);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-cols">
+            
+              <a name="method-c-cols"></a><b>cols</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the number of columns on the screen</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-cols_source')" id="l_method-c-cols_source">show</a>
+                
+              </p>
+              <div id="method-c-cols_source" class="dyn-source">
+                <pre>static VALUE
+curses_cols(void)
+{
+    return INT2FIX(COLS);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-crmode">
+            
+              <a name="method-c-crmode"></a><b>crmode</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Put the terminal into normal mode (out of cbreak mode).</p>
+
+<p>See <a href="Curses.html#method-c-cbreak">::cbreak</a> for more detail.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-crmode_source')" id="l_method-c-crmode_source">show</a>
+                
+              </p>
+              <div id="method-c-crmode_source" class="dyn-source">
+                <pre>static VALUE
+curses_nocbreak(VALUE obj)
+{
+    curses_stdscr();
+    nocbreak();
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-curs_set">
+            
+              <a name="method-c-curs_set"></a><b>curs_set(visibility)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Sets Cursor Visibility. 0: invisible 1: visible 2: very visible</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-curs_set_source')" id="l_method-c-curs_set_source">show</a>
+                
+              </p>
+              <div id="method-c-curs_set_source" class="dyn-source">
+                <pre>static VALUE
+curses_curs_set(VALUE obj, VALUE visibility)
+{
+#ifdef HAVE_CURS_SET
+    int n;
+    curses_stdscr();
+    return (n = curs_set(NUM2INT(visibility)) != ERR) ? INT2FIX(n) : Qnil;
+#else
+    return Qnil;
+#endif
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-def_prog_mode">
+            
+              <a name="method-c-def_prog_mode"></a><b>def_prog_mode</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Save the current terminal modes as the “program” state for use by the <a
+href="Curses.html#method-c-reset_prog_mode">::reset_prog_mode</a></p>
+
+<p>This is done automatically by <a
+href="Curses.html#method-c-init_screen">::init_screen</a></p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-def_prog_mode_source')" id="l_method-c-def_prog_mode_source">show</a>
+                
+              </p>
+              <div id="method-c-def_prog_mode_source" class="dyn-source">
+                <pre>static VALUE
+curses_def_prog_mode(VALUE obj)
+{
+    curses_stdscr();
+    return def_prog_mode() == OK ? Qtrue : Qfalse;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-delch">
+            
+              <a name="method-c-delch"></a><b>delch</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Delete the character under the cursor</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-delch_source')" id="l_method-c-delch_source">show</a>
+                
+              </p>
+              <div id="method-c-delch_source" class="dyn-source">
+                <pre>static VALUE
+curses_delch(VALUE obj)
+{
+    curses_stdscr();
+    delch();
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-deleteln">
+            
+              <a name="method-c-deleteln"></a><b>deleteln</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Delete the line under the cursor.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-deleteln_source')" id="l_method-c-deleteln_source">show</a>
+                
+              </p>
+              <div id="method-c-deleteln_source" class="dyn-source">
+                <pre>static VALUE
+curses_deleteln(VALUE obj)
+{
+    curses_stdscr();
+#if defined(HAVE_DELETELN) || defined(deleteln)
+    deleteln();
+#endif
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-doupdate">
+            
+              <a name="method-c-doupdate"></a><b>doupdate</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Refreshes the windows and lines.</p>
+
+<p><a href="Curses.html#method-c-doupdate">::doupdate</a> allows multiple
+updates with more efficiency than <a
+href="Curses.html#method-c-refresh">::refresh</a> alone.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-doupdate_source')" id="l_method-c-doupdate_source">show</a>
+                
+              </p>
+              <div id="method-c-doupdate_source" class="dyn-source">
+                <pre>static VALUE
+curses_doupdate(VALUE obj)
+{
+    curses_stdscr();
+#ifdef HAVE_DOUPDATE
+    doupdate();
+#else
+    refresh();
+#endif
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-echo">
+            
+              <a name="method-c-echo"></a><b>echo</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Enables characters typed by the user to be echoed by <a
+href="Curses.html#method-c-getch">::getch</a> as they are typed.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-echo_source')" id="l_method-c-echo_source">show</a>
+                
+              </p>
+              <div id="method-c-echo_source" class="dyn-source">
+                <pre>static VALUE
+curses_echo(VALUE obj)
+{
+    curses_stdscr();
+    echo();
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-flash">
+            
+              <a name="method-c-flash"></a><b>flash</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Flashs the screen, for visual alarm on the terminal, if possible; otherwise
+it sounds the alert.</p>
+
+<p>see also <a href="Curses.html#method-c-beep">::beep</a></p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-flash_source')" id="l_method-c-flash_source">show</a>
+                
+              </p>
+              <div id="method-c-flash_source" class="dyn-source">
+                <pre>static VALUE
+curses_flash(VALUE obj)
+{
+#ifdef HAVE_FLASH
+    curses_stdscr();
+    flash();
+#endif
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-getch">
+            
+              <a name="method-c-getch"></a><b>getch</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Read and returns a character from the window.</p>
+
+<p>See <a href="Curses/Key.html">Curses::Key</a> to all the function KEY_*
+available</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-getch_source')" id="l_method-c-getch_source">show</a>
+                
+              </p>
+              <div id="method-c-getch_source" class="dyn-source">
+                <pre>static VALUE
+curses_getch(VALUE obj)
+{
+    int c;
+
+    curses_stdscr();
+    rb_thread_blocking_region(getch_func, (void *)&amp;c, RUBY_UBF_IO, 0);
+    if (c == EOF) return Qnil;
+    if (rb_isprint(c)) {
+        char ch = (char)c;
+
+        return rb_locale_str_new(&amp;ch, 1);
+    }
+    return UINT2NUM(c);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-getmouse">
+            
+              <a name="method-c-getmouse"></a><b>getmouse</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns coordinates of the mouse.</p>
+
+<p>This will read and pop the mouse event data off the queue</p>
+
+<p>See the BUTTON*, <a
+href="Curses.html#ALL_MOUSE_EVENTS">ALL_MOUSE_EVENTS</a> and <a
+href="Curses.html#REPORT_MOUSE_POSITION">REPORT_MOUSE_POSITION</a>
+constants, to examine the mask of the event</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-getmouse_source')" id="l_method-c-getmouse_source">show</a>
+                
+              </p>
+              <div id="method-c-getmouse_source" class="dyn-source">
+                <pre>static VALUE
+curses_getmouse(VALUE obj)
+{
+    struct mousedata *mdata;
+    VALUE val;
+
+    curses_stdscr();
+    val = Data_Make_Struct(cMouseEvent,struct mousedata,
+                           0,curses_mousedata_free,mdata);
+    mdata-&gt;mevent = (MEVENT*)xmalloc(sizeof(MEVENT));
+    return (getmouse(mdata-&gt;mevent) == OK) ? val : Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-getstr">
+            
+              <a name="method-c-getstr"></a><b>getstr</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>This is equivalent to a series f <a
+href="Curses/Window.html#method-i-getch">Curses::Window#getch</a> calls</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-getstr_source')" id="l_method-c-getstr_source">show</a>
+                
+              </p>
+              <div id="method-c-getstr_source" class="dyn-source">
+                <pre>static VALUE
+curses_getstr(VALUE obj)
+{
+    char rtn[GETSTR_BUF_SIZE];
+
+    curses_stdscr();
+    rb_thread_blocking_region(getstr_func, (void *)rtn, RUBY_UBF_IO, 0);
+    return rb_locale_str_new_cstr(rtn);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-has_colors-3F">
+            
+              <a name="method-c-has_colors-3F"></a><b>has_colors?</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns <code>true</code> or <code>false</code> depending on whether the
+terminal has color capbilities.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-has_colors-3F_source')" id="l_method-c-has_colors-3F_source">show</a>
+                
+              </p>
+              <div id="method-c-has_colors-3F_source" class="dyn-source">
+                <pre>static VALUE
+curses_has_colors(VALUE obj)
+{
+    curses_stdscr();
+    return has_colors() ? Qtrue : Qfalse;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-inch">
+            
+              <a name="method-c-inch"></a><b>inch</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the character at the current position.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-inch_source')" id="l_method-c-inch_source">show</a>
+                
+              </p>
+              <div id="method-c-inch_source" class="dyn-source">
+                <pre>static VALUE
+curses_inch(VALUE obj)
+{
+    curses_stdscr();
+    return CH2FIX(inch());
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-init_color">
+            
+              <a name="method-c-init_color"></a><b>init_color(color, r, g, b)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Changes the definition of a color. It takes four arguments:</p>
+<ul><li>
+<p>the number of the color to be changed, <code>color</code></p>
+</li><li>
+<p>the amount of red, <code>r</code></p>
+</li><li>
+<p>the amount of green, <code>g</code></p>
+</li><li>
+<p>the amount of blue, <code>b</code></p>
+</li></ul>
+
+<p>The value of the first argument must be between 0 and  <a
+href="Curses.html#COLORS">COLORS</a>. (See the section Colors for the
+default color index.)  Each of the last three arguments must be a value
+between 0 and 1000. When <a
+href="Curses.html#method-c-init_color">::init_color</a> is used, all
+occurrences of that color on the screen immediately change to the new
+definition.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-init_color_source')" id="l_method-c-init_color_source">show</a>
+                
+              </p>
+              <div id="method-c-init_color_source" class="dyn-source">
+                <pre>static VALUE
+curses_init_color(VALUE obj, VALUE color, VALUE r, VALUE g, VALUE b)
+{
+    /* may have to raise exception on ERR */
+    curses_stdscr();
+    return (init_color(NUM2INT(color),NUM2INT(r),
+                       NUM2INT(g),NUM2INT(b)) == OK) ? Qtrue : Qfalse;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-init_pair">
+            
+              <a name="method-c-init_pair"></a><b>init_pair(pair, f, b)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Changes the definition of a color-pair.</p>
+
+<p>It takes three arguments: the number of the color-pair to be changed
+<code>pair</code>, the foreground color number <code>f</code>, and the
+background color number <code>b</code>.</p>
+
+<p>If the color-pair was previously initialized, the screen is refreshed and
+all occurrences of that color-pair are changed to the new definition.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-init_pair_source')" id="l_method-c-init_pair_source">show</a>
+                
+              </p>
+              <div id="method-c-init_pair_source" class="dyn-source">
+                <pre>static VALUE
+curses_init_pair(VALUE obj, VALUE pair, VALUE f, VALUE b)
+{
+    /* may have to raise exception on ERR */
+    curses_stdscr();
+    return (init_pair(NUM2INT(pair),NUM2INT(f),NUM2INT(b)) == OK) ? Qtrue : Qfalse;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-init_screen">
+            
+              <a name="method-c-init_screen"></a><b>init_screen</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Initialize a standard screen</p>
+
+<p>see also <a href="Curses.html#method-c-stdscr">::stdscr</a></p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-init_screen_source')" id="l_method-c-init_screen_source">show</a>
+                
+              </p>
+              <div id="method-c-init_screen_source" class="dyn-source">
+                <pre>static VALUE
+curses_init_screen(void)
+{
+    rb_secure(4);
+    if (rb_stdscr) return rb_stdscr;
+    initscr();
+    if (stdscr == 0) {
+        rb_raise(rb_eRuntimeError, &quot;can't initialize curses&quot;);
+    }
+    clear();
+    rb_stdscr = prep_window(cWindow, stdscr);
+    return rb_stdscr;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-insch">
+            
+              <a name="method-c-insch"></a><b>insch(ch)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Insert a character <code>ch</code>, before the cursor.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-insch_source')" id="l_method-c-insch_source">show</a>
+                
+              </p>
+              <div id="method-c-insch_source" class="dyn-source">
+                <pre>static VALUE
+curses_insch(VALUE obj, VALUE ch)
+{
+    curses_stdscr();
+    insch(NUM2CH(ch));
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-insertln">
+            
+              <a name="method-c-insertln"></a><b>insertln</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Inserts a line above the cursor, and the bottom line is lost</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-insertln_source')" id="l_method-c-insertln_source">show</a>
+                
+              </p>
+              <div id="method-c-insertln_source" class="dyn-source">
+                <pre>static VALUE
+curses_insertln(VALUE obj)
+{
+    curses_stdscr();
+#if defined(HAVE_INSERTLN) || defined(insertln)
+    insertln();
+#endif
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-keyname">
+            
+              <a name="method-c-keyname"></a><b>keyname(c)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the character string corresponding to key <code>c</code></p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-keyname_source')" id="l_method-c-keyname_source">show</a>
+                
+              </p>
+              <div id="method-c-keyname_source" class="dyn-source">
+                <pre>static VALUE
+curses_keyname(VALUE obj, VALUE c)
+{
+#ifdef HAVE_KEYNAME
+    int cc = curses_char(c);
+    const char *name;
+
+    curses_stdscr();
+    name = keyname(cc);
+    if (name) {
+        return rb_str_new_cstr(name);
+    }
+    else {
+        return Qnil;
+    }
+#else
+    return Qnil;
+#endif
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-lines">
+            
+              <a name="method-c-lines"></a><b>lines</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the number of lines on the screen</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-lines_source')" id="l_method-c-lines_source">show</a>
+                
+              </p>
+              <div id="method-c-lines_source" class="dyn-source">
+                <pre>static VALUE
+curses_lines(void)
+{
+    return INT2FIX(LINES);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-mouseinterval">
+            
+              <a name="method-c-mouseinterval"></a><b>mouseinterval(interval)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>The <a href="Curses.html#method-c-mouseinterval">::mouseinterval</a>
+function sets the maximum time (in thousands of a second) that can elapse
+between press and release events for them to be recognized as a click.</p>
+
+<p>Use <a href="Curses.html#method-c-mouseinterval">::mouseinterval</a> to
+disable click resolution. This function returns the previous interval
+value.</p>
+
+<p>Use <a href="Curses.html#method-c-mouseinterval">::mouseinterval</a> to
+obtain the interval without altering it.</p>
+
+<p>The default is one sixth of a second.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-mouseinterval_source')" id="l_method-c-mouseinterval_source">show</a>
+                
+              </p>
+              <div id="method-c-mouseinterval_source" class="dyn-source">
+                <pre>static VALUE
+curses_mouseinterval(VALUE obj, VALUE interval)
+{
+    curses_stdscr();
+    return mouseinterval(NUM2INT(interval)) ? Qtrue : Qfalse;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-mousemask">
+            
+              <a name="method-c-mousemask"></a><b>mousemask(mask)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the <code>mask</code> of the reportable events</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-mousemask_source')" id="l_method-c-mousemask_source">show</a>
+                
+              </p>
+              <div id="method-c-mousemask_source" class="dyn-source">
+                <pre>static VALUE
+curses_mousemask(VALUE obj, VALUE mask)
+{
+    curses_stdscr();
+    return INT2NUM(mousemask(NUM2UINT(mask),NULL));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-nl">
+            
+              <a name="method-c-nl"></a><b>nl</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Enable the underlying display device to translate the return key into
+newline on input, and whether it translates newline into return and
+line-feed on output (in either case, the call <a
+href="Curses.html#method-c-addch">::addch</a>(‘n’) does the equivalent of
+return and line feed on the virtual screen).</p>
+
+<p>Initially, these translations do occur. If you disable them using <a
+href="Curses.html#method-c-nonl">::nonl</a>, curses will be able to make
+better use of the line-feed capability, resulting in faster cursor motion.
+Also, curses will then be able to detect the return key.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-nl_source')" id="l_method-c-nl_source">show</a>
+                
+              </p>
+              <div id="method-c-nl_source" class="dyn-source">
+                <pre>static VALUE
+curses_nl(VALUE obj)
+{
+    curses_stdscr();
+    nl();
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-nocbreak">
+            
+              <a name="method-c-nocbreak"></a><b>nocbreak</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Put the terminal into normal mode (out of cbreak mode).</p>
+
+<p>See <a href="Curses.html#method-c-cbreak">::cbreak</a> for more detail.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-nocbreak_source')" id="l_method-c-nocbreak_source">show</a>
+                
+              </p>
+              <div id="method-c-nocbreak_source" class="dyn-source">
+                <pre>static VALUE
+curses_nocbreak(VALUE obj)
+{
+    curses_stdscr();
+    nocbreak();
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-nocrmode">
+            
+              <a name="method-c-nocrmode"></a><b>nocrmode</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Put the terminal into normal mode (out of cbreak mode).</p>
+
+<p>See <a href="Curses.html#method-c-cbreak">::cbreak</a> for more detail.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-nocrmode_source')" id="l_method-c-nocrmode_source">show</a>
+                
+              </p>
+              <div id="method-c-nocrmode_source" class="dyn-source">
+                <pre>static VALUE
+curses_nocbreak(VALUE obj)
+{
+    curses_stdscr();
+    nocbreak();
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-noecho">
+            
+              <a name="method-c-noecho"></a><b>noecho</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Disables characters typed by the user to be echoed by <a
+href="Curses.html#method-c-getch">::getch</a> as they are typed.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-noecho_source')" id="l_method-c-noecho_source">show</a>
+                
+              </p>
+              <div id="method-c-noecho_source" class="dyn-source">
+                <pre>static VALUE
+curses_noecho(VALUE obj)
+{
+    curses_stdscr();
+    noecho();
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-nonl">
+            
+              <a name="method-c-nonl"></a><b>nonl</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Disable the underlying display device to translate the return key into
+newline on input</p>
+
+<p>See <a href="Curses.html#method-c-nl">::nl</a> for more detail</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-nonl_source')" id="l_method-c-nonl_source">show</a>
+                
+              </p>
+              <div id="method-c-nonl_source" class="dyn-source">
+                <pre>static VALUE
+curses_nonl(VALUE obj)
+{
+    curses_stdscr();
+    nonl();
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-noraw">
+            
+              <a name="method-c-noraw"></a><b>noraw</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Put the terminal out of raw mode.</p>
+
+<p>see <a href="Curses.html#method-c-raw">::raw</a> for more detail</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-noraw_source')" id="l_method-c-noraw_source">show</a>
+                
+              </p>
+              <div id="method-c-noraw_source" class="dyn-source">
+                <pre>static VALUE
+curses_noraw(VALUE obj)
+{
+    curses_stdscr();
+    noraw();
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-pair_content">
+            
+              <a name="method-c-pair_content"></a><b>pair_content(pair)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns a 2 item Array, with the foreground and background color, in
+<code>pair</code></p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-pair_content_source')" id="l_method-c-pair_content_source">show</a>
+                
+              </p>
+              <div id="method-c-pair_content_source" class="dyn-source">
+                <pre>static VALUE
+curses_pair_content(VALUE obj, VALUE pair)
+{
+    short f,b;
+
+    curses_stdscr();
+    pair_content(NUM2INT(pair),&amp;f,&amp;b);
+    return rb_ary_new3(2,INT2FIX(f),INT2FIX(b));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-pair_number">
+            
+              <a name="method-c-pair_number"></a><b>pair_number(attrs)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the Fixnum color pair number of attributes <code>attrs</code>.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-pair_number_source')" id="l_method-c-pair_number_source">show</a>
+                
+              </p>
+              <div id="method-c-pair_number_source" class="dyn-source">
+                <pre>static VALUE
+curses_pair_number(VALUE obj, VALUE attrs)
+{
+    curses_stdscr();
+    return INT2FIX(PAIR_NUMBER(NUM2INT(attrs)));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-raw">
+            
+              <a name="method-c-raw"></a><b>raw</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Put the terminal into raw mode.</p>
+
+<p>Raw mode is similar to <a href="Curses.html#method-c-cbreak">::cbreak</a>
+mode, in that characters typed are immediately passed through to the user
+program.</p>
+
+<p>The differences are that in raw mode, the interrupt, quit, suspend, and
+flow control characters are all passed through uninterpreted, instead of
+generating a signal. The behavior of the BREAK key depends on other bits in
+the tty driver that are not set by curses.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-raw_source')" id="l_method-c-raw_source">show</a>
+                
+              </p>
+              <div id="method-c-raw_source" class="dyn-source">
+                <pre>static VALUE
+curses_raw(VALUE obj)
+{
+    curses_stdscr();
+    raw();
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-refresh">
+            
+              <a name="method-c-refresh"></a><b>refresh</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Refreshes the windows and lines.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-refresh_source')" id="l_method-c-refresh_source">show</a>
+                
+              </p>
+              <div id="method-c-refresh_source" class="dyn-source">
+                <pre>static VALUE
+curses_refresh(VALUE obj)
+{
+    curses_stdscr();
+    refresh();
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-reset_prog_mode">
+            
+              <a name="method-c-reset_prog_mode"></a><b>reset_prog_mode</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Reset the current terminal modes to the saved state by the <a
+href="Curses.html#method-c-def_prog_mode">::def_prog_mode</a></p>
+
+<p>This is done automatically by <a
+href="Curses.html#method-c-close_screen">::close_screen</a></p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-reset_prog_mode_source')" id="l_method-c-reset_prog_mode_source">show</a>
+                
+              </p>
+              <div id="method-c-reset_prog_mode_source" class="dyn-source">
+                <pre>static VALUE
+curses_reset_prog_mode(VALUE obj)
+{
+    curses_stdscr();
+    return reset_prog_mode() == OK ? Qtrue : Qfalse;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-resize">
+            
+              <a name="method-c-resize"></a><b>resizeterm(lines, cols)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Resize the current term to Fixnum <code>lines</code> and Fixnum
+<code>cols</code></p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-resize_source')" id="l_method-c-resize_source">show</a>
+                
+              </p>
+              <div id="method-c-resize_source" class="dyn-source">
+                <pre>static VALUE
+curses_resizeterm(VALUE obj, VALUE lin, VALUE col)
+{
+#if defined(HAVE_RESIZETERM)
+    curses_stdscr();
+    return (resizeterm(NUM2INT(lin),NUM2INT(col)) == OK) ? Qtrue : Qfalse;
+#else
+    return Qnil;
+#endif
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-resizeterm">
+            
+              <a name="method-c-resizeterm"></a><b>resizeterm(lines, cols)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Resize the current term to Fixnum <code>lines</code> and Fixnum
+<code>cols</code></p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-resizeterm_source')" id="l_method-c-resizeterm_source">show</a>
+                
+              </p>
+              <div id="method-c-resizeterm_source" class="dyn-source">
+                <pre>static VALUE
+curses_resizeterm(VALUE obj, VALUE lin, VALUE col)
+{
+#if defined(HAVE_RESIZETERM)
+    curses_stdscr();
+    return (resizeterm(NUM2INT(lin),NUM2INT(col)) == OK) ? Qtrue : Qfalse;
+#else
+    return Qnil;
+#endif
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-scrl">
+            
+              <a name="method-c-scrl"></a><b>scrl(num)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Scrolls the current window Fixnum <code>num</code> lines. The current
+cursor position is not changed.</p>
+
+<p>For positive <code>num</code>, it scrolls up.</p>
+
+<p>For negative <code>num</code>, it scrolls down.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-scrl_source')" id="l_method-c-scrl_source">show</a>
+                
+              </p>
+              <div id="method-c-scrl_source" class="dyn-source">
+                <pre>static VALUE
+curses_scrl(VALUE obj, VALUE n)
+{
+    /* may have to raise exception on ERR */
+#ifdef HAVE_SCRL
+    curses_stdscr();
+    return (scrl(NUM2INT(n)) == OK) ? Qtrue : Qfalse;
+#else
+    return Qfalse;
+#endif
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-setpos">
+            
+              <a name="method-c-setpos"></a><b>setpos(y, x)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>A setter for the position of the cursor, using coordinates <code>x</code>
+and <code>y</code></p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-setpos_source')" id="l_method-c-setpos_source">show</a>
+                
+              </p>
+              <div id="method-c-setpos_source" class="dyn-source">
+                <pre>static VALUE
+curses_setpos(VALUE obj, VALUE y, VALUE x)
+{
+    curses_stdscr();
+    move(NUM2INT(y), NUM2INT(x));
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-setscrreg">
+            
+              <a name="method-c-setscrreg"></a><b>setscrreg(top, bottom)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p><a href="Set.html">Set</a> a software scrolling region in a window.
+<code>top</code> and <code>bottom</code> are lines numbers of the margin.</p>
+
+<p>If this option and Curses.scrollok are enabled, an attempt to move off the
+bottom margin line causes all lines in the scrolling region to scroll one
+line in the direction of the first line. Only the text of the window is
+scrolled.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-setscrreg_source')" id="l_method-c-setscrreg_source">show</a>
+                
+              </p>
+              <div id="method-c-setscrreg_source" class="dyn-source">
+                <pre>static VALUE
+curses_setscrreg(VALUE obj, VALUE top, VALUE bottom)
+{
+    /* may have to raise exception on ERR */
+#ifdef HAVE_SETSCRREG
+    curses_stdscr();
+    return (setscrreg(NUM2INT(top), NUM2INT(bottom)) == OK) ? Qtrue : Qfalse;
+#else
+    return Qfalse;
+#endif
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-standend">
+            
+              <a name="method-c-standend"></a><b>standend</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Enables the Normal display (no highlight)</p>
+
+<p>This is equivalent to <a href="Curses.html#method-c-attron">::attron</a></p>
+
+<p>see also <a
+href="Curses/Window.html#method-i-attrset">Curses::Window#attrset</a> for
+additional information.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-standend_source')" id="l_method-c-standend_source">show</a>
+                
+              </p>
+              <div id="method-c-standend_source" class="dyn-source">
+                <pre>static VALUE
+curses_standend(VALUE obj)
+{
+    curses_stdscr();
+    standend();
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-standout">
+            
+              <a name="method-c-standout"></a><b>standout</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Enables the best highlighting mode of the terminal.</p>
+
+<p>This is equivalent to Curses:<a
+href="Curses/Window.html#method-i-attron">Curses::Window#attron</a></p>
+
+<p>see also <a
+href="Curses/Window.html#method-i-attrset">Curses::Window#attrset</a>
+additional information</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-standout_source')" id="l_method-c-standout_source">show</a>
+                
+              </p>
+              <div id="method-c-standout_source" class="dyn-source">
+                <pre>static VALUE
+curses_standout(VALUE obj)
+{
+    curses_stdscr();
+    standout();
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-start_color">
+            
+              <a name="method-c-start_color"></a><b>start_color</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Initializes the color attributes, for terminals that support it.</p>
+
+<p>This must be called, in order to use color attributes. It is good practice
+to call it just after <a
+href="Curses.html#method-c-init_screen">::init_screen</a></p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-start_color_source')" id="l_method-c-start_color_source">show</a>
+                
+              </p>
+              <div id="method-c-start_color_source" class="dyn-source">
+                <pre>static VALUE
+curses_start_color(VALUE obj)
+{
+    /* may have to raise exception on ERR */
+    curses_stdscr();
+    return (start_color() == OK) ? Qtrue : Qfalse;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-stdscr">
+            
+              <a name="method-c-stdscr"></a><b>stdscr</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>The Standard Screen.</p>
+
+<p>Upon initializing curses, a default window called stdscr, which is the size
+of the terminal screen, is created.</p>
+
+<p>Many curses functions use this window.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-stdscr_source')" id="l_method-c-stdscr_source">show</a>
+                
+              </p>
+              <div id="method-c-stdscr_source" class="dyn-source">
+                <pre>#define curses_stdscr curses_init_screen</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-timeout-3D">
+            
+              <a name="method-c-timeout-3D"></a><b>timeout=(delay)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Sets block and non-blocking reads for the window.</p>
+<ul><li>
+<p>If delay is negative, blocking read is used (i.e., waits indefinitely for
+input).</p>
+</li><li>
+<p>If delay is zero, then non-blocking read is used (i.e., read returns ERR if
+no input is waiting).</p>
+</li><li>
+<p>If delay is positive, then read blocks for delay milliseconds, and returns
+ERR if there is still no input.</p>
+</li></ul>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-timeout-3D_source')" id="l_method-c-timeout-3D_source">show</a>
+                
+              </p>
+              <div id="method-c-timeout-3D_source" class="dyn-source">
+                <pre>static VALUE
+curses_timeout(VALUE obj, VALUE delay)
+{
+    curses_stdscr();
+    timeout(NUM2INT(delay));
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-ungetch">
+            
+              <a name="method-c-ungetch"></a><b>ungetch(ch)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Places <code>ch</code> back onto the input queue to be returned by the next
+call to <a href="Curses.html#method-c-getch">::getch</a>.</p>
+
+<p>There is just one input queue for all windows.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-ungetch_source')" id="l_method-c-ungetch_source">show</a>
+                
+              </p>
+              <div id="method-c-ungetch_source" class="dyn-source">
+                <pre>static VALUE
+curses_ungetch(VALUE obj, VALUE ch)
+{
+    int c = curses_char(ch);
+    curses_stdscr();
+    ungetch(c);
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-ungetmouse">
+            
+              <a name="method-c-ungetmouse"></a><b>ungetmouse</b>(p1)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>It pushes a <a href="Curses.html#KEY_MOUSE">KEY_MOUSE</a> event onto the
+input queue, and associates with that event the given state data and
+screen-relative character-cell coordinates.</p>
+
+<p>The <a href="Curses.html#method-c-ungetmouse">::ungetmouse</a> function
+behaves analogously to <a
+href="Curses.html#method-c-ungetch">::ungetch</a>.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-ungetmouse_source')" id="l_method-c-ungetmouse_source">show</a>
+                
+              </p>
+              <div id="method-c-ungetmouse_source" class="dyn-source">
+                <pre>static VALUE
+curses_ungetmouse(VALUE obj, VALUE mevent)
+{
+    struct mousedata *mdata;
+
+    curses_stdscr();
+    GetMOUSE(mevent,mdata);
+    return (ungetmouse(mdata-&gt;mevent) == OK) ? Qtrue : Qfalse;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-use_default_colors">
+            
+              <a name="method-c-use_default_colors"></a><b>use_default_colors</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>tells the curses library to use terminal’s default colors.</p>
+
+<p>see also the system manual for default_colors(3)</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-use_default_colors_source')" id="l_method-c-use_default_colors_source">show</a>
+                
+              </p>
+              <div id="method-c-use_default_colors_source" class="dyn-source">
+                <pre>static VALUE
+curses_use_default_colors(VALUE obj)
+{
+    curses_stdscr();
+    use_default_colors();
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+                        </div>
+    </div>
+  </body>
+</html>    

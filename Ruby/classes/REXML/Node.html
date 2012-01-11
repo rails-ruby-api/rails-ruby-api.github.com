@@ -1,0 +1,469 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>REXML::Node</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Module</span> 
+            REXML::Node 
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/Users/fschumac/_rvm/src/ruby-1_9_3-p0/lib/rexml/node_rb.html">/Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/rexml/node.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>Represents a node in the tree.  Nodes are never encountered except as
+superclasses of other objects.  Nodes have siblings.</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>E</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-each_recursive">each_recursive</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>F</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-find_first_recursive">find_first_recursive</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>I</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-indent">indent</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-index_in_parent">index_in_parent</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-next_sibling_node">next_sibling_node</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>P</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-parent-3F">parent?</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-previous_sibling_node">previous_sibling_node</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-to_s">to_s</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+        
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-each_recursive">
+            
+              <a name="method-i-each_recursive"></a><b>each_recursive</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Visit all subnodes of <code>self</code> recursively</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-each_recursive_source')" id="l_method-i-each_recursive_source">show</a>
+                
+              </p>
+              <div id="method-i-each_recursive_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/rexml/node.rb, line 53</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">each_recursive</span>(&amp;<span class="ruby-identifier">block</span>) <span class="ruby-comment"># :yields: node</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">elements</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">node</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">block</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">node</span>)
+    <span class="ruby-identifier">node</span>.<span class="ruby-identifier">each_recursive</span>(&amp;<span class="ruby-identifier">block</span>)
+  }
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-find_first_recursive">
+            
+              <a name="method-i-find_first_recursive"></a><b>find_first_recursive</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p><a href="../Find.html">Find</a> (and return) first subnode (recursively)
+for which the block evaluates to true. Returns <code>nil</code> if none was
+found.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-find_first_recursive_source')" id="l_method-i-find_first_recursive_source">show</a>
+                
+              </p>
+              <div id="method-i-find_first_recursive_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/rexml/node.rb, line 62</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">find_first_recursive</span>(&amp;<span class="ruby-identifier">block</span>) <span class="ruby-comment"># :yields: node</span>
+  <span class="ruby-identifier">each_recursive</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">node</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-identifier">node</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">block</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">node</span>)
+  }
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-indent">
+            
+              <a name="method-i-indent"></a><b>indent</b>(to, ind)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-indent_source')" id="l_method-i-indent_source">show</a>
+                
+              </p>
+              <div id="method-i-indent_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/rexml/node.rb, line 38</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">indent</span> <span class="ruby-identifier">to</span>, <span class="ruby-identifier">ind</span>
+                    <span class="ruby-keyword">if</span> <span class="ruby-ivar">@parent</span> <span class="ruby-keyword">and</span> <span class="ruby-ivar">@parent</span>.<span class="ruby-identifier">context</span> <span class="ruby-keyword">and</span> <span class="ruby-keyword">not</span> <span class="ruby-ivar">@parent</span>.<span class="ruby-identifier">context</span>[<span class="ruby-value">:indentstyle</span>].<span class="ruby-identifier">nil?</span> <span class="ruby-keyword">then</span>
+                            <span class="ruby-identifier">indentstyle</span> = <span class="ruby-ivar">@parent</span>.<span class="ruby-identifier">context</span>[<span class="ruby-value">:indentstyle</span>]
+                    <span class="ruby-keyword">else</span>
+                            <span class="ruby-identifier">indentstyle</span> = <span class="ruby-string">'  '</span>
+                    <span class="ruby-keyword">end</span>
+                    <span class="ruby-identifier">to</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">indentstyle</span>*<span class="ruby-identifier">ind</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">ind</span><span class="ruby-operator">&lt;</span><span class="ruby-number">1</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-index_in_parent">
+            
+              <a name="method-i-index_in_parent"></a><b>index_in_parent</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the position that <code>self</code> holds in its parent’s array,
+indexed from 1.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-index_in_parent_source')" id="l_method-i-index_in_parent_source">show</a>
+                
+              </p>
+              <div id="method-i-index_in_parent_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/rexml/node.rb, line 71</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">index_in_parent</span>
+  <span class="ruby-identifier">parent</span>.<span class="ruby-identifier">index</span>(<span class="ruby-keyword">self</span>)<span class="ruby-operator">+</span><span class="ruby-number">1</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-next_sibling_node">
+            
+              <a name="method-i-next_sibling_node"></a><b>next_sibling_node</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>@return the next sibling (nil if unset)</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-next_sibling_node_source')" id="l_method-i-next_sibling_node_source">show</a>
+                
+              </p>
+              <div id="method-i-next_sibling_node_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/rexml/node.rb, line 10</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">next_sibling_node</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@parent</span>.<span class="ruby-identifier">nil?</span>
+  <span class="ruby-ivar">@parent</span>[ <span class="ruby-ivar">@parent</span>.<span class="ruby-identifier">index</span>(<span class="ruby-keyword">self</span>) <span class="ruby-operator">+</span> <span class="ruby-number">1</span> ]
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-parent-3F">
+            
+              <a name="method-i-parent-3F"></a><b>parent?</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-parent-3F_source')" id="l_method-i-parent-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-parent-3F_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/rexml/node.rb, line 47</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">parent?</span>
+  <span class="ruby-keyword">false</span>;
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-previous_sibling_node">
+            
+              <a name="method-i-previous_sibling_node"></a><b>previous_sibling_node</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>@return the previous sibling (nil if unset)</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-previous_sibling_node_source')" id="l_method-i-previous_sibling_node_source">show</a>
+                
+              </p>
+              <div id="method-i-previous_sibling_node_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/rexml/node.rb, line 16</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">previous_sibling_node</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@parent</span>.<span class="ruby-identifier">nil?</span>
+  <span class="ruby-identifier">ind</span> = <span class="ruby-ivar">@parent</span>.<span class="ruby-identifier">index</span>(<span class="ruby-keyword">self</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">ind</span> <span class="ruby-operator">==</span> <span class="ruby-number">0</span>
+  <span class="ruby-ivar">@parent</span>[ <span class="ruby-identifier">ind</span> <span class="ruby-operator">-</span> <span class="ruby-number">1</span> ]
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-to_s">
+            
+              <a name="method-i-to_s"></a><b>to_s</b>(indent=nil)
+            
+          </div>
+          
+          
+            <div class="description">
+              <dl class="rdoc-list note-list"><dt>indent
+<dd>
+<p><strong>DEPRECATED</strong> This parameter is now ignored.  See the
+formatters in the <a href="Formatters.html">REXML::Formatters</a> package
+for changing the output style.</p>
+</dd></dl>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-to_s_source')" id="l_method-i-to_s_source">show</a>
+                
+              </p>
+              <div id="method-i-to_s_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/rexml/node.rb, line 26</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">to_s</span> <span class="ruby-identifier">indent</span>=<span class="ruby-keyword">nil</span>
+  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">indent</span>.<span class="ruby-identifier">nil?</span>
+    <span class="ruby-constant">Kernel</span>.<span class="ruby-identifier">warn</span>( <span class="ruby-node">&quot;#{self.class.name}.to_s(indent) parameter is deprecated&quot;</span> )
+    <span class="ruby-identifier">f</span> = <span class="ruby-constant">REXML</span><span class="ruby-operator">::</span><span class="ruby-constant">Formatters</span><span class="ruby-operator">::</span><span class="ruby-constant">Pretty</span>.<span class="ruby-identifier">new</span>( <span class="ruby-identifier">indent</span> )
+    <span class="ruby-identifier">f</span>.<span class="ruby-identifier">write</span>( <span class="ruby-keyword">self</span>, <span class="ruby-identifier">rv</span> = <span class="ruby-string">&quot;&quot;</span> )
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">f</span> = <span class="ruby-constant">REXML</span><span class="ruby-operator">::</span><span class="ruby-constant">Formatters</span><span class="ruby-operator">::</span><span class="ruby-constant">Default</span>.<span class="ruby-identifier">new</span>
+    <span class="ruby-identifier">f</span>.<span class="ruby-identifier">write</span>( <span class="ruby-keyword">self</span>, <span class="ruby-identifier">rv</span> = <span class="ruby-string">&quot;&quot;</span> )
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">rv</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    

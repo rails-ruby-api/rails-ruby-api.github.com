@@ -1,0 +1,593 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Psych::Visitors::ToRuby</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/github.css" type="text/css" media="screen" />
+<script src="../../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            Psych::Visitors::ToRuby 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="Visitor.html">Psych::Visitors::Visitor</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../../files/Users/fschumac/_rvm/src/ruby-1_9_3-p0/ext/psych/lib/psych/visitors/to_ruby_rb.html">/Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/psych/lib/psych/visitors/to_ruby.rb</a></li>
+            
+            <li><a href="../../../files/Users/fschumac/_rvm/src/ruby-1_9_3-p0/ext/psych/to_ruby_c.html">/Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/psych/to_ruby.c</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>This class walks a YAML AST, converting each node to ruby</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>A</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-accept">accept</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>V</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-visit_Psych_Nodes_Alias">visit_Psych_Nodes_Alias</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-visit_Psych_Nodes_Document">visit_Psych_Nodes_Document</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-visit_Psych_Nodes_Mapping">visit_Psych_Nodes_Mapping</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-visit_Psych_Nodes_Scalar">visit_Psych_Nodes_Scalar</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-visit_Psych_Nodes_Sequence">visit_Psych_Nodes_Sequence</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-visit_Psych_Nodes_Stream">visit_Psych_Nodes_Stream</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <a name="method-c-new"></a><b>new</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/psych/lib/psych/visitors/to_ruby.rb, line 8</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">initialize</span>
+  <span class="ruby-keyword">super</span>
+  <span class="ruby-ivar">@st</span> = {}
+  <span class="ruby-ivar">@ss</span> = <span class="ruby-constant">ScalarScanner</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-ivar">@domain_types</span> = <span class="ruby-constant">Psych</span>.<span class="ruby-identifier">domain_types</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-accept">
+            
+              <a name="method-i-accept"></a><b>accept</b>(target)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-accept_source')" id="l_method-i-accept_source">show</a>
+                
+              </p>
+              <div id="method-i-accept_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/psych/lib/psych/visitors/to_ruby.rb, line 15</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">accept</span> <span class="ruby-identifier">target</span>
+  <span class="ruby-identifier">result</span> = <span class="ruby-keyword">super</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">result</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@domain_types</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-operator">||</span> <span class="ruby-operator">!</span><span class="ruby-identifier">target</span>.<span class="ruby-identifier">tag</span>
+
+  <span class="ruby-identifier">key</span> = <span class="ruby-identifier">target</span>.<span class="ruby-identifier">tag</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-regexp">%r^[!\/]*/</span>, <span class="ruby-string">''</span>).<span class="ruby-identifier">sub</span>(<span class="ruby-regexp">%r(,\d+)\//</span>, <span class="ruby-string">'\1:'</span>)
+  <span class="ruby-identifier">key</span> = <span class="ruby-node">&quot;tag:#{key}&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">key</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp">%r^(tag:|x-private)/</span>
+
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@domain_types</span>.<span class="ruby-identifier">key?</span> <span class="ruby-identifier">key</span>
+    <span class="ruby-identifier">value</span>, <span class="ruby-identifier">block</span> = <span class="ruby-ivar">@domain_types</span>[<span class="ruby-identifier">key</span>]
+    <span class="ruby-keyword">return</span> <span class="ruby-identifier">block</span>.<span class="ruby-identifier">call</span> <span class="ruby-identifier">value</span>, <span class="ruby-identifier">result</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">result</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-visit_Psych_Nodes_Alias">
+            
+              <a name="method-i-visit_Psych_Nodes_Alias"></a><b>visit_Psych_Nodes_Alias</b>(o)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-visit_Psych_Nodes_Alias_source')" id="l_method-i-visit_Psych_Nodes_Alias_source">show</a>
+                
+              </p>
+              <div id="method-i-visit_Psych_Nodes_Alias_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/psych/lib/psych/visitors/to_ruby.rb, line 203</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">visit_Psych_Nodes_Alias</span> <span class="ruby-identifier">o</span>
+  <span class="ruby-ivar">@st</span>[<span class="ruby-identifier">o</span>.<span class="ruby-identifier">anchor</span>]
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-visit_Psych_Nodes_Document">
+            
+              <a name="method-i-visit_Psych_Nodes_Document"></a><b>visit_Psych_Nodes_Document</b>(o)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-visit_Psych_Nodes_Document_source')" id="l_method-i-visit_Psych_Nodes_Document_source">show</a>
+                
+              </p>
+              <div id="method-i-visit_Psych_Nodes_Document_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/psych/lib/psych/visitors/to_ruby.rb, line 195</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">visit_Psych_Nodes_Document</span> <span class="ruby-identifier">o</span>
+  <span class="ruby-identifier">accept</span> <span class="ruby-identifier">o</span>.<span class="ruby-identifier">root</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-visit_Psych_Nodes_Mapping">
+            
+              <a name="method-i-visit_Psych_Nodes_Mapping"></a><b>visit_Psych_Nodes_Mapping</b>(o)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-visit_Psych_Nodes_Mapping_source')" id="l_method-i-visit_Psych_Nodes_Mapping_source">show</a>
+                
+              </p>
+              <div id="method-i-visit_Psych_Nodes_Mapping_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/psych/lib/psych/visitors/to_ruby.rb, line 121</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">visit_Psych_Nodes_Mapping</span> <span class="ruby-identifier">o</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">revive</span>(<span class="ruby-constant">Psych</span>.<span class="ruby-identifier">load_tags</span>[<span class="ruby-identifier">o</span>.<span class="ruby-identifier">tag</span>], <span class="ruby-identifier">o</span>) <span class="ruby-keyword">if</span> <span class="ruby-constant">Psych</span>.<span class="ruby-identifier">load_tags</span>[<span class="ruby-identifier">o</span>.<span class="ruby-identifier">tag</span>]
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">revive_hash</span>({}, <span class="ruby-identifier">o</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">o</span>.<span class="ruby-identifier">tag</span>
+
+  <span class="ruby-keyword">case</span> <span class="ruby-identifier">o</span>.<span class="ruby-identifier">tag</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-string">'!str'</span>, <span class="ruby-string">'tag:yaml.org,2002:str'</span>
+    <span class="ruby-identifier">members</span> = <span class="ruby-constant">Hash</span>[*<span class="ruby-identifier">o</span>.<span class="ruby-identifier">children</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span> <span class="ruby-identifier">accept</span> <span class="ruby-identifier">c</span> }]
+    <span class="ruby-identifier">string</span> = <span class="ruby-identifier">members</span>.<span class="ruby-identifier">delete</span> <span class="ruby-string">'str'</span>
+    <span class="ruby-identifier">init_with</span>(<span class="ruby-identifier">string</span>, <span class="ruby-identifier">members</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>,<span class="ruby-identifier">v</span><span class="ruby-operator">|</span> [<span class="ruby-identifier">k</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-regexp">%r^@/</span>, <span class="ruby-string">''</span>),<span class="ruby-identifier">v</span>] }, <span class="ruby-identifier">o</span>)
+  <span class="ruby-keyword">when</span> <span class="ruby-regexp">%r^!ruby\/struct:?(.*)?$/</span>
+    <span class="ruby-identifier">klass</span> = <span class="ruby-identifier">resolve_class</span>(<span class="ruby-node">$1</span>)
+
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">klass</span>
+      <span class="ruby-identifier">s</span> = <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">allocate</span>
+      <span class="ruby-ivar">@st</span>[<span class="ruby-identifier">o</span>.<span class="ruby-identifier">anchor</span>] = <span class="ruby-identifier">s</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">o</span>.<span class="ruby-identifier">anchor</span>
+
+      <span class="ruby-identifier">members</span> = {}
+      <span class="ruby-identifier">struct_members</span> = <span class="ruby-identifier">s</span>.<span class="ruby-identifier">members</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span> <span class="ruby-identifier">x</span>.<span class="ruby-identifier">to_sym</span> }
+      <span class="ruby-identifier">o</span>.<span class="ruby-identifier">children</span>.<span class="ruby-identifier">each_slice</span>(<span class="ruby-number">2</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>,<span class="ruby-identifier">v</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">member</span> = <span class="ruby-identifier">accept</span>(<span class="ruby-identifier">k</span>)
+        <span class="ruby-identifier">value</span>  = <span class="ruby-identifier">accept</span>(<span class="ruby-identifier">v</span>)
+        <span class="ruby-keyword">if</span> <span class="ruby-identifier">struct_members</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">member</span>.<span class="ruby-identifier">to_sym</span>)
+          <span class="ruby-identifier">s</span>.<span class="ruby-identifier">send</span>(<span class="ruby-node">&quot;#{member}=&quot;</span>, <span class="ruby-identifier">value</span>)
+        <span class="ruby-keyword">else</span>
+          <span class="ruby-identifier">members</span>[<span class="ruby-identifier">member</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-regexp">%r^@/</span>, <span class="ruby-string">''</span>)] = <span class="ruby-identifier">value</span>
+        <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">end</span>
+      <span class="ruby-identifier">init_with</span>(<span class="ruby-identifier">s</span>, <span class="ruby-identifier">members</span>, <span class="ruby-identifier">o</span>)
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">members</span> = <span class="ruby-identifier">o</span>.<span class="ruby-identifier">children</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span> <span class="ruby-identifier">accept</span> <span class="ruby-identifier">c</span> }
+      <span class="ruby-identifier">h</span> = <span class="ruby-constant">Hash</span>[*<span class="ruby-identifier">members</span>]
+      <span class="ruby-constant">Struct</span>.<span class="ruby-identifier">new</span>(*<span class="ruby-identifier">h</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>,<span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">k</span>.<span class="ruby-identifier">to_sym</span> }).<span class="ruby-identifier">new</span>(*<span class="ruby-identifier">h</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>,<span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">v</span> })
+    <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">when</span> <span class="ruby-string">'!ruby/range'</span>
+    <span class="ruby-identifier">h</span> = <span class="ruby-constant">Hash</span>[*<span class="ruby-identifier">o</span>.<span class="ruby-identifier">children</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span> <span class="ruby-identifier">accept</span> <span class="ruby-identifier">c</span> }]
+    <span class="ruby-constant">Range</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">h</span>[<span class="ruby-string">'begin'</span>], <span class="ruby-identifier">h</span>[<span class="ruby-string">'end'</span>], <span class="ruby-identifier">h</span>[<span class="ruby-string">'excl'</span>])
+
+  <span class="ruby-keyword">when</span> <span class="ruby-regexp">%r^!ruby\/exception:?(.*)?$/</span>
+    <span class="ruby-identifier">h</span> = <span class="ruby-constant">Hash</span>[*<span class="ruby-identifier">o</span>.<span class="ruby-identifier">children</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span> <span class="ruby-identifier">accept</span> <span class="ruby-identifier">c</span> }]
+
+    <span class="ruby-identifier">e</span> = <span class="ruby-identifier">build_exception</span>((<span class="ruby-identifier">resolve_class</span>(<span class="ruby-node">$1</span>) <span class="ruby-operator">||</span> <span class="ruby-constant">Exception</span>),
+                        <span class="ruby-identifier">h</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-string">'message'</span>))
+    <span class="ruby-identifier">init_with</span>(<span class="ruby-identifier">e</span>, <span class="ruby-identifier">h</span>, <span class="ruby-identifier">o</span>)
+
+  <span class="ruby-keyword">when</span> <span class="ruby-string">'!set'</span>, <span class="ruby-string">'tag:yaml.org,2002:set'</span>
+    <span class="ruby-identifier">set</span> = <span class="ruby-constant">Psych</span><span class="ruby-operator">::</span><span class="ruby-constant">Set</span>.<span class="ruby-identifier">new</span>
+    <span class="ruby-ivar">@st</span>[<span class="ruby-identifier">o</span>.<span class="ruby-identifier">anchor</span>] = <span class="ruby-identifier">set</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">o</span>.<span class="ruby-identifier">anchor</span>
+    <span class="ruby-identifier">o</span>.<span class="ruby-identifier">children</span>.<span class="ruby-identifier">each_slice</span>(<span class="ruby-number">2</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>,<span class="ruby-identifier">v</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">set</span>[<span class="ruby-identifier">accept</span>(<span class="ruby-identifier">k</span>)] = <span class="ruby-identifier">accept</span>(<span class="ruby-identifier">v</span>)
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">set</span>
+
+  <span class="ruby-keyword">when</span> <span class="ruby-string">'!ruby/object:Complex'</span>
+    <span class="ruby-identifier">h</span> = <span class="ruby-constant">Hash</span>[*<span class="ruby-identifier">o</span>.<span class="ruby-identifier">children</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span> <span class="ruby-identifier">accept</span> <span class="ruby-identifier">c</span> }]
+    <span class="ruby-constant">Complex</span>(<span class="ruby-identifier">h</span>[<span class="ruby-string">'real'</span>], <span class="ruby-identifier">h</span>[<span class="ruby-string">'image'</span>])
+
+  <span class="ruby-keyword">when</span> <span class="ruby-string">'!ruby/object:Rational'</span>
+    <span class="ruby-identifier">h</span> = <span class="ruby-constant">Hash</span>[*<span class="ruby-identifier">o</span>.<span class="ruby-identifier">children</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span> <span class="ruby-identifier">accept</span> <span class="ruby-identifier">c</span> }]
+    <span class="ruby-constant">Rational</span>(<span class="ruby-identifier">h</span>[<span class="ruby-string">'numerator'</span>], <span class="ruby-identifier">h</span>[<span class="ruby-string">'denominator'</span>])
+
+  <span class="ruby-keyword">when</span> <span class="ruby-regexp">%r^!ruby\/object:?(.*)?$/</span>
+    <span class="ruby-identifier">name</span> = <span class="ruby-node">$1</span> <span class="ruby-operator">||</span> <span class="ruby-string">'Object'</span>
+    <span class="ruby-identifier">obj</span> = <span class="ruby-identifier">revive</span>((<span class="ruby-identifier">resolve_class</span>(<span class="ruby-identifier">name</span>) <span class="ruby-operator">||</span> <span class="ruby-constant">Object</span>), <span class="ruby-identifier">o</span>)
+    <span class="ruby-identifier">obj</span>
+
+  <span class="ruby-keyword">when</span> <span class="ruby-regexp">%r^!map:(.*)$/</span>, <span class="ruby-regexp">%r^!ruby\/hash:(.*)$/</span>
+    <span class="ruby-identifier">revive_hash</span> <span class="ruby-identifier">resolve_class</span>(<span class="ruby-node">$1</span>).<span class="ruby-identifier">new</span>, <span class="ruby-identifier">o</span>
+
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">revive_hash</span>({}, <span class="ruby-identifier">o</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-visit_Psych_Nodes_Scalar">
+            
+              <a name="method-i-visit_Psych_Nodes_Scalar"></a><b>visit_Psych_Nodes_Scalar</b>(o)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-visit_Psych_Nodes_Scalar_source')" id="l_method-i-visit_Psych_Nodes_Scalar_source">show</a>
+                
+              </p>
+              <div id="method-i-visit_Psych_Nodes_Scalar_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/psych/lib/psych/visitors/to_ruby.rb, line 30</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">visit_Psych_Nodes_Scalar</span> <span class="ruby-identifier">o</span>
+  <span class="ruby-ivar">@st</span>[<span class="ruby-identifier">o</span>.<span class="ruby-identifier">anchor</span>] = <span class="ruby-identifier">o</span>.<span class="ruby-identifier">value</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">o</span>.<span class="ruby-identifier">anchor</span>
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">klass</span> = <span class="ruby-constant">Psych</span>.<span class="ruby-identifier">load_tags</span>[<span class="ruby-identifier">o</span>.<span class="ruby-identifier">tag</span>]
+    <span class="ruby-identifier">instance</span> = <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">allocate</span>
+
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">instance</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-value">:init_with</span>)
+      <span class="ruby-identifier">coder</span> = <span class="ruby-constant">Psych</span><span class="ruby-operator">::</span><span class="ruby-constant">Coder</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">o</span>.<span class="ruby-identifier">tag</span>)
+      <span class="ruby-identifier">coder</span>.<span class="ruby-identifier">scalar</span> = <span class="ruby-identifier">o</span>.<span class="ruby-identifier">value</span>
+      <span class="ruby-identifier">instance</span>.<span class="ruby-identifier">init_with</span> <span class="ruby-identifier">coder</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-keyword">return</span> <span class="ruby-identifier">instance</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">o</span>.<span class="ruby-identifier">value</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">o</span>.<span class="ruby-identifier">quoted</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-ivar">@ss</span>.<span class="ruby-identifier">tokenize</span>(<span class="ruby-identifier">o</span>.<span class="ruby-identifier">value</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">o</span>.<span class="ruby-identifier">tag</span>
+
+  <span class="ruby-keyword">case</span> <span class="ruby-identifier">o</span>.<span class="ruby-identifier">tag</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-string">'!binary'</span>, <span class="ruby-string">'tag:yaml.org,2002:binary'</span>
+    <span class="ruby-identifier">o</span>.<span class="ruby-identifier">value</span>.<span class="ruby-identifier">unpack</span>(<span class="ruby-string">'m'</span>).<span class="ruby-identifier">first</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-string">'!str'</span>, <span class="ruby-string">'tag:yaml.org,2002:str'</span>
+    <span class="ruby-identifier">o</span>.<span class="ruby-identifier">value</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-string">&quot;!ruby/object:DateTime&quot;</span>
+    <span class="ruby-identifier">require</span> <span class="ruby-string">'date'</span>
+    <span class="ruby-ivar">@ss</span>.<span class="ruby-identifier">parse_time</span>(<span class="ruby-identifier">o</span>.<span class="ruby-identifier">value</span>).<span class="ruby-identifier">to_datetime</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-string">&quot;!ruby/object:Complex&quot;</span>
+    <span class="ruby-constant">Complex</span>(<span class="ruby-identifier">o</span>.<span class="ruby-identifier">value</span>)
+  <span class="ruby-keyword">when</span> <span class="ruby-string">&quot;!ruby/object:Rational&quot;</span>
+    <span class="ruby-constant">Rational</span>(<span class="ruby-identifier">o</span>.<span class="ruby-identifier">value</span>)
+  <span class="ruby-keyword">when</span> <span class="ruby-string">&quot;!ruby/class&quot;</span>, <span class="ruby-string">&quot;!ruby/module&quot;</span>
+    <span class="ruby-identifier">resolve_class</span> <span class="ruby-identifier">o</span>.<span class="ruby-identifier">value</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-string">&quot;tag:yaml.org,2002:float&quot;</span>, <span class="ruby-string">&quot;!float&quot;</span>
+    <span class="ruby-constant">Float</span>(<span class="ruby-ivar">@ss</span>.<span class="ruby-identifier">tokenize</span>(<span class="ruby-identifier">o</span>.<span class="ruby-identifier">value</span>))
+  <span class="ruby-keyword">when</span> <span class="ruby-string">&quot;!ruby/regexp&quot;</span>
+    <span class="ruby-identifier">o</span>.<span class="ruby-identifier">value</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp">%r^\/(.*)\/([mixn]*)$/</span>
+    <span class="ruby-identifier">source</span>  = <span class="ruby-node">$1</span>
+    <span class="ruby-identifier">options</span> = <span class="ruby-number">0</span>
+    <span class="ruby-identifier">lang</span>    = <span class="ruby-keyword">nil</span>
+    (<span class="ruby-node">$2</span> <span class="ruby-operator">||</span> <span class="ruby-string">''</span>).<span class="ruby-identifier">split</span>(<span class="ruby-string">''</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">option</span><span class="ruby-operator">|</span>
+      <span class="ruby-keyword">case</span> <span class="ruby-identifier">option</span>
+      <span class="ruby-keyword">when</span> <span class="ruby-string">'x'</span> <span class="ruby-keyword">then</span> <span class="ruby-identifier">options</span> <span class="ruby-operator">|=</span> <span class="ruby-constant">Regexp</span><span class="ruby-operator">::</span><span class="ruby-constant">EXTENDED</span>
+      <span class="ruby-keyword">when</span> <span class="ruby-string">'i'</span> <span class="ruby-keyword">then</span> <span class="ruby-identifier">options</span> <span class="ruby-operator">|=</span> <span class="ruby-constant">Regexp</span><span class="ruby-operator">::</span><span class="ruby-constant">IGNORECASE</span>
+      <span class="ruby-keyword">when</span> <span class="ruby-string">'m'</span> <span class="ruby-keyword">then</span> <span class="ruby-identifier">options</span> <span class="ruby-operator">|=</span> <span class="ruby-constant">Regexp</span><span class="ruby-operator">::</span><span class="ruby-constant">MULTILINE</span>
+      <span class="ruby-keyword">when</span> <span class="ruby-string">'n'</span> <span class="ruby-keyword">then</span> <span class="ruby-identifier">options</span> <span class="ruby-operator">|=</span> <span class="ruby-constant">Regexp</span><span class="ruby-operator">::</span><span class="ruby-constant">NOENCODING</span>
+      <span class="ruby-keyword">else</span> <span class="ruby-identifier">lang</span> = <span class="ruby-identifier">option</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-constant">Regexp</span>.<span class="ruby-identifier">new</span>(*[<span class="ruby-identifier">source</span>, <span class="ruby-identifier">options</span>, <span class="ruby-identifier">lang</span>].<span class="ruby-identifier">compact</span>)
+  <span class="ruby-keyword">when</span> <span class="ruby-string">&quot;!ruby/range&quot;</span>
+    <span class="ruby-identifier">args</span> = <span class="ruby-identifier">o</span>.<span class="ruby-identifier">value</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp">%r([.]{2,3})/</span>, <span class="ruby-number">2</span>).<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">accept</span> <span class="ruby-constant">Nodes</span><span class="ruby-operator">::</span><span class="ruby-constant">Scalar</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">s</span>)
+    }
+    <span class="ruby-identifier">args</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">args</span>.<span class="ruby-identifier">delete_at</span>(<span class="ruby-number">1</span>) <span class="ruby-operator">==</span> <span class="ruby-string">'...'</span>)
+    <span class="ruby-constant">Range</span>.<span class="ruby-identifier">new</span>(*<span class="ruby-identifier">args</span>)
+  <span class="ruby-keyword">when</span> <span class="ruby-regexp">%r^!ruby\/sym(bol)?:?(.*)?$/</span>
+    <span class="ruby-identifier">o</span>.<span class="ruby-identifier">value</span>.<span class="ruby-identifier">to_sym</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-ivar">@ss</span>.<span class="ruby-identifier">tokenize</span> <span class="ruby-identifier">o</span>.<span class="ruby-identifier">value</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-visit_Psych_Nodes_Sequence">
+            
+              <a name="method-i-visit_Psych_Nodes_Sequence"></a><b>visit_Psych_Nodes_Sequence</b>(o)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-visit_Psych_Nodes_Sequence_source')" id="l_method-i-visit_Psych_Nodes_Sequence_source">show</a>
+                
+              </p>
+              <div id="method-i-visit_Psych_Nodes_Sequence_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/psych/lib/psych/visitors/to_ruby.rb, line 92</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">visit_Psych_Nodes_Sequence</span> <span class="ruby-identifier">o</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">klass</span> = <span class="ruby-constant">Psych</span>.<span class="ruby-identifier">load_tags</span>[<span class="ruby-identifier">o</span>.<span class="ruby-identifier">tag</span>]
+    <span class="ruby-identifier">instance</span> = <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">allocate</span>
+
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">instance</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-value">:init_with</span>)
+      <span class="ruby-identifier">coder</span> = <span class="ruby-constant">Psych</span><span class="ruby-operator">::</span><span class="ruby-constant">Coder</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">o</span>.<span class="ruby-identifier">tag</span>)
+      <span class="ruby-identifier">coder</span>.<span class="ruby-identifier">seq</span> = <span class="ruby-identifier">o</span>.<span class="ruby-identifier">children</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span> <span class="ruby-identifier">accept</span> <span class="ruby-identifier">c</span> }
+      <span class="ruby-identifier">instance</span>.<span class="ruby-identifier">init_with</span> <span class="ruby-identifier">coder</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-keyword">return</span> <span class="ruby-identifier">instance</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">case</span> <span class="ruby-identifier">o</span>.<span class="ruby-identifier">tag</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-string">'!omap'</span>, <span class="ruby-string">'tag:yaml.org,2002:omap'</span>
+    <span class="ruby-identifier">map</span> = <span class="ruby-constant">Psych</span><span class="ruby-operator">::</span><span class="ruby-constant">Omap</span>.<span class="ruby-identifier">new</span>
+    <span class="ruby-ivar">@st</span>[<span class="ruby-identifier">o</span>.<span class="ruby-identifier">anchor</span>] = <span class="ruby-identifier">map</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">o</span>.<span class="ruby-identifier">anchor</span>
+    <span class="ruby-identifier">o</span>.<span class="ruby-identifier">children</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">a</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">map</span>[<span class="ruby-identifier">accept</span>(<span class="ruby-identifier">a</span>.<span class="ruby-identifier">children</span>.<span class="ruby-identifier">first</span>)] = <span class="ruby-identifier">accept</span> <span class="ruby-identifier">a</span>.<span class="ruby-identifier">children</span>.<span class="ruby-identifier">last</span>
+    }
+    <span class="ruby-identifier">map</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">list</span> = []
+    <span class="ruby-ivar">@st</span>[<span class="ruby-identifier">o</span>.<span class="ruby-identifier">anchor</span>] = <span class="ruby-identifier">list</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">o</span>.<span class="ruby-identifier">anchor</span>
+    <span class="ruby-identifier">o</span>.<span class="ruby-identifier">children</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span> <span class="ruby-identifier">list</span>.<span class="ruby-identifier">push</span> <span class="ruby-identifier">accept</span> <span class="ruby-identifier">c</span> }
+    <span class="ruby-identifier">list</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-visit_Psych_Nodes_Stream">
+            
+              <a name="method-i-visit_Psych_Nodes_Stream"></a><b>visit_Psych_Nodes_Stream</b>(o)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-visit_Psych_Nodes_Stream_source')" id="l_method-i-visit_Psych_Nodes_Stream_source">show</a>
+                
+              </p>
+              <div id="method-i-visit_Psych_Nodes_Stream_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/psych/lib/psych/visitors/to_ruby.rb, line 199</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">visit_Psych_Nodes_Stream</span> <span class="ruby-identifier">o</span>
+  <span class="ruby-identifier">o</span>.<span class="ruby-identifier">children</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span> <span class="ruby-identifier">accept</span> <span class="ruby-identifier">c</span> }
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    

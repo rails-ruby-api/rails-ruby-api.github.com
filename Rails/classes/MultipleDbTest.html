@@ -1,0 +1,458 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>MultipleDbTest</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/github.css" type="text/css" media="screen" />
+<script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            MultipleDbTest 
+            
+                <span class="parent">&lt; 
+                    
+                    ActiveRecord::TestCase
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../files/rails/activerecord/test/cases/multiple_db_test_rb.html">rails/activerecord/test/cases/multiple_db_test.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>S</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-setup">setup</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-test_arel_table_engines">test_arel_table_engines</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_associations">test_associations</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_connected">test_connected</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_course_connection_should_survive_dependency_reload">test_course_connection_should_survive_dependency_reload</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_find">test_find</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_proper_connection">test_proper_connection</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_transactions_across_databases">test_transactions_across_databases</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+        
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-setup">
+            
+              <a name="method-i-setup"></a><b>setup</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-setup_source')" id="l_method-i-setup_source">show</a>
+                
+              </p>
+              <div id="method-i-setup_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File rails/activerecord/test/cases/multiple_db_test.rb, line 11</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">setup</span>
+  <span class="ruby-ivar">@courses</span>  = <span class="ruby-identifier">create_fixtures</span>(<span class="ruby-string">&quot;courses&quot;</span>) { <span class="ruby-constant">Course</span>.<span class="ruby-identifier">retrieve_connection</span> }
+  <span class="ruby-ivar">@entrants</span> = <span class="ruby-identifier">create_fixtures</span>(<span class="ruby-string">&quot;entrants&quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_arel_table_engines">
+            
+              <a name="method-i-test_arel_table_engines"></a><b>test_arel_table_engines</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_arel_table_engines_source')" id="l_method-i-test_arel_table_engines_source">show</a>
+                
+              </p>
+              <div id="method-i-test_arel_table_engines_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File rails/activerecord/test/cases/multiple_db_test.rb, line 87</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_arel_table_engines</span>
+  <span class="ruby-identifier">assert_not_equal</span> <span class="ruby-constant">Entrant</span>.<span class="ruby-identifier">arel_engine</span>, <span class="ruby-constant">Course</span>.<span class="ruby-identifier">arel_engine</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-constant">Entrant</span>.<span class="ruby-identifier">arel_engine</span>, <span class="ruby-constant">Bird</span>.<span class="ruby-identifier">arel_engine</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_associations">
+            
+              <a name="method-i-test_associations"></a><b>test_associations</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_associations_source')" id="l_method-i-test_associations_source">show</a>
+                
+              </p>
+              <div id="method-i-test_associations_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File rails/activerecord/test/cases/multiple_db_test.rb, line 41</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_associations</span>
+  <span class="ruby-identifier">c1</span> = <span class="ruby-constant">Course</span>.<span class="ruby-identifier">find</span>(<span class="ruby-number">1</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-number">2</span>, <span class="ruby-identifier">c1</span>.<span class="ruby-identifier">entrants</span>.<span class="ruby-identifier">count</span>
+  <span class="ruby-identifier">e1</span> = <span class="ruby-constant">Entrant</span>.<span class="ruby-identifier">find</span>(<span class="ruby-number">1</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">e1</span>.<span class="ruby-identifier">course</span>.<span class="ruby-identifier">id</span>, <span class="ruby-identifier">c1</span>.<span class="ruby-identifier">id</span>
+  <span class="ruby-identifier">c2</span> = <span class="ruby-constant">Course</span>.<span class="ruby-identifier">find</span>(<span class="ruby-number">2</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-number">1</span>, <span class="ruby-identifier">c2</span>.<span class="ruby-identifier">entrants</span>.<span class="ruby-identifier">count</span>
+  <span class="ruby-identifier">e3</span> = <span class="ruby-constant">Entrant</span>.<span class="ruby-identifier">find</span>(<span class="ruby-number">3</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">e3</span>.<span class="ruby-identifier">course</span>.<span class="ruby-identifier">id</span>, <span class="ruby-identifier">c2</span>.<span class="ruby-identifier">id</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_connected">
+            
+              <a name="method-i-test_connected"></a><b>test_connected</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_connected_source')" id="l_method-i-test_connected_source">show</a>
+                
+              </p>
+              <div id="method-i-test_connected_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File rails/activerecord/test/cases/multiple_db_test.rb, line 16</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_connected</span>
+  <span class="ruby-identifier">assert_not_nil</span> <span class="ruby-constant">Entrant</span>.<span class="ruby-identifier">connection</span>
+  <span class="ruby-identifier">assert_not_nil</span> <span class="ruby-constant">Course</span>.<span class="ruby-identifier">connection</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_course_connection_should_survive_dependency_reload">
+            
+              <a name="method-i-test_course_connection_should_survive_dependency_reload"></a><b>test_course_connection_should_survive_dependency_reload</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_course_connection_should_survive_dependency_reload_source')" id="l_method-i-test_course_connection_should_survive_dependency_reload_source">show</a>
+                
+              </p>
+              <div id="method-i-test_course_connection_should_survive_dependency_reload_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File rails/activerecord/test/cases/multiple_db_test.rb, line 52</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_course_connection_should_survive_dependency_reload</span>
+  <span class="ruby-identifier">assert</span> <span class="ruby-constant">Course</span>.<span class="ruby-identifier">connection</span>
+
+  <span class="ruby-constant">ActiveSupport</span><span class="ruby-operator">::</span><span class="ruby-constant">Dependencies</span>.<span class="ruby-identifier">clear</span>
+  <span class="ruby-constant">Object</span>.<span class="ruby-identifier">send</span>(<span class="ruby-value">:remove_const</span>, <span class="ruby-value">:Course</span>)
+  <span class="ruby-identifier">require_dependency</span> <span class="ruby-string">'models/course'</span>
+
+  <span class="ruby-identifier">assert</span> <span class="ruby-constant">Course</span>.<span class="ruby-identifier">connection</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_find">
+            
+              <a name="method-i-test_find"></a><b>test_find</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_find_source')" id="l_method-i-test_find_source">show</a>
+                
+              </p>
+              <div id="method-i-test_find_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File rails/activerecord/test/cases/multiple_db_test.rb, line 28</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_find</span>
+  <span class="ruby-identifier">c1</span> = <span class="ruby-constant">Course</span>.<span class="ruby-identifier">find</span>(<span class="ruby-number">1</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&quot;Ruby Development&quot;</span>, <span class="ruby-identifier">c1</span>.<span class="ruby-identifier">name</span>
+  <span class="ruby-identifier">c2</span> = <span class="ruby-constant">Course</span>.<span class="ruby-identifier">find</span>(<span class="ruby-number">2</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&quot;Java Development&quot;</span>, <span class="ruby-identifier">c2</span>.<span class="ruby-identifier">name</span>
+  <span class="ruby-identifier">e1</span> = <span class="ruby-constant">Entrant</span>.<span class="ruby-identifier">find</span>(<span class="ruby-number">1</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&quot;Ruby Developer&quot;</span>, <span class="ruby-identifier">e1</span>.<span class="ruby-identifier">name</span>
+  <span class="ruby-identifier">e2</span> = <span class="ruby-constant">Entrant</span>.<span class="ruby-identifier">find</span>(<span class="ruby-number">2</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&quot;Ruby Guru&quot;</span>, <span class="ruby-identifier">e2</span>.<span class="ruby-identifier">name</span>
+  <span class="ruby-identifier">e3</span> = <span class="ruby-constant">Entrant</span>.<span class="ruby-identifier">find</span>(<span class="ruby-number">3</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&quot;Java Lover&quot;</span>, <span class="ruby-identifier">e3</span>.<span class="ruby-identifier">name</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_proper_connection">
+            
+              <a name="method-i-test_proper_connection"></a><b>test_proper_connection</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_proper_connection_source')" id="l_method-i-test_proper_connection_source">show</a>
+                
+              </p>
+              <div id="method-i-test_proper_connection_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File rails/activerecord/test/cases/multiple_db_test.rb, line 21</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_proper_connection</span>
+  <span class="ruby-identifier">assert_not_equal</span>(<span class="ruby-constant">Entrant</span>.<span class="ruby-identifier">connection</span>, <span class="ruby-constant">Course</span>.<span class="ruby-identifier">connection</span>)
+  <span class="ruby-identifier">assert_equal</span>(<span class="ruby-constant">Entrant</span>.<span class="ruby-identifier">connection</span>, <span class="ruby-constant">Entrant</span>.<span class="ruby-identifier">retrieve_connection</span>)
+  <span class="ruby-identifier">assert_equal</span>(<span class="ruby-constant">Course</span>.<span class="ruby-identifier">connection</span>, <span class="ruby-constant">Course</span>.<span class="ruby-identifier">retrieve_connection</span>)
+  <span class="ruby-identifier">assert_equal</span>(<span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">connection</span>, <span class="ruby-constant">Entrant</span>.<span class="ruby-identifier">connection</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_transactions_across_databases">
+            
+              <a name="method-i-test_transactions_across_databases"></a><b>test_transactions_across_databases</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_transactions_across_databases_source')" id="l_method-i-test_transactions_across_databases_source">show</a>
+                
+              </p>
+              <div id="method-i-test_transactions_across_databases_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File rails/activerecord/test/cases/multiple_db_test.rb, line 62</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_transactions_across_databases</span>
+  <span class="ruby-identifier">c1</span> = <span class="ruby-constant">Course</span>.<span class="ruby-identifier">find</span>(<span class="ruby-number">1</span>)
+  <span class="ruby-identifier">e1</span> = <span class="ruby-constant">Entrant</span>.<span class="ruby-identifier">find</span>(<span class="ruby-number">1</span>)
+
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-constant">Course</span>.<span class="ruby-identifier">transaction</span> <span class="ruby-keyword">do</span>
+      <span class="ruby-constant">Entrant</span>.<span class="ruby-identifier">transaction</span> <span class="ruby-keyword">do</span>
+        <span class="ruby-identifier">c1</span>.<span class="ruby-identifier">name</span> = <span class="ruby-string">&quot;Typo&quot;</span>
+        <span class="ruby-identifier">e1</span>.<span class="ruby-identifier">name</span> = <span class="ruby-string">&quot;Typo&quot;</span>
+        <span class="ruby-identifier">c1</span>.<span class="ruby-identifier">save</span>
+        <span class="ruby-identifier">e1</span>.<span class="ruby-identifier">save</span>
+        <span class="ruby-identifier">raise</span> <span class="ruby-string">&quot;No I messed up.&quot;</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">rescue</span>
+    <span class="ruby-comment"># Yup caught it</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&quot;Typo&quot;</span>, <span class="ruby-identifier">c1</span>.<span class="ruby-identifier">name</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&quot;Typo&quot;</span>, <span class="ruby-identifier">e1</span>.<span class="ruby-identifier">name</span>
+
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&quot;Ruby Development&quot;</span>, <span class="ruby-constant">Course</span>.<span class="ruby-identifier">find</span>(<span class="ruby-number">1</span>).<span class="ruby-identifier">name</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&quot;Ruby Developer&quot;</span>, <span class="ruby-constant">Entrant</span>.<span class="ruby-identifier">find</span>(<span class="ruby-number">1</span>).<span class="ruby-identifier">name</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    

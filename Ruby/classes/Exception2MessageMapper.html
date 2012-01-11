@@ -1,0 +1,737 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Exception2MessageMapper::E2MM</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/github.css" type="text/css" media="screen" />
+<script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Module</span> 
+            Exception2MessageMapper::E2MM 
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../files/Users/fschumac/_rvm/src/ruby-1_9_3-p0/lib/e2mmap_rb.html">/Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/e2mmap.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<pre>e2mmap.rb - for ruby 1.1
+    $Release Version: 2.0$
+    $Revision: 1.10 $
+    by Keiju ISHITSUKA</pre>
+
+<p>–</p>
+
+<pre>Usage:</pre>
+
+<p>U1)</p>
+
+<pre class="ruby"><span class="ruby-keyword">class</span> <span class="ruby-constant">Foo</span>
+  <span class="ruby-identifier">extend</span> <span class="ruby-constant">Exception2MessageMapper</span>
+  <span class="ruby-identifier">def_e2message</span> <span class="ruby-constant">ExistingExceptionClass</span>, <span class="ruby-string">&quot;message...&quot;</span>
+  <span class="ruby-identifier">def_exception</span> :<span class="ruby-constant">NewExceptionClass</span>, <span class="ruby-string">&quot;message...&quot;</span>[, <span class="ruby-identifier">superclass</span>]
+  <span class="ruby-operator">...</span>
+<span class="ruby-keyword">end</span>
+</pre>
+
+<p>U2)</p>
+
+<pre class="ruby"><span class="ruby-keyword">module</span> <span class="ruby-constant">Error</span>
+  <span class="ruby-identifier">extend</span> <span class="ruby-constant">Exception2MessageMapper</span>
+  <span class="ruby-identifier">def_e2meggage</span> <span class="ruby-constant">ExistingExceptionClass</span>, <span class="ruby-string">&quot;message...&quot;</span>
+  <span class="ruby-identifier">def_exception</span> :<span class="ruby-constant">NewExceptionClass</span>, <span class="ruby-string">&quot;message...&quot;</span>[, <span class="ruby-identifier">superclass</span>]
+  <span class="ruby-operator">...</span>
+<span class="ruby-keyword">end</span>
+<span class="ruby-keyword">class</span> <span class="ruby-constant">Foo</span>
+  <span class="ruby-identifier">include</span> <span class="ruby-constant">Error</span>
+  <span class="ruby-operator">...</span>
+<span class="ruby-keyword">end</span>
+
+<span class="ruby-identifier">foo</span> = <span class="ruby-constant">Foo</span>.<span class="ruby-identifier">new</span>
+<span class="ruby-identifier">foo</span>.<span class="ruby-constant">Fail</span> <span class="ruby-operator">...</span>.
+</pre>
+
+<p>U3)</p>
+
+<pre class="ruby"><span class="ruby-keyword">module</span> <span class="ruby-constant">Error</span>
+  <span class="ruby-identifier">extend</span> <span class="ruby-constant">Exception2MessageMapper</span>
+  <span class="ruby-identifier">def_e2message</span> <span class="ruby-constant">ExistingExceptionClass</span>, <span class="ruby-string">&quot;message...&quot;</span>
+  <span class="ruby-identifier">def_exception</span> :<span class="ruby-constant">NewExceptionClass</span>, <span class="ruby-string">&quot;message...&quot;</span>[, <span class="ruby-identifier">superclass</span>]
+  <span class="ruby-operator">...</span>
+<span class="ruby-keyword">end</span>
+<span class="ruby-keyword">class</span> <span class="ruby-constant">Foo</span>
+  <span class="ruby-identifier">extend</span> <span class="ruby-constant">Exception2MessageMapper</span>
+  <span class="ruby-identifier">include</span> <span class="ruby-constant">Error</span>
+  <span class="ruby-operator">...</span>
+<span class="ruby-keyword">end</span>
+
+<span class="ruby-constant">Foo</span>.<span class="ruby-constant">Fail</span> <span class="ruby-constant">NewExceptionClass</span>, <span class="ruby-identifier">arg</span><span class="ruby-operator">...</span>
+<span class="ruby-constant">Foo</span>.<span class="ruby-constant">Fail</span> <span class="ruby-constant">ExistingExceptionClass</span>, <span class="ruby-identifier">arg</span><span class="ruby-operator">...</span>
+</pre>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+    <!-- Namespace -->
+    <div class="sectiontitle">Namespace</div>
+    <ul>
+      
+        <li>
+          <span class="type">MODULE</span>
+          <a href="Exception2MessageMapper.html">Exception2MessageMapper::E2MM</a>
+        </li>
+      
+    </ul>
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>F</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-Fail">Fail</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-Fail">Fail</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>R</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-Raise">Raise</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-Raise">Raise</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>B</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-bind">bind</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>D</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-def_e2message">def_e2message</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-def_e2message">def_e2message</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-def_exception">def_exception</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-def_exception">def_exception</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>E</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-e2mm_message">e2mm_message</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-extend_object">extend_object</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>F</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-fail">fail</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>M</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-message">message</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+      <!-- Section constants -->
+      <div class="sectiontitle">Constants</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class="attr-name">E2MM</td>
+            <td>=</td>
+            <td class="attr-value">Exception2MessageMapper</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+      </table>
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-Fail">
+            
+              <a name="method-c-Fail"></a><b>Fail</b>(klass = E2MM, err = nil, *rest)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-Raise">
+            
+              <a name="method-c-Raise"></a><b>Raise</b>(klass = E2MM, err = nil, *rest)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Fail(klass, err, *rest)</p>
+
+<pre class="ruby"><span class="ruby-identifier">klass</span><span class="ruby-operator">:</span>  <span class="ruby-keyword">class</span> <span class="ruby-identifier">to</span> <span class="ruby-identifier">define</span> <span class="ruby-identifier">exception</span> <span class="ruby-identifier">under</span>.
+<span class="ruby-identifier">err</span><span class="ruby-operator">:</span>    <span class="ruby-identifier">exception</span>
+<span class="ruby-identifier">rest</span><span class="ruby-operator">:</span>   <span class="ruby-identifier">message</span> <span class="ruby-identifier">arguments</span>
+</pre>
+            </div>
+          
+          
+          
+            <div class="aka">
+              Also aliased as: <a href="Exception2MessageMapper.html#method-c-Fail">Fail</a>
+            </div>
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-Raise_source')" id="l_method-c-Raise_source">show</a>
+                
+              </p>
+              <div id="method-c-Raise_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/e2mmap.rb, line 138</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">E2MM</span>.<span class="ruby-constant">Raise</span>(<span class="ruby-identifier">klass</span> = <span class="ruby-constant">E2MM</span>, <span class="ruby-identifier">err</span> = <span class="ruby-keyword">nil</span>, *<span class="ruby-identifier">rest</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">form</span> = <span class="ruby-identifier">e2mm_message</span>(<span class="ruby-identifier">klass</span>, <span class="ruby-identifier">err</span>)
+    <span class="ruby-identifier">b</span> = <span class="ruby-identifier">$@</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">caller</span>(<span class="ruby-number">1</span>) <span class="ruby-operator">:</span> <span class="ruby-identifier">$@</span>
+    <span class="ruby-comment">#p $@</span>
+    <span class="ruby-comment">#p __FILE__</span>
+    <span class="ruby-identifier">b</span>.<span class="ruby-identifier">shift</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">b</span>[<span class="ruby-number">0</span>] <span class="ruby-operator">=~</span> <span class="ruby-node">%r^#{Regexp.quote(__FILE__)}:/</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-identifier">err</span>, <span class="ruby-identifier">sprintf</span>(<span class="ruby-identifier">form</span>, *<span class="ruby-identifier">rest</span>), <span class="ruby-identifier">b</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-constant">E2MM</span>.<span class="ruby-constant">Fail</span> <span class="ruby-constant">E2MM</span>, <span class="ruby-constant">ErrNotRegisteredException</span>, <span class="ruby-identifier">err</span>.<span class="ruby-identifier">inspect</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-def_e2message">
+            
+              <a name="method-c-def_e2message"></a><b>def_e2message</b>(k, c, m)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p><a
+href="Exception2MessageMapper.html#method-i-def_e2message">#def_e2message</a>(k,
+e, m)</p>
+
+<pre class="ruby">    <span class="ruby-identifier">k</span><span class="ruby-operator">:</span>  <span class="ruby-keyword">class</span> <span class="ruby-identifier">to</span> <span class="ruby-identifier">define</span> <span class="ruby-identifier">exception</span> <span class="ruby-identifier">under</span>.
+    <span class="ruby-identifier">e</span><span class="ruby-operator">:</span>  <span class="ruby-identifier">exception</span>
+    <span class="ruby-identifier">m</span><span class="ruby-operator">:</span>  <span class="ruby-identifier">message_form</span>
+<span class="ruby-identifier">define</span> <span class="ruby-identifier">exception</span> <span class="ruby-identifier">c</span> <span class="ruby-identifier">with</span> <span class="ruby-identifier">message</span> <span class="ruby-identifier">m</span>.
+</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-def_e2message_source')" id="l_method-c-def_e2message_source">show</a>
+                
+              </p>
+              <div id="method-c-def_e2message_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/e2mmap.rb, line 114</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">E2MM</span>.<span class="ruby-identifier">def_e2message</span>(<span class="ruby-identifier">k</span>, <span class="ruby-identifier">c</span>, <span class="ruby-identifier">m</span>)
+  <span class="ruby-constant">E2MM</span>.<span class="ruby-identifier">instance_eval</span>{<span class="ruby-ivar">@MessageMap</span>[[<span class="ruby-identifier">k</span>, <span class="ruby-identifier">c</span>]] = <span class="ruby-identifier">m</span>}
+  <span class="ruby-identifier">c</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-def_exception">
+            
+              <a name="method-c-def_exception"></a><b>def_exception</b>(k, n, m, s = StandardError)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p><a
+href="Exception2MessageMapper.html#method-i-def_exception">#def_exception</a>(k,
+n, m, s)</p>
+
+<pre class="ruby">    <span class="ruby-identifier">k</span><span class="ruby-operator">:</span>  <span class="ruby-keyword">class</span> <span class="ruby-identifier">to</span> <span class="ruby-identifier">define</span> <span class="ruby-identifier">exception</span> <span class="ruby-identifier">under</span>.
+    <span class="ruby-identifier">n</span><span class="ruby-operator">:</span>  <span class="ruby-identifier">exception_name</span>
+    <span class="ruby-identifier">m</span><span class="ruby-operator">:</span>  <span class="ruby-identifier">message_form</span>
+    <span class="ruby-identifier">s</span><span class="ruby-operator">:</span>  <span class="ruby-identifier">superclass</span>(<span class="ruby-identifier">default</span><span class="ruby-operator">:</span> <span class="ruby-constant">StandardError</span>)
+<span class="ruby-identifier">define</span> <span class="ruby-identifier">exception</span> <span class="ruby-identifier">named</span> <span class="ruby-value">%x`</span><span class="ruby-identifier">c</span><span class="ruby-string">''</span> <span class="ruby-identifier">with</span> <span class="ruby-identifier">message</span> <span class="ruby-identifier">m</span>.
+</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-def_exception_source')" id="l_method-c-def_exception_source">show</a>
+                
+              </p>
+              <div id="method-c-def_exception_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/e2mmap.rb, line 126</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">E2MM</span>.<span class="ruby-identifier">def_exception</span>(<span class="ruby-identifier">k</span>, <span class="ruby-identifier">n</span>, <span class="ruby-identifier">m</span>, <span class="ruby-identifier">s</span> = <span class="ruby-constant">StandardError</span>)
+  <span class="ruby-identifier">n</span> = <span class="ruby-identifier">n</span>.<span class="ruby-identifier">id2name</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">n</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">Fixnum</span>)
+  <span class="ruby-identifier">e</span> = <span class="ruby-constant">Class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">s</span>)
+  <span class="ruby-constant">E2MM</span>.<span class="ruby-identifier">instance_eval</span>{<span class="ruby-ivar">@MessageMap</span>[[<span class="ruby-identifier">k</span>, <span class="ruby-identifier">e</span>]] = <span class="ruby-identifier">m</span>}
+  <span class="ruby-identifier">k</span>.<span class="ruby-identifier">const_set</span>(<span class="ruby-identifier">n</span>, <span class="ruby-identifier">e</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-e2mm_message">
+            
+              <a name="method-c-e2mm_message"></a><b>e2mm_message</b>(klass, exp)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+            <div class="aka">
+              Also aliased as: <a href="Exception2MessageMapper.html#method-c-message">message</a>
+            </div>
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-e2mm_message_source')" id="l_method-c-e2mm_message_source">show</a>
+                
+              </p>
+              <div id="method-c-e2mm_message_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/e2mmap.rb, line 153</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">E2MM</span>.<span class="ruby-identifier">e2mm_message</span>(<span class="ruby-identifier">klass</span>, <span class="ruby-identifier">exp</span>)
+  <span class="ruby-keyword">for</span> <span class="ruby-identifier">c</span> <span class="ruby-keyword">in</span> <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">ancestors</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">mes</span> = <span class="ruby-ivar">@MessageMap</span>[[<span class="ruby-identifier">c</span>,<span class="ruby-identifier">exp</span>]]
+      <span class="ruby-comment">#p mes</span>
+      <span class="ruby-identifier">m</span> = <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">instance_eval</span>(<span class="ruby-string">'&quot;'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">mes</span> <span class="ruby-operator">+</span> <span class="ruby-string">'&quot;'</span>)
+      <span class="ruby-keyword">return</span> <span class="ruby-identifier">m</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">nil</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-extend_object">
+            
+              <a name="method-c-extend_object"></a><b>extend_object</b>(cl)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-extend_object_source')" id="l_method-c-extend_object_source">show</a>
+                
+              </p>
+              <div id="method-c-extend_object_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/e2mmap.rb, line 55</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">E2MM</span>.<span class="ruby-identifier">extend_object</span>(<span class="ruby-identifier">cl</span>)
+  <span class="ruby-keyword">super</span>
+  <span class="ruby-identifier">cl</span>.<span class="ruby-identifier">bind</span>(<span class="ruby-keyword">self</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">cl</span> <span class="ruby-operator">&lt;</span> <span class="ruby-constant">E2MM</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-message">
+            
+              <a name="method-c-message"></a><b>message</b>(klass, exp)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-Fail">
+            
+              <a name="method-i-Fail"></a><b>Fail</b>(err = nil, *rest)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-Raise">
+            
+              <a name="method-i-Raise"></a><b>Raise</b>(err = nil, *rest)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Fail(err, *rest)</p>
+
+<pre>err:    exception
+rest:   message arguments</pre>
+            </div>
+          
+          
+          
+            <div class="aka">
+              Also aliased as: <a href="Exception2MessageMapper.html#method-i-Fail">Fail</a>, <a href="Exception2MessageMapper.html#method-i-fail">fail</a>
+            </div>
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-Raise_source')" id="l_method-i-Raise_source">show</a>
+                
+              </p>
+              <div id="method-i-Raise_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/e2mmap.rb, line 77</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">Raise</span>(<span class="ruby-identifier">err</span> = <span class="ruby-keyword">nil</span>, *<span class="ruby-identifier">rest</span>)
+  <span class="ruby-constant">E2MM</span>.<span class="ruby-constant">Raise</span>(<span class="ruby-keyword">self</span>, <span class="ruby-identifier">err</span>, *<span class="ruby-identifier">rest</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-bind">
+            
+              <a name="method-i-bind"></a><b>bind</b>(cl)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-bind_source')" id="l_method-i-bind_source">show</a>
+                
+              </p>
+              <div id="method-i-bind_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/e2mmap.rb, line 60</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">bind</span>(<span class="ruby-identifier">cl</span>)
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">module_eval</span> <span class="ruby-string">%Q[
+    def Raise(err = nil, *rest)
+      Exception2MessageMapper.Raise(self.class, err, *rest)
+    end
+    alias Fail Raise
+
+    def self.included(mod)
+      mod.extend Exception2MessageMapper
+    end
+  ]</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-def_e2message">
+            
+              <a name="method-i-def_e2message"></a><b>def_e2message</b>(c, m)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p><a
+href="Exception2MessageMapper.html#method-i-def_e2message">#def_e2message</a>(c,
+m)</p>
+
+<pre>    c:  exception
+    m:  message_form
+define exception c with message m.</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-def_e2message_source')" id="l_method-i-def_e2message_source">show</a>
+                
+              </p>
+              <div id="method-i-def_e2message_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/e2mmap.rb, line 88</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">def_e2message</span>(<span class="ruby-identifier">c</span>, <span class="ruby-identifier">m</span>)
+  <span class="ruby-constant">E2MM</span>.<span class="ruby-identifier">def_e2message</span>(<span class="ruby-keyword">self</span>, <span class="ruby-identifier">c</span>, <span class="ruby-identifier">m</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-def_exception">
+            
+              <a name="method-i-def_exception"></a><b>def_exception</b>(n, m, s = StandardError)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p><a
+href="Exception2MessageMapper.html#method-i-def_exception">#def_exception</a>(n,
+m, s)</p>
+
+<pre>    n:  exception_name
+    m:  message_form
+    s:  superclass(default: StandardError)
+define exception named ``c'' with message m.</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-def_exception_source')" id="l_method-i-def_exception_source">show</a>
+                
+              </p>
+              <div id="method-i-def_exception_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/e2mmap.rb, line 98</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">def_exception</span>(<span class="ruby-identifier">n</span>, <span class="ruby-identifier">m</span>, <span class="ruby-identifier">s</span> = <span class="ruby-constant">StandardError</span>)
+  <span class="ruby-constant">E2MM</span>.<span class="ruby-identifier">def_exception</span>(<span class="ruby-keyword">self</span>, <span class="ruby-identifier">n</span>, <span class="ruby-identifier">m</span>, <span class="ruby-identifier">s</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-fail">
+            
+              <a name="method-i-fail"></a><b>fail</b>(err = nil, *rest)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    

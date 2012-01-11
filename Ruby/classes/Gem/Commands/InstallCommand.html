@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Gem::Commands::InstallCommand</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/github.css" type="text/css" media="screen" />
+<script src="../../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            Gem::Commands::InstallCommand 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../Command.html">Gem::Command</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../../files/Users/fschumac/_rvm/src/ruby-1_9_3-p0/lib/rubygems/commands/install_command_rb.html">/Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/rubygems/commands/install_command.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p><a href="../../Gem.html">Gem</a> installer command line tool</p>
+
+<p>See `gem help install`</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>E</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-execute">execute</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+    <!-- Includes -->
+    <div class="sectiontitle">Included Modules</div>
+    <ul>
+      
+        <li>
+          
+            <a href="../VersionOption.html">
+              Gem::VersionOption
+            </a>
+          
+        </li>
+      
+        <li>
+          
+            <a href="../LocalRemoteOptions.html">
+              Gem::LocalRemoteOptions
+            </a>
+          
+        </li>
+      
+        <li>
+          
+            <a href="../InstallUpdateOptions.html">
+              Gem::InstallUpdateOptions
+            </a>
+          
+        </li>
+      
+    </ul>
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <a name="method-c-new"></a><b>new</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/rubygems/commands/install_command.rb, line 20</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">initialize</span>
+  <span class="ruby-identifier">defaults</span> = <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">DependencyInstaller</span><span class="ruby-operator">::</span><span class="ruby-constant">DEFAULT_OPTIONS</span>.<span class="ruby-identifier">merge</span>({
+    <span class="ruby-value">:generate_rdoc</span>     =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>,
+    <span class="ruby-value">:generate_ri</span>       =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>,
+    <span class="ruby-value">:format_executable</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">false</span>,
+    <span class="ruby-value">:version</span>           =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Requirement</span>.<span class="ruby-identifier">default</span>,
+  })
+
+  <span class="ruby-keyword">super</span> <span class="ruby-string">'install'</span>, <span class="ruby-string">'Install a gem into the local repository'</span>, <span class="ruby-identifier">defaults</span>
+
+  <span class="ruby-identifier">add_install_update_options</span>
+  <span class="ruby-identifier">add_local_remote_options</span>
+  <span class="ruby-identifier">add_platform_option</span>
+  <span class="ruby-identifier">add_version_option</span>
+  <span class="ruby-identifier">add_prerelease_option</span> <span class="ruby-string">&quot;to be installed. (Only for listed gems)&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-execute">
+            
+              <a name="method-i-execute"></a><b>execute</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-execute_source')" id="l_method-i-execute_source">show</a>
+                
+              </p>
+              <div id="method-i-execute_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/rubygems/commands/install_command.rb, line 103</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">execute</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:include_dependencies</span>] <span class="ruby-keyword">then</span>
+    <span class="ruby-identifier">alert</span> <span class="ruby-string">&quot;`gem install -y` is now default and will be removed&quot;</span>
+    <span class="ruby-identifier">alert</span> <span class="ruby-string">&quot;use --ignore-dependencies to install only the gems you list&quot;</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">installed_gems</span> = []
+
+  <span class="ruby-constant">ENV</span>.<span class="ruby-identifier">delete</span> <span class="ruby-string">'GEM_PATH'</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:install_dir</span>].<span class="ruby-identifier">nil?</span> <span class="ruby-keyword">and</span> <span class="ruby-constant">RUBY_VERSION</span> <span class="ruby-operator">&gt;</span> <span class="ruby-string">'1.9'</span>
+
+  <span class="ruby-identifier">exit_code</span> = <span class="ruby-number">0</span>
+
+  <span class="ruby-identifier">get_all_gem_names</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">gem_name</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">begin</span>
+      <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:conservative</span>] <span class="ruby-keyword">and</span>
+        <span class="ruby-keyword">not</span> <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Dependency</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">gem_name</span>, <span class="ruby-identifier">options</span>[<span class="ruby-value">:version</span>]).<span class="ruby-identifier">matching_specs</span>.<span class="ruby-identifier">empty?</span>
+
+      <span class="ruby-identifier">inst</span> = <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">DependencyInstaller</span>.<span class="ruby-identifier">new</span> <span class="ruby-identifier">options</span>
+      <span class="ruby-identifier">inst</span>.<span class="ruby-identifier">install</span> <span class="ruby-identifier">gem_name</span>, <span class="ruby-identifier">options</span>[<span class="ruby-value">:version</span>]
+
+      <span class="ruby-identifier">inst</span>.<span class="ruby-identifier">installed_gems</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">spec</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">say</span> <span class="ruby-node">&quot;Successfully installed #{spec.full_name}&quot;</span>
+      <span class="ruby-keyword">end</span>
+
+      <span class="ruby-identifier">installed_gems</span>.<span class="ruby-identifier">push</span>(*<span class="ruby-identifier">inst</span>.<span class="ruby-identifier">installed_gems</span>)
+    <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">InstallError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+      <span class="ruby-identifier">alert_error</span> <span class="ruby-node">&quot;Error installing #{gem_name}:\n\t#{e.message}&quot;</span>
+      <span class="ruby-identifier">exit_code</span> <span class="ruby-operator">|=</span> <span class="ruby-number">1</span>
+    <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">GemNotFoundException</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+      <span class="ruby-identifier">show_lookup_failure</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">name</span>, <span class="ruby-identifier">e</span>.<span class="ruby-identifier">version</span>, <span class="ruby-identifier">e</span>.<span class="ruby-identifier">errors</span>, <span class="ruby-identifier">options</span>[<span class="ruby-value">:domain</span>]
+
+      <span class="ruby-identifier">exit_code</span> <span class="ruby-operator">|=</span> <span class="ruby-number">2</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">installed_gems</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-keyword">then</span>
+    <span class="ruby-identifier">gems</span> = <span class="ruby-identifier">installed_gems</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-number">1</span> <span class="ruby-operator">?</span> <span class="ruby-string">'gem'</span> <span class="ruby-operator">:</span> <span class="ruby-string">'gems'</span>
+    <span class="ruby-identifier">say</span> <span class="ruby-node">&quot;#{installed_gems.length} #{gems} installed&quot;</span>
+
+    <span class="ruby-comment"># NOTE: *All* of the RI documents must be generated first.  For some</span>
+    <span class="ruby-comment"># reason, RI docs cannot be generated after any RDoc documents are</span>
+    <span class="ruby-comment"># generated.</span>
+
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:generate_ri</span>] <span class="ruby-keyword">then</span>
+      <span class="ruby-identifier">installed_gems</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">gem</span><span class="ruby-operator">|</span>
+        <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">DocManager</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">gem</span>, <span class="ruby-identifier">options</span>[<span class="ruby-value">:rdoc_args</span>]).<span class="ruby-identifier">generate_ri</span>
+      <span class="ruby-keyword">end</span>
+
+      <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">DocManager</span>.<span class="ruby-identifier">update_ri_cache</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:generate_rdoc</span>] <span class="ruby-keyword">then</span>
+      <span class="ruby-identifier">installed_gems</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">gem</span><span class="ruby-operator">|</span>
+        <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">DocManager</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">gem</span>, <span class="ruby-identifier">options</span>[<span class="ruby-value">:rdoc_args</span>]).<span class="ruby-identifier">generate_rdoc</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">SystemExitException</span>, <span class="ruby-identifier">exit_code</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    

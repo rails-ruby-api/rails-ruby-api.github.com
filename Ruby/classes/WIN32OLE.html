@@ -1,0 +1,2346 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>WIN32OLE</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/github.css" type="text/css" media="screen" />
+<script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            WIN32OLE 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../files/Users/fschumac/_rvm/src/ruby-1_9_3-p0/ext/win32ole/win32ole_c.html">/Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/win32ole/win32ole.c</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<pre class="ruby"><span class="ruby-operator">&lt;</span><span class="ruby-identifier">code</span><span class="ruby-operator">&gt;</span><span class="ruby-constant">WIN32OLE</span><span class="ruby-operator">&lt;</span><span class="ruby-regexp">%rcode&gt; objects represent OLE Automation object in Ruby.
+
+By using WIN32OLE, you can access OLE server like VBScript.
+
+Here is sample script.
+
+  require 'win32ole'
+
+  excel = WIN32OLE.new('Excel.Application')
+  excel.visible = true
+  workbook = excel.Workbooks.Add();
+  worksheet = workbook.Worksheets(1);
+  worksheet.Range(&quot;A1:D1&quot;).value = [&quot;North&quot;,&quot;South&quot;,&quot;East&quot;,&quot;West&quot;];
+  worksheet.Range(&quot;A2:B2&quot;).value = [5.2, 10];
+  worksheet.Range(&quot;C2&quot;).value = 8;
+  worksheet.Range(&quot;D2&quot;).value = 20;
+
+  range = worksheet.Range(&quot;A1:D2&quot;);
+  range.select
+  chart = workbook.Charts.Add;
+
+  workbook.saved = true;
+
+  excel.ActiveWorkbook.Close(0);
+  excel.Quit();
+</span></pre>
+
+<p>Unfortunately, Win32OLE doesn’t support the argument passed by reference
+directly. Instead, Win32OLE provides WIN32OLE::ARGV. If you want to get the
+result value of argument passed by reference, you can use WIN32OLE::ARGV.</p>
+
+<pre>oleobj.method(arg1, arg2, refargv3)
+puts WIN32OLE::ARGV[2]   # the value of refargv3 after called oleobj.method</pre>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+    <!-- Namespace -->
+    <div class="sectiontitle">Namespace</div>
+    <ul>
+      
+        <li>
+          <span class="type">MODULE</span>
+          <a href="WIN32OLE/VARIANT.html">WIN32OLE::VARIANT</a>
+        </li>
+      
+    </ul>
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>#</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-5B-5D">[]</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-5B-5D-3D">[]=</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-_getproperty">_getproperty</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-_invoke">_invoke</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-_setproperty">_setproperty</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>C</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-codepage">codepage</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-codepage-3D">codepage=</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-connect">connect</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-const_load">const_load</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-create_guid">create_guid</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>E</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-each">each</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>I</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-invoke">invoke</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>L</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-locale">locale</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-locale-3D">locale=</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>M</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-method_missing">method_missing</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>O</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-ole_activex_initialize">ole_activex_initialize</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-ole_free">ole_free</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-ole_free">ole_free</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-ole_func_methods">ole_func_methods</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-ole_get_methods">ole_get_methods</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-ole_initialize">ole_initialize</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-ole_method">ole_method</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-ole_method_help">ole_method_help</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-ole_methods">ole_methods</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-ole_obj_help">ole_obj_help</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-ole_put_methods">ole_put_methods</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-ole_query_interface">ole_query_interface</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-ole_reference_count">ole_reference_count</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-ole_respond_to-3F">ole_respond_to?</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-ole_show_help">ole_show_help</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-ole_type">ole_type</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-ole_typelib">ole_typelib</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-ole_uninitialize">ole_uninitialize</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>S</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-setproperty">setproperty</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+      <!-- Section constants -->
+      <div class="sectiontitle">Constants</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class="attr-name">VERSION</td>
+            <td>=</td>
+            <td class="attr-value">rb_str_new2(WIN32OLE_VERSION)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">ARGV</td>
+            <td>=</td>
+            <td class="attr-value">rb_ary_new()</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">CP_ACP</td>
+            <td>=</td>
+            <td class="attr-value">INT2FIX(CP_ACP)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">CP_OEMCP</td>
+            <td>=</td>
+            <td class="attr-value">INT2FIX(CP_OEMCP)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">CP_MACCP</td>
+            <td>=</td>
+            <td class="attr-value">INT2FIX(CP_MACCP)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">CP_THREAD_ACP</td>
+            <td>=</td>
+            <td class="attr-value">INT2FIX(CP_THREAD_ACP)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">CP_SYMBOL</td>
+            <td>=</td>
+            <td class="attr-value">INT2FIX(CP_SYMBOL)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">CP_UTF7</td>
+            <td>=</td>
+            <td class="attr-value">INT2FIX(CP_UTF7)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">CP_UTF8</td>
+            <td>=</td>
+            <td class="attr-value">INT2FIX(CP_UTF8)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">LOCALE_SYSTEM_DEFAULT</td>
+            <td>=</td>
+            <td class="attr-value">INT2FIX(LOCALE_SYSTEM_DEFAULT)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">LOCALE_USER_DEFAULT</td>
+            <td>=</td>
+            <td class="attr-value">INT2FIX(LOCALE_USER_DEFAULT)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+      </table>
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-codepage">
+            
+              <a name="method-c-codepage"></a><b>WIN32OLE.codepage
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns current codepage.</p>
+
+<pre class="ruby"><span class="ruby-constant">WIN32OLE</span>.<span class="ruby-identifier">codepage</span> <span class="ruby-comment"># =&gt; WIN32OLE::CP_ACP</span>
+</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-codepage_source')" id="l_method-c-codepage_source">show</a>
+                
+              </p>
+              <div id="method-c-codepage_source" class="dyn-source">
+                <pre>static VALUE
+fole_s_get_code_page(VALUE self)
+{
+    return INT2FIX(cWIN32OLE_cp);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-codepage-3D">
+            
+              <a name="method-c-codepage-3D"></a><b>WIN32OLE.codepage = CP
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Sets current codepage. The <a
+href="WIN32OLE.html#method-c-codepage">::codepage</a> is initialized
+according to <a
+href="Encoding.html#method-c-default_internal">Encoding.default_internal</a>.
+If <a
+href="Encoding.html#method-c-default_internal">Encoding.default_internal</a>
+is nil then <a href="WIN32OLE.html#method-c-codepage">::codepage</a> is
+initialized according to <a
+href="Encoding.html#method-c-default_external">Encoding.default_external</a>.</p>
+
+<pre>WIN32OLE.codepage = WIN32OLE::CP_UTF8
+WIN32OLE.codepage = 65001</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-codepage-3D_source')" id="l_method-c-codepage-3D_source">show</a>
+                
+              </p>
+              <div id="method-c-codepage-3D_source" class="dyn-source">
+                <pre>static VALUE
+fole_s_set_code_page(VALUE self, VALUE vcp)
+{
+    UINT cp = FIX2INT(vcp);
+    set_ole_codepage(cp);
+    /*
+     * Should this method return old codepage?
+     */
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-connect">
+            
+              <a name="method-c-connect"></a><b>WIN32OLE.connect( ole ) -&rarr; aWIN32OLE
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns running OLE Automation object or <a
+href="WIN32OLE.html">WIN32OLE</a> object from moniker. 1st argument should
+be OLE program id or class id or moniker.</p>
+
+<pre class="ruby"><span class="ruby-constant">WIN32OLE</span>.<span class="ruby-identifier">connect</span>(<span class="ruby-string">'Excel.Application'</span>) <span class="ruby-comment"># =&gt; WIN32OLE object which represents running Excel.</span>
+</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-connect_source')" id="l_method-c-connect_source">show</a>
+                
+              </p>
+              <div id="method-c-connect_source" class="dyn-source">
+                <pre>static VALUE
+fole_s_connect(int argc, VALUE *argv, VALUE self)
+{
+    VALUE svr_name;
+    VALUE others;
+    HRESULT hr;
+    CLSID   clsid;
+    OLECHAR *pBuf;
+    IDispatch *pDispatch;
+    void *p;
+    IUnknown *pUnknown;
+
+    rb_secure(4);
+    /* initialize to use OLE */
+    ole_initialize();
+
+    rb_scan_args(argc, argv, &quot;1*&quot;, &amp;svr_name, &amp;others);
+    SafeStringValue(svr_name);
+    if (rb_safe_level() &gt; 0 &amp;&amp; OBJ_TAINTED(svr_name)) {
+        rb_raise(rb_eSecurityError, &quot;Insecure Object Connection - %s&quot;,
+                 StringValuePtr(svr_name));
+    }
+
+    /* get CLSID from OLE server name */
+    pBuf = ole_vstr2wc(svr_name);
+    hr = CLSIDFromProgID(pBuf, &amp;clsid);
+    if(FAILED(hr)) {
+        hr = CLSIDFromString(pBuf, &amp;clsid);
+    }
+    SysFreeString(pBuf);
+    if(FAILED(hr)) {
+        return ole_bind_obj(svr_name, argc, argv, self);
+    }
+
+    hr = GetActiveObject(&amp;clsid, 0, &amp;pUnknown);
+    if (FAILED(hr)) {
+        ole_raise(hr, eWIN32OLERuntimeError,
+                  &quot;OLE server `%s' not running&quot;, StringValuePtr(svr_name));
+    }
+    hr = pUnknown-&gt;lpVtbl-&gt;QueryInterface(pUnknown, &amp;IID_IDispatch, &amp;p);
+    pDispatch = p;
+    if(FAILED(hr)) {
+        OLE_RELEASE(pUnknown);
+        ole_raise(hr, eWIN32OLERuntimeError,
+                  &quot;failed to create WIN32OLE server `%s'&quot;,
+                  StringValuePtr(svr_name));
+    }
+
+    OLE_RELEASE(pUnknown);
+
+    return create_win32ole_object(self, pDispatch, argc, argv);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-const_load">
+            
+              <a name="method-c-const_load"></a><b>WIN32OLE.const_load( ole, mod = WIN32OLE)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Defines the constants of OLE Automation server as mod’s constants. The
+first argument is <a href="WIN32OLE.html">WIN32OLE</a> object or type
+library name. If 2nd argument is omitted, the default is <a
+href="WIN32OLE.html">WIN32OLE</a>. The first letter of Ruby’s constant
+variable name is upper case, so constant variable name of <a
+href="WIN32OLE.html">WIN32OLE</a> object is capitalized. For example, the
+‘xlTop’ constant of Excel is changed to ‘XlTop’ in <a
+href="WIN32OLE.html">WIN32OLE</a>. If the first letter of constant variabl
+is not [A-Z], then the constant is defined as CONSTANTS hash element.</p>
+
+<pre class="ruby"><span class="ruby-keyword">module</span> <span class="ruby-constant">EXCEL_CONST</span>
+<span class="ruby-keyword">end</span>
+<span class="ruby-identifier">excel</span> = <span class="ruby-constant">WIN32OLE</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">'Excel.Application'</span>)
+<span class="ruby-constant">WIN32OLE</span>.<span class="ruby-identifier">const_load</span>(<span class="ruby-identifier">excel</span>, <span class="ruby-constant">EXCEL_CONST</span>)
+<span class="ruby-identifier">puts</span> <span class="ruby-constant">EXCEL_CONST</span><span class="ruby-operator">::</span><span class="ruby-constant">XlTop</span> <span class="ruby-comment"># =&gt; -4160</span>
+<span class="ruby-identifier">puts</span> <span class="ruby-constant">EXCEL_CONST</span><span class="ruby-operator">::</span><span class="ruby-constant">CONSTANTS</span>[<span class="ruby-string">'_xlDialogChartSourceData'</span>] <span class="ruby-comment"># =&gt; 541</span>
+
+<span class="ruby-constant">WIN32OLE</span>.<span class="ruby-identifier">const_load</span>(<span class="ruby-identifier">excel</span>)
+<span class="ruby-identifier">puts</span> <span class="ruby-constant">WIN32OLE</span><span class="ruby-operator">::</span><span class="ruby-constant">XlTop</span> <span class="ruby-comment"># =&gt; -4160</span>
+
+<span class="ruby-keyword">module</span> <span class="ruby-constant">MSO</span>
+<span class="ruby-keyword">end</span>
+<span class="ruby-constant">WIN32OLE</span>.<span class="ruby-identifier">const_load</span>(<span class="ruby-string">'Microsoft Office 9.0 Object Library'</span>, <span class="ruby-constant">MSO</span>)
+<span class="ruby-identifier">puts</span> <span class="ruby-constant">MSO</span><span class="ruby-operator">::</span><span class="ruby-constant">MsoLineSingle</span> <span class="ruby-comment"># =&gt; 1</span>
+</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-const_load_source')" id="l_method-c-const_load_source">show</a>
+                
+              </p>
+              <div id="method-c-const_load_source" class="dyn-source">
+                <pre>static VALUE
+fole_s_const_load(int argc, VALUE *argv, VALUE self)
+{
+    VALUE ole;
+    VALUE klass;
+    struct oledata *pole;
+    ITypeInfo *pTypeInfo;
+    ITypeLib *pTypeLib;
+    unsigned int index;
+    HRESULT hr;
+    OLECHAR *pBuf;
+    VALUE file;
+    LCID    lcid = cWIN32OLE_lcid;
+
+    rb_secure(4);
+    rb_scan_args(argc, argv, &quot;11&quot;, &amp;ole, &amp;klass);
+    if (TYPE(klass) != T_CLASS &amp;&amp;
+        TYPE(klass) != T_MODULE &amp;&amp;
+        TYPE(klass) != T_NIL) {
+        rb_raise(rb_eTypeError, &quot;2nd parameter must be Class or Module&quot;);
+    }
+    if (rb_obj_is_kind_of(ole, cWIN32OLE)) {
+        OLEData_Get_Struct(ole, pole);
+        hr = pole-&gt;pDispatch-&gt;lpVtbl-&gt;GetTypeInfo(pole-&gt;pDispatch,
+                                                  0, lcid, &amp;pTypeInfo);
+        if(FAILED(hr)) {
+            ole_raise(hr, rb_eRuntimeError, &quot;failed to GetTypeInfo&quot;);
+        }
+        hr = pTypeInfo-&gt;lpVtbl-&gt;GetContainingTypeLib(pTypeInfo, &amp;pTypeLib, &amp;index);
+        if(FAILED(hr)) {
+            OLE_RELEASE(pTypeInfo);
+            ole_raise(hr, rb_eRuntimeError, &quot;failed to GetContainingTypeLib&quot;);
+        }
+        OLE_RELEASE(pTypeInfo);
+        if(TYPE(klass) != T_NIL) {
+            ole_const_load(pTypeLib, klass, self);
+        }
+        else {
+            ole_const_load(pTypeLib, cWIN32OLE, self);
+        }
+        OLE_RELEASE(pTypeLib);
+    }
+    else if(TYPE(ole) == T_STRING) {
+        file = typelib_file(ole);
+        if (file == Qnil) {
+            file = ole;
+        }
+        pBuf = ole_vstr2wc(file);
+        hr = LoadTypeLibEx(pBuf, REGKIND_NONE, &amp;pTypeLib);
+        SysFreeString(pBuf);
+        if (FAILED(hr))
+          ole_raise(hr, eWIN32OLERuntimeError, &quot;failed to LoadTypeLibEx&quot;);
+        if(TYPE(klass) != T_NIL) {
+            ole_const_load(pTypeLib, klass, self);
+        }
+        else {
+            ole_const_load(pTypeLib, cWIN32OLE, self);
+        }
+        OLE_RELEASE(pTypeLib);
+    }
+    else {
+        rb_raise(rb_eTypeError, &quot;1st parameter must be WIN32OLE instance&quot;);
+    }
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-create_guid">
+            
+              <a name="method-c-create_guid"></a><b>WIN32OLE.create_guid
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Creates GUID.</p>
+
+<pre class="ruby"><span class="ruby-constant">WIN32OLE</span>.<span class="ruby-identifier">create_guid</span> <span class="ruby-comment"># =&gt; {1CB530F1-F6B1-404D-BCE6-1959BF91F4A8}</span>
+</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-create_guid_source')" id="l_method-c-create_guid_source">show</a>
+                
+              </p>
+              <div id="method-c-create_guid_source" class="dyn-source">
+                <pre>static VALUE
+fole_s_create_guid(VALUE self)
+{
+    GUID guid;
+    HRESULT hr;
+    OLECHAR bstr[80];
+    int len = 0;
+    hr = CoCreateGuid(&amp;guid);
+    if (FAILED(hr)) {
+        ole_raise(hr, eWIN32OLERuntimeError, &quot;failed to create GUID&quot;);
+    }
+    len = StringFromGUID2(&amp;guid, bstr, sizeof(bstr)/sizeof(OLECHAR));
+    if (len == 0) {
+        rb_raise(rb_eRuntimeError, &quot;failed to create GUID(buffer over)&quot;);
+    }
+    return ole_wc2vstr(bstr, FALSE);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-locale">
+            
+              <a name="method-c-locale"></a><b>WIN32OLE.locale &rarr; locale id.
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns current locale id (lcid). The default locale is <a
+href="WIN32OLE.html#LOCALE_SYSTEM_DEFAULT">LOCALE_SYSTEM_DEFAULT</a>.</p>
+
+<pre>lcid = WIN32OLE.locale</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-locale_source')" id="l_method-c-locale_source">show</a>
+                
+              </p>
+              <div id="method-c-locale_source" class="dyn-source">
+                <pre>static VALUE
+fole_s_get_locale(VALUE self)
+{
+    return INT2FIX(cWIN32OLE_lcid);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-locale-3D">
+            
+              <a name="method-c-locale-3D"></a><b>WIN32OLE.locale = lcid
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Sets current locale id (lcid).</p>
+
+<pre>WIN32OLE.locale = 1033 # set locale English(U.S)
+obj = WIN32OLE_VARIANT.new(&quot;$100,000&quot;, WIN32OLE::VARIANT::VT_CY)</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-locale-3D_source')" id="l_method-c-locale-3D_source">show</a>
+                
+              </p>
+              <div id="method-c-locale-3D_source" class="dyn-source">
+                <pre>static VALUE
+fole_s_set_locale(VALUE self, VALUE vlcid)
+{
+    LCID lcid = FIX2INT(vlcid);
+    if (lcid_installed(lcid)) {
+        cWIN32OLE_lcid = lcid;
+    } else {
+        switch (lcid) {
+        case LOCALE_SYSTEM_DEFAULT:
+        case LOCALE_USER_DEFAULT:
+            cWIN32OLE_lcid = lcid;
+            break;
+        default:
+            rb_raise(eWIN32OLERuntimeError, &quot;not installed locale: %u&quot;, (unsigned int)lcid);
+        }
+    }
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <a name="method-c-new"></a><b>WIN32OLE.new(server, [host]) &rarr; WIN32OLE object
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns a new <a href="WIN32OLE.html">WIN32OLE</a> object(OLE Automation
+object). The first argument server specifies OLE Automation server. The
+first argument should be CLSID or PROGID. If second argument host
+specified, then returns OLE Automation object on host.</p>
+
+<pre class="ruby"><span class="ruby-constant">WIN32OLE</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">'Excel.Application'</span>) <span class="ruby-comment"># =&gt; Excel OLE Automation WIN32OLE object.</span>
+<span class="ruby-constant">WIN32OLE</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">'{00024500-0000-0000-C000-000000000046}'</span>) <span class="ruby-comment"># =&gt; Excel OLE Automation WIN32OLE object.</span>
+</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre>static VALUE
+fole_initialize(int argc, VALUE *argv, VALUE self)
+{
+    VALUE svr_name;
+    VALUE host;
+    VALUE others;
+    HRESULT hr;
+    CLSID   clsid;
+    OLECHAR *pBuf;
+    IDispatch *pDispatch;
+    void *p;
+    rb_secure(4);
+    rb_call_super(0, 0);
+    rb_scan_args(argc, argv, &quot;11*&quot;, &amp;svr_name, &amp;host, &amp;others);
+
+    SafeStringValue(svr_name);
+    if (rb_safe_level() &gt; 0 &amp;&amp; OBJ_TAINTED(svr_name)) {
+        rb_raise(rb_eSecurityError, &quot;Insecure Object Creation - %s&quot;,
+                 StringValuePtr(svr_name));
+    }
+    if (!NIL_P(host)) {
+        SafeStringValue(host);
+        if (rb_safe_level() &gt; 0 &amp;&amp; OBJ_TAINTED(host)) {
+            rb_raise(rb_eSecurityError, &quot;Insecure Object Creation - %s&quot;,
+                     StringValuePtr(svr_name));
+        }
+        return ole_create_dcom(argc, argv, self);
+    }
+
+    /* get CLSID from OLE server name */
+    pBuf  = ole_vstr2wc(svr_name);
+    hr = CLSIDFromProgID(pBuf, &amp;clsid);
+    if(FAILED(hr)) {
+        hr = CLSIDFromString(pBuf, &amp;clsid);
+    }
+    SysFreeString(pBuf);
+    if(FAILED(hr)) {
+        ole_raise(hr, eWIN32OLERuntimeError,
+                  &quot;unknown OLE server: `%s'&quot;,
+                  StringValuePtr(svr_name));
+    }
+
+    /* get IDispatch interface */
+    hr = CoCreateInstance(&amp;clsid, NULL, CLSCTX_INPROC_SERVER | CLSCTX_LOCAL_SERVER,
+                          &amp;IID_IDispatch, &amp;p);
+    pDispatch = p;
+    if(FAILED(hr)) {
+        ole_raise(hr, eWIN32OLERuntimeError,
+                  &quot;failed to create WIN32OLE object from `%s'&quot;,
+                  StringValuePtr(svr_name));
+    }
+
+    ole_set_member(self, pDispatch);
+    return self;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-ole_free">
+            
+              <a name="method-c-ole_free"></a><b>WIN32OLE.ole_free(aWIN32OLE) -&rarr; number
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Invokes Release method of Dispatch interface of <a
+href="WIN32OLE.html">WIN32OLE</a> object. You should not use this method
+because this method exists only for debugging <a
+href="WIN32OLE.html">WIN32OLE</a>. The return value is reference counter of
+OLE object.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-ole_free_source')" id="l_method-c-ole_free_source">show</a>
+                
+              </p>
+              <div id="method-c-ole_free_source" class="dyn-source">
+                <pre>static VALUE
+fole_s_free(VALUE self, VALUE obj)
+{
+    ULONG n = 0;
+    struct oledata * pole;
+    OLEData_Get_Struct(obj, pole);
+    if(pole-&gt;pDispatch) {
+        if (reference_count(pole) &gt; 0) {
+            n = OLE_RELEASE(pole-&gt;pDispatch);
+        }
+    }
+    return INT2NUM(n);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-ole_initialize">
+            
+              <a name="method-c-ole_initialize"></a><b>ole_initialize</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>:nodoc</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-ole_initialize_source')" id="l_method-c-ole_initialize_source">show</a>
+                
+              </p>
+              <div id="method-c-ole_initialize_source" class="dyn-source">
+                <pre>static VALUE
+fole_s_ole_initialize(VALUE self)
+{
+    ole_pure_initialize();
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-ole_reference_count">
+            
+              <a name="method-c-ole_reference_count"></a><b>WIN32OLE.ole_reference_count(aWIN32OLE) -&rarr; number
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns reference counter of Dispatch interface of <a
+href="WIN32OLE.html">WIN32OLE</a> object. You should not use this method
+because this method exists only for debugging <a
+href="WIN32OLE.html">WIN32OLE</a>.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-ole_reference_count_source')" id="l_method-c-ole_reference_count_source">show</a>
+                
+              </p>
+              <div id="method-c-ole_reference_count_source" class="dyn-source">
+                <pre>static VALUE
+fole_s_reference_count(VALUE self, VALUE obj)
+{
+    struct oledata * pole;
+    OLEData_Get_Struct(obj, pole);
+    return INT2NUM(reference_count(pole));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-ole_show_help">
+            
+              <a name="method-c-ole_show_help"></a><b>WIN32OLE.ole_show_help(obj [,helpcontext])
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Displays helpfile. The 1st argument specifies <a
+href="WIN32OLE_TYPE.html">WIN32OLE_TYPE</a> object or <a
+href="WIN32OLE_METHOD.html">WIN32OLE_METHOD</a> object or helpfile.</p>
+
+<pre>excel = WIN32OLE.new('Excel.Application')
+typeobj = excel.ole_type
+WIN32OLE.ole_show_help(typeobj)</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-ole_show_help_source')" id="l_method-c-ole_show_help_source">show</a>
+                
+              </p>
+              <div id="method-c-ole_show_help_source" class="dyn-source">
+                <pre>static VALUE
+fole_s_show_help(int argc, VALUE *argv, VALUE self)
+{
+    VALUE target;
+    VALUE helpcontext;
+    VALUE helpfile;
+    VALUE name;
+    HWND  hwnd;
+    rb_scan_args(argc, argv, &quot;11&quot;, &amp;target, &amp;helpcontext);
+    if (rb_obj_is_kind_of(target, cWIN32OLE_TYPE) ||
+        rb_obj_is_kind_of(target, cWIN32OLE_METHOD)) {
+        helpfile = rb_funcall(target, rb_intern(&quot;helpfile&quot;), 0);
+        if(strlen(StringValuePtr(helpfile)) == 0) {
+            name = rb_ivar_get(target, rb_intern(&quot;name&quot;));
+            rb_raise(rb_eRuntimeError, &quot;no helpfile of `%s'&quot;,
+                     StringValuePtr(name));
+        }
+        helpcontext = rb_funcall(target, rb_intern(&quot;helpcontext&quot;), 0);
+    } else {
+        helpfile = target;
+    }
+    if (TYPE(helpfile) != T_STRING) {
+        rb_raise(rb_eTypeError, &quot;1st parameter must be (String|WIN32OLE_TYPE|WIN32OLE_METHOD)&quot;);
+    }
+    hwnd = ole_show_help(helpfile, helpcontext);
+    if(hwnd == 0) {
+        rb_raise(rb_eRuntimeError, &quot;failed to open help file `%s'&quot;,
+                 StringValuePtr(helpfile));
+    }
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-ole_uninitialize">
+            
+              <a name="method-c-ole_uninitialize"></a><b>ole_uninitialize</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>:nodoc</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-ole_uninitialize_source')" id="l_method-c-ole_uninitialize_source">show</a>
+                
+              </p>
+              <div id="method-c-ole_uninitialize_source" class="dyn-source">
+                <pre>static VALUE
+fole_s_ole_uninitialize(VALUE self)
+{
+    ole_pure_uninitialize();
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-5B-5D">
+            
+              <a name="method-i-5B-5D"></a><b>WIN32OLE[a1,a2,...]
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the value of Collection specified by a1, a2,.…</p>
+
+<pre class="ruby"><span class="ruby-identifier">dict</span> = <span class="ruby-constant">WIN32OLE</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">'Scripting.Dictionary'</span>)
+<span class="ruby-identifier">dict</span>.<span class="ruby-identifier">add</span>(<span class="ruby-string">'ruby'</span>, <span class="ruby-string">'Ruby'</span>)
+<span class="ruby-identifier">puts</span> <span class="ruby-identifier">dict</span>[<span class="ruby-string">'ruby'</span>] <span class="ruby-comment"># =&gt; 'Ruby' (same as `puts dict.item('ruby')')</span>
+</pre>
+
+<p>Remark: You can not use this method to get the property.</p>
+
+<pre>excel = WIN32OLE.new('Excel.Application')
+# puts excel['Visible']  This is error !!!
+puts excel.Visible # You should to use this style to get the property.</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-5B-5D_source')" id="l_method-i-5B-5D_source">show</a>
+                
+              </p>
+              <div id="method-i-5B-5D_source" class="dyn-source">
+                <pre>static VALUE
+fole_getproperty_with_bracket(int argc, VALUE *argv, VALUE self)
+{
+    return ole_invoke(argc, argv, self, DISPATCH_PROPERTYGET, TRUE);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-5B-5D-3D">
+            
+              <a name="method-i-5B-5D-3D"></a><b>WIN32OLE[a1, a2, ...]=val
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Sets the value to <a href="WIN32OLE.html">WIN32OLE</a> object specified by
+a1, a2, …</p>
+
+<pre class="ruby"><span class="ruby-identifier">dict</span> = <span class="ruby-constant">WIN32OLE</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">'Scripting.Dictionary'</span>)
+<span class="ruby-identifier">dict</span>.<span class="ruby-identifier">add</span>(<span class="ruby-string">'ruby'</span>, <span class="ruby-string">'RUBY'</span>)
+<span class="ruby-identifier">dict</span>[<span class="ruby-string">'ruby'</span>] = <span class="ruby-string">'Ruby'</span>
+<span class="ruby-identifier">puts</span> <span class="ruby-identifier">dict</span>[<span class="ruby-string">'ruby'</span>] <span class="ruby-comment"># =&gt; 'Ruby'</span>
+</pre>
+
+<p>Remark: You can not use this method to set the property value.</p>
+
+<pre>excel = WIN32OLE.new('Excel.Application')
+# excel['Visible'] = true # This is error !!!
+excel.Visible = true # You should to use this style to set the property.</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-5B-5D-3D_source')" id="l_method-i-5B-5D-3D_source">show</a>
+                
+              </p>
+              <div id="method-i-5B-5D-3D_source" class="dyn-source">
+                <pre>static VALUE
+fole_setproperty_with_bracket(int argc, VALUE *argv, VALUE self)
+{
+    return ole_invoke(argc, argv, self, DISPATCH_PROPERTYPUT, TRUE);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-_getproperty">
+            
+              <a name="method-i-_getproperty"></a><b>WIN32OLE#_getproperty(dispid, args, types)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Runs the early binding method to get property. The 1st argument specifies
+dispatch ID, the 2nd argument specifies the array of arguments, the 3rd
+argument specifies the array of the type of arguments.</p>
+
+<pre>excel = WIN32OLE.new('Excel.Application')
+puts excel._getproperty(558, [], []) # same effect as puts excel.visible</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-_getproperty_source')" id="l_method-i-_getproperty_source">show</a>
+                
+              </p>
+              <div id="method-i-_getproperty_source" class="dyn-source">
+                <pre>static VALUE
+fole_getproperty2(VALUE self, VALUE dispid, VALUE args, VALUE types)
+{
+    return ole_invoke2(self, dispid, args, types, DISPATCH_PROPERTYGET);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-_invoke">
+            
+              <a name="method-i-_invoke"></a><b>WIN32OLE#_invoke(dispid, args, types)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Runs the early binding method. The 1st argument specifies dispatch ID, the
+2nd argument specifies the array of arguments, the 3rd argument specifies
+the array of the type of arguments.</p>
+
+<pre>excel = WIN32OLE.new('Excel.Application')
+excel._invoke(302, [], []) #  same effect as excel.Quit</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-_invoke_source')" id="l_method-i-_invoke_source">show</a>
+                
+              </p>
+              <div id="method-i-_invoke_source" class="dyn-source">
+                <pre>static VALUE
+fole_invoke2(VALUE self, VALUE dispid, VALUE args, VALUE types)
+{
+    return ole_invoke2(self, dispid, args, types, DISPATCH_METHOD);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-_setproperty">
+            
+              <a name="method-i-_setproperty"></a><b>WIN32OLE#_setproperty(dispid, args, types)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Runs the early binding method to set property. The 1st argument specifies
+dispatch ID, the 2nd argument specifies the array of arguments, the 3rd
+argument specifies the array of the type of arguments.</p>
+
+<pre>excel = WIN32OLE.new('Excel.Application')
+excel._setproperty(558, [true], [WIN32OLE::VARIANT::VT_BOOL]) # same effect as excel.visible = true</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-_setproperty_source')" id="l_method-i-_setproperty_source">show</a>
+                
+              </p>
+              <div id="method-i-_setproperty_source" class="dyn-source">
+                <pre>static VALUE
+fole_setproperty2(VALUE self, VALUE dispid, VALUE args, VALUE types)
+{
+    return ole_invoke2(self, dispid, args, types, DISPATCH_PROPERTYPUT);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-each">
+            
+              <a name="method-i-each"></a><b>WIN32OLE#each {|i|...}
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Iterates over each item of OLE collection which has IEnumVARIANT interface.</p>
+
+<pre class="ruby"><span class="ruby-identifier">excel</span> = <span class="ruby-constant">WIN32OLE</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">'Excel.Application'</span>)
+<span class="ruby-identifier">book</span> = <span class="ruby-identifier">excel</span>.<span class="ruby-identifier">workbooks</span>.<span class="ruby-identifier">add</span>
+<span class="ruby-identifier">sheets</span> = <span class="ruby-identifier">book</span>.<span class="ruby-identifier">worksheets</span>(<span class="ruby-value">1</span>)
+<span class="ruby-identifier">cells</span> = <span class="ruby-identifier">sheets</span>.<span class="ruby-identifier">cells</span>(<span class="ruby-string">&quot;A1:A5&quot;</span>)
+<span class="ruby-identifier">cells</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">cell</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">cell</span>.<span class="ruby-identifier">value</span> = <span class="ruby-value">10</span>
+<span class="ruby-keyword">end</span>
+</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-each_source')" id="l_method-i-each_source">show</a>
+                
+              </p>
+              <div id="method-i-each_source" class="dyn-source">
+                <pre>static VALUE
+fole_each(VALUE self)
+{
+    LCID    lcid = cWIN32OLE_lcid;
+
+    struct oledata *pole;
+
+    unsigned int argErr;
+    EXCEPINFO excepinfo;
+    DISPPARAMS dispParams;
+    VARIANT result;
+    HRESULT hr;
+    IEnumVARIANT *pEnum = NULL;
+    void *p;
+
+    RETURN_ENUMERATOR(self, 0, 0);
+
+    VariantInit(&amp;result);
+    dispParams.rgvarg = NULL;
+    dispParams.rgdispidNamedArgs = NULL;
+    dispParams.cNamedArgs = 0;
+    dispParams.cArgs = 0;
+    memset(&amp;excepinfo, 0, sizeof(excepinfo));
+
+    OLEData_Get_Struct(self, pole);
+    hr = pole-&gt;pDispatch-&gt;lpVtbl-&gt;Invoke(pole-&gt;pDispatch, DISPID_NEWENUM,
+                                         &amp;IID_NULL, lcid,
+                                         DISPATCH_METHOD | DISPATCH_PROPERTYGET,
+                                         &amp;dispParams, &amp;result,
+                                         &amp;excepinfo, &amp;argErr);
+
+    if (FAILED(hr)) {
+        VariantClear(&amp;result);
+        ole_raise(hr, eWIN32OLERuntimeError, &quot;failed to get IEnum Interface&quot;);
+    }
+
+    if (V_VT(&amp;result) == VT_UNKNOWN) {
+        hr = V_UNKNOWN(&amp;result)-&gt;lpVtbl-&gt;QueryInterface(V_UNKNOWN(&amp;result),
+                                                        &amp;IID_IEnumVARIANT,
+                                                        &amp;p);
+        pEnum = p;
+    } else if (V_VT(&amp;result) == VT_DISPATCH) {
+        hr = V_DISPATCH(&amp;result)-&gt;lpVtbl-&gt;QueryInterface(V_DISPATCH(&amp;result),
+                                                         &amp;IID_IEnumVARIANT,
+                                                         &amp;p);
+        pEnum = p;
+    }
+    if (FAILED(hr) || !pEnum) {
+        VariantClear(&amp;result);
+        ole_raise(hr, rb_eRuntimeError, &quot;failed to get IEnum Interface&quot;);
+    }
+
+    VariantClear(&amp;result);
+    rb_ensure(ole_each_sub, (VALUE)pEnum, ole_ienum_free, (VALUE)pEnum);
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-invoke">
+            
+              <a name="method-i-invoke"></a><b>WIN32OLE#invoke(method, [arg1,...])  => return value of method.
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Runs OLE method. The first argument specifies the method name of OLE
+Automation object. The others specify argument of the <em>method</em>. If
+you can not execute <em>method</em> directly, then use this method instead.</p>
+
+<pre class="ruby"><span class="ruby-identifier">excel</span> = <span class="ruby-constant">WIN32OLE</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">'Excel.Application'</span>)
+<span class="ruby-identifier">excel</span>.<span class="ruby-identifier">invoke</span>(<span class="ruby-string">'Quit'</span>)  <span class="ruby-comment"># =&gt; same as excel.Quit</span>
+</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-invoke_source')" id="l_method-i-invoke_source">show</a>
+                
+              </p>
+              <div id="method-i-invoke_source" class="dyn-source">
+                <pre>static VALUE
+fole_invoke(int argc, VALUE *argv, VALUE self)
+{
+    return ole_invoke(argc, argv, self, DISPATCH_METHOD|DISPATCH_PROPERTYGET, FALSE);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-method_missing">
+            
+              <a name="method-i-method_missing"></a><b>WIN32OLE#method_missing(id [,arg1, arg2, ...])
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Calls <a href="WIN32OLE.html#method-i-invoke">#invoke</a> method.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-method_missing_source')" id="l_method-i-method_missing_source">show</a>
+                
+              </p>
+              <div id="method-i-method_missing_source" class="dyn-source">
+                <pre>static VALUE
+fole_missing(int argc, VALUE *argv, VALUE self)
+{
+    ID id;
+    const char* mname;
+    int n;
+    id = rb_to_id(argv[0]);
+    mname = rb_id2name(id);
+    if(!mname) {
+        rb_raise(rb_eRuntimeError, &quot;fail: unknown method or property&quot;);
+    }
+    n = strlen(mname);
+    if(mname[n-1] == '=') {
+        argv[0] = rb_enc_str_new(mname, n-1, cWIN32OLE_enc);
+
+        return ole_propertyput(self, argv[0], argv[1]);
+    }
+    else {
+        argv[0] = rb_enc_str_new(mname, n, cWIN32OLE_enc);
+        return ole_invoke(argc, argv, self, DISPATCH_METHOD|DISPATCH_PROPERTYGET, FALSE);
+    }
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-ole_activex_initialize">
+            
+              <a name="method-i-ole_activex_initialize"></a><b>WIN32OLE#ole_activex_initialize() &rarr; Qnil
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Initialize <a href="WIN32OLE.html">WIN32OLE</a> object(ActiveX Control) by
+calling IPersistMemory::InitNew.</p>
+
+<p>Before calling OLE method, some kind of the ActiveX controls created with
+MFC should be initialized by calling IPersistXXX::InitNew.</p>
+
+<p>If and only if you received the exception “HRESULT error code: 0x8000ffff
+catastrophic failure”, try this method before invoking any ole_method.</p>
+
+<pre>obj = WIN32OLE.new(&quot;ProgID_or_GUID_of_ActiveX_Control&quot;)
+obj.ole_activex_initialize
+obj.method(...)</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-ole_activex_initialize_source')" id="l_method-i-ole_activex_initialize_source">show</a>
+                
+              </p>
+              <div id="method-i-ole_activex_initialize_source" class="dyn-source">
+                <pre>static VALUE
+fole_activex_initialize(VALUE self)
+{
+    struct oledata *pole;
+    IPersistMemory *pPersistMemory;
+    void *p;
+
+    HRESULT hr = S_OK;
+
+    OLEData_Get_Struct(self, pole);
+
+    hr = pole-&gt;pDispatch-&gt;lpVtbl-&gt;QueryInterface(pole-&gt;pDispatch, &amp;IID_IPersistMemory, &amp;p);
+    pPersistMemory = p;
+    if (SUCCEEDED(hr)) {
+        hr = pPersistMemory-&gt;lpVtbl-&gt;InitNew(pPersistMemory);
+        OLE_RELEASE(pPersistMemory);
+        if (SUCCEEDED(hr)) {
+            return Qnil;
+        }
+    }
+
+    if (FAILED(hr)) {
+        ole_raise(hr, eWIN32OLERuntimeError, &quot;fail to initialize ActiveX control&quot;);
+    }
+
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-ole_free">
+            
+              <a name="method-i-ole_free"></a><b>WIN32OLE#ole_free
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>invokes Release method of Dispatch interface of <a
+href="WIN32OLE.html">WIN32OLE</a> object. Usually, you do not need to call
+this method because Release method called automatically when <a
+href="WIN32OLE.html">WIN32OLE</a> object garbaged.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-ole_free_source')" id="l_method-i-ole_free_source">show</a>
+                
+              </p>
+              <div id="method-i-ole_free_source" class="dyn-source">
+                <pre>static VALUE
+fole_free(VALUE self)
+{
+    struct oledata *pole;
+    rb_secure(4);
+    OLEData_Get_Struct(self, pole);
+    OLE_FREE(pole-&gt;pDispatch);
+    pole-&gt;pDispatch = NULL;
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-ole_func_methods">
+            
+              <a name="method-i-ole_func_methods"></a><b>WIN32OLE#ole_func_methods
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the array of <a href="WIN32OLE_METHOD.html">WIN32OLE_METHOD</a>
+object . The element of the array is property (settable) of <a
+href="WIN32OLE.html">WIN32OLE</a> object.</p>
+
+<pre>excel = WIN32OLE.new('Excel.Application')
+properties = excel.ole_func_methods</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-ole_func_methods_source')" id="l_method-i-ole_func_methods_source">show</a>
+                
+              </p>
+              <div id="method-i-ole_func_methods_source" class="dyn-source">
+                <pre>static VALUE
+fole_func_methods(VALUE self)
+{
+    return ole_methods( self, INVOKE_FUNC);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-ole_get_methods">
+            
+              <a name="method-i-ole_get_methods"></a><b>WIN32OLE#ole_get_methods
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the array of <a href="WIN32OLE_METHOD.html">WIN32OLE_METHOD</a>
+object . The element of the array is property (gettable) of <a
+href="WIN32OLE.html">WIN32OLE</a> object.</p>
+
+<pre>excel = WIN32OLE.new('Excel.Application')
+properties = excel.ole_get_methods</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-ole_get_methods_source')" id="l_method-i-ole_get_methods_source">show</a>
+                
+              </p>
+              <div id="method-i-ole_get_methods_source" class="dyn-source">
+                <pre>static VALUE
+fole_get_methods(VALUE self)
+{
+    return ole_methods( self, INVOKE_PROPERTYGET);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-ole_method">
+            
+              <a name="method-i-ole_method"></a><b>WIN32OLE#ole_method_help(method)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns <a href="WIN32OLE_METHOD.html">WIN32OLE_METHOD</a> object
+corresponding with method specified by 1st argument.</p>
+
+<pre>excel = WIN32OLE.new('Excel.Application')
+method = excel.ole_method_help('Quit')</pre>
+            </div>
+          
+          
+          
+            <div class="aka">
+              Also aliased as: <a href="WIN32OLE.html#method-i-ole_method_help">ole_method_help</a>
+            </div>
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-ole_method_source')" id="l_method-i-ole_method_source">show</a>
+                
+              </p>
+              <div id="method-i-ole_method_source" class="dyn-source">
+                <pre>static VALUE
+fole_method_help(VALUE self, VALUE cmdname)
+{
+    ITypeInfo *pTypeInfo;
+    HRESULT hr;
+    struct oledata *pole;
+    VALUE method, obj;
+
+    SafeStringValue(cmdname);
+    OLEData_Get_Struct(self, pole);
+    hr = typeinfo_from_ole(pole, &amp;pTypeInfo);
+    if(FAILED(hr))
+        ole_raise(hr, rb_eRuntimeError, &quot;failed to get ITypeInfo&quot;);
+    method = folemethod_s_allocate(cWIN32OLE_METHOD);
+    obj = olemethod_from_typeinfo(method, pTypeInfo, cmdname);
+    OLE_RELEASE(pTypeInfo);
+    if (obj == Qnil)
+        rb_raise(eWIN32OLERuntimeError, &quot;not found %s&quot;,
+                 StringValuePtr(cmdname));
+    return obj;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-ole_method_help">
+            
+              <a name="method-i-ole_method_help"></a><b>ole_method_help</b>(p1)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-ole_methods">
+            
+              <a name="method-i-ole_methods"></a><b>WIN32OLE#ole_methods
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the array of <a href="WIN32OLE_METHOD.html">WIN32OLE_METHOD</a>
+object. The element is OLE method of <a href="WIN32OLE.html">WIN32OLE</a>
+object.</p>
+
+<pre>excel = WIN32OLE.new('Excel.Application')
+methods = excel.ole_methods</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-ole_methods_source')" id="l_method-i-ole_methods_source">show</a>
+                
+              </p>
+              <div id="method-i-ole_methods_source" class="dyn-source">
+                <pre>static VALUE
+fole_methods(VALUE self)
+{
+    return ole_methods( self, INVOKE_FUNC | INVOKE_PROPERTYGET | INVOKE_PROPERTYPUT | INVOKE_PROPERTYPUTREF);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-ole_obj_help">
+            
+              <a name="method-i-ole_obj_help"></a><b>ole_obj_help</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-ole_put_methods">
+            
+              <a name="method-i-ole_put_methods"></a><b>WIN32OLE#ole_put_methods
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the array of <a href="WIN32OLE_METHOD.html">WIN32OLE_METHOD</a>
+object . The element of the array is property (settable) of <a
+href="WIN32OLE.html">WIN32OLE</a> object.</p>
+
+<pre>excel = WIN32OLE.new('Excel.Application')
+properties = excel.ole_put_methods</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-ole_put_methods_source')" id="l_method-i-ole_put_methods_source">show</a>
+                
+              </p>
+              <div id="method-i-ole_put_methods_source" class="dyn-source">
+                <pre>static VALUE
+fole_put_methods(VALUE self)
+{
+    return ole_methods( self, INVOKE_PROPERTYPUT|INVOKE_PROPERTYPUTREF);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-ole_query_interface">
+            
+              <a name="method-i-ole_query_interface"></a><b>WIN32OLE#ole_query_interface(iid) &rarr; WIN32OLE object
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns <a href="WIN32OLE.html">WIN32OLE</a> object for a specific dispatch
+or dual interface specified by iid.</p>
+
+<pre class="ruby"><span class="ruby-identifier">ie</span> = <span class="ruby-constant">WIN32OLE</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">'InternetExplorer.Application'</span>)
+<span class="ruby-identifier">ie_web_app</span> = <span class="ruby-identifier">ie</span>.<span class="ruby-identifier">ole_query_interface</span>(<span class="ruby-string">'{0002DF05-0000-0000-C000-000000000046}'</span>) <span class="ruby-comment"># =&gt; WIN32OLE object for dispinterface IWebBrowserApp</span>
+</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-ole_query_interface_source')" id="l_method-i-ole_query_interface_source">show</a>
+                
+              </p>
+              <div id="method-i-ole_query_interface_source" class="dyn-source">
+                <pre>static VALUE
+fole_query_interface(VALUE self, VALUE str_iid)
+{
+    HRESULT hr;
+    OLECHAR *pBuf;
+    IID iid;
+    struct oledata *pole;
+    IDispatch *pDispatch;
+    void *p;
+
+    pBuf  = ole_vstr2wc(str_iid);
+    hr = CLSIDFromString(pBuf, &amp;iid);
+    SysFreeString(pBuf);
+    if(FAILED(hr)) {
+        ole_raise(hr, eWIN32OLERuntimeError,
+                  &quot;invalid iid: `%s'&quot;,
+                  StringValuePtr(str_iid));
+    }
+
+    OLEData_Get_Struct(self, pole);
+    if(!pole-&gt;pDispatch) {
+        rb_raise(rb_eRuntimeError, &quot;failed to get dispatch interface&quot;);
+    }
+
+    hr = pole-&gt;pDispatch-&gt;lpVtbl-&gt;QueryInterface(pole-&gt;pDispatch, &amp;iid,
+                                                 &amp;p);
+    if(FAILED(hr)) {
+        ole_raise(hr, eWIN32OLERuntimeError,
+                  &quot;failed to get interface `%s'&quot;,
+                  StringValuePtr(str_iid));
+    }
+
+    pDispatch = p;
+    return create_win32ole_object(cWIN32OLE, pDispatch, 0, 0);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-ole_respond_to-3F">
+            
+              <a name="method-i-ole_respond_to-3F"></a><b>WIN32OLE#ole_respond_to?(method) &rarr; true or false
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns true when OLE object has OLE method, otherwise returns false.</p>
+
+<pre class="ruby"><span class="ruby-identifier">ie</span> = <span class="ruby-constant">WIN32OLE</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">'InternetExplorer.Application'</span>)
+<span class="ruby-identifier">ie</span>.<span class="ruby-identifier">ole_respond_to?</span>(<span class="ruby-string">&quot;gohome&quot;</span>) =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>
+</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-ole_respond_to-3F_source')" id="l_method-i-ole_respond_to-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-ole_respond_to-3F_source" class="dyn-source">
+                <pre>static VALUE
+fole_respond_to(VALUE self, VALUE method)
+{
+    struct oledata *pole;
+    BSTR wcmdname;
+    DISPID DispID;
+    HRESULT hr;
+    rb_secure(4);
+    if(TYPE(method) != T_STRING &amp;&amp; TYPE(method) != T_SYMBOL) {
+        rb_raise(rb_eTypeError, &quot;wrong argument type (expected String or Symbol)&quot;);
+    }
+    if (TYPE(method) == T_SYMBOL) {
+        method = rb_sym_to_s(method);
+    }
+    OLEData_Get_Struct(self, pole);
+    wcmdname = ole_vstr2wc(method);
+    hr = pole-&gt;pDispatch-&gt;lpVtbl-&gt;GetIDsOfNames( pole-&gt;pDispatch, &amp;IID_NULL,
+            &amp;wcmdname, 1, cWIN32OLE_lcid, &amp;DispID);
+    SysFreeString(wcmdname);
+    return SUCCEEDED(hr) ? Qtrue : Qfalse;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-ole_type">
+            
+              <a name="method-i-ole_type"></a><b>WIN32OLE#ole_type
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns <a href="WIN32OLE_TYPE.html">WIN32OLE_TYPE</a> object.</p>
+
+<pre>excel = WIN32OLE.new('Excel.Application')
+tobj = excel.ole_type</pre>
+            </div>
+          
+          
+          
+            <div class="aka">
+              Also aliased as: <a href="WIN32OLE.html#method-i-ole_obj_help">ole_obj_help</a>
+            </div>
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-ole_type_source')" id="l_method-i-ole_type_source">show</a>
+                
+              </p>
+              <div id="method-i-ole_type_source" class="dyn-source">
+                <pre>static VALUE
+fole_type(VALUE self)
+{
+    ITypeInfo *pTypeInfo;
+    HRESULT hr;
+    struct oledata *pole;
+    LCID  lcid = cWIN32OLE_lcid;
+    VALUE type = Qnil;
+
+    OLEData_Get_Struct(self, pole);
+
+    hr = pole-&gt;pDispatch-&gt;lpVtbl-&gt;GetTypeInfo( pole-&gt;pDispatch, 0, lcid, &amp;pTypeInfo );
+    if(FAILED(hr)) {
+        ole_raise(hr, rb_eRuntimeError, &quot;failed to GetTypeInfo&quot;);
+    }
+    type = ole_type_from_itypeinfo(pTypeInfo);
+    OLE_RELEASE(pTypeInfo);
+    if (type == Qnil) {
+        rb_raise(rb_eRuntimeError, &quot;failed to create WIN32OLE_TYPE obj from ITypeInfo&quot;);
+    }
+    return type;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-ole_typelib">
+            
+              <a name="method-i-ole_typelib"></a><b>WIN32OLE#ole_typelib &rarr; The WIN32OLE_TYPELIB object
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the <a href="WIN32OLE_TYPELIB.html">WIN32OLE_TYPELIB</a> object.
+The object represents the type library which contains the <a
+href="WIN32OLE.html">WIN32OLE</a> object.</p>
+
+<pre>excel = WIN32OLE.new('Excel.Application')
+tlib = excel.ole_typelib
+puts tlib.name  # -&gt; 'Microsoft Excel 9.0 Object Library'</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-ole_typelib_source')" id="l_method-i-ole_typelib_source">show</a>
+                
+              </p>
+              <div id="method-i-ole_typelib_source" class="dyn-source">
+                <pre>static VALUE
+fole_typelib(VALUE self)
+{
+    struct oledata *pole;
+    HRESULT hr;
+    ITypeInfo *pTypeInfo;
+    LCID  lcid = cWIN32OLE_lcid;
+    VALUE vtlib = Qnil;
+
+    OLEData_Get_Struct(self, pole);
+    hr = pole-&gt;pDispatch-&gt;lpVtbl-&gt;GetTypeInfo(pole-&gt;pDispatch,
+                                              0, lcid, &amp;pTypeInfo);
+    if(FAILED(hr)) {
+        ole_raise(hr, rb_eRuntimeError, &quot;failed to GetTypeInfo&quot;);
+    }
+    vtlib = ole_typelib_from_itypeinfo(pTypeInfo);
+    OLE_RELEASE(pTypeInfo);
+    if (vtlib == Qnil) {
+        rb_raise(rb_eRuntimeError, &quot;failed to get type library info.&quot;);
+    }
+    return vtlib;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-setproperty">
+            
+              <a name="method-i-setproperty"></a><b>WIN32OLE.setproperty('property', [arg1, arg2,...] val)
+</b>
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Sets property of OLE object. When you want to set property with argument,
+you can use this method.</p>
+
+<pre class="ruby"><span class="ruby-identifier">excel</span> = <span class="ruby-constant">WIN32OLE</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">'Excel.Application'</span>)
+<span class="ruby-identifier">excel</span>.<span class="ruby-constant">Visible</span> = <span class="ruby-keyword">true</span>
+<span class="ruby-identifier">book</span> = <span class="ruby-identifier">excel</span>.<span class="ruby-identifier">workbooks</span>.<span class="ruby-identifier">add</span>
+<span class="ruby-identifier">sheet</span> = <span class="ruby-identifier">book</span>.<span class="ruby-identifier">worksheets</span>(<span class="ruby-value">1</span>)
+<span class="ruby-identifier">sheet</span>.<span class="ruby-identifier">setproperty</span>(<span class="ruby-string">'Cells'</span>, <span class="ruby-value">1</span>, <span class="ruby-value">2</span>, <span class="ruby-value">10</span>) <span class="ruby-comment"># =&gt; The B1 cell value is 10.</span>
+</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-setproperty_source')" id="l_method-i-setproperty_source">show</a>
+                
+              </p>
+              <div id="method-i-setproperty_source" class="dyn-source">
+                <pre>static VALUE
+fole_setproperty(int argc, VALUE *argv, VALUE self)
+{
+    return ole_invoke(argc, argv, self, DISPATCH_PROPERTYPUT, FALSE);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    

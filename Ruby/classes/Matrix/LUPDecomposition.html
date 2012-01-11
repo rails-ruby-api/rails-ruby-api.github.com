@@ -1,0 +1,676 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Matrix::LUPDecomposition</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            Matrix::LUPDecomposition 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/Users/fschumac/_rvm/src/ruby-1_9_3-p0/lib/matrix/lup_decomposition_rb.html">/Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/matrix/lup_decomposition.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>For an m-by-n matrix A with m &gt;= n, the LU decomposition is an m-by-n
+unit lower triangular matrix L, an n-by-n upper triangular matrix U, and a
+m-by-m permutation matrix P so that L*U = P*A. If m &lt; n, then L is
+m-by-m and U is m-by-n.</p>
+
+<p>The LUP decomposition with pivoting always exists, even if the matrix is
+singular, so the constructor will never fail.  The primary use of the LU
+decomposition is in the solution of square systems of simultaneous linear
+equations.  This will fail if singular? returns true.</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>D</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-det">det</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-determinant">determinant</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>L</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-l">l</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>P</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-p">p</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>S</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-singular-3F">singular?</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-solve">solve</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-to_a">to_a</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-to_ary">to_ary</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>U</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-u">u</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+      <!-- Section attributes -->
+      <div class="sectiontitle">Attributes</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [R]
+            </td>
+            <td class='attr-name'>pivots</td>
+            <td class='attr-desc'><p>Returns the pivoting indices</p></td>
+          </tr>
+        
+      </table>
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <a name="method-c-new"></a><b>new</b>(a)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/matrix/lup_decomposition.rb, line 153</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">initialize</span> <span class="ruby-identifier">a</span>
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">TypeError</span>, <span class="ruby-node">&quot;Expected Matrix but got #{a.class}&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">a</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Matrix</span>)
+  <span class="ruby-comment"># Use a &quot;left-looking&quot;, dot-product, Crout/Doolittle algorithm.</span>
+  <span class="ruby-ivar">@lu</span> = <span class="ruby-identifier">a</span>.<span class="ruby-identifier">to_a</span>
+  <span class="ruby-ivar">@row_size</span> = <span class="ruby-identifier">a</span>.<span class="ruby-identifier">row_size</span>
+  <span class="ruby-ivar">@col_size</span> = <span class="ruby-identifier">a</span>.<span class="ruby-identifier">column_size</span>
+  <span class="ruby-ivar">@pivots</span> = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@row_size</span>)
+  <span class="ruby-ivar">@row_size</span>.<span class="ruby-identifier">times</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+     <span class="ruby-ivar">@pivots</span>[<span class="ruby-identifier">i</span>] = <span class="ruby-identifier">i</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-ivar">@pivot_sign</span> = <span class="ruby-number">1</span>
+  <span class="ruby-identifier">lu_col_j</span> = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@row_size</span>)
+
+  <span class="ruby-comment"># Outer loop.</span>
+
+  <span class="ruby-ivar">@col_size</span>.<span class="ruby-identifier">times</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">j</span><span class="ruby-operator">|</span>
+
+    <span class="ruby-comment"># Make a copy of the j-th column to localize references.</span>
+
+    <span class="ruby-ivar">@row_size</span>.<span class="ruby-identifier">times</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">lu_col_j</span>[<span class="ruby-identifier">i</span>] = <span class="ruby-ivar">@lu</span>[<span class="ruby-identifier">i</span>][<span class="ruby-identifier">j</span>]
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-comment"># Apply previous transformations.</span>
+
+    <span class="ruby-ivar">@row_size</span>.<span class="ruby-identifier">times</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">lu_row_i</span> = <span class="ruby-ivar">@lu</span>[<span class="ruby-identifier">i</span>]
+
+      <span class="ruby-comment"># Most of the time is spent in the following dot product.</span>
+
+      <span class="ruby-identifier">kmax</span> = [<span class="ruby-identifier">i</span>, <span class="ruby-identifier">j</span>].<span class="ruby-identifier">min</span>
+      <span class="ruby-identifier">s</span> = <span class="ruby-number">0</span>
+      <span class="ruby-identifier">kmax</span>.<span class="ruby-identifier">times</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">s</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">lu_row_i</span>[<span class="ruby-identifier">k</span>]*<span class="ruby-identifier">lu_col_j</span>[<span class="ruby-identifier">k</span>]
+      <span class="ruby-keyword">end</span>
+
+      <span class="ruby-identifier">lu_row_i</span>[<span class="ruby-identifier">j</span>] = <span class="ruby-identifier">lu_col_j</span>[<span class="ruby-identifier">i</span>] <span class="ruby-operator">-=</span> <span class="ruby-identifier">s</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-comment"># Find pivot and exchange if necessary.</span>
+
+    <span class="ruby-identifier">p</span> = <span class="ruby-identifier">j</span>
+    (<span class="ruby-identifier">j</span><span class="ruby-operator">+</span><span class="ruby-number">1</span>).<span class="ruby-identifier">upto</span>(<span class="ruby-ivar">@row_size</span><span class="ruby-operator">-</span><span class="ruby-number">1</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+      <span class="ruby-keyword">if</span> (<span class="ruby-identifier">lu_col_j</span>[<span class="ruby-identifier">i</span>].<span class="ruby-identifier">abs</span> <span class="ruby-operator">&gt;</span> <span class="ruby-identifier">lu_col_j</span>[<span class="ruby-identifier">p</span>].<span class="ruby-identifier">abs</span>)
+        <span class="ruby-identifier">p</span> = <span class="ruby-identifier">i</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">if</span> (<span class="ruby-identifier">p</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">j</span>)
+      <span class="ruby-ivar">@col_size</span>.<span class="ruby-identifier">times</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">t</span> = <span class="ruby-ivar">@lu</span>[<span class="ruby-identifier">p</span>][<span class="ruby-identifier">k</span>]; <span class="ruby-ivar">@lu</span>[<span class="ruby-identifier">p</span>][<span class="ruby-identifier">k</span>] = <span class="ruby-ivar">@lu</span>[<span class="ruby-identifier">j</span>][<span class="ruby-identifier">k</span>]; <span class="ruby-ivar">@lu</span>[<span class="ruby-identifier">j</span>][<span class="ruby-identifier">k</span>] = <span class="ruby-identifier">t</span>
+      <span class="ruby-keyword">end</span>
+      <span class="ruby-identifier">k</span> = <span class="ruby-ivar">@pivots</span>[<span class="ruby-identifier">p</span>]; <span class="ruby-ivar">@pivots</span>[<span class="ruby-identifier">p</span>] = <span class="ruby-ivar">@pivots</span>[<span class="ruby-identifier">j</span>]; <span class="ruby-ivar">@pivots</span>[<span class="ruby-identifier">j</span>] = <span class="ruby-identifier">k</span>
+      <span class="ruby-ivar">@pivot_sign</span> = <span class="ruby-operator">-</span><span class="ruby-ivar">@pivot_sign</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-comment"># Compute multipliers.</span>
+
+    <span class="ruby-keyword">if</span> (<span class="ruby-identifier">j</span> <span class="ruby-operator">&lt;</span> <span class="ruby-ivar">@row_size</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@lu</span>[<span class="ruby-identifier">j</span>][<span class="ruby-identifier">j</span>] <span class="ruby-operator">!=</span> <span class="ruby-number">0</span>)
+      (<span class="ruby-identifier">j</span><span class="ruby-operator">+</span><span class="ruby-number">1</span>).<span class="ruby-identifier">upto</span>(<span class="ruby-ivar">@row_size</span><span class="ruby-operator">-</span><span class="ruby-number">1</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+        <span class="ruby-ivar">@lu</span>[<span class="ruby-identifier">i</span>][<span class="ruby-identifier">j</span>] = <span class="ruby-ivar">@lu</span>[<span class="ruby-identifier">i</span>][<span class="ruby-identifier">j</span>].<span class="ruby-identifier">quo</span>(<span class="ruby-ivar">@lu</span>[<span class="ruby-identifier">j</span>][<span class="ruby-identifier">j</span>])
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-det">
+            
+              <a name="method-i-det"></a><b>det</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the determinant of <code>A</code>, calculated efficiently from the
+factorization.</p>
+            </div>
+          
+          
+          
+            <div class="aka">
+              Also aliased as: <a href="LUPDecomposition.html#method-i-determinant">determinant</a>
+            </div>
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-det_source')" id="l_method-i-det_source">show</a>
+                
+              </p>
+              <div id="method-i-det_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/matrix/lup_decomposition.rb, line 78</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">det</span>
+  <span class="ruby-keyword">if</span> (<span class="ruby-ivar">@row_size</span> <span class="ruby-operator">!=</span> <span class="ruby-ivar">@col_size</span>)
+    <span class="ruby-constant">Matrix</span>.<span class="ruby-constant">Raise</span> <span class="ruby-constant">Matrix</span><span class="ruby-operator">::</span><span class="ruby-constant">ErrDimensionMismatch</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">square?</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">d</span> = <span class="ruby-ivar">@pivot_sign</span>
+  <span class="ruby-ivar">@col_size</span>.<span class="ruby-identifier">times</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">j</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">d</span> <span class="ruby-operator">*=</span> <span class="ruby-ivar">@lu</span>[<span class="ruby-identifier">j</span>][<span class="ruby-identifier">j</span>]
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">d</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-determinant">
+            
+              <a name="method-i-determinant"></a><b>determinant</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-l">
+            
+              <a name="method-i-l"></a><b>l</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-l_source')" id="l_method-i-l_source">show</a>
+                
+              </p>
+              <div id="method-i-l_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/matrix/lup_decomposition.rb, line 21</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">l</span>
+  <span class="ruby-constant">Matrix</span>.<span class="ruby-identifier">build</span>(<span class="ruby-ivar">@row_size</span>, <span class="ruby-ivar">@col_size</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">i</span>, <span class="ruby-identifier">j</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">if</span> (<span class="ruby-identifier">i</span> <span class="ruby-operator">&gt;</span> <span class="ruby-identifier">j</span>)
+      <span class="ruby-ivar">@lu</span>[<span class="ruby-identifier">i</span>][<span class="ruby-identifier">j</span>]
+    <span class="ruby-keyword">elsif</span> (<span class="ruby-identifier">i</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">j</span>)
+      <span class="ruby-number">1</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-number">0</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-p">
+            
+              <a name="method-i-p"></a><b>p</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the permutation matrix <code>P</code></p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-p_source')" id="l_method-i-p_source">show</a>
+                
+              </p>
+              <div id="method-i-p_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/matrix/lup_decomposition.rb, line 47</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">p</span>
+  <span class="ruby-identifier">rows</span> = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@row_size</span>){<span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@col_size</span>, <span class="ruby-number">0</span>)}
+  <span class="ruby-ivar">@pivots</span>.<span class="ruby-identifier">each_with_index</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">p</span>, <span class="ruby-identifier">i</span><span class="ruby-operator">|</span> <span class="ruby-identifier">rows</span>[<span class="ruby-identifier">i</span>][<span class="ruby-identifier">p</span>] = <span class="ruby-number">1</span>}
+  <span class="ruby-constant">Matrix</span>.<span class="ruby-identifier">send</span> <span class="ruby-value">:new</span>, <span class="ruby-identifier">rows</span>, <span class="ruby-ivar">@col_size</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-singular-3F">
+            
+              <a name="method-i-singular-3F"></a><b>singular?</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns <code>true</code> if <code>U</code>, and hence <code>A</code>, is
+singular.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-singular-3F_source')" id="l_method-i-singular-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-singular-3F_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/matrix/lup_decomposition.rb, line 66</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">singular?</span> ()
+  <span class="ruby-ivar">@col_size</span>.<span class="ruby-identifier">times</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">j</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">if</span> (<span class="ruby-ivar">@lu</span>[<span class="ruby-identifier">j</span>][<span class="ruby-identifier">j</span>] <span class="ruby-operator">==</span> <span class="ruby-number">0</span>)
+      <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">false</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-solve">
+            
+              <a name="method-i-solve"></a><b>solve</b>(b)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns <code>m</code> so that <code>A*m = b</code>, or equivalently so
+that <code>L*U*m = P*b</code> <code>b</code> can be a <a
+href="../Matrix.html">Matrix</a> or a <a href="../Vector.html">Vector</a></p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-solve_source')" id="l_method-i-solve_source">show</a>
+                
+              </p>
+              <div id="method-i-solve_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/matrix/lup_decomposition.rb, line 94</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">solve</span> <span class="ruby-identifier">b</span>
+  <span class="ruby-keyword">if</span> (<span class="ruby-identifier">singular?</span>)
+    <span class="ruby-constant">Matrix</span>.<span class="ruby-constant">Raise</span> <span class="ruby-constant">Matrix</span><span class="ruby-operator">::</span><span class="ruby-constant">ErrNotRegular</span>, <span class="ruby-string">&quot;Matrix is singular.&quot;</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">b</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">Matrix</span>
+    <span class="ruby-keyword">if</span> (<span class="ruby-identifier">b</span>.<span class="ruby-identifier">row_size</span> <span class="ruby-operator">!=</span> <span class="ruby-ivar">@row_size</span>)
+      <span class="ruby-constant">Matrix</span>.<span class="ruby-constant">Raise</span> <span class="ruby-constant">Matrix</span><span class="ruby-operator">::</span><span class="ruby-constant">ErrDimensionMismatch</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-comment"># Copy right hand side with pivoting</span>
+    <span class="ruby-identifier">nx</span> = <span class="ruby-identifier">b</span>.<span class="ruby-identifier">column_size</span>
+    <span class="ruby-identifier">m</span> = <span class="ruby-ivar">@pivots</span>.<span class="ruby-identifier">map</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">row</span><span class="ruby-operator">|</span> <span class="ruby-identifier">b</span>.<span class="ruby-identifier">row</span>(<span class="ruby-identifier">row</span>).<span class="ruby-identifier">to_a</span>}
+
+    <span class="ruby-comment"># Solve L*Y = P*b</span>
+    <span class="ruby-ivar">@col_size</span>.<span class="ruby-identifier">times</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span><span class="ruby-operator">|</span>
+      (<span class="ruby-identifier">k</span><span class="ruby-operator">+</span><span class="ruby-number">1</span>).<span class="ruby-identifier">upto</span>(<span class="ruby-ivar">@col_size</span><span class="ruby-operator">-</span><span class="ruby-number">1</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">nx</span>.<span class="ruby-identifier">times</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">j</span><span class="ruby-operator">|</span>
+          <span class="ruby-identifier">m</span>[<span class="ruby-identifier">i</span>][<span class="ruby-identifier">j</span>] <span class="ruby-operator">-=</span> <span class="ruby-identifier">m</span>[<span class="ruby-identifier">k</span>][<span class="ruby-identifier">j</span>]*<span class="ruby-ivar">@lu</span>[<span class="ruby-identifier">i</span>][<span class="ruby-identifier">k</span>]
+        <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-comment"># Solve U*m = Y</span>
+    (<span class="ruby-ivar">@col_size</span><span class="ruby-operator">-</span><span class="ruby-number">1</span>).<span class="ruby-identifier">downto</span>(<span class="ruby-number">0</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">nx</span>.<span class="ruby-identifier">times</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">j</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">m</span>[<span class="ruby-identifier">k</span>][<span class="ruby-identifier">j</span>] = <span class="ruby-identifier">m</span>[<span class="ruby-identifier">k</span>][<span class="ruby-identifier">j</span>].<span class="ruby-identifier">quo</span>(<span class="ruby-ivar">@lu</span>[<span class="ruby-identifier">k</span>][<span class="ruby-identifier">k</span>])
+      <span class="ruby-keyword">end</span>
+      <span class="ruby-identifier">k</span>.<span class="ruby-identifier">times</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">nx</span>.<span class="ruby-identifier">times</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">j</span><span class="ruby-operator">|</span>
+          <span class="ruby-identifier">m</span>[<span class="ruby-identifier">i</span>][<span class="ruby-identifier">j</span>] <span class="ruby-operator">-=</span> <span class="ruby-identifier">m</span>[<span class="ruby-identifier">k</span>][<span class="ruby-identifier">j</span>]*<span class="ruby-ivar">@lu</span>[<span class="ruby-identifier">i</span>][<span class="ruby-identifier">k</span>]
+        <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-constant">Matrix</span>.<span class="ruby-identifier">send</span> <span class="ruby-value">:new</span>, <span class="ruby-identifier">m</span>, <span class="ruby-identifier">nx</span>
+  <span class="ruby-keyword">else</span> <span class="ruby-comment"># same algorithm, specialized for simpler case of a vector</span>
+    <span class="ruby-identifier">b</span> = <span class="ruby-identifier">convert_to_array</span>(<span class="ruby-identifier">b</span>)
+    <span class="ruby-keyword">if</span> (<span class="ruby-identifier">b</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">!=</span> <span class="ruby-ivar">@row_size</span>)
+      <span class="ruby-constant">Matrix</span>.<span class="ruby-constant">Raise</span> <span class="ruby-constant">Matrix</span><span class="ruby-operator">::</span><span class="ruby-constant">ErrDimensionMismatch</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-comment"># Copy right hand side with pivoting</span>
+    <span class="ruby-identifier">m</span> = <span class="ruby-identifier">b</span>.<span class="ruby-identifier">values_at</span>(*<span class="ruby-ivar">@pivots</span>)
+
+    <span class="ruby-comment"># Solve L*Y = P*b</span>
+    <span class="ruby-ivar">@col_size</span>.<span class="ruby-identifier">times</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span><span class="ruby-operator">|</span>
+      (<span class="ruby-identifier">k</span><span class="ruby-operator">+</span><span class="ruby-number">1</span>).<span class="ruby-identifier">upto</span>(<span class="ruby-ivar">@col_size</span><span class="ruby-operator">-</span><span class="ruby-number">1</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">m</span>[<span class="ruby-identifier">i</span>] <span class="ruby-operator">-=</span> <span class="ruby-identifier">m</span>[<span class="ruby-identifier">k</span>]*<span class="ruby-ivar">@lu</span>[<span class="ruby-identifier">i</span>][<span class="ruby-identifier">k</span>]
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-comment"># Solve U*m = Y</span>
+    (<span class="ruby-ivar">@col_size</span><span class="ruby-operator">-</span><span class="ruby-number">1</span>).<span class="ruby-identifier">downto</span>(<span class="ruby-number">0</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">m</span>[<span class="ruby-identifier">k</span>] = <span class="ruby-identifier">m</span>[<span class="ruby-identifier">k</span>].<span class="ruby-identifier">quo</span>(<span class="ruby-ivar">@lu</span>[<span class="ruby-identifier">k</span>][<span class="ruby-identifier">k</span>])
+      <span class="ruby-identifier">k</span>.<span class="ruby-identifier">times</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">m</span>[<span class="ruby-identifier">i</span>] <span class="ruby-operator">-=</span> <span class="ruby-identifier">m</span>[<span class="ruby-identifier">k</span>]*<span class="ruby-ivar">@lu</span>[<span class="ruby-identifier">i</span>][<span class="ruby-identifier">k</span>]
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-constant">Vector</span>.<span class="ruby-identifier">elements</span>(<span class="ruby-identifier">m</span>, <span class="ruby-keyword">false</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-to_a">
+            
+              <a name="method-i-to_a"></a><b>to_a</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-to_ary">
+            
+              <a name="method-i-to_ary"></a><b>to_ary</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns <code>L</code>, <code>U</code>, <code>P</code> in an array</p>
+            </div>
+          
+          
+          
+            <div class="aka">
+              Also aliased as: <a href="LUPDecomposition.html#method-i-to_a">to_a</a>
+            </div>
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-to_ary_source')" id="l_method-i-to_ary_source">show</a>
+                
+              </p>
+              <div id="method-i-to_ary_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/matrix/lup_decomposition.rb, line 55</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">to_ary</span>
+  [<span class="ruby-identifier">l</span>, <span class="ruby-identifier">u</span>, <span class="ruby-identifier">p</span>]
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-u">
+            
+              <a name="method-i-u"></a><b>u</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the upper triangular factor <code>U</code></p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-u_source')" id="l_method-i-u_source">show</a>
+                
+              </p>
+              <div id="method-i-u_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/matrix/lup_decomposition.rb, line 35</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">u</span>
+  <span class="ruby-constant">Matrix</span>.<span class="ruby-identifier">build</span>(<span class="ruby-ivar">@col_size</span>, <span class="ruby-ivar">@col_size</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">i</span>, <span class="ruby-identifier">j</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">if</span> (<span class="ruby-identifier">i</span> <span class="ruby-operator">&lt;=</span> <span class="ruby-identifier">j</span>)
+      <span class="ruby-ivar">@lu</span>[<span class="ruby-identifier">i</span>][<span class="ruby-identifier">j</span>]
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-number">0</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    

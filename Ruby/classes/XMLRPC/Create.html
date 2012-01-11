@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>XMLRPC::Create</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            XMLRPC::Create 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/Users/fschumac/_rvm/src/ruby-1_9_3-p0/lib/xmlrpc/create_rb.html">/Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/xmlrpc/create.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>M</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-methodCall">methodCall</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-methodResponse">methodResponse</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <a name="method-c-new"></a><b>new</b>(xml_writer = nil)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/xmlrpc/create.rb, line 105</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">initialize</span>(<span class="ruby-identifier">xml_writer</span> = <span class="ruby-keyword">nil</span>)
+  <span class="ruby-ivar">@writer</span> = <span class="ruby-identifier">xml_writer</span> <span class="ruby-operator">||</span> <span class="ruby-constant">Config</span><span class="ruby-operator">::</span><span class="ruby-constant">DEFAULT_WRITER</span>.<span class="ruby-identifier">new</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-methodCall">
+            
+              <a name="method-i-methodCall"></a><b>methodCall</b>(name, *params)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-methodCall_source')" id="l_method-i-methodCall_source">show</a>
+                
+              </p>
+              <div id="method-i-methodCall_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/xmlrpc/create.rb, line 110</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">methodCall</span>(<span class="ruby-identifier">name</span>, *<span class="ruby-identifier">params</span>)
+  <span class="ruby-identifier">name</span> = <span class="ruby-identifier">name</span>.<span class="ruby-identifier">to_s</span>
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">!~</span> <span class="ruby-regexp">%r[a-zA-Z0-9_.:\/]+/</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-string">&quot;Wrong XML-RPC method-name&quot;</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">parameter</span> = <span class="ruby-identifier">params</span>.<span class="ruby-identifier">collect</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">param</span><span class="ruby-operator">|</span>
+    <span class="ruby-ivar">@writer</span>.<span class="ruby-identifier">ele</span>(<span class="ruby-string">&quot;param&quot;</span>, <span class="ruby-identifier">conv2value</span>(<span class="ruby-identifier">param</span>))
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">tree</span> = <span class="ruby-ivar">@writer</span>.<span class="ruby-identifier">document</span>(
+           <span class="ruby-ivar">@writer</span>.<span class="ruby-identifier">pi</span>(<span class="ruby-string">&quot;xml&quot;</span>, <span class="ruby-string">'version=&quot;1.0&quot;'</span>),
+           <span class="ruby-ivar">@writer</span>.<span class="ruby-identifier">ele</span>(<span class="ruby-string">&quot;methodCall&quot;</span>,
+             <span class="ruby-ivar">@writer</span>.<span class="ruby-identifier">tag</span>(<span class="ruby-string">&quot;methodName&quot;</span>, <span class="ruby-identifier">name</span>),
+             <span class="ruby-ivar">@writer</span>.<span class="ruby-identifier">ele</span>(<span class="ruby-string">&quot;params&quot;</span>, *<span class="ruby-identifier">parameter</span>)
+           )
+         )
+
+  <span class="ruby-ivar">@writer</span>.<span class="ruby-identifier">document_to_str</span>(<span class="ruby-identifier">tree</span>) <span class="ruby-operator">+</span> <span class="ruby-string">&quot;\n&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-methodResponse">
+            
+              <a name="method-i-methodResponse"></a><b>methodResponse</b>(is_ret, *params)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>generates a XML-RPC methodResponse document</p>
+
+<p>if is_ret == false then the params array must contain only one element,
+which is a structure of a fault return-value.</p>
+
+<p>if is_ret == true then a normal return-value of all the given params is
+created.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-methodResponse_source')" id="l_method-i-methodResponse_source">show</a>
+                
+              </p>
+              <div id="method-i-methodResponse_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/xmlrpc/create.rb, line 144</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">methodResponse</span>(<span class="ruby-identifier">is_ret</span>, *<span class="ruby-identifier">params</span>)
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">is_ret</span>
+    <span class="ruby-identifier">resp</span> = <span class="ruby-identifier">params</span>.<span class="ruby-identifier">collect</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">param</span><span class="ruby-operator">|</span>
+      <span class="ruby-ivar">@writer</span>.<span class="ruby-identifier">ele</span>(<span class="ruby-string">&quot;param&quot;</span>, <span class="ruby-identifier">conv2value</span>(<span class="ruby-identifier">param</span>))
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-identifier">resp</span> = [<span class="ruby-ivar">@writer</span>.<span class="ruby-identifier">ele</span>(<span class="ruby-string">&quot;params&quot;</span>, *<span class="ruby-identifier">resp</span>)]
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">!=</span> <span class="ruby-number">1</span> <span class="ruby-keyword">or</span> <span class="ruby-identifier">params</span>[<span class="ruby-number">0</span>] <span class="ruby-operator">===</span> <span class="ruby-constant">XMLRPC</span><span class="ruby-operator">::</span><span class="ruby-constant">FaultException</span>
+      <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-string">&quot;no valid fault-structure given&quot;</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">resp</span> = <span class="ruby-ivar">@writer</span>.<span class="ruby-identifier">ele</span>(<span class="ruby-string">&quot;fault&quot;</span>, <span class="ruby-identifier">conv2value</span>(<span class="ruby-identifier">params</span>[<span class="ruby-number">0</span>].<span class="ruby-identifier">to_h</span>))
+  <span class="ruby-keyword">end</span>
+
+
+  <span class="ruby-identifier">tree</span> = <span class="ruby-ivar">@writer</span>.<span class="ruby-identifier">document</span>(
+           <span class="ruby-ivar">@writer</span>.<span class="ruby-identifier">pi</span>(<span class="ruby-string">&quot;xml&quot;</span>, <span class="ruby-string">'version=&quot;1.0&quot;'</span>),
+           <span class="ruby-ivar">@writer</span>.<span class="ruby-identifier">ele</span>(<span class="ruby-string">&quot;methodResponse&quot;</span>, <span class="ruby-identifier">resp</span>)
+         )
+
+  <span class="ruby-ivar">@writer</span>.<span class="ruby-identifier">document_to_str</span>(<span class="ruby-identifier">tree</span>) <span class="ruby-operator">+</span> <span class="ruby-string">&quot;\n&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    

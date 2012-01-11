@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>NamespacedScaffoldGeneratorTest</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/github.css" type="text/css" media="screen" />
+<script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            NamespacedScaffoldGeneratorTest 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="NamespacedGeneratorTestCase.html">NamespacedGeneratorTestCase</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../files/rails/railties/test/generators/namespaced_generators_test_rb.html">rails/railties/test/generators/namespaced_generators_test.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-test_scaffold_on_invoke">test_scaffold_on_invoke</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_scaffold_on_revoke">test_scaffold_on_revoke</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_scaffold_with_namespace_on_invoke">test_scaffold_with_namespace_on_invoke</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_scaffold_with_namespace_on_revoke">test_scaffold_with_namespace_on_revoke</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+    <!-- Includes -->
+    <div class="sectiontitle">Included Modules</div>
+    <ul>
+      
+        <li>
+          
+            <a href="GeneratorsTestHelper.html">
+              GeneratorsTestHelper
+            </a>
+          
+        </li>
+      
+    </ul>
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+        
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-test_scaffold_on_invoke">
+            
+              <a name="method-i-test_scaffold_on_invoke"></a><b>test_scaffold_on_invoke</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_scaffold_on_invoke_source')" id="l_method-i-test_scaffold_on_invoke_source">show</a>
+                
+              </p>
+              <div id="method-i-test_scaffold_on_invoke_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File rails/railties/test/generators/namespaced_generators_test.rb, line 218</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_scaffold_on_invoke</span>
+  <span class="ruby-identifier">run_generator</span>
+
+  <span class="ruby-comment"># Model</span>
+  <span class="ruby-identifier">assert_file</span> <span class="ruby-string">&quot;app/models/test_app/product_line.rb&quot;</span>, <span class="ruby-regexp">%rmodule TestApp\n  class ProductLine &lt; ActiveRecord::Base/</span>
+  <span class="ruby-identifier">assert_file</span> <span class="ruby-string">&quot;test/unit/test_app/product_line_test.rb&quot;</span>, <span class="ruby-regexp">%rmodule TestApp\n  class ProductLineTest &lt; ActiveSupport::TestCase/</span>
+  <span class="ruby-identifier">assert_file</span> <span class="ruby-string">&quot;test/fixtures/test_app/product_lines.yml&quot;</span>
+  <span class="ruby-identifier">assert_migration</span> <span class="ruby-string">&quot;db/migrate/create_test_app_product_lines.rb&quot;</span>
+
+  <span class="ruby-comment"># Route</span>
+  <span class="ruby-identifier">assert_file</span> <span class="ruby-string">&quot;config/routes.rb&quot;</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">route</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">assert_match</span>(<span class="ruby-regexp">%rresources :product_lines$/</span>, <span class="ruby-identifier">route</span>)
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-comment"># Controller</span>
+  <span class="ruby-identifier">assert_file</span> <span class="ruby-string">&quot;app/controllers/test_app/product_lines_controller.rb&quot;</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">content</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">assert_match</span>(<span class="ruby-regexp">%rmodule TestApp\n  class ProductLinesController &lt; ApplicationController/</span>, <span class="ruby-identifier">content</span>)
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">assert_file</span> <span class="ruby-string">&quot;test/functional/test_app/product_lines_controller_test.rb&quot;</span>,
+              <span class="ruby-regexp">%rmodule TestApp\n  class ProductLinesControllerTest &lt; ActionController::TestCase/</span>
+
+  <span class="ruby-comment"># Views</span>
+  <span class="ruby-node">%w(
+    index
+    edit
+    new
+    show
+    _form
+  )</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">view</span><span class="ruby-operator">|</span> <span class="ruby-identifier">assert_file</span> <span class="ruby-node">&quot;app/views/test_app/product_lines/#{view}.html.erb&quot;</span> }
+  <span class="ruby-identifier">assert_no_file</span> <span class="ruby-string">&quot;app/views/layouts/test_app/product_lines.html.erb&quot;</span>
+
+  <span class="ruby-comment"># Helpers</span>
+  <span class="ruby-identifier">assert_file</span> <span class="ruby-string">&quot;app/helpers/test_app/product_lines_helper.rb&quot;</span>
+  <span class="ruby-identifier">assert_file</span> <span class="ruby-string">&quot;test/unit/helpers/test_app/product_lines_helper_test.rb&quot;</span>
+
+  <span class="ruby-comment"># Stylesheets</span>
+  <span class="ruby-identifier">assert_file</span> <span class="ruby-string">&quot;app/assets/stylesheets/scaffold.css&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_scaffold_on_revoke">
+            
+              <a name="method-i-test_scaffold_on_revoke"></a><b>test_scaffold_on_revoke</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_scaffold_on_revoke_source')" id="l_method-i-test_scaffold_on_revoke_source">show</a>
+                
+              </p>
+              <div id="method-i-test_scaffold_on_revoke_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File rails/railties/test/generators/namespaced_generators_test.rb, line 258</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_scaffold_on_revoke</span>
+  <span class="ruby-identifier">run_generator</span>
+  <span class="ruby-identifier">run_generator</span> [<span class="ruby-string">&quot;product_line&quot;</span>], <span class="ruby-value">:behavior</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:revoke</span>
+
+  <span class="ruby-comment"># Model</span>
+  <span class="ruby-identifier">assert_no_file</span> <span class="ruby-string">&quot;app/models/test_app/product_line.rb&quot;</span>
+  <span class="ruby-identifier">assert_no_file</span> <span class="ruby-string">&quot;test/unit/test_app/product_line_test.rb&quot;</span>
+  <span class="ruby-identifier">assert_no_file</span> <span class="ruby-string">&quot;test/fixtures/test_app/product_lines.yml&quot;</span>
+  <span class="ruby-identifier">assert_no_migration</span> <span class="ruby-string">&quot;db/migrate/create_test_app_product_lines.rb&quot;</span>
+
+  <span class="ruby-comment"># Route</span>
+  <span class="ruby-identifier">assert_file</span> <span class="ruby-string">&quot;config/routes.rb&quot;</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">route</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">assert_no_match</span>(<span class="ruby-regexp">%rresources :product_lines$/</span>, <span class="ruby-identifier">route</span>)
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-comment"># Controller</span>
+  <span class="ruby-identifier">assert_no_file</span> <span class="ruby-string">&quot;app/controllers/test_app/product_lines_controller.rb&quot;</span>
+  <span class="ruby-identifier">assert_no_file</span> <span class="ruby-string">&quot;test/functional/test_app/product_lines_controller_test.rb&quot;</span>
+
+  <span class="ruby-comment"># Views</span>
+  <span class="ruby-identifier">assert_no_file</span> <span class="ruby-string">&quot;app/views/test_app/product_lines&quot;</span>
+  <span class="ruby-identifier">assert_no_file</span> <span class="ruby-string">&quot;app/views/test_app/layouts/product_lines.html.erb&quot;</span>
+
+  <span class="ruby-comment"># Helpers</span>
+  <span class="ruby-identifier">assert_no_file</span> <span class="ruby-string">&quot;app/helpers/test_app/product_lines_helper.rb&quot;</span>
+  <span class="ruby-identifier">assert_no_file</span> <span class="ruby-string">&quot;test/unit/helpers/test_app/product_lines_helper_test.rb&quot;</span>
+
+  <span class="ruby-comment"># Stylesheets (should not be removed)</span>
+  <span class="ruby-identifier">assert_file</span> <span class="ruby-string">&quot;app/assets/stylesheets/scaffold.css&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_scaffold_with_namespace_on_invoke">
+            
+              <a name="method-i-test_scaffold_with_namespace_on_invoke"></a><b>test_scaffold_with_namespace_on_invoke</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_scaffold_with_namespace_on_invoke_source')" id="l_method-i-test_scaffold_with_namespace_on_invoke_source">show</a>
+                
+              </p>
+              <div id="method-i-test_scaffold_with_namespace_on_invoke_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File rails/railties/test/generators/namespaced_generators_test.rb, line 289</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_scaffold_with_namespace_on_invoke</span>
+  <span class="ruby-identifier">run_generator</span> [ <span class="ruby-string">&quot;admin/role&quot;</span>, <span class="ruby-string">&quot;name:string&quot;</span>, <span class="ruby-string">&quot;description:string&quot;</span> ]
+
+  <span class="ruby-comment"># Model</span>
+  <span class="ruby-identifier">assert_file</span> <span class="ruby-string">&quot;app/models/test_app/admin.rb&quot;</span>, <span class="ruby-regexp">%rmodule TestApp\n  module Admin/</span>
+  <span class="ruby-identifier">assert_file</span> <span class="ruby-string">&quot;app/models/test_app/admin/role.rb&quot;</span>, <span class="ruby-regexp">%rmodule TestApp\n  class Admin::Role &lt; ActiveRecord::Base/</span>
+  <span class="ruby-identifier">assert_file</span> <span class="ruby-string">&quot;test/unit/test_app/admin/role_test.rb&quot;</span>, <span class="ruby-regexp">%rmodule TestApp\n  class Admin::RoleTest &lt; ActiveSupport::TestCase/</span>
+  <span class="ruby-identifier">assert_file</span> <span class="ruby-string">&quot;test/fixtures/test_app/admin/roles.yml&quot;</span>
+  <span class="ruby-identifier">assert_migration</span> <span class="ruby-string">&quot;db/migrate/create_test_app_admin_roles.rb&quot;</span>
+
+  <span class="ruby-comment"># Route</span>
+  <span class="ruby-identifier">assert_file</span> <span class="ruby-string">&quot;config/routes.rb&quot;</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">route</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">assert_match</span>(<span class="ruby-regexp">%rnamespace :admin do resources :roles end$/</span>, <span class="ruby-identifier">route</span>)
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-comment"># Controller</span>
+  <span class="ruby-identifier">assert_file</span> <span class="ruby-string">&quot;app/controllers/test_app/admin/roles_controller.rb&quot;</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">content</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">assert_match</span>(<span class="ruby-regexp">%rmodule TestApp\n  class Admin::RolesController &lt; ApplicationController/</span>, <span class="ruby-identifier">content</span>)
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">assert_file</span> <span class="ruby-string">&quot;test/functional/test_app/admin/roles_controller_test.rb&quot;</span>,
+              <span class="ruby-regexp">%rmodule TestApp\n  class Admin::RolesControllerTest &lt; ActionController::TestCase/</span>
+
+  <span class="ruby-comment"># Views</span>
+  <span class="ruby-node">%w(
+    index
+    edit
+    new
+    show
+    _form
+  )</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">view</span><span class="ruby-operator">|</span> <span class="ruby-identifier">assert_file</span> <span class="ruby-node">&quot;app/views/test_app/admin/roles/#{view}.html.erb&quot;</span> }
+  <span class="ruby-identifier">assert_no_file</span> <span class="ruby-string">&quot;app/views/layouts/admin/roles.html.erb&quot;</span>
+
+  <span class="ruby-comment"># Helpers</span>
+  <span class="ruby-identifier">assert_file</span> <span class="ruby-string">&quot;app/helpers/test_app/admin/roles_helper.rb&quot;</span>
+  <span class="ruby-identifier">assert_file</span> <span class="ruby-string">&quot;test/unit/helpers/test_app/admin/roles_helper_test.rb&quot;</span>
+
+  <span class="ruby-comment"># Stylesheets</span>
+  <span class="ruby-identifier">assert_file</span> <span class="ruby-string">&quot;app/assets/stylesheets/scaffold.css&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_scaffold_with_namespace_on_revoke">
+            
+              <a name="method-i-test_scaffold_with_namespace_on_revoke"></a><b>test_scaffold_with_namespace_on_revoke</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_scaffold_with_namespace_on_revoke_source')" id="l_method-i-test_scaffold_with_namespace_on_revoke_source">show</a>
+                
+              </p>
+              <div id="method-i-test_scaffold_with_namespace_on_revoke_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File rails/railties/test/generators/namespaced_generators_test.rb, line 330</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_scaffold_with_namespace_on_revoke</span>
+  <span class="ruby-identifier">run_generator</span> [ <span class="ruby-string">&quot;admin/role&quot;</span>, <span class="ruby-string">&quot;name:string&quot;</span>, <span class="ruby-string">&quot;description:string&quot;</span> ]
+  <span class="ruby-identifier">run_generator</span> [ <span class="ruby-string">&quot;admin/role&quot;</span> ], <span class="ruby-value">:behavior</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:revoke</span>
+
+  <span class="ruby-comment"># Model</span>
+  <span class="ruby-identifier">assert_file</span> <span class="ruby-string">&quot;app/models/test_app/admin.rb&quot;</span>  <span class="ruby-comment"># ( should not be remove )</span>
+  <span class="ruby-identifier">assert_no_file</span> <span class="ruby-string">&quot;app/models/test_app/admin/role.rb&quot;</span>
+  <span class="ruby-identifier">assert_no_file</span> <span class="ruby-string">&quot;test/unit/test_app/admin/role_test.rb&quot;</span>
+  <span class="ruby-identifier">assert_no_file</span> <span class="ruby-string">&quot;test/fixtures/test_app/admin/roles.yml&quot;</span>
+  <span class="ruby-identifier">assert_no_migration</span> <span class="ruby-string">&quot;db/migrate/create_test_app_admin_roles.rb&quot;</span>
+
+  <span class="ruby-comment"># Route</span>
+  <span class="ruby-identifier">assert_file</span> <span class="ruby-string">&quot;config/routes.rb&quot;</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">route</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">assert_no_match</span>(<span class="ruby-regexp">%rnamespace :admin do resources :roles end$/</span>, <span class="ruby-identifier">route</span>)
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-comment"># Controller</span>
+  <span class="ruby-identifier">assert_no_file</span> <span class="ruby-string">&quot;app/controllers/test_app/admin/roles_controller.rb&quot;</span>
+  <span class="ruby-identifier">assert_no_file</span> <span class="ruby-string">&quot;test/functional/test_app/admin/roles_controller_test.rb&quot;</span>
+
+  <span class="ruby-comment"># Views</span>
+  <span class="ruby-identifier">assert_no_file</span> <span class="ruby-string">&quot;app/views/test_app/admin/roles&quot;</span>
+  <span class="ruby-identifier">assert_no_file</span> <span class="ruby-string">&quot;app/views/layouts/test_app/admin/roles.html.erb&quot;</span>
+
+  <span class="ruby-comment"># Helpers</span>
+  <span class="ruby-identifier">assert_no_file</span> <span class="ruby-string">&quot;app/helpers/test_app/admin/roles_helper.rb&quot;</span>
+  <span class="ruby-identifier">assert_no_file</span> <span class="ruby-string">&quot;test/unit/helpers/test_app/admin/roles_helper_test.rb&quot;</span>
+
+  <span class="ruby-comment"># Stylesheets (should not be removed)</span>
+  <span class="ruby-identifier">assert_file</span> <span class="ruby-string">&quot;app/assets/stylesheets/scaffold.css&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    

@@ -1,0 +1,1131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Open3</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/github.css" type="text/css" media="screen" />
+<script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Module</span> 
+            Open3 
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../files/Users/fschumac/_rvm/src/ruby-1_9_3-p0/lib/open3_rb.html">/Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/open3.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p><a href="Open3.html">Open3</a> grants you access to stdin, stdout, stderr
+and a thread to wait the child process when running another program. You
+can specify various attributes, redirections, current directory, etc., of
+the program as <a href="Process.html#method-c-spawn">Process.spawn</a>.</p>
+<ul><li>
+<p><a href="Open3.html#method-c-popen3">::popen3</a> : pipes for stdin,
+stdout, stderr</p>
+</li><li>
+<p><a href="Open3.html#method-c-popen2">::popen2</a> : pipes for stdin, stdout</p>
+</li><li>
+<p><a href="Open3.html#method-c-popen2e">::popen2e</a> : pipes for stdin,
+merged stdout and stderr</p>
+</li><li>
+<p><a href="Open3.html#method-c-capture3">::capture3</a> : give a string for
+stdin.  get strings for stdout, stderr</p>
+</li><li>
+<p><a href="Open3.html#method-c-capture2">::capture2</a> : give a string for
+stdin.  get a string for stdout</p>
+</li><li>
+<p><a href="Open3.html#method-c-capture2e">::capture2e</a> : give a string for
+stdin.  get a string for merged stdout and stderr</p>
+</li><li>
+<p><a href="Open3.html#method-c-pipeline_rw">::pipeline_rw</a> : pipes for
+first stdin and last stdout of a pipeline</p>
+</li><li>
+<p><a href="Open3.html#method-c-pipeline_r">::pipeline_r</a> : pipe for last
+stdout of a pipeline</p>
+</li><li>
+<p><a href="Open3.html#method-c-pipeline_w">::pipeline_w</a> : pipe for first
+stdin of a pipeline</p>
+</li><li>
+<p><a href="Open3.html#method-c-pipeline_start">::pipeline_start</a> : a
+pipeline</p>
+</li><li>
+<p><a href="Open3.html#method-c-pipeline">::pipeline</a> : run a pipline and
+wait</p>
+</li></ul>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>C</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-capture2">capture2</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-capture2e">capture2e</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-capture3">capture3</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>P</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-pipeline">pipeline</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-pipeline_r">pipeline_r</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-pipeline_rw">pipeline_rw</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-pipeline_start">pipeline_start</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-pipeline_w">pipeline_w</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-popen2">popen2</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-popen2e">popen2e</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-popen3">popen3</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-capture2">
+            
+              <a name="method-c-capture2"></a><b>capture2</b>(*cmd, &amp;block)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p><a href="Open3.html#method-c-capture2">::capture2</a> captures the standard
+output of a command.</p>
+
+<pre>stdout_str, status = Open3.capture2([env,] cmd... [, opts])</pre>
+
+<p>The arguments env, cmd and opts are passed to <a
+href="Open3.html#method-c-popen3">::popen3</a> except <a
+href="http://:stdin_data">opts</a> and <a href="http://:binmode">opts</a>. 
+See <a href="Process.html#method-c-spawn">Process.spawn</a>.</p>
+
+<p>If <a href="http://:stdin_data">opts</a> is specified, it is sent to the
+command’s standard input.</p>
+
+<p>If <a href="http://:binmode">opts</a> is true, internal pipes are set to
+binary mode.</p>
+
+<p>Example:</p>
+
+<pre class="ruby"><span class="ruby-comment"># factor is a command for integer factorization.</span>
+<span class="ruby-identifier">o</span>, <span class="ruby-identifier">s</span> = <span class="ruby-constant">Open3</span>.<span class="ruby-identifier">capture2</span>(<span class="ruby-string">&quot;factor&quot;</span>, :<span class="ruby-identifier">stdin_data=</span><span class="ruby-operator">&gt;</span><span class="ruby-string">&quot;42&quot;</span>)
+<span class="ruby-identifier">p</span> <span class="ruby-identifier">o</span> <span class="ruby-comment">#=&gt; &quot;42: 2 3 7\n&quot;</span>
+
+<span class="ruby-comment"># generate x**2 graph in png using gnuplot.</span>
+<span class="ruby-identifier">gnuplot_commands</span> = <span class="ruby-string">&quot;  set terminal png
+  plot x**2, &quot;-&quot; with lines
+  1 14
+  2 1
+  3 8
+  4 5
+  e
+&quot;</span>
+<span class="ruby-identifier">image</span>, <span class="ruby-identifier">s</span> = <span class="ruby-constant">Open3</span>.<span class="ruby-identifier">capture2</span>(<span class="ruby-string">&quot;gnuplot&quot;</span>, :<span class="ruby-identifier">stdin_data=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">gnuplot_commands</span>, :<span class="ruby-identifier">binmode=</span><span class="ruby-operator">&gt;</span><span class="ruby-keyword">true</span>)
+</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-capture2_source')" id="l_method-c-capture2_source">show</a>
+                
+              </p>
+              <div id="method-c-capture2_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/open3.rb, line 314</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">capture2</span>(*<span class="ruby-identifier">cmd</span>, &amp;<span class="ruby-identifier">block</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-constant">Hash</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">cmd</span>.<span class="ruby-identifier">last</span>
+    <span class="ruby-identifier">opts</span> = <span class="ruby-identifier">cmd</span>.<span class="ruby-identifier">pop</span>.<span class="ruby-identifier">dup</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">opts</span> = {}
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">stdin_data</span> = <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-value">:stdin_data</span>) <span class="ruby-operator">||</span> <span class="ruby-string">''</span>
+  <span class="ruby-identifier">binmode</span> = <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-value">:binmode</span>)
+
+  <span class="ruby-identifier">popen2</span>(*<span class="ruby-identifier">cmd</span>, <span class="ruby-identifier">opts</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">i</span>, <span class="ruby-identifier">o</span>, <span class="ruby-identifier">t</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">binmode</span>
+      <span class="ruby-identifier">i</span>.<span class="ruby-identifier">binmode</span>
+      <span class="ruby-identifier">o</span>.<span class="ruby-identifier">binmode</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">out_reader</span> = <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">new</span> { <span class="ruby-identifier">o</span>.<span class="ruby-identifier">read</span> }
+    <span class="ruby-identifier">i</span>.<span class="ruby-identifier">write</span> <span class="ruby-identifier">stdin_data</span>
+    <span class="ruby-identifier">i</span>.<span class="ruby-identifier">close</span>
+    [<span class="ruby-identifier">out_reader</span>.<span class="ruby-identifier">value</span>, <span class="ruby-identifier">t</span>.<span class="ruby-identifier">value</span>]
+  }
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-capture2e">
+            
+              <a name="method-c-capture2e"></a><b>capture2e</b>(*cmd, &amp;block)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p><a href="Open3.html#method-c-capture2e">::capture2e</a> captures the
+standard output and the standard error of a command.</p>
+
+<pre>stdout_and_stderr_str, status = Open3.capture2e([env,] cmd... [, opts])</pre>
+
+<p>The arguments env, cmd and opts are passed to <a
+href="Open3.html#method-c-popen3">::popen3</a> except <a
+href="http://:stdin_data">opts</a> and <a href="http://:binmode">opts</a>. 
+See <a href="Process.html#method-c-spawn">Process.spawn</a>.</p>
+
+<p>If <a href="http://:stdin_data">opts</a> is specified, it is sent to the
+command’s standard input.</p>
+
+<p>If <a href="http://:binmode">opts</a> is true, internal pipes are set to
+binary mode.</p>
+
+<p>Example:</p>
+
+<pre># capture make log
+make_log, s = Open3.capture2e(&quot;make&quot;)</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-capture2e_source')" id="l_method-c-capture2e_source">show</a>
+                
+              </p>
+              <div id="method-c-capture2e_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/open3.rb, line 353</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">capture2e</span>(*<span class="ruby-identifier">cmd</span>, &amp;<span class="ruby-identifier">block</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-constant">Hash</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">cmd</span>.<span class="ruby-identifier">last</span>
+    <span class="ruby-identifier">opts</span> = <span class="ruby-identifier">cmd</span>.<span class="ruby-identifier">pop</span>.<span class="ruby-identifier">dup</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">opts</span> = {}
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">stdin_data</span> = <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-value">:stdin_data</span>) <span class="ruby-operator">||</span> <span class="ruby-string">''</span>
+  <span class="ruby-identifier">binmode</span> = <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-value">:binmode</span>)
+
+  <span class="ruby-identifier">popen2e</span>(*<span class="ruby-identifier">cmd</span>, <span class="ruby-identifier">opts</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">i</span>, <span class="ruby-identifier">oe</span>, <span class="ruby-identifier">t</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">binmode</span>
+      <span class="ruby-identifier">i</span>.<span class="ruby-identifier">binmode</span>
+      <span class="ruby-identifier">oe</span>.<span class="ruby-identifier">binmode</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">outerr_reader</span> = <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">new</span> { <span class="ruby-identifier">oe</span>.<span class="ruby-identifier">read</span> }
+    <span class="ruby-identifier">i</span>.<span class="ruby-identifier">write</span> <span class="ruby-identifier">stdin_data</span>
+    <span class="ruby-identifier">i</span>.<span class="ruby-identifier">close</span>
+    [<span class="ruby-identifier">outerr_reader</span>.<span class="ruby-identifier">value</span>, <span class="ruby-identifier">t</span>.<span class="ruby-identifier">value</span>]
+  }
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-capture3">
+            
+              <a name="method-c-capture3"></a><b>capture3</b>(*cmd, &amp;block)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p><a href="Open3.html#method-c-capture3">::capture3</a> captures the standard
+output and the standard error of a command.</p>
+
+<pre>stdout_str, stderr_str, status = Open3.capture3([env,] cmd... [, opts])</pre>
+
+<p>The arguments env, cmd and opts are passed to <a
+href="Open3.html#method-c-popen3">::popen3</a> except <a
+href="http://:stdin_data">opts</a> and <a href="http://:binmode">opts</a>. 
+See <a href="Process.html#method-c-spawn">Process.spawn</a>.</p>
+
+<p>If <a href="http://:stdin_data">opts</a> is specified, it is sent to the
+command’s standard input.</p>
+
+<p>If <a href="http://:binmode">opts</a> is true, internal pipes are set to
+binary mode.</p>
+
+<p>Example:</p>
+
+<pre class="ruby"><span class="ruby-comment"># dot is a command of graphviz.</span>
+<span class="ruby-identifier">graph</span> = <span class="ruby-string">&quot;  digraph g {
+    a -&gt; b
+  }
+&quot;</span>
+<span class="ruby-identifier">layouted_graph</span>, <span class="ruby-identifier">dot_log</span> = <span class="ruby-constant">Open3</span>.<span class="ruby-identifier">capture3</span>(<span class="ruby-string">&quot;dot -v&quot;</span>, :<span class="ruby-identifier">stdin_data=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">graph</span>)
+
+<span class="ruby-identifier">o</span>, <span class="ruby-identifier">e</span>, <span class="ruby-identifier">s</span> = <span class="ruby-constant">Open3</span>.<span class="ruby-identifier">capture3</span>(<span class="ruby-string">&quot;echo a; sort &gt;&amp;2&quot;</span>, :<span class="ruby-identifier">stdin_data=</span><span class="ruby-operator">&gt;</span><span class="ruby-string">&quot;foo\nbar\nbaz\n&quot;</span>)
+<span class="ruby-identifier">p</span> <span class="ruby-identifier">o</span> <span class="ruby-comment">#=&gt; &quot;a\n&quot;</span>
+<span class="ruby-identifier">p</span> <span class="ruby-identifier">e</span> <span class="ruby-comment">#=&gt; &quot;bar\nbaz\nfoo\n&quot;</span>
+<span class="ruby-identifier">p</span> <span class="ruby-identifier">s</span> <span class="ruby-comment">#=&gt; #&lt;Process::Status: pid 32682 exit 0&gt;</span>
+
+<span class="ruby-comment"># generate a thumnail image using the convert command of ImageMagick.</span>
+<span class="ruby-comment"># However, if the image stored really in a file,</span>
+<span class="ruby-comment"># system(&quot;convert&quot;, &quot;-thumbnail&quot;, &quot;80&quot;, &quot;png:#{filename}&quot;, &quot;png:-&quot;) is better</span>
+<span class="ruby-comment"># because memory consumption.</span>
+<span class="ruby-comment"># But if the image is stored in a DB or generated by gnuplot Open3.capture2 example,</span>
+<span class="ruby-comment"># Open3.capture3 is considerable.</span>
+<span class="ruby-comment">#</span>
+<span class="ruby-identifier">image</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-string">&quot;/usr/share/openclipart/png/animals/mammals/sheep-md-v0.1.png&quot;</span>, :<span class="ruby-identifier">binmode=</span><span class="ruby-operator">&gt;</span><span class="ruby-keyword">true</span>)
+<span class="ruby-identifier">thumnail</span>, <span class="ruby-identifier">err</span>, <span class="ruby-identifier">s</span> = <span class="ruby-constant">Open3</span>.<span class="ruby-identifier">capture3</span>(<span class="ruby-string">&quot;convert -thumbnail 80 png:- png:-&quot;</span>, :<span class="ruby-identifier">stdin_data=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">image</span>, :<span class="ruby-identifier">binmode=</span><span class="ruby-operator">&gt;</span><span class="ruby-keyword">true</span>)
+<span class="ruby-keyword">if</span> <span class="ruby-identifier">s</span>.<span class="ruby-identifier">success?</span>
+  <span class="ruby-constant">STDOUT</span>.<span class="ruby-identifier">binmode</span>; <span class="ruby-identifier">print</span> <span class="ruby-identifier">thumnail</span>
+<span class="ruby-keyword">end</span>
+</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-capture3_source')" id="l_method-c-capture3_source">show</a>
+                
+              </p>
+              <div id="method-c-capture3_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/open3.rb, line 260</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">capture3</span>(*<span class="ruby-identifier">cmd</span>, &amp;<span class="ruby-identifier">block</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-constant">Hash</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">cmd</span>.<span class="ruby-identifier">last</span>
+    <span class="ruby-identifier">opts</span> = <span class="ruby-identifier">cmd</span>.<span class="ruby-identifier">pop</span>.<span class="ruby-identifier">dup</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">opts</span> = {}
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">stdin_data</span> = <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-value">:stdin_data</span>) <span class="ruby-operator">||</span> <span class="ruby-string">''</span>
+  <span class="ruby-identifier">binmode</span> = <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-value">:binmode</span>)
+
+  <span class="ruby-identifier">popen3</span>(*<span class="ruby-identifier">cmd</span>, <span class="ruby-identifier">opts</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">i</span>, <span class="ruby-identifier">o</span>, <span class="ruby-identifier">e</span>, <span class="ruby-identifier">t</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">binmode</span>
+      <span class="ruby-identifier">i</span>.<span class="ruby-identifier">binmode</span>
+      <span class="ruby-identifier">o</span>.<span class="ruby-identifier">binmode</span>
+      <span class="ruby-identifier">e</span>.<span class="ruby-identifier">binmode</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">out_reader</span> = <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">new</span> { <span class="ruby-identifier">o</span>.<span class="ruby-identifier">read</span> }
+    <span class="ruby-identifier">err_reader</span> = <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">new</span> { <span class="ruby-identifier">e</span>.<span class="ruby-identifier">read</span> }
+    <span class="ruby-identifier">i</span>.<span class="ruby-identifier">write</span> <span class="ruby-identifier">stdin_data</span>
+    <span class="ruby-identifier">i</span>.<span class="ruby-identifier">close</span>
+    [<span class="ruby-identifier">out_reader</span>.<span class="ruby-identifier">value</span>, <span class="ruby-identifier">err_reader</span>.<span class="ruby-identifier">value</span>, <span class="ruby-identifier">t</span>.<span class="ruby-identifier">value</span>]
+  }
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-pipeline">
+            
+              <a name="method-c-pipeline"></a><b>pipeline</b>(*cmds)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p><a href="Open3.html#method-c-pipeline">::pipeline</a> starts a list of
+commands as a pipeline. It waits the finish of the commands. No pipe made
+for stdin of the first command and stdout of the last command.</p>
+
+<pre>status_list = Open3.pipeline(cmd1, cmd2, ... [, opts])</pre>
+
+<p>Each cmd is a string or an array. If it is an array, the elements are
+passed to <a href="Process.html#method-c-spawn">Process.spawn</a>.</p>
+
+<pre>cmd:
+  commandline                              command line string which is passed to a shell
+  [env, commandline, opts]                 command line string which is passed to a shell
+  [env, cmdname, arg1, ..., opts]          command name and one or more arguments (no shell)
+  [env, [cmdname, argv0], arg1, ..., opts] command name and arguments including argv[0] (no shell)
+
+Note that env and opts are optional, as Process.spawn.</pre>
+
+<p>Example:</p>
+
+<pre class="ruby"><span class="ruby-identifier">fname</span> = <span class="ruby-string">&quot;/usr/share/man/man1/ruby.1.gz&quot;</span>
+<span class="ruby-identifier">p</span> <span class="ruby-constant">Open3</span>.<span class="ruby-identifier">pipeline</span>([<span class="ruby-string">&quot;zcat&quot;</span>, <span class="ruby-identifier">fname</span>], <span class="ruby-string">&quot;nroff -man&quot;</span>, <span class="ruby-string">&quot;less&quot;</span>)
+<span class="ruby-comment">#=&gt; [#&lt;Process::Status: pid 11817 exit 0&gt;,</span>
+<span class="ruby-comment">#    #&lt;Process::Status: pid 11820 exit 0&gt;,</span>
+<span class="ruby-comment">#    #&lt;Process::Status: pid 11828 exit 0&gt;]</span>
+
+<span class="ruby-identifier">fname</span> = <span class="ruby-string">&quot;/usr/share/man/man1/ls.1.gz&quot;</span>
+<span class="ruby-constant">Open3</span>.<span class="ruby-identifier">pipeline</span>([<span class="ruby-string">&quot;zcat&quot;</span>, <span class="ruby-identifier">fname</span>], <span class="ruby-string">&quot;nroff -man&quot;</span>, <span class="ruby-string">&quot;colcrt&quot;</span>)
+
+<span class="ruby-comment"># convert PDF to PS and send to a printer by lpr</span>
+<span class="ruby-identifier">pdf_file</span> = <span class="ruby-string">&quot;paper.pdf&quot;</span>
+<span class="ruby-identifier">printer</span> = <span class="ruby-string">&quot;printer-name&quot;</span>
+<span class="ruby-constant">Open3</span>.<span class="ruby-identifier">pipeline</span>([<span class="ruby-string">&quot;pdftops&quot;</span>, <span class="ruby-identifier">pdf_file</span>, <span class="ruby-string">&quot;-&quot;</span>],
+               [<span class="ruby-string">&quot;lpr&quot;</span>, <span class="ruby-node">&quot;-P#{printer}&quot;</span>])
+
+<span class="ruby-comment"># count lines</span>
+<span class="ruby-constant">Open3</span>.<span class="ruby-identifier">pipeline</span>(<span class="ruby-string">&quot;sort&quot;</span>, <span class="ruby-string">&quot;uniq -c&quot;</span>, :<span class="ruby-keyword">in</span>=<span class="ruby-operator">&gt;</span><span class="ruby-string">&quot;names.txt&quot;</span>, :<span class="ruby-identifier">out=</span><span class="ruby-operator">&gt;</span><span class="ruby-string">&quot;count&quot;</span>)
+
+<span class="ruby-comment"># cyclic pipeline</span>
+<span class="ruby-identifier">r</span>,<span class="ruby-identifier">w</span> = <span class="ruby-constant">IO</span>.<span class="ruby-identifier">pipe</span>
+<span class="ruby-identifier">w</span>.<span class="ruby-identifier">print</span> <span class="ruby-string">&quot;ibase=14\n10\n&quot;</span>
+<span class="ruby-constant">Open3</span>.<span class="ruby-identifier">pipeline</span>(<span class="ruby-string">&quot;bc&quot;</span>, <span class="ruby-string">&quot;tee /dev/tty&quot;</span>, :<span class="ruby-keyword">in</span>=<span class="ruby-operator">&gt;</span><span class="ruby-identifier">r</span>, :<span class="ruby-identifier">out=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">w</span>)
+<span class="ruby-comment">#=&gt; 14</span>
+<span class="ruby-comment">#   18</span>
+<span class="ruby-comment">#   22</span>
+<span class="ruby-comment">#   30</span>
+<span class="ruby-comment">#   42</span>
+<span class="ruby-comment">#   58</span>
+<span class="ruby-comment">#   78</span>
+<span class="ruby-comment">#   106</span>
+<span class="ruby-comment">#   202</span>
+</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-pipeline_source')" id="l_method-c-pipeline_source">show</a>
+                
+              </p>
+              <div id="method-c-pipeline_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/open3.rb, line 643</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">pipeline</span>(*<span class="ruby-identifier">cmds</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-constant">Hash</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">cmds</span>.<span class="ruby-identifier">last</span>
+    <span class="ruby-identifier">opts</span> = <span class="ruby-identifier">cmds</span>.<span class="ruby-identifier">pop</span>.<span class="ruby-identifier">dup</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">opts</span> = {}
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">pipeline_run</span>(<span class="ruby-identifier">cmds</span>, <span class="ruby-identifier">opts</span>, [], []) {<span class="ruby-operator">|</span><span class="ruby-identifier">ts</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">ts</span>.<span class="ruby-identifier">map</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">t</span><span class="ruby-operator">|</span> <span class="ruby-identifier">t</span>.<span class="ruby-identifier">value</span> }
+  }
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-pipeline_r">
+            
+              <a name="method-c-pipeline_r"></a><b>pipeline_r</b>(*cmds, &amp;block)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p><a href="Open3.html#method-c-pipeline_r">::pipeline_r</a> starts a list of
+commands as a pipeline with a pipe which connects stdout of the last
+command.</p>
+
+<pre class="ruby"><span class="ruby-constant">Open3</span>.<span class="ruby-identifier">pipeline_r</span>(<span class="ruby-identifier">cmd1</span>, <span class="ruby-identifier">cmd2</span>, <span class="ruby-operator">...</span> [, <span class="ruby-identifier">opts</span>]) {<span class="ruby-operator">|</span><span class="ruby-identifier">last_stdout</span>, <span class="ruby-identifier">wait_threads</span><span class="ruby-operator">|</span>
+  <span class="ruby-operator">...</span>
+}
+
+<span class="ruby-identifier">last_stdout</span>, <span class="ruby-identifier">wait_threads</span> = <span class="ruby-constant">Open3</span>.<span class="ruby-identifier">pipeline_r</span>(<span class="ruby-identifier">cmd1</span>, <span class="ruby-identifier">cmd2</span>, <span class="ruby-operator">...</span> [, <span class="ruby-identifier">opts</span>])
+<span class="ruby-operator">...</span>
+<span class="ruby-identifier">last_stdout</span>.<span class="ruby-identifier">close</span>
+</pre>
+
+<p>Each cmd is a string or an array. If it is an array, the elements are
+passed to <a href="Process.html#method-c-spawn">Process.spawn</a>.</p>
+
+<pre>cmd:
+  commandline                              command line string which is passed to a shell
+  [env, commandline, opts]                 command line string which is passed to a shell
+  [env, cmdname, arg1, ..., opts]          command name and one or more arguments (no shell)
+  [env, [cmdname, argv0], arg1, ..., opts] command name and arguments including argv[0] (no shell)
+
+Note that env and opts are optional, as Process.spawn.</pre>
+
+<p>Example:</p>
+
+<pre class="ruby"><span class="ruby-constant">Open3</span>.<span class="ruby-identifier">pipeline_r</span>(<span class="ruby-string">&quot;zcat /var/log/apache2/access.log.*.gz&quot;</span>,
+                 [{<span class="ruby-string">&quot;LANG&quot;</span>=<span class="ruby-operator">&gt;</span><span class="ruby-string">&quot;C&quot;</span>}, <span class="ruby-string">&quot;grep&quot;</span>, <span class="ruby-string">&quot;GET /favicon.ico&quot;</span>],
+                 <span class="ruby-string">&quot;logresolve&quot;</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">o</span>, <span class="ruby-identifier">ts</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">o</span>.<span class="ruby-identifier">each_line</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span>
+    <span class="ruby-operator">...</span>
+  }
+}
+
+<span class="ruby-constant">Open3</span>.<span class="ruby-identifier">pipeline_r</span>(<span class="ruby-string">&quot;yes&quot;</span>, <span class="ruby-string">&quot;head -10&quot;</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">o</span>, <span class="ruby-identifier">ts</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">p</span> <span class="ruby-identifier">o</span>.<span class="ruby-identifier">read</span>      <span class="ruby-comment">#=&gt; &quot;y\ny\ny\ny\ny\ny\ny\ny\ny\ny\n&quot;</span>
+  <span class="ruby-identifier">p</span> <span class="ruby-identifier">ts</span>[<span class="ruby-value">0</span>].<span class="ruby-identifier">value</span> <span class="ruby-comment">#=&gt; #&lt;Process::Status: pid 24910 SIGPIPE (signal 13)&gt;</span>
+  <span class="ruby-identifier">p</span> <span class="ruby-identifier">ts</span>[<span class="ruby-value">1</span>].<span class="ruby-identifier">value</span> <span class="ruby-comment">#=&gt; #&lt;Process::Status: pid 24913 exit 0&gt;</span>
+}
+</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-pipeline_r_source')" id="l_method-c-pipeline_r_source">show</a>
+                
+              </p>
+              <div id="method-c-pipeline_r_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/open3.rb, line 474</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">pipeline_r</span>(*<span class="ruby-identifier">cmds</span>, &amp;<span class="ruby-identifier">block</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-constant">Hash</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">cmds</span>.<span class="ruby-identifier">last</span>
+    <span class="ruby-identifier">opts</span> = <span class="ruby-identifier">cmds</span>.<span class="ruby-identifier">pop</span>.<span class="ruby-identifier">dup</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">opts</span> = {}
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">out_r</span>, <span class="ruby-identifier">out_w</span> = <span class="ruby-constant">IO</span>.<span class="ruby-identifier">pipe</span>
+  <span class="ruby-identifier">opts</span>[<span class="ruby-value">:out</span>] = <span class="ruby-identifier">out_w</span>
+
+  <span class="ruby-identifier">pipeline_run</span>(<span class="ruby-identifier">cmds</span>, <span class="ruby-identifier">opts</span>, [<span class="ruby-identifier">out_w</span>], [<span class="ruby-identifier">out_r</span>], &amp;<span class="ruby-identifier">block</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-pipeline_rw">
+            
+              <a name="method-c-pipeline_rw"></a><b>pipeline_rw</b>(*cmds, &amp;block)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p><a href="Open3.html#method-c-pipeline_rw">::pipeline_rw</a> starts a list
+of commands as a pipeline with pipes which connects stdin of the first
+command and stdout of the last command.</p>
+
+<pre class="ruby"><span class="ruby-constant">Open3</span>.<span class="ruby-identifier">pipeline_rw</span>(<span class="ruby-identifier">cmd1</span>, <span class="ruby-identifier">cmd2</span>, <span class="ruby-operator">...</span> [, <span class="ruby-identifier">opts</span>]) {<span class="ruby-operator">|</span><span class="ruby-identifier">first_stdin</span>, <span class="ruby-identifier">last_stdout</span>, <span class="ruby-identifier">wait_threads</span><span class="ruby-operator">|</span>
+  <span class="ruby-operator">...</span>
+}
+
+<span class="ruby-identifier">first_stdin</span>, <span class="ruby-identifier">last_stdout</span>, <span class="ruby-identifier">wait_threads</span> = <span class="ruby-constant">Open3</span>.<span class="ruby-identifier">pipeline_rw</span>(<span class="ruby-identifier">cmd1</span>, <span class="ruby-identifier">cmd2</span>, <span class="ruby-operator">...</span> [, <span class="ruby-identifier">opts</span>])
+<span class="ruby-operator">...</span>
+<span class="ruby-identifier">first_stdin</span>.<span class="ruby-identifier">close</span>
+<span class="ruby-identifier">last_stdout</span>.<span class="ruby-identifier">close</span>
+</pre>
+
+<p>Each cmd is a string or an array. If it is an array, the elements are
+passed to <a href="Process.html#method-c-spawn">Process.spawn</a>.</p>
+
+<pre>cmd:
+  commandline                              command line string which is passed to a shell
+  [env, commandline, opts]                 command line string which is passed to a shell
+  [env, cmdname, arg1, ..., opts]          command name and one or more arguments (no shell)
+  [env, [cmdname, argv0], arg1, ..., opts] command name and arguments including argv[0] (no shell)
+
+Note that env and opts are optional, as Process.spawn.</pre>
+
+<p>The option to pass <a href="Process.html#method-c-spawn">Process.spawn</a>
+is constructed by merging <code>opts</code>, the last hash element of the
+array and specification for the pipe between each commands.</p>
+
+<p>Example:</p>
+
+<pre class="ruby"><span class="ruby-constant">Open3</span>.<span class="ruby-identifier">pipeline_rw</span>(<span class="ruby-string">&quot;tr -dc A-Za-z&quot;</span>, <span class="ruby-string">&quot;wc -c&quot;</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">i</span>,<span class="ruby-identifier">o</span>,<span class="ruby-identifier">ts</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">i</span>.<span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;All persons more than a mile high to leave the court.&quot;</span>
+  <span class="ruby-identifier">i</span>.<span class="ruby-identifier">close</span>
+  <span class="ruby-identifier">p</span> <span class="ruby-identifier">o</span>.<span class="ruby-identifier">gets</span> <span class="ruby-comment">#=&gt; &quot;42\n&quot;</span>
+}
+
+<span class="ruby-constant">Open3</span>.<span class="ruby-identifier">pipeline_rw</span>(<span class="ruby-string">&quot;sort&quot;</span>, <span class="ruby-string">&quot;cat -n&quot;</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">stdin</span>, <span class="ruby-identifier">stdout</span>, <span class="ruby-identifier">wait_thrs</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">stdin</span>.<span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;foo&quot;</span>
+  <span class="ruby-identifier">stdin</span>.<span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;bar&quot;</span>
+  <span class="ruby-identifier">stdin</span>.<span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;baz&quot;</span>
+  <span class="ruby-identifier">stdin</span>.<span class="ruby-identifier">close</span>     <span class="ruby-comment"># send EOF to sort.</span>
+  <span class="ruby-identifier">p</span> <span class="ruby-identifier">stdout</span>.<span class="ruby-identifier">read</span>   <span class="ruby-comment">#=&gt; &quot;     1\tbar\n     2\tbaz\n     3\tfoo\n&quot;</span>
+}
+</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-pipeline_rw_source')" id="l_method-c-pipeline_rw_source">show</a>
+                
+              </p>
+              <div id="method-c-pipeline_rw_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/open3.rb, line 418</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">pipeline_rw</span>(*<span class="ruby-identifier">cmds</span>, &amp;<span class="ruby-identifier">block</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-constant">Hash</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">cmds</span>.<span class="ruby-identifier">last</span>
+    <span class="ruby-identifier">opts</span> = <span class="ruby-identifier">cmds</span>.<span class="ruby-identifier">pop</span>.<span class="ruby-identifier">dup</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">opts</span> = {}
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">in_r</span>, <span class="ruby-identifier">in_w</span> = <span class="ruby-constant">IO</span>.<span class="ruby-identifier">pipe</span>
+  <span class="ruby-identifier">opts</span>[<span class="ruby-value">:in</span>] = <span class="ruby-identifier">in_r</span>
+  <span class="ruby-identifier">in_w</span>.<span class="ruby-identifier">sync</span> = <span class="ruby-keyword">true</span>
+
+  <span class="ruby-identifier">out_r</span>, <span class="ruby-identifier">out_w</span> = <span class="ruby-constant">IO</span>.<span class="ruby-identifier">pipe</span>
+  <span class="ruby-identifier">opts</span>[<span class="ruby-value">:out</span>] = <span class="ruby-identifier">out_w</span>
+
+  <span class="ruby-identifier">pipeline_run</span>(<span class="ruby-identifier">cmds</span>, <span class="ruby-identifier">opts</span>, [<span class="ruby-identifier">in_r</span>, <span class="ruby-identifier">out_w</span>], [<span class="ruby-identifier">in_w</span>, <span class="ruby-identifier">out_r</span>], &amp;<span class="ruby-identifier">block</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-pipeline_start">
+            
+              <a name="method-c-pipeline_start"></a><b>pipeline_start</b>(*cmds, &amp;block)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p><a href="Open3.html#method-c-pipeline_start">::pipeline_start</a> starts a
+list of commands as a pipeline. No pipe made for stdin of the first command
+and stdout of the last command.</p>
+
+<pre class="ruby"><span class="ruby-constant">Open3</span>.<span class="ruby-identifier">pipeline_start</span>(<span class="ruby-identifier">cmd1</span>, <span class="ruby-identifier">cmd2</span>, <span class="ruby-operator">...</span> [, <span class="ruby-identifier">opts</span>]) {<span class="ruby-operator">|</span><span class="ruby-identifier">wait_threads</span><span class="ruby-operator">|</span>
+  <span class="ruby-operator">...</span>
+}
+
+<span class="ruby-identifier">wait_threads</span> = <span class="ruby-constant">Open3</span>.<span class="ruby-identifier">pipeline_start</span>(<span class="ruby-identifier">cmd1</span>, <span class="ruby-identifier">cmd2</span>, <span class="ruby-operator">...</span> [, <span class="ruby-identifier">opts</span>])
+<span class="ruby-operator">...</span>
+</pre>
+
+<p>Each cmd is a string or an array. If it is an array, the elements are
+passed to <a href="Process.html#method-c-spawn">Process.spawn</a>.</p>
+
+<pre>cmd:
+  commandline                              command line string which is passed to a shell
+  [env, commandline, opts]                 command line string which is passed to a shell
+  [env, cmdname, arg1, ..., opts]          command name and one or more arguments (no shell)
+  [env, [cmdname, argv0], arg1, ..., opts] command name and arguments including argv[0] (no shell)
+
+Note that env and opts are optional, as Process.spawn.</pre>
+
+<p>Example:</p>
+
+<pre class="ruby"><span class="ruby-comment"># run xeyes in 10 seconds.</span>
+<span class="ruby-constant">Open3</span>.<span class="ruby-identifier">pipeline_start</span>(<span class="ruby-string">&quot;xeyes&quot;</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">ts</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">sleep</span> <span class="ruby-value">10</span>
+  <span class="ruby-identifier">t</span> = <span class="ruby-identifier">ts</span>[<span class="ruby-value">0</span>]
+  <span class="ruby-constant">Process</span>.<span class="ruby-identifier">kill</span>(<span class="ruby-string">&quot;TERM&quot;</span>, <span class="ruby-identifier">t</span>.<span class="ruby-identifier">pid</span>)
+  <span class="ruby-identifier">p</span> <span class="ruby-identifier">t</span>.<span class="ruby-identifier">value</span> <span class="ruby-comment">#=&gt; #&lt;Process::Status: pid 911 SIGTERM (signal 15)&gt;</span>
+}
+
+<span class="ruby-comment"># convert pdf to ps and send it to a printer.</span>
+<span class="ruby-comment"># collect error message of pdftops and lpr.</span>
+<span class="ruby-identifier">pdf_file</span> = <span class="ruby-string">&quot;paper.pdf&quot;</span>
+<span class="ruby-identifier">printer</span> = <span class="ruby-string">&quot;printer-name&quot;</span>
+<span class="ruby-identifier">err_r</span>, <span class="ruby-identifier">err_w</span> = <span class="ruby-constant">IO</span>.<span class="ruby-identifier">pipe</span>
+<span class="ruby-constant">Open3</span>.<span class="ruby-identifier">pipeline_start</span>([<span class="ruby-string">&quot;pdftops&quot;</span>, <span class="ruby-identifier">pdf_file</span>, <span class="ruby-string">&quot;-&quot;</span>],
+                     [<span class="ruby-string">&quot;lpr&quot;</span>, <span class="ruby-node">&quot;-P#{printer}&quot;</span>],
+                     :<span class="ruby-identifier">err=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">err_w</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">ts</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">err_w</span>.<span class="ruby-identifier">close</span>
+  <span class="ruby-identifier">p</span> <span class="ruby-identifier">err_r</span>.<span class="ruby-identifier">read</span> <span class="ruby-comment"># error messages of pdftops and lpr.</span>
+}
+</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-pipeline_start_source')" id="l_method-c-pipeline_start_source">show</a>
+                
+              </p>
+              <div id="method-c-pipeline_start_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/open3.rb, line 575</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">pipeline_start</span>(*<span class="ruby-identifier">cmds</span>, &amp;<span class="ruby-identifier">block</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-constant">Hash</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">cmds</span>.<span class="ruby-identifier">last</span>
+    <span class="ruby-identifier">opts</span> = <span class="ruby-identifier">cmds</span>.<span class="ruby-identifier">pop</span>.<span class="ruby-identifier">dup</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">opts</span> = {}
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">block</span>
+    <span class="ruby-identifier">pipeline_run</span>(<span class="ruby-identifier">cmds</span>, <span class="ruby-identifier">opts</span>, [], [], &amp;<span class="ruby-identifier">block</span>)
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">ts</span>, = <span class="ruby-identifier">pipeline_run</span>(<span class="ruby-identifier">cmds</span>, <span class="ruby-identifier">opts</span>, [], [])
+    <span class="ruby-identifier">ts</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-pipeline_w">
+            
+              <a name="method-c-pipeline_w"></a><b>pipeline_w</b>(*cmds, &amp;block)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p><a href="Open3.html#method-c-pipeline_w">::pipeline_w</a> starts a list of
+commands as a pipeline with a pipe which connects stdin of the first
+command.</p>
+
+<pre class="ruby"><span class="ruby-constant">Open3</span>.<span class="ruby-identifier">pipeline_w</span>(<span class="ruby-identifier">cmd1</span>, <span class="ruby-identifier">cmd2</span>, <span class="ruby-operator">...</span> [, <span class="ruby-identifier">opts</span>]) {<span class="ruby-operator">|</span><span class="ruby-identifier">first_stdin</span>, <span class="ruby-identifier">wait_threads</span><span class="ruby-operator">|</span>
+  <span class="ruby-operator">...</span>
+}
+
+<span class="ruby-identifier">first_stdin</span>, <span class="ruby-identifier">wait_threads</span> = <span class="ruby-constant">Open3</span>.<span class="ruby-identifier">pipeline_w</span>(<span class="ruby-identifier">cmd1</span>, <span class="ruby-identifier">cmd2</span>, <span class="ruby-operator">...</span> [, <span class="ruby-identifier">opts</span>])
+<span class="ruby-operator">...</span>
+<span class="ruby-identifier">first_stdin</span>.<span class="ruby-identifier">close</span>
+</pre>
+
+<p>Each cmd is a string or an array. If it is an array, the elements are
+passed to <a href="Process.html#method-c-spawn">Process.spawn</a>.</p>
+
+<pre>cmd:
+  commandline                              command line string which is passed to a shell
+  [env, commandline, opts]                 command line string which is passed to a shell
+  [env, cmdname, arg1, ..., opts]          command name and one or more arguments (no shell)
+  [env, [cmdname, argv0], arg1, ..., opts] command name and arguments including argv[0] (no shell)
+
+Note that env and opts are optional, as Process.spawn.</pre>
+
+<p>Example:</p>
+
+<pre class="ruby"><span class="ruby-constant">Open3</span>.<span class="ruby-identifier">pipeline_w</span>(<span class="ruby-string">&quot;bzip2 -c&quot;</span>, :<span class="ruby-identifier">out=</span><span class="ruby-operator">&gt;</span><span class="ruby-string">&quot;/tmp/hello.bz2&quot;</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">i</span>, <span class="ruby-identifier">ts</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">i</span>.<span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;hello&quot;</span>
+}
+</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-pipeline_w_source')" id="l_method-c-pipeline_w_source">show</a>
+                
+              </p>
+              <div id="method-c-pipeline_w_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/open3.rb, line 516</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">pipeline_w</span>(*<span class="ruby-identifier">cmds</span>, &amp;<span class="ruby-identifier">block</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-constant">Hash</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">cmds</span>.<span class="ruby-identifier">last</span>
+    <span class="ruby-identifier">opts</span> = <span class="ruby-identifier">cmds</span>.<span class="ruby-identifier">pop</span>.<span class="ruby-identifier">dup</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">opts</span> = {}
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">in_r</span>, <span class="ruby-identifier">in_w</span> = <span class="ruby-constant">IO</span>.<span class="ruby-identifier">pipe</span>
+  <span class="ruby-identifier">opts</span>[<span class="ruby-value">:in</span>] = <span class="ruby-identifier">in_r</span>
+  <span class="ruby-identifier">in_w</span>.<span class="ruby-identifier">sync</span> = <span class="ruby-keyword">true</span>
+
+  <span class="ruby-identifier">pipeline_run</span>(<span class="ruby-identifier">cmds</span>, <span class="ruby-identifier">opts</span>, [<span class="ruby-identifier">in_r</span>], [<span class="ruby-identifier">in_w</span>], &amp;<span class="ruby-identifier">block</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-popen2">
+            
+              <a name="method-c-popen2"></a><b>popen2</b>(*cmd, &amp;block)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p><a href="Open3.html#method-c-popen2">::popen2</a> is similer to <a
+href="Open3.html#method-c-popen3">::popen3</a> except it doesn’t make a
+pipe for the standard error stream.</p>
+
+<p>Block form:</p>
+
+<pre class="ruby"><span class="ruby-constant">Open3</span>.<span class="ruby-identifier">popen2</span>([<span class="ruby-identifier">env</span>,] <span class="ruby-identifier">cmd</span><span class="ruby-operator">...</span> [, <span class="ruby-identifier">opts</span>]) {<span class="ruby-operator">|</span><span class="ruby-identifier">stdin</span>, <span class="ruby-identifier">stdout</span>, <span class="ruby-identifier">wait_thr</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">pid</span> = <span class="ruby-identifier">wait_thr</span>.<span class="ruby-identifier">pid</span> <span class="ruby-comment"># pid of the started process.</span>
+  <span class="ruby-operator">...</span>
+  <span class="ruby-identifier">exit_status</span> = <span class="ruby-identifier">wait_thr</span>.<span class="ruby-identifier">value</span> <span class="ruby-comment"># Process::Status object returned.</span>
+}
+</pre>
+
+<p>Non-block form:</p>
+
+<pre>stdin, stdout, wait_thr = Open3.popen2([env,] cmd... [, opts])
+...
+stdin.close  # stdin and stdout should be closed explicitly in this form.
+stdout.close</pre>
+
+<p>See <a href="Process.html#method-c-spawn">Process.spawn</a> for the
+optional hash arguments <em>env</em> and <em>opts</em>.</p>
+
+<p>Example:</p>
+
+<pre class="ruby"><span class="ruby-constant">Open3</span>.<span class="ruby-identifier">popen2</span>(<span class="ruby-string">&quot;wc -c&quot;</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">i</span>,<span class="ruby-identifier">o</span>,<span class="ruby-identifier">t</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">i</span>.<span class="ruby-identifier">print</span> <span class="ruby-string">&quot;answer to life the universe and everything&quot;</span>
+  <span class="ruby-identifier">i</span>.<span class="ruby-identifier">close</span>
+  <span class="ruby-identifier">p</span> <span class="ruby-identifier">o</span>.<span class="ruby-identifier">gets</span> <span class="ruby-comment">#=&gt; &quot;42\n&quot;</span>
+}
+
+<span class="ruby-constant">Open3</span>.<span class="ruby-identifier">popen2</span>(<span class="ruby-string">&quot;bc -q&quot;</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">i</span>,<span class="ruby-identifier">o</span>,<span class="ruby-identifier">t</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">i</span>.<span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;obase=13&quot;</span>
+  <span class="ruby-identifier">i</span>.<span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;6 * 9&quot;</span>
+  <span class="ruby-identifier">p</span> <span class="ruby-identifier">o</span>.<span class="ruby-identifier">gets</span> <span class="ruby-comment">#=&gt; &quot;42\n&quot;</span>
+}
+
+<span class="ruby-constant">Open3</span>.<span class="ruby-identifier">popen2</span>(<span class="ruby-string">&quot;dc&quot;</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">i</span>,<span class="ruby-identifier">o</span>,<span class="ruby-identifier">t</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">i</span>.<span class="ruby-identifier">print</span> <span class="ruby-string">&quot;42P&quot;</span>
+  <span class="ruby-identifier">i</span>.<span class="ruby-identifier">close</span>
+  <span class="ruby-identifier">p</span> <span class="ruby-identifier">o</span>.<span class="ruby-identifier">read</span> <span class="ruby-comment">#=&gt; &quot;*&quot;</span>
+}
+</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-popen2_source')" id="l_method-c-popen2_source">show</a>
+                
+              </p>
+              <div id="method-c-popen2_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/open3.rb, line 134</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">popen2</span>(*<span class="ruby-identifier">cmd</span>, &amp;<span class="ruby-identifier">block</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-constant">Hash</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">cmd</span>.<span class="ruby-identifier">last</span>
+    <span class="ruby-identifier">opts</span> = <span class="ruby-identifier">cmd</span>.<span class="ruby-identifier">pop</span>.<span class="ruby-identifier">dup</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">opts</span> = {}
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">in_r</span>, <span class="ruby-identifier">in_w</span> = <span class="ruby-constant">IO</span>.<span class="ruby-identifier">pipe</span>
+  <span class="ruby-identifier">opts</span>[<span class="ruby-value">:in</span>] = <span class="ruby-identifier">in_r</span>
+  <span class="ruby-identifier">in_w</span>.<span class="ruby-identifier">sync</span> = <span class="ruby-keyword">true</span>
+
+  <span class="ruby-identifier">out_r</span>, <span class="ruby-identifier">out_w</span> = <span class="ruby-constant">IO</span>.<span class="ruby-identifier">pipe</span>
+  <span class="ruby-identifier">opts</span>[<span class="ruby-value">:out</span>] = <span class="ruby-identifier">out_w</span>
+
+  <span class="ruby-identifier">popen_run</span>(<span class="ruby-identifier">cmd</span>, <span class="ruby-identifier">opts</span>, [<span class="ruby-identifier">in_r</span>, <span class="ruby-identifier">out_w</span>], [<span class="ruby-identifier">in_w</span>, <span class="ruby-identifier">out_r</span>], &amp;<span class="ruby-identifier">block</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-popen2e">
+            
+              <a name="method-c-popen2e"></a><b>popen2e</b>(*cmd, &amp;block)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p><a href="Open3.html#method-c-popen2e">::popen2e</a> is similer to <a
+href="Open3.html#method-c-popen3">::popen3</a> except it merges the
+standard output stream and the standard error stream.</p>
+
+<p>Block form:</p>
+
+<pre class="ruby"><span class="ruby-constant">Open3</span>.<span class="ruby-identifier">popen2e</span>([<span class="ruby-identifier">env</span>,] <span class="ruby-identifier">cmd</span><span class="ruby-operator">...</span> [, <span class="ruby-identifier">opts</span>]) {<span class="ruby-operator">|</span><span class="ruby-identifier">stdin</span>, <span class="ruby-identifier">stdout_and_stderr</span>, <span class="ruby-identifier">wait_thr</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">pid</span> = <span class="ruby-identifier">wait_thr</span>.<span class="ruby-identifier">pid</span> <span class="ruby-comment"># pid of the started process.</span>
+  <span class="ruby-operator">...</span>
+  <span class="ruby-identifier">exit_status</span> = <span class="ruby-identifier">wait_thr</span>.<span class="ruby-identifier">value</span> <span class="ruby-comment"># Process::Status object returned.</span>
+}
+</pre>
+
+<p>Non-block form:</p>
+
+<pre>stdin, stdout_and_stderr, wait_thr = Open3.popen2e([env,] cmd... [, opts])
+...
+stdin.close  # stdin and stdout_and_stderr should be closed explicitly in this form.
+stdout_and_stderr.close</pre>
+
+<p>See <a href="Process.html#method-c-spawn">Process.spawn</a> for the
+optional hash arguments <em>env</em> and <em>opts</em>.</p>
+
+<p>Example:</p>
+
+<pre class="ruby"><span class="ruby-comment"># check gcc warnings</span>
+<span class="ruby-identifier">source</span> = <span class="ruby-string">&quot;foo.c&quot;</span>
+<span class="ruby-constant">Open3</span>.<span class="ruby-identifier">popen2e</span>(<span class="ruby-string">&quot;gcc&quot;</span>, <span class="ruby-string">&quot;-Wall&quot;</span>, <span class="ruby-identifier">source</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">i</span>,<span class="ruby-identifier">oe</span>,<span class="ruby-identifier">t</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">oe</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-regexp">%rwarning/</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">line</span>
+      <span class="ruby-operator">...</span>
+    <span class="ruby-keyword">end</span>
+  }
+}
+</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-popen2e_source')" id="l_method-c-popen2e_source">show</a>
+                
+              </p>
+              <div id="method-c-popen2e_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/open3.rb, line 183</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">popen2e</span>(*<span class="ruby-identifier">cmd</span>, &amp;<span class="ruby-identifier">block</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-constant">Hash</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">cmd</span>.<span class="ruby-identifier">last</span>
+    <span class="ruby-identifier">opts</span> = <span class="ruby-identifier">cmd</span>.<span class="ruby-identifier">pop</span>.<span class="ruby-identifier">dup</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">opts</span> = {}
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">in_r</span>, <span class="ruby-identifier">in_w</span> = <span class="ruby-constant">IO</span>.<span class="ruby-identifier">pipe</span>
+  <span class="ruby-identifier">opts</span>[<span class="ruby-value">:in</span>] = <span class="ruby-identifier">in_r</span>
+  <span class="ruby-identifier">in_w</span>.<span class="ruby-identifier">sync</span> = <span class="ruby-keyword">true</span>
+
+  <span class="ruby-identifier">out_r</span>, <span class="ruby-identifier">out_w</span> = <span class="ruby-constant">IO</span>.<span class="ruby-identifier">pipe</span>
+  <span class="ruby-identifier">opts</span>[[<span class="ruby-value">:out</span>, <span class="ruby-value">:err</span>]] = <span class="ruby-identifier">out_w</span>
+
+  <span class="ruby-identifier">popen_run</span>(<span class="ruby-identifier">cmd</span>, <span class="ruby-identifier">opts</span>, [<span class="ruby-identifier">in_r</span>, <span class="ruby-identifier">out_w</span>], [<span class="ruby-identifier">in_w</span>, <span class="ruby-identifier">out_r</span>], &amp;<span class="ruby-identifier">block</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-popen3">
+            
+              <a name="method-c-popen3"></a><b>popen3</b>(*cmd, &amp;block)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Open stdin, stdout, and stderr streams and start external executable. In
+addition, a thread for waiting the started process is noticed. The thread
+has a pid method and thread variable :pid which is the pid of the started
+process.</p>
+
+<p>Block form:</p>
+
+<pre class="ruby"><span class="ruby-constant">Open3</span>.<span class="ruby-identifier">popen3</span>([<span class="ruby-identifier">env</span>,] <span class="ruby-identifier">cmd</span><span class="ruby-operator">...</span> [, <span class="ruby-identifier">opts</span>]) {<span class="ruby-operator">|</span><span class="ruby-identifier">stdin</span>, <span class="ruby-identifier">stdout</span>, <span class="ruby-identifier">stderr</span>, <span class="ruby-identifier">wait_thr</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">pid</span> = <span class="ruby-identifier">wait_thr</span>.<span class="ruby-identifier">pid</span> <span class="ruby-comment"># pid of the started process.</span>
+  <span class="ruby-operator">...</span>
+  <span class="ruby-identifier">exit_status</span> = <span class="ruby-identifier">wait_thr</span>.<span class="ruby-identifier">value</span> <span class="ruby-comment"># Process::Status object returned.</span>
+}
+</pre>
+
+<p>Non-block form:</p>
+
+<pre>stdin, stdout, stderr, wait_thr = Open3.popen3([env,] cmd... [, opts])
+pid = wait_thr[:pid]  # pid of the started process.
+...
+stdin.close  # stdin, stdout and stderr should be closed explicitly in this form.
+stdout.close
+stderr.close
+exit_status = wait_thr.value  # Process::Status object returned.</pre>
+
+<p>The parameters <code>cmd...</code> is passed to <a
+href="Process.html#method-c-spawn">Process.spawn</a>. So a commandline
+string and list of argument strings can be accepted as follows.</p>
+
+<pre class="ruby"><span class="ruby-constant">Open3</span>.<span class="ruby-identifier">popen3</span>(<span class="ruby-string">&quot;echo a&quot;</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">i</span>, <span class="ruby-identifier">o</span>, <span class="ruby-identifier">e</span>, <span class="ruby-identifier">t</span><span class="ruby-operator">|</span> <span class="ruby-operator">...</span> }
+<span class="ruby-constant">Open3</span>.<span class="ruby-identifier">popen3</span>(<span class="ruby-string">&quot;echo&quot;</span>, <span class="ruby-string">&quot;a&quot;</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">i</span>, <span class="ruby-identifier">o</span>, <span class="ruby-identifier">e</span>, <span class="ruby-identifier">t</span><span class="ruby-operator">|</span> <span class="ruby-operator">...</span> }
+<span class="ruby-constant">Open3</span>.<span class="ruby-identifier">popen3</span>([<span class="ruby-string">&quot;echo&quot;</span>, <span class="ruby-string">&quot;argv0&quot;</span>], <span class="ruby-string">&quot;a&quot;</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">i</span>, <span class="ruby-identifier">o</span>, <span class="ruby-identifier">e</span>, <span class="ruby-identifier">t</span><span class="ruby-operator">|</span> <span class="ruby-operator">...</span> }
+</pre>
+
+<p>If the last parameter, opts, is a <a href="Hash.html">Hash</a>, it is
+recognized as an option for <a
+href="Process.html#method-c-spawn">Process.spawn</a>.</p>
+
+<pre class="ruby"><span class="ruby-constant">Open3</span>.<span class="ruby-identifier">popen3</span>(<span class="ruby-string">&quot;pwd&quot;</span>, :<span class="ruby-identifier">chdir=</span><span class="ruby-operator">&gt;</span><span class="ruby-string">&quot;/&quot;</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">i</span>,<span class="ruby-identifier">o</span>,<span class="ruby-identifier">e</span>,<span class="ruby-identifier">t</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">p</span> <span class="ruby-identifier">o</span>.<span class="ruby-identifier">read</span>.<span class="ruby-identifier">chomp</span> <span class="ruby-comment">#=&gt; &quot;/&quot;</span>
+}
+</pre>
+
+<p>wait_thr.value waits the termination of the process. The block form also
+waits the process when it returns.</p>
+
+<p>Closing stdin, stdout and stderr does not wait the process.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-popen3_source')" id="l_method-c-popen3_source">show</a>
+                
+              </p>
+              <div id="method-c-popen3_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/open3.rb, line 73</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">popen3</span>(*<span class="ruby-identifier">cmd</span>, &amp;<span class="ruby-identifier">block</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-constant">Hash</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">cmd</span>.<span class="ruby-identifier">last</span>
+    <span class="ruby-identifier">opts</span> = <span class="ruby-identifier">cmd</span>.<span class="ruby-identifier">pop</span>.<span class="ruby-identifier">dup</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">opts</span> = {}
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">in_r</span>, <span class="ruby-identifier">in_w</span> = <span class="ruby-constant">IO</span>.<span class="ruby-identifier">pipe</span>
+  <span class="ruby-identifier">opts</span>[<span class="ruby-value">:in</span>] = <span class="ruby-identifier">in_r</span>
+  <span class="ruby-identifier">in_w</span>.<span class="ruby-identifier">sync</span> = <span class="ruby-keyword">true</span>
+
+  <span class="ruby-identifier">out_r</span>, <span class="ruby-identifier">out_w</span> = <span class="ruby-constant">IO</span>.<span class="ruby-identifier">pipe</span>
+  <span class="ruby-identifier">opts</span>[<span class="ruby-value">:out</span>] = <span class="ruby-identifier">out_w</span>
+
+  <span class="ruby-identifier">err_r</span>, <span class="ruby-identifier">err_w</span> = <span class="ruby-constant">IO</span>.<span class="ruby-identifier">pipe</span>
+  <span class="ruby-identifier">opts</span>[<span class="ruby-value">:err</span>] = <span class="ruby-identifier">err_w</span>
+
+  <span class="ruby-identifier">popen_run</span>(<span class="ruby-identifier">cmd</span>, <span class="ruby-identifier">opts</span>, [<span class="ruby-identifier">in_r</span>, <span class="ruby-identifier">out_w</span>, <span class="ruby-identifier">err_w</span>], [<span class="ruby-identifier">in_w</span>, <span class="ruby-identifier">out_r</span>, <span class="ruby-identifier">err_r</span>], &amp;<span class="ruby-identifier">block</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                        </div>
+    </div>
+  </body>
+</html>    

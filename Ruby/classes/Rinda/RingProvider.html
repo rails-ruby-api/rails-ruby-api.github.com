@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Rinda::RingProvider</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            Rinda::RingProvider 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/Users/fschumac/_rvm/src/ruby-1_9_3-p0/lib/rinda/ring_rb.html">/Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/rinda/ring.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p><a href="RingProvider.html">RingProvider</a> uses a <a
+href="RingServer.html">RingServer</a> advertised <a
+href="TupleSpace.html">TupleSpace</a> as a name service. <a
+href="TupleSpace.html">TupleSpace</a> clients can register themselves with
+the remote <a href="TupleSpace.html">TupleSpace</a> and look up other
+provided services via the remote <a href="TupleSpace.html">TupleSpace</a>.</p>
+
+<p>Services are registered with a tuple of the format [:name, klass, <a
+href="../DRb/DRbObject.html">DRbObject</a>, description].</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>P</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-provide">provide</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <a name="method-c-new"></a><b>new</b>(klass, front, desc, renewer = nil)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Creates a <a href="RingProvider.html">RingProvider</a> that will provide a
+<code>klass</code> service running on <code>front</code>, with a
+<code>description</code>.  <code>renewer</code> is optional.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/rinda/ring.rb, line 232</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">initialize</span>(<span class="ruby-identifier">klass</span>, <span class="ruby-identifier">front</span>, <span class="ruby-identifier">desc</span>, <span class="ruby-identifier">renewer</span> = <span class="ruby-keyword">nil</span>)
+  <span class="ruby-ivar">@tuple</span> = [<span class="ruby-value">:name</span>, <span class="ruby-identifier">klass</span>, <span class="ruby-identifier">front</span>, <span class="ruby-identifier">desc</span>]
+  <span class="ruby-ivar">@renewer</span> = <span class="ruby-identifier">renewer</span> <span class="ruby-operator">||</span> <span class="ruby-constant">Rinda</span><span class="ruby-operator">::</span><span class="ruby-constant">SimpleRenewer</span>.<span class="ruby-identifier">new</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-provide">
+            
+              <a name="method-i-provide"></a><b>provide</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Advertises this service on the primary remote <a
+href="TupleSpace.html">TupleSpace</a>.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-provide_source')" id="l_method-i-provide_source">show</a>
+                
+              </p>
+              <div id="method-i-provide_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/rinda/ring.rb, line 240</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">provide</span>
+  <span class="ruby-identifier">ts</span> = <span class="ruby-constant">Rinda</span><span class="ruby-operator">::</span><span class="ruby-constant">RingFinger</span>.<span class="ruby-identifier">primary</span>
+  <span class="ruby-identifier">ts</span>.<span class="ruby-identifier">write</span>(<span class="ruby-ivar">@tuple</span>, <span class="ruby-ivar">@renewer</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    

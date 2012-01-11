@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>CacheEntryTest</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/github.css" type="text/css" media="screen" />
+<script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            CacheEntryTest 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="ActiveSupport/TestCase.html">ActiveSupport::TestCase</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../files/rails/activesupport/test/caching_test_rb.html">rails/activesupport/test/caching_test.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-test_compress_values">test_compress_values</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_create_raw_entry">test_create_raw_entry</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_expired">test_expired</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_non_compress_values">test_non_compress_values</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+        
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-test_compress_values">
+            
+              <a name="method-i-test_compress_values"></a><b>test_compress_values</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_compress_values_source')" id="l_method-i-test_compress_values_source">show</a>
+                
+              </p>
+              <div id="method-i-test_compress_values_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File rails/activesupport/test/caching_test.rb, line 760</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_compress_values</span>
+  <span class="ruby-identifier">entry</span> = <span class="ruby-constant">ActiveSupport</span><span class="ruby-operator">::</span><span class="ruby-constant">Cache</span><span class="ruby-operator">::</span><span class="ruby-constant">Entry</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&quot;value&quot;</span>, <span class="ruby-value">:compress</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>, <span class="ruby-value">:compress_threshold</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-number">1</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&quot;value&quot;</span>, <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">value</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-keyword">true</span>, <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">compressed?</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&quot;value&quot;</span>, <span class="ruby-constant">Marshal</span>.<span class="ruby-identifier">load</span>(<span class="ruby-constant">Zlib</span><span class="ruby-operator">::</span><span class="ruby-constant">Inflate</span>.<span class="ruby-identifier">inflate</span>(<span class="ruby-identifier">entry</span>.<span class="ruby-identifier">raw_value</span>))
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_create_raw_entry">
+            
+              <a name="method-i-test_create_raw_entry"></a><b>test_create_raw_entry</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_create_raw_entry_source')" id="l_method-i-test_create_raw_entry_source">show</a>
+                
+              </p>
+              <div id="method-i-test_create_raw_entry_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File rails/activesupport/test/caching_test.rb, line 741</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_create_raw_entry</span>
+  <span class="ruby-identifier">time</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>
+  <span class="ruby-identifier">entry</span> = <span class="ruby-constant">ActiveSupport</span><span class="ruby-operator">::</span><span class="ruby-constant">Cache</span><span class="ruby-operator">::</span><span class="ruby-constant">Entry</span>.<span class="ruby-identifier">create</span>(<span class="ruby-string">&quot;raw&quot;</span>, <span class="ruby-identifier">time</span>, <span class="ruby-value">:compress</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">false</span>, <span class="ruby-value">:expires_in</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-number">300</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&quot;raw&quot;</span>, <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">raw_value</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">time</span>.<span class="ruby-identifier">to_f</span>, <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">created_at</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-keyword">false</span>, <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">compressed?</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-number">300</span>, <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">expires_in</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_expired">
+            
+              <a name="method-i-test_expired"></a><b>test_expired</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_expired_source')" id="l_method-i-test_expired_source">show</a>
+                
+              </p>
+              <div id="method-i-test_expired_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File rails/activesupport/test/caching_test.rb, line 750</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_expired</span>
+  <span class="ruby-identifier">entry</span> = <span class="ruby-constant">ActiveSupport</span><span class="ruby-operator">::</span><span class="ruby-constant">Cache</span><span class="ruby-operator">::</span><span class="ruby-constant">Entry</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&quot;value&quot;</span>)
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-identifier">entry</span>.<span class="ruby-identifier">expired?</span>, <span class="ruby-string">'entry not expired'</span>
+  <span class="ruby-identifier">entry</span> = <span class="ruby-constant">ActiveSupport</span><span class="ruby-operator">::</span><span class="ruby-constant">Cache</span><span class="ruby-operator">::</span><span class="ruby-constant">Entry</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&quot;value&quot;</span>, <span class="ruby-value">:expires_in</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-number">60</span>)
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-identifier">entry</span>.<span class="ruby-identifier">expired?</span>, <span class="ruby-string">'entry not expired'</span>
+  <span class="ruby-identifier">time</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span> <span class="ruby-operator">+</span> <span class="ruby-number">61</span>
+  <span class="ruby-constant">Time</span>.<span class="ruby-identifier">stubs</span>(<span class="ruby-value">:now</span>).<span class="ruby-identifier">returns</span>(<span class="ruby-identifier">time</span>)
+  <span class="ruby-identifier">assert</span> <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">expired?</span>, <span class="ruby-string">'entry is expired'</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_non_compress_values">
+            
+              <a name="method-i-test_non_compress_values"></a><b>test_non_compress_values</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_non_compress_values_source')" id="l_method-i-test_non_compress_values_source">show</a>
+                
+              </p>
+              <div id="method-i-test_non_compress_values_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File rails/activesupport/test/caching_test.rb, line 767</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_non_compress_values</span>
+  <span class="ruby-identifier">entry</span> = <span class="ruby-constant">ActiveSupport</span><span class="ruby-operator">::</span><span class="ruby-constant">Cache</span><span class="ruby-operator">::</span><span class="ruby-constant">Entry</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&quot;value&quot;</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&quot;value&quot;</span>, <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">value</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&quot;value&quot;</span>, <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">raw_value</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-keyword">false</span>, <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">compressed?</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    

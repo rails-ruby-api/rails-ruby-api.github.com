@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Gem::Commands::GenerateIndexCommand</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/github.css" type="text/css" media="screen" />
+<script src="../../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            Gem::Commands::GenerateIndexCommand 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../Command.html">Gem::Command</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../../files/Users/fschumac/_rvm/src/ruby-1_9_3-p0/lib/rubygems/commands/generate_index_command_rb.html">/Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/rubygems/commands/generate_index_command.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>Generates a index files for use as a gem server.</p>
+
+<p>See `gem help generate_index`</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>E</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-execute">execute</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <a name="method-c-new"></a><b>new</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/rubygems/commands/generate_index_command.rb, line 11</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">initialize</span>
+  <span class="ruby-keyword">super</span> <span class="ruby-string">'generate_index'</span>,
+        <span class="ruby-string">'Generates the index files for a gem server directory'</span>,
+        <span class="ruby-value">:directory</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'.'</span>, <span class="ruby-value">:build_legacy</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>, <span class="ruby-value">:build_modern</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>
+
+  <span class="ruby-identifier">add_option</span> <span class="ruby-string">'-d'</span>, <span class="ruby-string">'--directory=DIRNAME'</span>,
+             <span class="ruby-string">'repository base dir containing gems subdir'</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">dir</span>, <span class="ruby-identifier">options</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">options</span>[<span class="ruby-value">:directory</span>] = <span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span> <span class="ruby-identifier">dir</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">add_option</span> <span class="ruby-string">'--[no-]legacy'</span>,
+             <span class="ruby-string">'Generate Marshal.4.8'</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">value</span>, <span class="ruby-identifier">options</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">unless</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:build_modern</span>] <span class="ruby-keyword">or</span> <span class="ruby-identifier">value</span> <span class="ruby-keyword">then</span>
+      <span class="ruby-identifier">raise</span> <span class="ruby-constant">OptionParser</span><span class="ruby-operator">::</span><span class="ruby-constant">InvalidOption</span>, <span class="ruby-string">'no indicies will be built'</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-identifier">options</span>[<span class="ruby-value">:build_legacy</span>] = <span class="ruby-identifier">value</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">add_option</span> <span class="ruby-string">'--[no-]modern'</span>,
+             <span class="ruby-string">'Generate indexes for RubyGems newer'</span>,
+             <span class="ruby-string">'than 1.2.0'</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">value</span>, <span class="ruby-identifier">options</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">unless</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:build_legacy</span>] <span class="ruby-keyword">or</span> <span class="ruby-identifier">value</span> <span class="ruby-keyword">then</span>
+      <span class="ruby-identifier">raise</span> <span class="ruby-constant">OptionParser</span><span class="ruby-operator">::</span><span class="ruby-constant">InvalidOption</span>, <span class="ruby-string">'no indicies will be built'</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-identifier">options</span>[<span class="ruby-value">:build_modern</span>] = <span class="ruby-identifier">value</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">add_option</span> <span class="ruby-string">'--update'</span>,
+             <span class="ruby-string">'Update modern indexes with gems added'</span>,
+             <span class="ruby-string">'since the last update'</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">value</span>, <span class="ruby-identifier">options</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">options</span>[<span class="ruby-value">:update</span>] = <span class="ruby-identifier">value</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">add_option</span> <span class="ruby-value">:RSS</span>, <span class="ruby-string">'--rss-gems-host=GEM_HOST'</span>,
+             <span class="ruby-string">'Host name where gems are served from,'</span>,
+             <span class="ruby-string">'used for GUID and enclosure values'</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">value</span>, <span class="ruby-identifier">options</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">options</span>[<span class="ruby-value">:rss_gems_host</span>] = <span class="ruby-identifier">value</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">add_option</span> <span class="ruby-value">:RSS</span>, <span class="ruby-string">'--rss-host=HOST'</span>,
+             <span class="ruby-string">'Host name for more gems information,'</span>,
+             <span class="ruby-string">'used for RSS feed link'</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">value</span>, <span class="ruby-identifier">options</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">options</span>[<span class="ruby-value">:rss_host</span>] = <span class="ruby-identifier">value</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">add_option</span> <span class="ruby-value">:RSS</span>, <span class="ruby-string">'--rss-title=TITLE'</span>,
+             <span class="ruby-string">'Set title for RSS feed'</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">value</span>, <span class="ruby-identifier">options</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">options</span>[<span class="ruby-value">:rss_title</span>] = <span class="ruby-identifier">value</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-execute">
+            
+              <a name="method-i-execute"></a><b>execute</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-execute_source')" id="l_method-i-execute_source">show</a>
+                
+              </p>
+              <div id="method-i-execute_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/rubygems/commands/generate_index_command.rb, line 101</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">execute</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:update</span>] <span class="ruby-keyword">and</span>
+     (<span class="ruby-identifier">options</span>[<span class="ruby-value">:rss_host</span>] <span class="ruby-keyword">or</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:rss_gems_host</span>]) <span class="ruby-keyword">then</span>
+    <span class="ruby-identifier">alert_error</span> <span class="ruby-string">'--update not compatible with RSS generation'</span>
+    <span class="ruby-identifier">terminate_interaction</span> <span class="ruby-number">1</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">if</span> <span class="ruby-keyword">not</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">options</span>[<span class="ruby-value">:directory</span>]) <span class="ruby-keyword">or</span>
+     <span class="ruby-keyword">not</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-identifier">options</span>[<span class="ruby-value">:directory</span>]) <span class="ruby-keyword">then</span>
+    <span class="ruby-identifier">alert_error</span> <span class="ruby-node">&quot;unknown directory name #{directory}.&quot;</span>
+    <span class="ruby-identifier">terminate_interaction</span> <span class="ruby-number">1</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">indexer</span> = <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Indexer</span>.<span class="ruby-identifier">new</span> <span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-value">:directory</span>), <span class="ruby-identifier">options</span>
+
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:update</span>] <span class="ruby-keyword">then</span>
+      <span class="ruby-identifier">indexer</span>.<span class="ruby-identifier">update_index</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">indexer</span>.<span class="ruby-identifier">generate_index</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    

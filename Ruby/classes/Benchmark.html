@@ -1,0 +1,597 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Benchmark</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/github.css" type="text/css" media="screen" />
+<script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Module</span> 
+            Benchmark 
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../files/Users/fschumac/_rvm/src/ruby-1_9_3-p0/lib/benchmark_rb.html">/Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/benchmark.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>The <a href="Benchmark.html">Benchmark</a> module provides methods to
+measure and report the time used to execute Ruby code.</p>
+<ul><li>
+<p>Measure the time to construct the string given by the expression
+<code>&quot;a&quot;*1_000_000</code>:</p>
+
+<pre class="ruby"><span class="ruby-identifier">require</span> <span class="ruby-string">'benchmark'</span>
+
+<span class="ruby-identifier">puts</span> <span class="ruby-constant">Benchmark</span>.<span class="ruby-identifier">measure</span> { <span class="ruby-string">&quot;a&quot;</span>*<span class="ruby-value">1_000_000</span> }
+</pre>
+
+<p>On my machine (FreeBSD 3.2 on P5, 100MHz) this generates:</p>
+
+<pre>1.166667   0.050000   1.216667 (  0.571355)</pre>
+
+<p>This report shows the user CPU time, system CPU time, the sum of the user
+and system CPU times, and the elapsed real time. The unit of time is
+seconds.</p>
+</li><li>
+<p>Do some experiments sequentially using the bm method:</p>
+
+<pre class="ruby"><span class="ruby-identifier">require</span> <span class="ruby-string">'benchmark'</span>
+
+<span class="ruby-identifier">n</span> = <span class="ruby-value">50000</span>
+<span class="ruby-constant">Benchmark</span>.<span class="ruby-identifier">bm</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">x</span>.<span class="ruby-identifier">report</span> { <span class="ruby-keyword">for</span> <span class="ruby-identifier">i</span> <span class="ruby-keyword">in</span> <span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-identifier">n</span>; <span class="ruby-identifier">a</span> = <span class="ruby-string">&quot;1&quot;</span>; <span class="ruby-keyword">end</span> }
+  <span class="ruby-identifier">x</span>.<span class="ruby-identifier">report</span> { <span class="ruby-identifier">n</span>.<span class="ruby-identifier">times</span> <span class="ruby-keyword">do</span>   ; <span class="ruby-identifier">a</span> = <span class="ruby-string">&quot;1&quot;</span>; <span class="ruby-keyword">end</span> }
+  <span class="ruby-identifier">x</span>.<span class="ruby-identifier">report</span> { <span class="ruby-value">1</span>.<span class="ruby-identifier">upto</span>(<span class="ruby-identifier">n</span>) <span class="ruby-keyword">do</span> ; <span class="ruby-identifier">a</span> = <span class="ruby-string">&quot;1&quot;</span>; <span class="ruby-keyword">end</span> }
+<span class="ruby-keyword">end</span>
+</pre>
+
+<p>The result:</p>
+
+<pre>    user     system      total        real
+1.033333   0.016667   1.016667 (  0.492106)
+1.483333   0.000000   1.483333 (  0.694605)
+1.516667   0.000000   1.516667 (  0.711077)</pre>
+</li><li>
+<p>Continuing the previous example, put a label in each report:</p>
+
+<pre class="ruby"><span class="ruby-identifier">require</span> <span class="ruby-string">'benchmark'</span>
+
+<span class="ruby-identifier">n</span> = <span class="ruby-value">50000</span>
+<span class="ruby-constant">Benchmark</span>.<span class="ruby-identifier">bm</span>(<span class="ruby-value">7</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">x</span>.<span class="ruby-identifier">report</span>(<span class="ruby-string">&quot;for:&quot;</span>)   { <span class="ruby-keyword">for</span> <span class="ruby-identifier">i</span> <span class="ruby-keyword">in</span> <span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-identifier">n</span>; <span class="ruby-identifier">a</span> = <span class="ruby-string">&quot;1&quot;</span>; <span class="ruby-keyword">end</span> }
+  <span class="ruby-identifier">x</span>.<span class="ruby-identifier">report</span>(<span class="ruby-string">&quot;times:&quot;</span>) { <span class="ruby-identifier">n</span>.<span class="ruby-identifier">times</span> <span class="ruby-keyword">do</span>   ; <span class="ruby-identifier">a</span> = <span class="ruby-string">&quot;1&quot;</span>; <span class="ruby-keyword">end</span> }
+  <span class="ruby-identifier">x</span>.<span class="ruby-identifier">report</span>(<span class="ruby-string">&quot;upto:&quot;</span>)  { <span class="ruby-value">1</span>.<span class="ruby-identifier">upto</span>(<span class="ruby-identifier">n</span>) <span class="ruby-keyword">do</span> ; <span class="ruby-identifier">a</span> = <span class="ruby-string">&quot;1&quot;</span>; <span class="ruby-keyword">end</span> }
+<span class="ruby-keyword">end</span>
+</pre>
+</li></ul>
+
+<p>The result:</p>
+
+<pre>             user     system      total        real
+for:     1.050000   0.000000   1.050000 (  0.503462)
+times:   1.533333   0.016667   1.550000 (  0.735473)
+upto:    1.500000   0.016667   1.516667 (  0.711239)</pre>
+<ul><li>
+<p>The times for some benchmarks depend on the order in which items are run. 
+These differences are due to the cost of memory allocation and garbage
+collection. To avoid these discrepancies, the bmbm method is provided.  For
+example, to compare ways to sort an array of floats:</p>
+
+<pre class="ruby"><span class="ruby-identifier">require</span> <span class="ruby-string">'benchmark'</span>
+
+<span class="ruby-identifier">array</span> = (<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">1000000</span>).<span class="ruby-identifier">map</span> { <span class="ruby-identifier">rand</span> }
+
+<span class="ruby-constant">Benchmark</span>.<span class="ruby-identifier">bmbm</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">x</span>.<span class="ruby-identifier">report</span>(<span class="ruby-string">&quot;sort!&quot;</span>) { <span class="ruby-identifier">array</span>.<span class="ruby-identifier">dup</span>.<span class="ruby-identifier">sort!</span> }
+  <span class="ruby-identifier">x</span>.<span class="ruby-identifier">report</span>(<span class="ruby-string">&quot;sort&quot;</span>)  { <span class="ruby-identifier">array</span>.<span class="ruby-identifier">dup</span>.<span class="ruby-identifier">sort</span>  }
+<span class="ruby-keyword">end</span>
+</pre>
+
+<p>The result:</p>
+
+<pre>Rehearsal -----------------------------------------
+sort!  11.928000   0.010000  11.938000 ( 12.756000)
+sort   13.048000   0.020000  13.068000 ( 13.857000)
+------------------------------- total: 25.006000sec
+
+            user     system      total        real
+sort!  12.959000   0.010000  12.969000 ( 13.793000)
+sort   12.007000   0.000000  12.007000 ( 12.791000)</pre>
+</li><li>
+<p>Report statistics of sequential experiments with unique labels, using the
+benchmark method:</p>
+
+<pre class="ruby"><span class="ruby-identifier">require</span> <span class="ruby-string">'benchmark'</span>
+<span class="ruby-identifier">include</span> <span class="ruby-constant">Benchmark</span>         <span class="ruby-comment"># we need the CAPTION and FORMAT constants</span>
+
+<span class="ruby-identifier">n</span> = <span class="ruby-value">50000</span>
+<span class="ruby-constant">Benchmark</span>.<span class="ruby-identifier">benchmark</span>(<span class="ruby-constant">CAPTION</span>, <span class="ruby-value">7</span>, <span class="ruby-constant">FORMAT</span>, <span class="ruby-string">&quot;&gt;total:&quot;</span>, <span class="ruby-string">&quot;&gt;avg:&quot;</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">tf</span> = <span class="ruby-identifier">x</span>.<span class="ruby-identifier">report</span>(<span class="ruby-string">&quot;for:&quot;</span>)   { <span class="ruby-keyword">for</span> <span class="ruby-identifier">i</span> <span class="ruby-keyword">in</span> <span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-identifier">n</span>; <span class="ruby-identifier">a</span> = <span class="ruby-string">&quot;1&quot;</span>; <span class="ruby-keyword">end</span> }
+  <span class="ruby-identifier">tt</span> = <span class="ruby-identifier">x</span>.<span class="ruby-identifier">report</span>(<span class="ruby-string">&quot;times:&quot;</span>) { <span class="ruby-identifier">n</span>.<span class="ruby-identifier">times</span> <span class="ruby-keyword">do</span>   ; <span class="ruby-identifier">a</span> = <span class="ruby-string">&quot;1&quot;</span>; <span class="ruby-keyword">end</span> }
+  <span class="ruby-identifier">tu</span> = <span class="ruby-identifier">x</span>.<span class="ruby-identifier">report</span>(<span class="ruby-string">&quot;upto:&quot;</span>)  { <span class="ruby-value">1</span>.<span class="ruby-identifier">upto</span>(<span class="ruby-identifier">n</span>) <span class="ruby-keyword">do</span> ; <span class="ruby-identifier">a</span> = <span class="ruby-string">&quot;1&quot;</span>; <span class="ruby-keyword">end</span> }
+  [<span class="ruby-identifier">tf</span><span class="ruby-operator">+</span><span class="ruby-identifier">tt</span><span class="ruby-operator">+</span><span class="ruby-identifier">tu</span>, (<span class="ruby-identifier">tf</span><span class="ruby-operator">+</span><span class="ruby-identifier">tt</span><span class="ruby-operator">+</span><span class="ruby-identifier">tu</span>)<span class="ruby-operator">/</span><span class="ruby-value">3</span>]
+<span class="ruby-keyword">end</span>
+</pre>
+
+<p>The result:</p>
+
+<pre>             user     system      total        real
+for:     1.016667   0.016667   1.033333 (  0.485749)
+times:   1.450000   0.016667   1.466667 (  0.681367)
+upto:    1.533333   0.000000   1.533333 (  0.722166)
+&gt;total:  4.000000   0.033333   4.033333 (  1.889282)
+&gt;avg:    1.333333   0.011111   1.344444 (  0.629761)</pre>
+</li></ul>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+    <!-- Namespace -->
+    <div class="sectiontitle">Namespace</div>
+    <ul>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="Benchmark/Tms.html">Benchmark::Tms</a>
+        </li>
+      
+    </ul>
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>B</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-benchmark">benchmark</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-bm">bm</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-bmbm">bmbm</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>M</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-measure">measure</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>R</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-realtime">realtime</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+      <!-- Section constants -->
+      <div class="sectiontitle">Constants</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class="attr-name">BENCHMARK_VERSION</td>
+            <td>=</td>
+            <td class="attr-value">&quot;2002-04-25&quot;</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">CAPTION</td>
+            <td>=</td>
+            <td class="attr-value">Benchmark::Tms::CAPTION</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>The default caption string (heading above the output times).</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">FORMAT</td>
+            <td>=</td>
+            <td class="attr-value">Benchmark::Tms::FORMAT</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>The default format string used to display times.  See also <a
+href="Benchmark/Tms.html#method-i-format">Benchmark::Tms#format</a>.</p></td>
+            </tr>
+          
+        
+      </table>
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-benchmark">
+            
+              <a name="method-c-benchmark"></a><b>benchmark</b>(caption = &quot;&quot;, label_width = nil, format = nil, *labels)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Invokes the block with a <code>Benchmark::Report</code> object, which may
+be used to collect and report on the results of individual benchmark tests.
+Reserves <em>label_width</em> leading spaces for labels on each line.
+Prints <em>caption</em> at the top of the report, and uses <em>format</em>
+to format each line. Returns an array of <a
+href="Benchmark/Tms.html">Benchmark::Tms</a> objects.</p>
+
+<p>If the block returns an array of <code>Benchmark::Tms</code> objects, these
+will be used to format additional lines of output. If <em>label</em>
+parameters are given, these are used to label these extra lines.</p>
+
+<p><em>Note</em>: Other methods provide a simpler interface to this one, and
+are suitable for nearly all benchmarking requirements.  See the examples in
+<a href="Benchmark.html">Benchmark</a>, and the bm and bmbm methods.</p>
+
+<p>Example:</p>
+
+<pre class="ruby"><span class="ruby-identifier">require</span> <span class="ruby-string">'benchmark'</span>
+<span class="ruby-identifier">include</span> <span class="ruby-constant">Benchmark</span>          <span class="ruby-comment"># we need the CAPTION and FORMAT constants</span>
+
+<span class="ruby-identifier">n</span> = <span class="ruby-value">50000</span>
+<span class="ruby-constant">Benchmark</span>.<span class="ruby-identifier">benchmark</span>(<span class="ruby-constant">CAPTION</span>, <span class="ruby-value">7</span>, <span class="ruby-constant">FORMAT</span>, <span class="ruby-string">&quot;&gt;total:&quot;</span>, <span class="ruby-string">&quot;&gt;avg:&quot;</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">tf</span> = <span class="ruby-identifier">x</span>.<span class="ruby-identifier">report</span>(<span class="ruby-string">&quot;for:&quot;</span>)   { <span class="ruby-keyword">for</span> <span class="ruby-identifier">i</span> <span class="ruby-keyword">in</span> <span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-identifier">n</span>; <span class="ruby-identifier">a</span> = <span class="ruby-string">&quot;1&quot;</span>; <span class="ruby-keyword">end</span> }
+  <span class="ruby-identifier">tt</span> = <span class="ruby-identifier">x</span>.<span class="ruby-identifier">report</span>(<span class="ruby-string">&quot;times:&quot;</span>) { <span class="ruby-identifier">n</span>.<span class="ruby-identifier">times</span> <span class="ruby-keyword">do</span>   ; <span class="ruby-identifier">a</span> = <span class="ruby-string">&quot;1&quot;</span>; <span class="ruby-keyword">end</span> }
+  <span class="ruby-identifier">tu</span> = <span class="ruby-identifier">x</span>.<span class="ruby-identifier">report</span>(<span class="ruby-string">&quot;upto:&quot;</span>)  { <span class="ruby-value">1</span>.<span class="ruby-identifier">upto</span>(<span class="ruby-identifier">n</span>) <span class="ruby-keyword">do</span> ; <span class="ruby-identifier">a</span> = <span class="ruby-string">&quot;1&quot;</span>; <span class="ruby-keyword">end</span> }
+  [<span class="ruby-identifier">tf</span><span class="ruby-operator">+</span><span class="ruby-identifier">tt</span><span class="ruby-operator">+</span><span class="ruby-identifier">tu</span>, (<span class="ruby-identifier">tf</span><span class="ruby-operator">+</span><span class="ruby-identifier">tt</span><span class="ruby-operator">+</span><span class="ruby-identifier">tu</span>)<span class="ruby-operator">/</span><span class="ruby-value">3</span>]
+<span class="ruby-keyword">end</span>
+</pre>
+
+<p><em>Generates:</em></p>
+
+<pre>             user     system      total        real
+for:     1.016667   0.016667   1.033333 (  0.485749)
+times:   1.450000   0.016667   1.466667 (  0.681367)
+upto:    1.533333   0.000000   1.533333 (  0.722166)
+&gt;total:  4.000000   0.033333   4.033333 (  1.889282)
+&gt;avg:    1.333333   0.011111   1.344444 (  0.629761)</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-benchmark_source')" id="l_method-c-benchmark_source">show</a>
+                
+              </p>
+              <div id="method-c-benchmark_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/benchmark.rb, line 166</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">benchmark</span>(<span class="ruby-identifier">caption</span> = <span class="ruby-string">&quot;&quot;</span>, <span class="ruby-identifier">label_width</span> = <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">format</span> = <span class="ruby-keyword">nil</span>, *<span class="ruby-identifier">labels</span>) <span class="ruby-comment"># :yield: report</span>
+  <span class="ruby-identifier">sync</span> = <span class="ruby-constant">STDOUT</span>.<span class="ruby-identifier">sync</span>
+  <span class="ruby-constant">STDOUT</span>.<span class="ruby-identifier">sync</span> = <span class="ruby-keyword">true</span>
+  <span class="ruby-identifier">label_width</span> <span class="ruby-operator">||=</span> <span class="ruby-number">0</span>
+  <span class="ruby-identifier">label_width</span> <span class="ruby-operator">+=</span> <span class="ruby-number">1</span>
+  <span class="ruby-identifier">format</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">FORMAT</span>
+  <span class="ruby-identifier">print</span> <span class="ruby-string">' '</span>*<span class="ruby-identifier">label_width</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">caption</span>
+  <span class="ruby-identifier">report</span> = <span class="ruby-constant">Report</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">label_width</span>, <span class="ruby-identifier">format</span>)
+  <span class="ruby-identifier">results</span> = <span class="ruby-keyword">yield</span>(<span class="ruby-identifier">report</span>)
+  <span class="ruby-constant">Array</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">results</span> <span class="ruby-keyword">and</span> <span class="ruby-identifier">results</span>.<span class="ruby-identifier">grep</span>(<span class="ruby-constant">Tms</span>).<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">t</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">print</span>((<span class="ruby-identifier">labels</span>.<span class="ruby-identifier">shift</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">t</span>.<span class="ruby-identifier">label</span> <span class="ruby-operator">||</span> <span class="ruby-string">&quot;&quot;</span>).<span class="ruby-identifier">ljust</span>(<span class="ruby-identifier">label_width</span>), <span class="ruby-identifier">t</span>.<span class="ruby-identifier">format</span>(<span class="ruby-identifier">format</span>))
+  }
+  <span class="ruby-identifier">report</span>.<span class="ruby-identifier">list</span>
+<span class="ruby-keyword">ensure</span>
+  <span class="ruby-constant">STDOUT</span>.<span class="ruby-identifier">sync</span> = <span class="ruby-identifier">sync</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">sync</span>.<span class="ruby-identifier">nil?</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-bm">
+            
+              <a name="method-c-bm"></a><b>bm</b>(label_width = 0, *labels)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>A simple interface to the benchmark method, bm is generates sequential
+reports with labels.  The parameters have the same meaning as for
+benchmark.</p>
+
+<pre class="ruby"><span class="ruby-identifier">require</span> <span class="ruby-string">'benchmark'</span>
+
+<span class="ruby-identifier">n</span> = <span class="ruby-value">50000</span>
+<span class="ruby-constant">Benchmark</span>.<span class="ruby-identifier">bm</span>(<span class="ruby-value">7</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">x</span>.<span class="ruby-identifier">report</span>(<span class="ruby-string">&quot;for:&quot;</span>)   { <span class="ruby-keyword">for</span> <span class="ruby-identifier">i</span> <span class="ruby-keyword">in</span> <span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-identifier">n</span>; <span class="ruby-identifier">a</span> = <span class="ruby-string">&quot;1&quot;</span>; <span class="ruby-keyword">end</span> }
+  <span class="ruby-identifier">x</span>.<span class="ruby-identifier">report</span>(<span class="ruby-string">&quot;times:&quot;</span>) { <span class="ruby-identifier">n</span>.<span class="ruby-identifier">times</span> <span class="ruby-keyword">do</span>   ; <span class="ruby-identifier">a</span> = <span class="ruby-string">&quot;1&quot;</span>; <span class="ruby-keyword">end</span> }
+  <span class="ruby-identifier">x</span>.<span class="ruby-identifier">report</span>(<span class="ruby-string">&quot;upto:&quot;</span>)  { <span class="ruby-value">1</span>.<span class="ruby-identifier">upto</span>(<span class="ruby-identifier">n</span>) <span class="ruby-keyword">do</span> ; <span class="ruby-identifier">a</span> = <span class="ruby-string">&quot;1&quot;</span>; <span class="ruby-keyword">end</span> }
+<span class="ruby-keyword">end</span>
+</pre>
+
+<p><em>Generates:</em></p>
+
+<pre>             user     system      total        real
+for:     1.050000   0.000000   1.050000 (  0.503462)
+times:   1.533333   0.016667   1.550000 (  0.735473)
+upto:    1.500000   0.016667   1.516667 (  0.711239)</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-bm_source')" id="l_method-c-bm_source">show</a>
+                
+              </p>
+              <div id="method-c-bm_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/benchmark.rb, line 204</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">bm</span>(<span class="ruby-identifier">label_width</span> = <span class="ruby-number">0</span>, *<span class="ruby-identifier">labels</span>, &amp;<span class="ruby-identifier">blk</span>) <span class="ruby-comment"># :yield: report</span>
+  <span class="ruby-identifier">benchmark</span>(<span class="ruby-constant">CAPTION</span>, <span class="ruby-identifier">label_width</span>, <span class="ruby-constant">FORMAT</span>, *<span class="ruby-identifier">labels</span>, &amp;<span class="ruby-identifier">blk</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-bmbm">
+            
+              <a name="method-c-bmbm"></a><b>bmbm</b>(width = 0)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Sometimes benchmark results are skewed because code executed earlier
+encounters different garbage collection overheads than that run later. bmbm
+attempts to minimize this effect by running the tests twice, the first time
+as a rehearsal in order to get the runtime environment stable, the second
+time for real. <code>GC.start</code> is executed before the start of each
+of the real timings; the cost of this is not included in the timings. In
+reality, though, there’s only so much that bmbm can do, and the results are
+not guaranteed to be isolated from garbage collection and other effects.</p>
+
+<p>Because bmbm takes two passes through the tests, it can calculate the
+required label width.</p>
+
+<pre class="ruby"><span class="ruby-identifier">require</span> <span class="ruby-string">'benchmark'</span>
+
+<span class="ruby-identifier">array</span> = (<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">1000000</span>).<span class="ruby-identifier">map</span> { <span class="ruby-identifier">rand</span> }
+
+<span class="ruby-constant">Benchmark</span>.<span class="ruby-identifier">bmbm</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">x</span>.<span class="ruby-identifier">report</span>(<span class="ruby-string">&quot;sort!&quot;</span>) { <span class="ruby-identifier">array</span>.<span class="ruby-identifier">dup</span>.<span class="ruby-identifier">sort!</span> }
+  <span class="ruby-identifier">x</span>.<span class="ruby-identifier">report</span>(<span class="ruby-string">&quot;sort&quot;</span>)  { <span class="ruby-identifier">array</span>.<span class="ruby-identifier">dup</span>.<span class="ruby-identifier">sort</span>  }
+<span class="ruby-keyword">end</span>
+</pre>
+
+<p><em>Generates:</em></p>
+
+<pre>Rehearsal -----------------------------------------
+sort!  11.928000   0.010000  11.938000 ( 12.756000)
+sort   13.048000   0.020000  13.068000 ( 13.857000)
+------------------------------- total: 25.006000sec
+
+            user     system      total        real
+sort!  12.959000   0.010000  12.969000 ( 13.793000)
+sort   12.007000   0.000000  12.007000 ( 12.791000)</pre>
+
+<p>bmbm yields a Benchmark::Job object and returns an array of <a
+href="Benchmark/Tms.html">Benchmark::Tms</a> objects.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-bmbm_source')" id="l_method-c-bmbm_source">show</a>
+                
+              </p>
+              <div id="method-c-bmbm_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/benchmark.rb, line 246</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">bmbm</span>(<span class="ruby-identifier">width</span> = <span class="ruby-number">0</span>, &amp;<span class="ruby-identifier">blk</span>) <span class="ruby-comment"># :yield: job</span>
+  <span class="ruby-identifier">job</span> = <span class="ruby-constant">Job</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">width</span>)
+  <span class="ruby-keyword">yield</span>(<span class="ruby-identifier">job</span>)
+  <span class="ruby-identifier">width</span> = <span class="ruby-identifier">job</span>.<span class="ruby-identifier">width</span> <span class="ruby-operator">+</span> <span class="ruby-number">1</span>
+  <span class="ruby-identifier">sync</span> = <span class="ruby-constant">STDOUT</span>.<span class="ruby-identifier">sync</span>
+  <span class="ruby-constant">STDOUT</span>.<span class="ruby-identifier">sync</span> = <span class="ruby-keyword">true</span>
+
+  <span class="ruby-comment"># rehearsal</span>
+  <span class="ruby-identifier">puts</span> <span class="ruby-string">'Rehearsal '</span>.<span class="ruby-identifier">ljust</span>(<span class="ruby-identifier">width</span><span class="ruby-operator">+</span><span class="ruby-constant">CAPTION</span>.<span class="ruby-identifier">length</span>,<span class="ruby-string">'-'</span>)
+  <span class="ruby-identifier">ets</span> = <span class="ruby-identifier">job</span>.<span class="ruby-identifier">list</span>.<span class="ruby-identifier">inject</span>(<span class="ruby-constant">Tms</span>.<span class="ruby-identifier">new</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">sum</span>,(<span class="ruby-identifier">label</span>,<span class="ruby-identifier">item</span>)<span class="ruby-operator">|</span>
+    <span class="ruby-identifier">print</span> <span class="ruby-identifier">label</span>.<span class="ruby-identifier">ljust</span>(<span class="ruby-identifier">width</span>)
+    <span class="ruby-identifier">res</span> = <span class="ruby-constant">Benchmark</span>.<span class="ruby-identifier">measure</span>(&amp;<span class="ruby-identifier">item</span>)
+    <span class="ruby-identifier">print</span> <span class="ruby-identifier">res</span>.<span class="ruby-identifier">format</span>
+    <span class="ruby-identifier">sum</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">res</span>
+  }.<span class="ruby-identifier">format</span>(<span class="ruby-string">&quot;total: %tsec&quot;</span>)
+  <span class="ruby-identifier">print</span> <span class="ruby-node">&quot; #{ets}\n\n&quot;</span>.<span class="ruby-identifier">rjust</span>(<span class="ruby-identifier">width</span><span class="ruby-operator">+</span><span class="ruby-constant">CAPTION</span>.<span class="ruby-identifier">length</span><span class="ruby-operator">+</span><span class="ruby-number">2</span>,<span class="ruby-string">'-'</span>)
+
+  <span class="ruby-comment"># take</span>
+  <span class="ruby-identifier">print</span> <span class="ruby-string">' '</span>*<span class="ruby-identifier">width</span> <span class="ruby-operator">+</span> <span class="ruby-constant">CAPTION</span>
+  <span class="ruby-identifier">job</span>.<span class="ruby-identifier">list</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">label</span>,<span class="ruby-identifier">item</span><span class="ruby-operator">|</span>
+    <span class="ruby-constant">GC</span>.<span class="ruby-identifier">start</span>
+    <span class="ruby-identifier">print</span> <span class="ruby-identifier">label</span>.<span class="ruby-identifier">ljust</span>(<span class="ruby-identifier">width</span>)
+    <span class="ruby-constant">Benchmark</span>.<span class="ruby-identifier">measure</span>(<span class="ruby-identifier">label</span>, &amp;<span class="ruby-identifier">item</span>).<span class="ruby-identifier">tap</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">res</span><span class="ruby-operator">|</span> <span class="ruby-identifier">print</span> <span class="ruby-identifier">res</span> }
+  }
+<span class="ruby-keyword">ensure</span>
+  <span class="ruby-constant">STDOUT</span>.<span class="ruby-identifier">sync</span> = <span class="ruby-identifier">sync</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">sync</span>.<span class="ruby-identifier">nil?</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-measure">
+            
+              <a name="method-c-measure"></a><b>measure</b>(label = &quot;&quot;)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the time used to execute the given block as a <a
+href="Benchmark/Tms.html">Benchmark::Tms</a> object.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-measure_source')" id="l_method-c-measure_source">show</a>
+                
+              </p>
+              <div id="method-c-measure_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/benchmark.rb, line 278</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">measure</span>(<span class="ruby-identifier">label</span> = <span class="ruby-string">&quot;&quot;</span>) <span class="ruby-comment"># :yield:</span>
+  <span class="ruby-identifier">t0</span>, <span class="ruby-identifier">r0</span> = <span class="ruby-constant">Process</span>.<span class="ruby-identifier">times</span>, <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>
+  <span class="ruby-keyword">yield</span>
+  <span class="ruby-identifier">t1</span>, <span class="ruby-identifier">r1</span> = <span class="ruby-constant">Process</span>.<span class="ruby-identifier">times</span>, <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>
+  <span class="ruby-constant">Benchmark</span><span class="ruby-operator">::</span><span class="ruby-constant">Tms</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">t1</span>.<span class="ruby-identifier">utime</span>  <span class="ruby-operator">-</span> <span class="ruby-identifier">t0</span>.<span class="ruby-identifier">utime</span>,
+                     <span class="ruby-identifier">t1</span>.<span class="ruby-identifier">stime</span>  <span class="ruby-operator">-</span> <span class="ruby-identifier">t0</span>.<span class="ruby-identifier">stime</span>,
+                     <span class="ruby-identifier">t1</span>.<span class="ruby-identifier">cutime</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">t0</span>.<span class="ruby-identifier">cutime</span>,
+                     <span class="ruby-identifier">t1</span>.<span class="ruby-identifier">cstime</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">t0</span>.<span class="ruby-identifier">cstime</span>,
+                     <span class="ruby-identifier">r1</span>.<span class="ruby-identifier">to_f</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">r0</span>.<span class="ruby-identifier">to_f</span>,
+                     <span class="ruby-identifier">label</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-realtime">
+            
+              <a name="method-c-realtime"></a><b>realtime</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the elapsed real time used to execute the given block.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-realtime_source')" id="l_method-c-realtime_source">show</a>
+                
+              </p>
+              <div id="method-c-realtime_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/benchmark.rb, line 293</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">realtime</span> <span class="ruby-comment"># :yield:</span>
+  <span class="ruby-identifier">r0</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>
+  <span class="ruby-keyword">yield</span>
+  <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">r0</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                        </div>
+    </div>
+  </body>
+</html>    

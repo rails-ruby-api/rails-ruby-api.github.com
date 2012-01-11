@@ -1,0 +1,996 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>OpenSSL::X509::Request</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/github.css" type="text/css" media="screen" />
+<script src="../../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            OpenSSL::X509::Request 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../../Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../../files/Users/fschumac/_rvm/src/ruby-1_9_3-p0/ext/openssl/ossl_ssl_session_c.html">/Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/openssl/ossl_ssl_session.c</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>A</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-add_attribute">add_attribute</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-attributes">attributes</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-attributes-3D">attributes=</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>P</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-public_key">public_key</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-public_key-3D">public_key=</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>S</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-sign">sign</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-signature_algorithm">signature_algorithm</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-subject">subject</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-subject-3D">subject=</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-to_der">to_der</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-to_pem">to_pem</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-to_s">to_s</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-to_text">to_text</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>V</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-verify">verify</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-version">version</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-version-3D">version=</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <a name="method-c-new"></a><b>new</b>(p1 = v1)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre>static VALUE
+ossl_x509req_initialize(int argc, VALUE *argv, VALUE self)
+{
+    BIO *in;
+    X509_REQ *req, *x = DATA_PTR(self);
+    VALUE arg;
+
+    if (rb_scan_args(argc, argv, &quot;01&quot;, &amp;arg) == 0) {
+        return self;
+    }
+    arg = ossl_to_der_if_possible(arg);
+    in = ossl_obj2bio(arg);
+    req = PEM_read_bio_X509_REQ(in, &amp;x, NULL, NULL);
+    DATA_PTR(self) = x;
+    if (!req) {
+        OSSL_BIO_reset(in);
+        req = d2i_X509_REQ_bio(in, &amp;x);
+        DATA_PTR(self) = x;
+    }
+    BIO_free(in);
+    if (!req) ossl_raise(eX509ReqError, NULL);
+
+    return self;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-add_attribute">
+            
+              <a name="method-i-add_attribute"></a><b>add_attribute</b>(p1)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-add_attribute_source')" id="l_method-i-add_attribute_source">show</a>
+                
+              </p>
+              <div id="method-i-add_attribute_source" class="dyn-source">
+                <pre>static VALUE
+ossl_x509req_add_attribute(VALUE self, VALUE attr)
+{
+    X509_REQ *req;
+
+    GetX509Req(self, req);
+    if (!X509_REQ_add1_attr(req, DupX509AttrPtr(attr))) {
+        ossl_raise(eX509ReqError, NULL);
+    }
+
+    return attr;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-attributes">
+            
+              <a name="method-i-attributes"></a><b>attributes</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-attributes_source')" id="l_method-i-attributes_source">show</a>
+                
+              </p>
+              <div id="method-i-attributes_source" class="dyn-source">
+                <pre>static VALUE
+ossl_x509req_get_attributes(VALUE self)
+{
+    X509_REQ *req;
+    int count, i;
+    X509_ATTRIBUTE *attr;
+    VALUE ary;
+
+    GetX509Req(self, req);
+
+    count = X509_REQ_get_attr_count(req);
+    if (count &lt; 0) {
+        OSSL_Debug(&quot;count &lt; 0???&quot;);
+        return rb_ary_new();
+    }
+    ary = rb_ary_new2(count);
+    for (i=0; i&lt;count; i++) {
+        attr = X509_REQ_get_attr(req, i);
+        rb_ary_push(ary, ossl_x509attr_new(attr));
+    }
+
+    return ary;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-attributes-3D">
+            
+              <a name="method-i-attributes-3D"></a><b>attributes=</b>(p1)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-attributes-3D_source')" id="l_method-i-attributes-3D_source">show</a>
+                
+              </p>
+              <div id="method-i-attributes-3D_source" class="dyn-source">
+                <pre>static VALUE
+ossl_x509req_set_attributes(VALUE self, VALUE ary)
+{
+    X509_REQ *req;
+    X509_ATTRIBUTE *attr;
+    int i;
+    VALUE item;
+
+    Check_Type(ary, T_ARRAY);
+    for (i=0;i&lt;RARRAY_LEN(ary); i++) {
+        OSSL_Check_Kind(RARRAY_PTR(ary)[i], cX509Attr);
+    }
+    GetX509Req(self, req);
+    sk_X509_ATTRIBUTE_pop_free(req-&gt;req_info-&gt;attributes, X509_ATTRIBUTE_free);
+    req-&gt;req_info-&gt;attributes = NULL;
+    for (i=0;i&lt;RARRAY_LEN(ary); i++) {
+        item = RARRAY_PTR(ary)[i];
+        attr = DupX509AttrPtr(item);
+        if (!X509_REQ_add1_attr(req, attr)) {
+            ossl_raise(eX509ReqError, NULL);
+        }
+    }
+    return ary;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-public_key">
+            
+              <a name="method-i-public_key"></a><b>public_key</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-public_key_source')" id="l_method-i-public_key_source">show</a>
+                
+              </p>
+              <div id="method-i-public_key_source" class="dyn-source">
+                <pre>static VALUE
+ossl_x509req_get_public_key(VALUE self)
+{
+    X509_REQ *req;
+    EVP_PKEY *pkey;
+
+    GetX509Req(self, req);
+    if (!(pkey = X509_REQ_get_pubkey(req))) { /* adds reference */
+        ossl_raise(eX509ReqError, NULL);
+    }
+
+    return ossl_pkey_new(pkey); /* NO DUP - OK */
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-public_key-3D">
+            
+              <a name="method-i-public_key-3D"></a><b>public_key=</b>(p1)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-public_key-3D_source')" id="l_method-i-public_key-3D_source">show</a>
+                
+              </p>
+              <div id="method-i-public_key-3D_source" class="dyn-source">
+                <pre>static VALUE
+ossl_x509req_set_public_key(VALUE self, VALUE key)
+{
+    X509_REQ *req;
+    EVP_PKEY *pkey;
+
+    GetX509Req(self, req);
+    pkey = GetPKeyPtr(key); /* NO NEED TO DUP */
+    if (!X509_REQ_set_pubkey(req, pkey)) {
+        ossl_raise(eX509ReqError, NULL);
+    }
+
+    return key;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-sign">
+            
+              <a name="method-i-sign"></a><b>sign</b>(p1, p2)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-sign_source')" id="l_method-i-sign_source">show</a>
+                
+              </p>
+              <div id="method-i-sign_source" class="dyn-source">
+                <pre>static VALUE
+ossl_x509req_sign(VALUE self, VALUE key, VALUE digest)
+{
+    X509_REQ *req;
+    EVP_PKEY *pkey;
+    const EVP_MD *md;
+
+    GetX509Req(self, req);
+    pkey = GetPrivPKeyPtr(key); /* NO NEED TO DUP */
+    md = GetDigestPtr(digest);
+    if (!X509_REQ_sign(req, pkey, md)) {
+        ossl_raise(eX509ReqError, NULL);
+    }
+
+    return self;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-signature_algorithm">
+            
+              <a name="method-i-signature_algorithm"></a><b>signature_algorithm</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-signature_algorithm_source')" id="l_method-i-signature_algorithm_source">show</a>
+                
+              </p>
+              <div id="method-i-signature_algorithm_source" class="dyn-source">
+                <pre>static VALUE
+ossl_x509req_get_signature_algorithm(VALUE self)
+{
+    X509_REQ *req;
+    BIO *out;
+    BUF_MEM *buf;
+    VALUE str;
+
+    GetX509Req(self, req);
+
+    if (!(out = BIO_new(BIO_s_mem()))) {
+        ossl_raise(eX509ReqError, NULL);
+    }
+    if (!i2a_ASN1_OBJECT(out, req-&gt;sig_alg-&gt;algorithm)) {
+        BIO_free(out);
+        ossl_raise(eX509ReqError, NULL);
+    }
+    BIO_get_mem_ptr(out, &amp;buf);
+    str = rb_str_new(buf-&gt;data, buf-&gt;length);
+    BIO_free(out);
+    return str;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-subject">
+            
+              <a name="method-i-subject"></a><b>subject</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-subject_source')" id="l_method-i-subject_source">show</a>
+                
+              </p>
+              <div id="method-i-subject_source" class="dyn-source">
+                <pre>static VALUE
+ossl_x509req_get_subject(VALUE self)
+{
+    X509_REQ *req;
+    X509_NAME *name;
+
+    GetX509Req(self, req);
+    if (!(name = X509_REQ_get_subject_name(req))) { /* NO DUP - don't free */
+        ossl_raise(eX509ReqError, NULL);
+    }
+
+    return ossl_x509name_new(name);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-subject-3D">
+            
+              <a name="method-i-subject-3D"></a><b>subject=</b>(p1)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-subject-3D_source')" id="l_method-i-subject-3D_source">show</a>
+                
+              </p>
+              <div id="method-i-subject-3D_source" class="dyn-source">
+                <pre>static VALUE
+ossl_x509req_set_subject(VALUE self, VALUE subject)
+{
+    X509_REQ *req;
+
+    GetX509Req(self, req);
+    /* DUPs name */
+    if (!X509_REQ_set_subject_name(req, GetX509NamePtr(subject))) {
+        ossl_raise(eX509ReqError, NULL);
+    }
+
+    return subject;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-to_der">
+            
+              <a name="method-i-to_der"></a><b>to_der</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-to_der_source')" id="l_method-i-to_der_source">show</a>
+                
+              </p>
+              <div id="method-i-to_der_source" class="dyn-source">
+                <pre>static VALUE
+ossl_x509req_to_der(VALUE self)
+{
+    X509_REQ *req;
+    VALUE str;
+    long len;
+    unsigned char *p;
+
+    GetX509Req(self, req);
+    if ((len = i2d_X509_REQ(req, NULL)) &lt;= 0)
+        ossl_raise(eX509ReqError, NULL);
+    str = rb_str_new(0, len);
+    p = (unsigned char *)RSTRING_PTR(str);
+    if (i2d_X509_REQ(req, &amp;p) &lt;= 0)
+        ossl_raise(eX509ReqError, NULL);
+    ossl_str_adjust(str, p);
+
+    return str;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-to_pem">
+            
+              <a name="method-i-to_pem"></a><b>to_pem</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+            <div class="aka">
+              Also aliased as: <a href="Request.html#method-i-to_s">to_s</a>
+            </div>
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-to_pem_source')" id="l_method-i-to_pem_source">show</a>
+                
+              </p>
+              <div id="method-i-to_pem_source" class="dyn-source">
+                <pre>static VALUE
+ossl_x509req_to_pem(VALUE self)
+{
+    X509_REQ *req;
+    BIO *out;
+    BUF_MEM *buf;
+    VALUE str;
+
+    GetX509Req(self, req);
+    if (!(out = BIO_new(BIO_s_mem()))) {
+        ossl_raise(eX509ReqError, NULL);
+    }
+    if (!PEM_write_bio_X509_REQ(out, req)) {
+        BIO_free(out);
+        ossl_raise(eX509ReqError, NULL);
+    }
+    BIO_get_mem_ptr(out, &amp;buf);
+    str = rb_str_new(buf-&gt;data, buf-&gt;length);
+    BIO_free(out);
+
+    return str;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-to_s">
+            
+              <a name="method-i-to_s"></a><b>to_s</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-to_text">
+            
+              <a name="method-i-to_text"></a><b>to_text</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-to_text_source')" id="l_method-i-to_text_source">show</a>
+                
+              </p>
+              <div id="method-i-to_text_source" class="dyn-source">
+                <pre>static VALUE
+ossl_x509req_to_text(VALUE self)
+{
+    X509_REQ *req;
+    BIO *out;
+    BUF_MEM *buf;
+    VALUE str;
+
+    GetX509Req(self, req);
+    if (!(out = BIO_new(BIO_s_mem()))) {
+        ossl_raise(eX509ReqError, NULL);
+    }
+    if (!X509_REQ_print(out, req)) {
+        BIO_free(out);
+        ossl_raise(eX509ReqError, NULL);
+    }
+    BIO_get_mem_ptr(out, &amp;buf);
+    str = rb_str_new(buf-&gt;data, buf-&gt;length);
+    BIO_free(out);
+
+    return str;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-verify">
+            
+              <a name="method-i-verify"></a><b>verify</b>(p1)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Checks that cert signature is made with PRIVversion of this PUBLIC ‘key’</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-verify_source')" id="l_method-i-verify_source">show</a>
+                
+              </p>
+              <div id="method-i-verify_source" class="dyn-source">
+                <pre>static VALUE
+ossl_x509req_verify(VALUE self, VALUE key)
+{
+    X509_REQ *req;
+    EVP_PKEY *pkey;
+    int i;
+
+    GetX509Req(self, req);
+    pkey = GetPKeyPtr(key); /* NO NEED TO DUP */
+    if ((i = X509_REQ_verify(req, pkey)) &lt; 0) {
+        ossl_raise(eX509ReqError, NULL);
+    }
+    if (i &gt; 0) {
+        return Qtrue;
+    }
+
+    return Qfalse;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-version">
+            
+              <a name="method-i-version"></a><b>version</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-version_source')" id="l_method-i-version_source">show</a>
+                
+              </p>
+              <div id="method-i-version_source" class="dyn-source">
+                <pre>static VALUE
+ossl_x509req_get_version(VALUE self)
+{
+    X509_REQ *req;
+    long version;
+
+    GetX509Req(self, req);
+    version = X509_REQ_get_version(req);
+
+    return LONG2FIX(version);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-version-3D">
+            
+              <a name="method-i-version-3D"></a><b>version=</b>(p1)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-version-3D_source')" id="l_method-i-version-3D_source">show</a>
+                
+              </p>
+              <div id="method-i-version-3D_source" class="dyn-source">
+                <pre>static VALUE
+ossl_x509req_set_version(VALUE self, VALUE version)
+{
+    X509_REQ *req;
+    long ver;
+
+    if ((ver = FIX2LONG(version)) &lt; 0) {
+        ossl_raise(eX509ReqError, &quot;version must be &gt;= 0!&quot;);
+    }
+    GetX509Req(self, req);
+    if (!X509_REQ_set_version(req, ver)) {
+        ossl_raise(eX509ReqError, NULL);
+    }
+
+    return version;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    

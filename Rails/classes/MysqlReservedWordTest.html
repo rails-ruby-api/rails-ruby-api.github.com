@@ -1,0 +1,693 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>MysqlReservedWordTest</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/github.css" type="text/css" media="screen" />
+<script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            MysqlReservedWordTest 
+            
+                <span class="parent">&lt; 
+                    
+                    ActiveRecord::TestCase
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../files/rails/activerecord/test/cases/adapters/mysql/reserved_word_test_rb.html">rails/activerecord/test/cases/adapters/mysql/reserved_word_test.rb</a></li>
+            
+            <li><a href="../files/rails/activerecord/test/cases/adapters/mysql2/reserved_word_test_rb.html">rails/activerecord/test/cases/adapters/mysql2/reserved_word_test.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>a suite of tests to ensure the ConnectionAdapters#MysqlAdapter can handle
+tables with reserved word names (ie: group, order, values, etc…)</p>
+
+<p>a suite of tests to ensure the ConnectionAdapters#MysqlAdapter can handle
+tables with reserved word names (ie: group, order, values, etc…)</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>S</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-setup">setup</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-teardown">teardown</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_activerecord_introspection">test_activerecord_introspection</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_activerecord_model">test_activerecord_model</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_associations_work_with_reserved_words">test_associations_work_with_reserved_words</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_belongs_to_associations">test_belongs_to_associations</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_calculations_work_with_reserved_words">test_calculations_work_with_reserved_words</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_change_columns">test_change_columns</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_create_tables">test_create_tables</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_has_and_belongs_to_many">test_has_and_belongs_to_many</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_has_one_associations">test_has_one_associations</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_introspect">test_introspect</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_rename_tables">test_rename_tables</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_structure_dump">test_structure_dump</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+        
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-setup">
+            
+              <a name="method-i-setup"></a><b>setup</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-setup_source')" id="l_method-i-setup_source">show</a>
+                
+              </p>
+              <div id="method-i-setup_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File rails/activerecord/test/cases/adapters/mysql/reserved_word_test.rb, line 27</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">setup</span>
+  <span class="ruby-ivar">@connection</span> = <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">connection</span>
+
+  <span class="ruby-comment"># we call execute directly here (and do similar below) because ActiveRecord::Base#create_table()</span>
+  <span class="ruby-comment"># will fail with these table names if these test cases fail</span>
+
+  <span class="ruby-identifier">create_tables_directly</span> <span class="ruby-string">'group'</span>=<span class="ruby-operator">&gt;</span><span class="ruby-string">'id int auto_increment primary key, `order` varchar(255), select_id int'</span>,
+    <span class="ruby-string">'select'</span>=<span class="ruby-operator">&gt;</span><span class="ruby-string">'id int auto_increment primary key'</span>,
+    <span class="ruby-string">'values'</span>=<span class="ruby-operator">&gt;</span><span class="ruby-string">'id int auto_increment primary key, group_id int'</span>,
+    <span class="ruby-string">'distinct'</span>=<span class="ruby-operator">&gt;</span><span class="ruby-string">'id int auto_increment primary key'</span>,
+    <span class="ruby-string">'distincts_selects'</span>=<span class="ruby-operator">&gt;</span><span class="ruby-string">'distinct_id int, select_id int'</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-teardown">
+            
+              <a name="method-i-teardown"></a><b>teardown</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-teardown_source')" id="l_method-i-teardown_source">show</a>
+                
+              </p>
+              <div id="method-i-teardown_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File rails/activerecord/test/cases/adapters/mysql/reserved_word_test.rb, line 40</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">teardown</span>
+  <span class="ruby-identifier">drop_tables_directly</span> [<span class="ruby-string">'group'</span>, <span class="ruby-string">'select'</span>, <span class="ruby-string">'values'</span>, <span class="ruby-string">'distinct'</span>, <span class="ruby-string">'distincts_selects'</span>, <span class="ruby-string">'order'</span>]
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_activerecord_introspection">
+            
+              <a name="method-i-test_activerecord_introspection"></a><b>test_activerecord_introspection</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>activerecord model introspection with reserved-word table and column names</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_activerecord_introspection_source')" id="l_method-i-test_activerecord_introspection_source">show</a>
+                
+              </p>
+              <div id="method-i-test_activerecord_introspection_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File rails/activerecord/test/cases/adapters/mysql/reserved_word_test.rb, line 122</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_activerecord_introspection</span>
+  <span class="ruby-identifier">assert_nothing_raised</span> { <span class="ruby-constant">Group</span>.<span class="ruby-identifier">table_exists?</span> }
+  <span class="ruby-identifier">assert_nothing_raised</span> { <span class="ruby-constant">Group</span>.<span class="ruby-identifier">columns</span> }
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_activerecord_model">
+            
+              <a name="method-i-test_activerecord_model"></a><b>test_activerecord_model</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>activerecord model class with reserved-word table name</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_activerecord_model_source')" id="l_method-i-test_activerecord_model_source">show</a>
+                
+              </p>
+              <div id="method-i-test_activerecord_model_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File rails/activerecord/test/cases/adapters/mysql/reserved_word_test.rb, line 82</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_activerecord_model</span>
+  <span class="ruby-identifier">create_test_fixtures</span> <span class="ruby-value">:select</span>, <span class="ruby-value">:distinct</span>, <span class="ruby-value">:group</span>, <span class="ruby-value">:values</span>, <span class="ruby-value">:distincts_selects</span>
+  <span class="ruby-identifier">x</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-identifier">assert_nothing_raised</span> { <span class="ruby-identifier">x</span> = <span class="ruby-constant">Group</span>.<span class="ruby-identifier">new</span> }
+  <span class="ruby-identifier">x</span>.<span class="ruby-identifier">order</span> = <span class="ruby-string">'x'</span>
+  <span class="ruby-identifier">assert_nothing_raised</span> { <span class="ruby-identifier">x</span>.<span class="ruby-identifier">save</span> }
+  <span class="ruby-identifier">x</span>.<span class="ruby-identifier">order</span> = <span class="ruby-string">'y'</span>
+  <span class="ruby-identifier">assert_nothing_raised</span> { <span class="ruby-identifier">x</span>.<span class="ruby-identifier">save</span> }
+  <span class="ruby-identifier">assert_nothing_raised</span> { <span class="ruby-constant">Group</span>.<span class="ruby-identifier">find_by_order</span>(<span class="ruby-string">'y'</span>) }
+  <span class="ruby-identifier">assert_nothing_raised</span> { <span class="ruby-constant">Group</span>.<span class="ruby-identifier">find</span>(<span class="ruby-number">1</span>) }
+  <span class="ruby-constant">Group</span>.<span class="ruby-identifier">find</span>(<span class="ruby-number">1</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_associations_work_with_reserved_words">
+            
+              <a name="method-i-test_associations_work_with_reserved_words"></a><b>test_associations_work_with_reserved_words</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_associations_work_with_reserved_words_source')" id="l_method-i-test_associations_work_with_reserved_words_source">show</a>
+                
+              </p>
+              <div id="method-i-test_associations_work_with_reserved_words_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File rails/activerecord/test/cases/adapters/mysql/reserved_word_test.rb, line 132</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_associations_work_with_reserved_words</span>
+  <span class="ruby-identifier">assert_nothing_raised</span> { <span class="ruby-constant">Select</span>.<span class="ruby-identifier">find</span>(<span class="ruby-value">:all</span>, <span class="ruby-value">:include</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-value">:groups</span>]) }
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_belongs_to_associations">
+            
+              <a name="method-i-test_belongs_to_associations"></a><b>test_belongs_to_associations</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>belongs_to association with reserved-word table name</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_belongs_to_associations_source')" id="l_method-i-test_belongs_to_associations_source">show</a>
+                
+              </p>
+              <div id="method-i-test_belongs_to_associations_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File rails/activerecord/test/cases/adapters/mysql/reserved_word_test.rb, line 104</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_belongs_to_associations</span>
+  <span class="ruby-identifier">create_test_fixtures</span> <span class="ruby-value">:select</span>, <span class="ruby-value">:distinct</span>, <span class="ruby-value">:group</span>, <span class="ruby-value">:values</span>, <span class="ruby-value">:distincts_selects</span>
+  <span class="ruby-identifier">gs</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-identifier">assert_nothing_raised</span> { <span class="ruby-identifier">gs</span> = <span class="ruby-constant">Select</span>.<span class="ruby-identifier">find</span>(<span class="ruby-number">2</span>).<span class="ruby-identifier">groups</span> }
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">gs</span>.<span class="ruby-identifier">length</span>, <span class="ruby-number">2</span>
+  <span class="ruby-identifier">assert</span>(<span class="ruby-identifier">gs</span>.<span class="ruby-identifier">collect</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span> <span class="ruby-identifier">x</span>.<span class="ruby-identifier">id</span>}.<span class="ruby-identifier">sort</span> <span class="ruby-operator">==</span> [<span class="ruby-number">2</span>, <span class="ruby-number">3</span>])
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_calculations_work_with_reserved_words">
+            
+              <a name="method-i-test_calculations_work_with_reserved_words"></a><b>test_calculations_work_with_reserved_words</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Calculations</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_calculations_work_with_reserved_words_source')" id="l_method-i-test_calculations_work_with_reserved_words_source">show</a>
+                
+              </p>
+              <div id="method-i-test_calculations_work_with_reserved_words_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File rails/activerecord/test/cases/adapters/mysql/reserved_word_test.rb, line 128</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_calculations_work_with_reserved_words</span>
+  <span class="ruby-identifier">assert_nothing_raised</span> { <span class="ruby-constant">Group</span>.<span class="ruby-identifier">count</span> }
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_change_columns">
+            
+              <a name="method-i-test_change_columns"></a><b>test_change_columns</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>alter column with a reserved-word name in a table with a reserved-word name</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_change_columns_source')" id="l_method-i-test_change_columns_source">show</a>
+                
+              </p>
+              <div id="method-i-test_change_columns_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File rails/activerecord/test/cases/adapters/mysql/reserved_word_test.rb, line 59</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_change_columns</span>
+  <span class="ruby-identifier">assert_nothing_raised</span> { <span class="ruby-ivar">@connection</span>.<span class="ruby-identifier">change_column_default</span>(<span class="ruby-value">:group</span>, <span class="ruby-value">:order</span>, <span class="ruby-string">'whatever'</span>) }
+  <span class="ruby-comment">#the quoting here will reveal any double quoting issues in change_column's interaction with the column method in the adapter</span>
+  <span class="ruby-identifier">assert_nothing_raised</span> { <span class="ruby-ivar">@connection</span>.<span class="ruby-identifier">change_column</span>(<span class="ruby-string">'group'</span>, <span class="ruby-string">'order'</span>, <span class="ruby-value">:Int</span>, <span class="ruby-value">:default</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-number">0</span>) }
+  <span class="ruby-identifier">assert_nothing_raised</span> { <span class="ruby-ivar">@connection</span>.<span class="ruby-identifier">rename_column</span>(<span class="ruby-value">:group</span>, <span class="ruby-value">:order</span>, <span class="ruby-value">:values</span>) }
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_create_tables">
+            
+              <a name="method-i-test_create_tables"></a><b>test_create_tables</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>create tables with reserved-word names and columns</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_create_tables_source')" id="l_method-i-test_create_tables_source">show</a>
+                
+              </p>
+              <div id="method-i-test_create_tables_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File rails/activerecord/test/cases/adapters/mysql/reserved_word_test.rb, line 45</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_create_tables</span>
+  <span class="ruby-identifier">assert_nothing_raised</span> {
+    <span class="ruby-ivar">@connection</span>.<span class="ruby-identifier">create_table</span> <span class="ruby-value">:order</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">t</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">t</span>.<span class="ruby-identifier">column</span> <span class="ruby-value">:group</span>, <span class="ruby-value">:string</span>
+    <span class="ruby-keyword">end</span>
+  }
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_has_and_belongs_to_many">
+            
+              <a name="method-i-test_has_and_belongs_to_many"></a><b>test_has_and_belongs_to_many</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>has_and_belongs_to_many with reserved-word table name</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_has_and_belongs_to_many_source')" id="l_method-i-test_has_and_belongs_to_many_source">show</a>
+                
+              </p>
+              <div id="method-i-test_has_and_belongs_to_many_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File rails/activerecord/test/cases/adapters/mysql/reserved_word_test.rb, line 113</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_has_and_belongs_to_many</span>
+  <span class="ruby-identifier">create_test_fixtures</span> <span class="ruby-value">:select</span>, <span class="ruby-value">:distinct</span>, <span class="ruby-value">:group</span>, <span class="ruby-value">:values</span>, <span class="ruby-value">:distincts_selects</span>
+  <span class="ruby-identifier">s</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-identifier">assert_nothing_raised</span> { <span class="ruby-identifier">s</span> = <span class="ruby-constant">Distinct</span>.<span class="ruby-identifier">find</span>(<span class="ruby-number">1</span>).<span class="ruby-identifier">selects</span> }
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">s</span>.<span class="ruby-identifier">length</span>, <span class="ruby-number">2</span>
+  <span class="ruby-identifier">assert</span>(<span class="ruby-identifier">s</span>.<span class="ruby-identifier">collect</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span><span class="ruby-identifier">x</span>.<span class="ruby-identifier">id</span>}.<span class="ruby-identifier">sort</span> <span class="ruby-operator">==</span> [<span class="ruby-number">1</span>, <span class="ruby-number">2</span>])
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_has_one_associations">
+            
+              <a name="method-i-test_has_one_associations"></a><b>test_has_one_associations</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>has_one association with reserved-word table name</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_has_one_associations_source')" id="l_method-i-test_has_one_associations_source">show</a>
+                
+              </p>
+              <div id="method-i-test_has_one_associations_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File rails/activerecord/test/cases/adapters/mysql/reserved_word_test.rb, line 96</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_has_one_associations</span>
+  <span class="ruby-identifier">create_test_fixtures</span> <span class="ruby-value">:select</span>, <span class="ruby-value">:distinct</span>, <span class="ruby-value">:group</span>, <span class="ruby-value">:values</span>, <span class="ruby-value">:distincts_selects</span>
+  <span class="ruby-identifier">v</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-identifier">assert_nothing_raised</span> { <span class="ruby-identifier">v</span> = <span class="ruby-constant">Group</span>.<span class="ruby-identifier">find</span>(<span class="ruby-number">1</span>).<span class="ruby-identifier">values</span> }
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-number">2</span>, <span class="ruby-identifier">v</span>.<span class="ruby-identifier">id</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_introspect">
+            
+              <a name="method-i-test_introspect"></a><b>test_introspect</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>introspect table with reserved word name</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_introspect_source')" id="l_method-i-test_introspect_source">show</a>
+                
+              </p>
+              <div id="method-i-test_introspect_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File rails/activerecord/test/cases/adapters/mysql/reserved_word_test.rb, line 72</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_introspect</span>
+  <span class="ruby-identifier">assert_nothing_raised</span> { <span class="ruby-ivar">@connection</span>.<span class="ruby-identifier">columns</span>(<span class="ruby-value">:group</span>) }
+  <span class="ruby-identifier">assert_nothing_raised</span> { <span class="ruby-ivar">@connection</span>.<span class="ruby-identifier">indexes</span>(<span class="ruby-value">:group</span>) }
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_rename_tables">
+            
+              <a name="method-i-test_rename_tables"></a><b>test_rename_tables</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>rename tables with reserved-word names</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_rename_tables_source')" id="l_method-i-test_rename_tables_source">show</a>
+                
+              </p>
+              <div id="method-i-test_rename_tables_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File rails/activerecord/test/cases/adapters/mysql/reserved_word_test.rb, line 54</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_rename_tables</span>
+  <span class="ruby-identifier">assert_nothing_raised</span> { <span class="ruby-ivar">@connection</span>.<span class="ruby-identifier">rename_table</span>(<span class="ruby-value">:group</span>, <span class="ruby-value">:order</span>) }
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_structure_dump">
+            
+              <a name="method-i-test_structure_dump"></a><b>test_structure_dump</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>dump structure of table with reserved word name</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_structure_dump_source')" id="l_method-i-test_structure_dump_source">show</a>
+                
+              </p>
+              <div id="method-i-test_structure_dump_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File rails/activerecord/test/cases/adapters/mysql/reserved_word_test.rb, line 67</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_structure_dump</span>
+  <span class="ruby-identifier">assert_nothing_raised</span> { <span class="ruby-ivar">@connection</span>.<span class="ruby-identifier">structure_dump</span>  }
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    

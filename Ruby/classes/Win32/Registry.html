@@ -1,0 +1,1932 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Win32::Registry</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            Win32::Registry 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/Users/fschumac/_rvm/src/ruby-1_9_3-p0/ext/dl/win32/lib/win32/registry_rb.html">/Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/dl/win32/lib/win32/registry.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<h1 id="label-Win32+Registry"><a href="../Win32.html">Win32</a> <a href="Registry.html">Registry</a></h1>
+
+<p>win32/registry is registry accessor library for <a
+href="../Win32.html">Win32</a> platform. It uses dl/import to call <a
+href="../Win32.html">Win32</a> <a href="Registry.html">Registry</a> APIs.</p>
+
+<h2 id="label-example">example</h2>
+
+<pre class="ruby"><span class="ruby-constant">Win32</span><span class="ruby-operator">::</span><span class="ruby-constant">Registry</span><span class="ruby-operator">::</span><span class="ruby-constant">HKEY_CURRENT_USER</span>.<span class="ruby-identifier">open</span>(<span class="ruby-string">'SOFTWARE\foo'</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">reg</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">value</span> = <span class="ruby-identifier">reg</span>[<span class="ruby-string">'foo'</span>]                               <span class="ruby-comment"># read a value</span>
+  <span class="ruby-identifier">value</span> = <span class="ruby-identifier">reg</span>[<span class="ruby-string">'foo'</span>, <span class="ruby-constant">Win32</span><span class="ruby-operator">::</span><span class="ruby-constant">Registry</span><span class="ruby-operator">::</span><span class="ruby-constant">REG_SZ</span>]      <span class="ruby-comment"># read a value with type</span>
+  <span class="ruby-identifier">type</span>, <span class="ruby-identifier">value</span> = <span class="ruby-identifier">reg</span>.<span class="ruby-identifier">read</span>(<span class="ruby-string">'foo'</span>)                    <span class="ruby-comment"># read a value</span>
+  <span class="ruby-identifier">reg</span>[<span class="ruby-string">'foo'</span>] = <span class="ruby-string">'bar'</span>                               <span class="ruby-comment"># write a value</span>
+  <span class="ruby-identifier">reg</span>[<span class="ruby-string">'foo'</span>, <span class="ruby-constant">Win32</span><span class="ruby-operator">::</span><span class="ruby-constant">Registry</span><span class="ruby-operator">::</span><span class="ruby-constant">REG_SZ</span>] = <span class="ruby-string">'bar'</span>      <span class="ruby-comment"># write a value with type</span>
+  <span class="ruby-identifier">reg</span>.<span class="ruby-identifier">write</span>(<span class="ruby-string">'foo'</span>, <span class="ruby-constant">Win32</span><span class="ruby-operator">::</span><span class="ruby-constant">Registry</span><span class="ruby-operator">::</span><span class="ruby-constant">REG_SZ</span>, <span class="ruby-string">'bar'</span>) <span class="ruby-comment"># write a value</span>
+
+  <span class="ruby-identifier">reg</span>.<span class="ruby-identifier">each_value</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">name</span>, <span class="ruby-identifier">type</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">|</span> <span class="ruby-operator">...</span> }        <span class="ruby-comment"># Enumerate values</span>
+  <span class="ruby-identifier">reg</span>.<span class="ruby-identifier">each_key</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">wtime</span><span class="ruby-operator">|</span> <span class="ruby-operator">...</span> }                <span class="ruby-comment"># Enumerate subkeys</span>
+
+  <span class="ruby-identifier">reg</span>.<span class="ruby-identifier">delete_value</span>(<span class="ruby-identifier">name</span>)                         <span class="ruby-comment"># Delete a value</span>
+  <span class="ruby-identifier">reg</span>.<span class="ruby-identifier">delete_key</span>(<span class="ruby-identifier">name</span>)                           <span class="ruby-comment"># Delete a subkey</span>
+  <span class="ruby-identifier">reg</span>.<span class="ruby-identifier">delete_key</span>(<span class="ruby-identifier">name</span>, <span class="ruby-keyword">true</span>)                     <span class="ruby-comment"># Delete a subkey recursively</span>
+<span class="ruby-keyword">end</span>
+</pre>
+
+<h1 id="label-Reference">Reference</h1>
+
+<h2 id="label-Win32%3A%3ARegistry+class"><a href="Registry.html">Win32::Registry</a> class</h2>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+    <!-- Namespace -->
+    <div class="sectiontitle">Namespace</div>
+    <ul>
+      
+        <li>
+          <span class="type">MODULE</span>
+          <a href="Registry/API.html">Win32::Registry::API</a>
+        </li>
+      
+        <li>
+          <span class="type">MODULE</span>
+          <a href="Registry/Constants.html">Win32::Registry::Constants</a>
+        </li>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="Registry/Error.html">Win32::Registry::Error</a>
+        </li>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="Registry/PredefinedKey.html">Win32::Registry::PredefinedKey</a>
+        </li>
+      
+    </ul>
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>#</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-5B-5D">[]</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-5B-5D-3D">[]=</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-_dump">_dump</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>C</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-close">close</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-create">create</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-create">create</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-created-3F">created?</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>D</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-delete">delete</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-delete_key">delete_key</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-delete_value">delete_value</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>E</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-each">each</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-each_key">each_key</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-each_value">each_value</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-expand_environ">expand_environ</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>F</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-flush">flush</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>I</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-info">info</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-inspect">inspect</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>K</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-keys">keys</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-name">name</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>O</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-open">open</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-open">open</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-open-3F">open?</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>R</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-read">read</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-read_bin">read_bin</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-read_i">read_i</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-read_s">read_s</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-read_s_expand">read_s_expand</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-time2wtime">time2wtime</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-type2name">type2name</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>W</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-write">write</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-write_bin">write_bin</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-write_i">write_i</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-write_s">write_s</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-wtime2time">wtime2time</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+    <!-- Includes -->
+    <div class="sectiontitle">Included Modules</div>
+    <ul>
+      
+        <li>
+          
+            <a href="Registry/Constants.html">
+              Win32::Registry::Constants
+            </a>
+          
+        </li>
+      
+        <li>
+          
+            <a href="../Enumerable.html">
+              Enumerable
+            </a>
+          
+        </li>
+      
+    </ul>
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+      <!-- Section attributes -->
+      <div class="sectiontitle">Attributes</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [R]
+            </td>
+            <td class='attr-name'>disposition</td>
+            <td class='attr-desc'><p>Disposition value (REG_CREATED_NEW_KEY or REG_OPENED_EXISTING_KEY).</p></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [R]
+            </td>
+            <td class='attr-name'>hkey</td>
+            <td class='attr-desc'><p>Returns key handle value.</p></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [R]
+            </td>
+            <td class='attr-name'>keyname</td>
+            <td class='attr-desc'><p>Same as subkey value of <a href="Registry.html#method-c-open">::open</a> or
+<a href="Registry.html#method-c-create">::create</a> method.</p></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [R]
+            </td>
+            <td class='attr-name'>parent</td>
+            <td class='attr-desc'><p><a href="Registry.html">Win32::Registry</a> object of parent key, or nil if
+predefeined key.</p></td>
+          </tr>
+        
+      </table>
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-create">
+            
+              <a name="method-c-create"></a><b>create</b>(hkey, subkey, desired = KEY_ALL_ACCESS, opt = REG_OPTION_RESERVED)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>— <a href="Registry.html#method-c-create">::create</a>(key, subkey, desired
+= KEY_ALL_ACCESS, opt = REG_OPTION_RESERVED)</p>
+
+<p>— <a href="Registry.html#method-c-create">::create</a>(key, subkey, desired
+= KEY_ALL_ACCESS, opt = REG_OPTION_RESERVED) { |reg| … }</p>
+
+<p>Create or open the registry key subkey under key. You can use predefined
+key HKEY_* (see <a href="Registry/Constants.html">Constants</a>)</p>
+
+<p>If subkey is already exists, key is opened and <a
+href="Registry.html#method-i-created-3F">#created?</a> method will return
+false.</p>
+
+<p>If block is given, the key is closed automatically.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-create_source')" id="l_method-c-create_source">show</a>
+                
+              </p>
+              <div id="method-c-create_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/dl/win32/lib/win32/registry.rb, line 411</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">self</span>.<span class="ruby-identifier">create</span>(<span class="ruby-identifier">hkey</span>, <span class="ruby-identifier">subkey</span>, <span class="ruby-identifier">desired</span> = <span class="ruby-constant">KEY_ALL_ACCESS</span>, <span class="ruby-identifier">opt</span> = <span class="ruby-constant">REG_OPTION_RESERVED</span>)
+  <span class="ruby-identifier">newkey</span>, <span class="ruby-identifier">disp</span> = <span class="ruby-constant">API</span>.<span class="ruby-constant">CreateKey</span>(<span class="ruby-identifier">hkey</span>.<span class="ruby-identifier">hkey</span>, <span class="ruby-identifier">subkey</span>, <span class="ruby-identifier">opt</span>, <span class="ruby-identifier">desired</span>)
+  <span class="ruby-identifier">obj</span> = <span class="ruby-identifier">new</span>(<span class="ruby-identifier">newkey</span>, <span class="ruby-identifier">hkey</span>, <span class="ruby-identifier">subkey</span>, <span class="ruby-identifier">disp</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">block_given?</span>
+    <span class="ruby-keyword">begin</span>
+      <span class="ruby-keyword">yield</span> <span class="ruby-identifier">obj</span>
+    <span class="ruby-keyword">ensure</span>
+      <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">close</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">obj</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-expand_environ">
+            
+              <a name="method-c-expand_environ"></a><b>expand_environ</b>(str)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Replace %w+% into the environment value of what is contained between the
+%‘s This method is used for REG_EXPAND_SZ.</p>
+
+<p>For detail, see <a
+href="http://msdn.microsoft.com/library/en-us/sysinfo/base/expandenvironmentstrings.asp">expandEnvironmentStrings</a>
+Win32 API.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-expand_environ_source')" id="l_method-c-expand_environ_source">show</a>
+                
+              </p>
+              <div id="method-c-expand_environ_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/dl/win32/lib/win32/registry.rb, line 332</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">self</span>.<span class="ruby-identifier">expand_environ</span>(<span class="ruby-identifier">str</span>)
+  <span class="ruby-identifier">str</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">%r%([^%]+)%/</span>) { <span class="ruby-constant">ENV</span>[<span class="ruby-node">$1</span>] <span class="ruby-operator">||</span> <span class="ruby-constant">ENV</span>[<span class="ruby-node">$1</span>.<span class="ruby-identifier">upcase</span>] <span class="ruby-operator">||</span> <span class="ruby-node">$&amp;</span> }
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <a name="method-c-new"></a><b>new</b>(hkey, parent, keyname, disposition)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>initialize</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/dl/win32/lib/win32/registry.rb, line 433</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">initialize</span>(<span class="ruby-identifier">hkey</span>, <span class="ruby-identifier">parent</span>, <span class="ruby-identifier">keyname</span>, <span class="ruby-identifier">disposition</span>)
+  <span class="ruby-ivar">@hkey</span> = <span class="ruby-identifier">hkey</span>
+  <span class="ruby-ivar">@parent</span> = <span class="ruby-identifier">parent</span>
+  <span class="ruby-ivar">@keyname</span> = <span class="ruby-identifier">keyname</span>
+  <span class="ruby-ivar">@disposition</span> = <span class="ruby-identifier">disposition</span>
+  <span class="ruby-ivar">@hkeyfinal</span> = [ <span class="ruby-identifier">hkey</span> ]
+  <span class="ruby-constant">ObjectSpace</span>.<span class="ruby-identifier">define_finalizer</span> <span class="ruby-keyword">self</span>, <span class="ruby-identifier">@@final</span>.<span class="ruby-identifier">call</span>(<span class="ruby-ivar">@hkeyfinal</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-open">
+            
+              <a name="method-c-open"></a><b>open</b>(hkey, subkey, desired = KEY_READ, opt = REG_OPTION_RESERVED)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>— <a href="Registry.html#method-c-open">::open</a>(key, subkey, desired =
+KEY_READ, opt = REG_OPTION_RESERVED)</p>
+
+<p>— <a href="Registry.html#method-c-open">::open</a>(key, subkey, desired =
+KEY_READ, opt = REG_OPTION_RESERVED) { |reg| … }</p>
+
+<p>Open the registry key subkey under key. key is <a
+href="Registry.html">Win32::Registry</a> object of parent key. You can use
+predefined key HKEY_* (see <a href="Registry/Constants.html">Constants</a>)
+desired and opt is access mask and key option. For detail, see the <a
+href="http://msdn.microsoft.com/library/en-us/sysinfo/base/regopenkeyex.asp">MSDN</a>.
+If block is given, the key is closed automatically.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-open_source')" id="l_method-c-open_source">show</a>
+                
+              </p>
+              <div id="method-c-open_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/dl/win32/lib/win32/registry.rb, line 383</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">self</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">hkey</span>, <span class="ruby-identifier">subkey</span>, <span class="ruby-identifier">desired</span> = <span class="ruby-constant">KEY_READ</span>, <span class="ruby-identifier">opt</span> = <span class="ruby-constant">REG_OPTION_RESERVED</span>)
+  <span class="ruby-identifier">subkey</span> = <span class="ruby-identifier">subkey</span>.<span class="ruby-identifier">chomp</span>(<span class="ruby-string">'\'</span>)
+  <span class="ruby-identifier">newkey</span> = <span class="ruby-constant">API</span>.<span class="ruby-constant">OpenKey</span>(<span class="ruby-identifier">hkey</span>.<span class="ruby-identifier">hkey</span>, <span class="ruby-identifier">subkey</span>, <span class="ruby-identifier">opt</span>, <span class="ruby-identifier">desired</span>)
+  <span class="ruby-identifier">obj</span> = <span class="ruby-identifier">new</span>(<span class="ruby-identifier">newkey</span>, <span class="ruby-identifier">hkey</span>, <span class="ruby-identifier">subkey</span>, <span class="ruby-constant">REG_OPENED_EXISTING_KEY</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">block_given?</span>
+    <span class="ruby-keyword">begin</span>
+      <span class="ruby-keyword">yield</span> <span class="ruby-identifier">obj</span>
+    <span class="ruby-keyword">ensure</span>
+      <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">close</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">obj</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-time2wtime">
+            
+              <a name="method-c-time2wtime"></a><b>time2wtime</b>(time)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Convert <a href="../Time.html">Time</a> object or <a
+href="../Integer.html">Integer</a> object into 64-bit FILETIME.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-time2wtime_source')" id="l_method-c-time2wtime_source">show</a>
+                
+              </p>
+              <div id="method-c-time2wtime_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/dl/win32/lib/win32/registry.rb, line 363</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">self</span>.<span class="ruby-identifier">time2wtime</span>(<span class="ruby-identifier">time</span>)
+  <span class="ruby-identifier">time</span>.<span class="ruby-identifier">to_i</span> * <span class="ruby-number">10000000</span> <span class="ruby-operator">+</span> <span class="ruby-number">116444736000000000</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-type2name">
+            
+              <a name="method-c-type2name"></a><b>type2name</b>(type)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Convert registry type value to readable string.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-type2name_source')" id="l_method-c-type2name_source">show</a>
+                
+              </p>
+              <div id="method-c-type2name_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/dl/win32/lib/win32/registry.rb, line 349</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">self</span>.<span class="ruby-identifier">type2name</span>(<span class="ruby-identifier">type</span>)
+  <span class="ruby-identifier">@@type2name</span>[<span class="ruby-identifier">type</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">type</span>.<span class="ruby-identifier">to_s</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-wtime2time">
+            
+              <a name="method-c-wtime2time"></a><b>wtime2time</b>(wtime)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Convert 64-bit FILETIME integer into <a href="../Time.html">Time</a>
+object.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-wtime2time_source')" id="l_method-c-wtime2time_source">show</a>
+                
+              </p>
+              <div id="method-c-wtime2time_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/dl/win32/lib/win32/registry.rb, line 356</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">self</span>.<span class="ruby-identifier">wtime2time</span>(<span class="ruby-identifier">wtime</span>)
+  <span class="ruby-constant">Time</span>.<span class="ruby-identifier">at</span>((<span class="ruby-identifier">wtime</span> <span class="ruby-operator">-</span> <span class="ruby-number">116444736000000000</span>) <span class="ruby-operator">/</span> <span class="ruby-number">10000000</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-5B-5D">
+            
+              <a name="method-i-5B-5D"></a><b>[]</b>(name, *rtype)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Read a registry value named name and return its value data. The class of
+value is same as <a href="Registry.html#method-i-read">read</a> method
+returns.</p>
+
+<p>If the value type is REG_EXPAND_SZ, returns value data whose environment
+variables are replaced. If the value type is neither REG_SZ, REG_MULTI_SZ,
+REG_DWORD, REG_DWORD_BIG_ENDIAN, nor REG_QWORD, <a
+href="../TypeError.html">TypeError</a> is raised.</p>
+
+<p>The meaning of rtype is same as <a
+href="Registry.html#method-i-read">read</a> method.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-5B-5D_source')" id="l_method-i-5B-5D_source">show</a>
+                
+              </p>
+              <div id="method-i-5B-5D_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/dl/win32/lib/win32/registry.rb, line 620</span>
+<span class="ruby-keyword">def</span> <span class="ruby-operator">[]</span>(<span class="ruby-keyword ruby-title">name</span>, *<span class="ruby-identifier">rtype</span>)
+  <span class="ruby-identifier">type</span>, <span class="ruby-identifier">data</span> = <span class="ruby-identifier">read</span>(<span class="ruby-identifier">name</span>, *<span class="ruby-identifier">rtype</span>)
+  <span class="ruby-keyword">case</span> <span class="ruby-identifier">type</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-constant">REG_SZ</span>, <span class="ruby-constant">REG_DWORD</span>, <span class="ruby-constant">REG_QWORD</span>, <span class="ruby-constant">REG_MULTI_SZ</span>
+    <span class="ruby-identifier">data</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-constant">REG_EXPAND_SZ</span>
+    <span class="ruby-constant">Registry</span>.<span class="ruby-identifier">expand_environ</span>(<span class="ruby-identifier">data</span>)
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">TypeError</span>, <span class="ruby-node">&quot;Type #{type} is not supported.&quot;</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-5B-5D-3D">
+            
+              <a name="method-i-5B-5D-3D"></a><b>[]=</b>(name, rtype, value = nil)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Write value to a registry value named name.</p>
+
+<p>If wtype is specified, the value type is it. Otherwise, the value type is
+depend on class of value: :<a href="../Integer.html">Integer</a></p>
+
+<pre>REG_DWORD</pre>
+
+<p>:String</p>
+
+<pre>REG_SZ</pre>
+
+<p>:Array</p>
+
+<pre>REG_MULTI_SZ</pre>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-5B-5D-3D_source')" id="l_method-i-5B-5D-3D_source">show</a>
+                
+              </p>
+              <div id="method-i-5B-5D-3D_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/dl/win32/lib/win32/registry.rb, line 715</span>
+<span class="ruby-keyword">def</span> <span class="ruby-operator">[]=</span>(<span class="ruby-keyword ruby-title">name</span>, <span class="ruby-identifier">rtype</span>, <span class="ruby-identifier">value</span> = <span class="ruby-keyword">nil</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">value</span>
+    <span class="ruby-identifier">write</span> <span class="ruby-identifier">name</span>, <span class="ruby-identifier">rtype</span>, <span class="ruby-identifier">value</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-keyword">case</span> <span class="ruby-identifier">value</span> = <span class="ruby-identifier">rtype</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-constant">Integer</span>
+      <span class="ruby-identifier">write</span> <span class="ruby-identifier">name</span>, <span class="ruby-constant">REG_DWORD</span>, <span class="ruby-identifier">value</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-constant">String</span>
+      <span class="ruby-identifier">write</span> <span class="ruby-identifier">name</span>, <span class="ruby-constant">REG_SZ</span>, <span class="ruby-identifier">value</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-constant">Array</span>
+      <span class="ruby-identifier">write</span> <span class="ruby-identifier">name</span>, <span class="ruby-constant">REG_MULTI_SZ</span>, <span class="ruby-identifier">value</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">raise</span> <span class="ruby-constant">TypeError</span>, <span class="ruby-node">&quot;Unexpected type #{value.class}&quot;</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">value</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-_dump">
+            
+              <a name="method-i-_dump"></a><b>_dump</b>(depth)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>marshalling is not allowed</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-_dump_source')" id="l_method-i-_dump_source">show</a>
+                
+              </p>
+              <div id="method-i-_dump_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/dl/win32/lib/win32/registry.rb, line 488</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">_dump</span>(<span class="ruby-identifier">depth</span>)
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">TypeError</span>, <span class="ruby-string">&quot;can't dump Win32::Registry&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-close">
+            
+              <a name="method-i-close"></a><b>close</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Close key.</p>
+
+<p>After close, most method raise an error.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-close_source')" id="l_method-i-close_source">show</a>
+                
+              </p>
+              <div id="method-i-close_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/dl/win32/lib/win32/registry.rb, line 511</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">close</span>
+  <span class="ruby-constant">API</span>.<span class="ruby-constant">CloseKey</span>(<span class="ruby-ivar">@hkey</span>)
+  <span class="ruby-ivar">@hkey</span> = <span class="ruby-ivar">@parent</span> = <span class="ruby-ivar">@keyname</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-ivar">@hkeyfinal</span>[<span class="ruby-number">0</span>] = <span class="ruby-keyword">nil</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-create">
+            
+              <a name="method-i-create"></a><b>create</b>(subkey, desired = KEY_ALL_ACCESS, opt = REG_OPTION_RESERVED, &amp;blk)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Same as <a href="Registry.html#method-c-create">::create</a> (self, subkey,
+desired, opt)</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-create_source')" id="l_method-i-create_source">show</a>
+                
+              </p>
+              <div id="method-i-create_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/dl/win32/lib/win32/registry.rb, line 502</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">create</span>(<span class="ruby-identifier">subkey</span>, <span class="ruby-identifier">desired</span> = <span class="ruby-constant">KEY_ALL_ACCESS</span>, <span class="ruby-identifier">opt</span> = <span class="ruby-constant">REG_OPTION_RESERVED</span>, &amp;<span class="ruby-identifier">blk</span>)
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">create</span>(<span class="ruby-keyword">self</span>, <span class="ruby-identifier">subkey</span>, <span class="ruby-identifier">desired</span>, <span class="ruby-identifier">opt</span>, &amp;<span class="ruby-identifier">blk</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-created-3F">
+            
+              <a name="method-i-created-3F"></a><b>created?</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns if key is created ((<strong>newly</strong>)). (see <a
+href="Registry.html#method-c-create">::create</a>) – basically you call
+create then when you call created? on the instance returned it will tell if
+it was successful or not</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-created-3F_source')" id="l_method-i-created-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-created-3F_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/dl/win32/lib/win32/registry.rb, line 458</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">created?</span>
+  <span class="ruby-ivar">@disposition</span> <span class="ruby-operator">==</span> <span class="ruby-constant">REG_CREATED_NEW_KEY</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-delete">
+            
+              <a name="method-i-delete"></a><b>delete</b>(name)
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-delete_key">
+            
+              <a name="method-i-delete_key"></a><b>delete_key</b>(name, recursive = false)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Delete a subkey named name and all its values.</p>
+
+<p>If recursive is false, the subkey must not have subkeys. Otherwise, this
+method deletes all subkeys and values recursively.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-delete_key_source')" id="l_method-i-delete_key_source">show</a>
+                
+              </p>
+              <div id="method-i-delete_key_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/dl/win32/lib/win32/registry.rb, line 778</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">delete_key</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">recursive</span> = <span class="ruby-keyword">false</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">recursive</span>
+    <span class="ruby-identifier">open</span>(<span class="ruby-identifier">name</span>, <span class="ruby-constant">KEY_ALL_ACCESS</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">reg</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">reg</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span><span class="ruby-operator">|</span>
+        <span class="ruby-keyword">begin</span>
+          <span class="ruby-identifier">reg</span>.<span class="ruby-identifier">delete_key</span>(<span class="ruby-identifier">key</span>, <span class="ruby-keyword">true</span>)
+        <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Error</span>
+          <span class="ruby-comment">#</span>
+        <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-constant">API</span>.<span class="ruby-constant">DeleteKey</span>(<span class="ruby-ivar">@hkey</span>, <span class="ruby-identifier">name</span>)
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-keyword">begin</span>
+      <span class="ruby-constant">API</span>.<span class="ruby-constant">EnumKey</span> <span class="ruby-ivar">@hkey</span>, <span class="ruby-number">0</span>
+    <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Error</span>
+      <span class="ruby-keyword">return</span> <span class="ruby-constant">API</span>.<span class="ruby-constant">DeleteKey</span>(<span class="ruby-ivar">@hkey</span>, <span class="ruby-identifier">name</span>)
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">Error</span>.<span class="ruby-identifier">new</span>(<span class="ruby-number">5</span>) <span class="ruby-comment">## ERROR_ACCESS_DENIED</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-delete_value">
+            
+              <a name="method-i-delete_value"></a><b>delete_value</b>(name)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Delete a registry value named name. We can not delete the `default’ value.</p>
+            </div>
+          
+          
+          
+            <div class="aka">
+              Also aliased as: <a href="Registry.html#method-i-delete">delete</a>
+            </div>
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-delete_value_source')" id="l_method-i-delete_value_source">show</a>
+                
+              </p>
+              <div id="method-i-delete_value_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/dl/win32/lib/win32/registry.rb, line 767</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">delete_value</span>(<span class="ruby-identifier">name</span>)
+  <span class="ruby-constant">API</span>.<span class="ruby-constant">DeleteValue</span>(<span class="ruby-ivar">@hkey</span>, <span class="ruby-identifier">name</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-each">
+            
+              <a name="method-i-each"></a><b>each</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-each_key">
+            
+              <a name="method-i-each_key"></a><b>each_key</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Enumerate subkeys.</p>
+
+<p>subkey is String which contains name of subkey. wtime is last write time as
+FILETIME (64-bit integer). (see <a
+href="Registry.html#method-c-wtime2time">::wtime2time</a>)</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-each_key_source')" id="l_method-i-each_key_source">show</a>
+                
+              </p>
+              <div id="method-i-each_key_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/dl/win32/lib/win32/registry.rb, line 547</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">each_key</span>
+  <span class="ruby-identifier">index</span> = <span class="ruby-number">0</span>
+  <span class="ruby-keyword">while</span> <span class="ruby-keyword">true</span>
+    <span class="ruby-keyword">begin</span>
+      <span class="ruby-identifier">subkey</span>, <span class="ruby-identifier">wtime</span> = <span class="ruby-constant">API</span>.<span class="ruby-constant">EnumKey</span>(<span class="ruby-ivar">@hkey</span>, <span class="ruby-identifier">index</span>)
+    <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Error</span>
+      <span class="ruby-keyword">break</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">yield</span> <span class="ruby-identifier">subkey</span>, <span class="ruby-identifier">wtime</span>
+    <span class="ruby-identifier">index</span> <span class="ruby-operator">+=</span> <span class="ruby-number">1</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">index</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-each_value">
+            
+              <a name="method-i-each_value"></a><b>each_value</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Enumerate values.</p>
+            </div>
+          
+          
+          
+            <div class="aka">
+              Also aliased as: <a href="Registry.html#method-i-each">each</a>
+            </div>
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-each_value_source')" id="l_method-i-each_value_source">show</a>
+                
+              </p>
+              <div id="method-i-each_value_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/dl/win32/lib/win32/registry.rb, line 520</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">each_value</span>
+  <span class="ruby-identifier">index</span> = <span class="ruby-number">0</span>
+  <span class="ruby-keyword">while</span> <span class="ruby-keyword">true</span>
+    <span class="ruby-keyword">begin</span>
+      <span class="ruby-identifier">subkey</span> = <span class="ruby-constant">API</span>.<span class="ruby-constant">EnumValue</span>(<span class="ruby-ivar">@hkey</span>, <span class="ruby-identifier">index</span>)
+    <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Error</span>
+      <span class="ruby-keyword">break</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">begin</span>
+      <span class="ruby-identifier">type</span>, <span class="ruby-identifier">data</span> = <span class="ruby-identifier">read</span>(<span class="ruby-identifier">subkey</span>)
+    <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Error</span>
+      <span class="ruby-keyword">next</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">yield</span> <span class="ruby-identifier">subkey</span>, <span class="ruby-identifier">type</span>, <span class="ruby-identifier">data</span>
+    <span class="ruby-identifier">index</span> <span class="ruby-operator">+=</span> <span class="ruby-number">1</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">index</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-flush">
+            
+              <a name="method-i-flush"></a><b>flush</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Write all the attributes into the registry file.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-flush_source')" id="l_method-i-flush_source">show</a>
+                
+              </p>
+              <div id="method-i-flush_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/dl/win32/lib/win32/registry.rb, line 803</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">flush</span>
+  <span class="ruby-constant">API</span>.<span class="ruby-constant">FlushKey</span> <span class="ruby-ivar">@hkey</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-info">
+            
+              <a name="method-i-info"></a><b>info</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns key information as Array of: :num_keys</p>
+
+<pre>The number of subkeys.</pre>
+
+<p>:max_key_length</p>
+
+<pre>Maximum length of name of subkeys.</pre>
+
+<p>:num_values</p>
+
+<pre>The number of values.</pre>
+
+<p>:max_value_name_length</p>
+
+<pre>Maximum length of name of values.</pre>
+
+<p>:max_value_length</p>
+
+<pre>Maximum length of value of values.</pre>
+
+<p>:descriptor_length</p>
+
+<pre>Length of security descriptor.</pre>
+
+<p>:wtime</p>
+
+<pre>Last write time as FILETIME(64-bit integer)</pre>
+
+<p>For detail, see <a
+href="http://msdn.microsoft.com/library/en-us/sysinfo/base/regqueryinfokey.asp">RegQueryInfoKey</a>
+<a href="../Win32.html">Win32</a> <a href="Registry/API.html">API</a>.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-info_source')" id="l_method-i-info_source">show</a>
+                
+              </p>
+              <div id="method-i-info_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/dl/win32/lib/win32/registry.rb, line 826</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">info</span>
+  <span class="ruby-constant">API</span>.<span class="ruby-constant">QueryInfoKey</span>(<span class="ruby-ivar">@hkey</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-inspect">
+            
+              <a name="method-i-inspect"></a><b>inspect</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-inspect_source')" id="l_method-i-inspect_source">show</a>
+                
+              </p>
+              <div id="method-i-inspect_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/dl/win32/lib/win32/registry.rb, line 481</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">inspect</span>
+  <span class="ruby-node">&quot;\#&lt;Win32::Registry key=#{name.inspect}&gt;&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-keys">
+            
+              <a name="method-i-keys"></a><b>keys</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>return keys as an array</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-keys_source')" id="l_method-i-keys_source">show</a>
+                
+              </p>
+              <div id="method-i-keys_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/dl/win32/lib/win32/registry.rb, line 564</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">keys</span>
+  <span class="ruby-identifier">keys_ary</span> = []
+  <span class="ruby-identifier">each_key</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>,<span class="ruby-operator">|</span> <span class="ruby-identifier">keys_ary</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">key</span> }
+  <span class="ruby-identifier">keys_ary</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-name">
+            
+              <a name="method-i-name"></a><b>name</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Full path of key such as ‘HKEY_CURRENT_USERSOFTWAREfoobar’.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-name_source')" id="l_method-i-name_source">show</a>
+                
+              </p>
+              <div id="method-i-name_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/dl/win32/lib/win32/registry.rb, line 472</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">name</span>
+  <span class="ruby-identifier">parent</span> = <span class="ruby-keyword">self</span>
+  <span class="ruby-identifier">name</span> = <span class="ruby-ivar">@keyname</span>
+  <span class="ruby-keyword">while</span> <span class="ruby-identifier">parent</span> = <span class="ruby-identifier">parent</span>.<span class="ruby-identifier">parent</span>
+    <span class="ruby-identifier">name</span> = <span class="ruby-identifier">parent</span>.<span class="ruby-identifier">keyname</span> <span class="ruby-operator">+</span> <span class="ruby-string">'\'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">name</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">name</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-open">
+            
+              <a name="method-i-open"></a><b>open</b>(subkey, desired = KEY_READ, opt = REG_OPTION_RESERVED, &amp;blk)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Same as <a href="Registry.html#method-c-open">::open</a> (self, subkey,
+desired, opt)</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-open_source')" id="l_method-i-open_source">show</a>
+                
+              </p>
+              <div id="method-i-open_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/dl/win32/lib/win32/registry.rb, line 495</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">open</span>(<span class="ruby-identifier">subkey</span>, <span class="ruby-identifier">desired</span> = <span class="ruby-constant">KEY_READ</span>, <span class="ruby-identifier">opt</span> = <span class="ruby-constant">REG_OPTION_RESERVED</span>, &amp;<span class="ruby-identifier">blk</span>)
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">open</span>(<span class="ruby-keyword">self</span>, <span class="ruby-identifier">subkey</span>, <span class="ruby-identifier">desired</span>, <span class="ruby-identifier">opt</span>, &amp;<span class="ruby-identifier">blk</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-open-3F">
+            
+              <a name="method-i-open-3F"></a><b>open?</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns if key is not closed.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-open-3F_source')" id="l_method-i-open-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-open-3F_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/dl/win32/lib/win32/registry.rb, line 465</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">open?</span>
+  <span class="ruby-operator">!</span><span class="ruby-ivar">@hkey</span>.<span class="ruby-identifier">nil?</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-read">
+            
+              <a name="method-i-read"></a><b>read</b>(name, *rtype)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Read a registry value named name and return array of [ type, data ]. When
+name is nil, the `default’ value is read. type is value type. (see <a
+href="Registry/Constants.html">Win32::Registry::Constants</a> module) data
+is value data, its class is: :REG_SZ, REG_EXPAND_SZ</p>
+
+<pre>String</pre>
+
+<p>:REG_MULTI_SZ</p>
+
+<pre>Array of String</pre>
+
+<p>:REG_DWORD, REG_DWORD_BIG_ENDIAN, REG_QWORD</p>
+
+<pre>Integer</pre>
+
+<p>:REG_BINARY</p>
+
+<pre>String (contains binary data)</pre>
+
+<p>When rtype is specified, the value type must be included by rtype array, or
+<a href="../TypeError.html">TypeError</a> is raised.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-read_source')" id="l_method-i-read_source">show</a>
+                
+              </p>
+              <div id="method-i-read_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/dl/win32/lib/win32/registry.rb, line 586</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">read</span>(<span class="ruby-identifier">name</span>, *<span class="ruby-identifier">rtype</span>)
+  <span class="ruby-identifier">type</span>, <span class="ruby-identifier">data</span> = <span class="ruby-constant">API</span>.<span class="ruby-constant">QueryValue</span>(<span class="ruby-ivar">@hkey</span>, <span class="ruby-identifier">name</span>)
+  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">rtype</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-keyword">or</span> <span class="ruby-identifier">rtype</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">type</span>)
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">TypeError</span>, <span class="ruby-node">&quot;Type mismatch (expect #{rtype.inspect} but #{type} present)&quot;</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">case</span> <span class="ruby-identifier">type</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-constant">REG_SZ</span>, <span class="ruby-constant">REG_EXPAND_SZ</span>
+    [ <span class="ruby-identifier">type</span>, <span class="ruby-identifier">data</span>.<span class="ruby-identifier">chop</span> ]
+  <span class="ruby-keyword">when</span> <span class="ruby-constant">REG_MULTI_SZ</span>
+    [ <span class="ruby-identifier">type</span>, <span class="ruby-identifier">data</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp">%r\00//</span>) ]
+  <span class="ruby-keyword">when</span> <span class="ruby-constant">REG_BINARY</span>
+    [ <span class="ruby-identifier">type</span>, <span class="ruby-identifier">data</span> ]
+  <span class="ruby-keyword">when</span> <span class="ruby-constant">REG_DWORD</span>
+    [ <span class="ruby-identifier">type</span>, <span class="ruby-constant">API</span>.<span class="ruby-identifier">unpackdw</span>(<span class="ruby-identifier">data</span>) ]
+  <span class="ruby-keyword">when</span> <span class="ruby-constant">REG_DWORD_BIG_ENDIAN</span>
+    [ <span class="ruby-identifier">type</span>, <span class="ruby-identifier">data</span>.<span class="ruby-identifier">unpack</span>(<span class="ruby-string">'N'</span>)[<span class="ruby-number">0</span>] ]
+  <span class="ruby-keyword">when</span> <span class="ruby-constant">REG_QWORD</span>
+    [ <span class="ruby-identifier">type</span>, <span class="ruby-constant">API</span>.<span class="ruby-identifier">unpackqw</span>(<span class="ruby-identifier">data</span>) ]
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">TypeError</span>, <span class="ruby-node">&quot;Type #{type} is not supported.&quot;</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-read_bin">
+            
+              <a name="method-i-read_bin"></a><b>read_bin</b>(name)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Read a REG_SZ(<a href="Registry.html#method-i-read_s">#read_s</a>),
+REG_DWORD(<a href="Registry.html#method-i-read_i">#read_i</a>), or
+REG_BINARY(<a href="Registry.html#method-i-read_bin">#read_bin</a>)
+registry value named name.</p>
+
+<p>If the values type does not match, <a
+href="../TypeError.html">TypeError</a> is raised.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-read_bin_source')" id="l_method-i-read_bin_source">show</a>
+                
+              </p>
+              <div id="method-i-read_bin_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/dl/win32/lib/win32/registry.rb, line 671</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">read_bin</span>(<span class="ruby-identifier">name</span>)
+  <span class="ruby-identifier">read</span>(<span class="ruby-identifier">name</span>, <span class="ruby-constant">REG_BINARY</span>)[<span class="ruby-number">1</span>]
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-read_i">
+            
+              <a name="method-i-read_i"></a><b>read_i</b>(name)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Read a REG_SZ(<a href="Registry.html#method-i-read_s">#read_s</a>),
+REG_DWORD(<a href="Registry.html#method-i-read_i">#read_i</a>), or
+REG_BINARY(<a href="Registry.html#method-i-read_bin">#read_bin</a>)
+registry value named name.</p>
+
+<p>If the values type does not match, <a
+href="../TypeError.html">TypeError</a> is raised.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-read_i_source')" id="l_method-i-read_i_source">show</a>
+                
+              </p>
+              <div id="method-i-read_i_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/dl/win32/lib/win32/registry.rb, line 661</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">read_i</span>(<span class="ruby-identifier">name</span>)
+  <span class="ruby-identifier">read</span>(<span class="ruby-identifier">name</span>, <span class="ruby-constant">REG_DWORD</span>, <span class="ruby-constant">REG_DWORD_BIG_ENDIAN</span>, <span class="ruby-constant">REG_QWORD</span>)[<span class="ruby-number">1</span>]
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-read_s">
+            
+              <a name="method-i-read_s"></a><b>read_s</b>(name)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Read a REG_SZ(<a href="Registry.html#method-i-read_s">#read_s</a>),
+REG_DWORD(<a href="Registry.html#method-i-read_i">#read_i</a>), or
+REG_BINARY(<a href="Registry.html#method-i-read_bin">#read_bin</a>)
+registry value named name.</p>
+
+<p>If the values type does not match, <a
+href="../TypeError.html">TypeError</a> is raised.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-read_s_source')" id="l_method-i-read_s_source">show</a>
+                
+              </p>
+              <div id="method-i-read_s_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/dl/win32/lib/win32/registry.rb, line 636</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">read_s</span>(<span class="ruby-identifier">name</span>)
+  <span class="ruby-identifier">read</span>(<span class="ruby-identifier">name</span>, <span class="ruby-constant">REG_SZ</span>)[<span class="ruby-number">1</span>]
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-read_s_expand">
+            
+              <a name="method-i-read_s_expand"></a><b>read_s_expand</b>(name)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Read a REG_SZ or REG_EXPAND_SZ registry value named name.</p>
+
+<p>If the value type is REG_EXPAND_SZ, environment variables are replaced.
+Unless the value type is REG_SZ or REG_EXPAND_SZ, <a
+href="../TypeError.html">TypeError</a> is raised.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-read_s_expand_source')" id="l_method-i-read_s_expand_source">show</a>
+                
+              </p>
+              <div id="method-i-read_s_expand_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/dl/win32/lib/win32/registry.rb, line 646</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">read_s_expand</span>(<span class="ruby-identifier">name</span>)
+  <span class="ruby-identifier">type</span>, <span class="ruby-identifier">data</span> = <span class="ruby-identifier">read</span>(<span class="ruby-identifier">name</span>, <span class="ruby-constant">REG_SZ</span>, <span class="ruby-constant">REG_EXPAND_SZ</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">type</span> <span class="ruby-operator">==</span> <span class="ruby-constant">REG_EXPAND_SZ</span>
+    <span class="ruby-constant">Registry</span>.<span class="ruby-identifier">expand_environ</span>(<span class="ruby-identifier">data</span>)
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">data</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-write">
+            
+              <a name="method-i-write"></a><b>write</b>(name, type, data)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Write data to a registry value named name. When name is nil, write to the
+`default’ value.</p>
+
+<p>type is type value. (see <a
+href="Registry/Constants.html">Registry::Constants</a> module) <a
+href="../Class.html">Class</a> of data must be same as which <a
+href="Registry.html#method-i-read">read</a> method returns.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-write_source')" id="l_method-i-write_source">show</a>
+                
+              </p>
+              <div id="method-i-write_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/dl/win32/lib/win32/registry.rb, line 683</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">write</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">type</span>, <span class="ruby-identifier">data</span>)
+  <span class="ruby-keyword">case</span> <span class="ruby-identifier">type</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-constant">REG_SZ</span>, <span class="ruby-constant">REG_EXPAND_SZ</span>
+    <span class="ruby-identifier">data</span> = <span class="ruby-identifier">data</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;\00&quot;&quot;</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-constant">REG_MULTI_SZ</span>
+    <span class="ruby-identifier">data</span> = <span class="ruby-identifier">data</span>.<span class="ruby-identifier">to_a</span>.<span class="ruby-identifier">join</span>(<span class="ruby-string">&quot;\00&quot;&quot;</span>) <span class="ruby-operator">+</span> <span class="ruby-string">&quot;\00\\00&quot;&quot;</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-constant">REG_BINARY</span>
+    <span class="ruby-identifier">data</span> = <span class="ruby-identifier">data</span>.<span class="ruby-identifier">to_s</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-constant">REG_DWORD</span>
+    <span class="ruby-identifier">data</span> = <span class="ruby-constant">API</span>.<span class="ruby-identifier">packdw</span>(<span class="ruby-identifier">data</span>.<span class="ruby-identifier">to_i</span>)
+  <span class="ruby-keyword">when</span> <span class="ruby-constant">REG_DWORD_BIG_ENDIAN</span>
+    <span class="ruby-identifier">data</span> = [<span class="ruby-identifier">data</span>.<span class="ruby-identifier">to_i</span>].<span class="ruby-identifier">pack</span>(<span class="ruby-string">'N'</span>)
+  <span class="ruby-keyword">when</span> <span class="ruby-constant">REG_QWORD</span>
+    <span class="ruby-identifier">data</span> = <span class="ruby-constant">API</span>.<span class="ruby-identifier">packqw</span>(<span class="ruby-identifier">data</span>.<span class="ruby-identifier">to_i</span>)
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">TypeError</span>, <span class="ruby-node">&quot;Unsupported type #{type}&quot;</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-constant">API</span>.<span class="ruby-constant">SetValue</span>(<span class="ruby-ivar">@hkey</span>, <span class="ruby-identifier">name</span>, <span class="ruby-identifier">type</span>, <span class="ruby-identifier">data</span>, <span class="ruby-identifier">data</span>.<span class="ruby-identifier">length</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-write_bin">
+            
+              <a name="method-i-write_bin"></a><b>write_bin</b>(name, value)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Write value to a registry value named name.</p>
+
+<p>The value type is REG_SZ(<a
+href="Registry.html#method-i-write_s">#write_s</a>), REG_DWORD(<a
+href="Registry.html#method-i-write_i">#write_i</a>), or REG_BINARY(<a
+href="Registry.html#method-i-write_bin">#write_bin</a>).</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-write_bin_source')" id="l_method-i-write_bin_source">show</a>
+                
+              </p>
+              <div id="method-i-write_bin_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/dl/win32/lib/win32/registry.rb, line 759</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">write_bin</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">value</span>)
+  <span class="ruby-identifier">write</span> <span class="ruby-identifier">name</span>, <span class="ruby-constant">REG_BINARY</span>, <span class="ruby-identifier">value</span>.<span class="ruby-identifier">to_s</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-write_i">
+            
+              <a name="method-i-write_i"></a><b>write_i</b>(name, value)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Write value to a registry value named name.</p>
+
+<p>The value type is REG_SZ(<a
+href="Registry.html#method-i-write_s">#write_s</a>), REG_DWORD(<a
+href="Registry.html#method-i-write_i">#write_i</a>), or REG_BINARY(<a
+href="Registry.html#method-i-write_bin">#write_bin</a>).</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-write_i_source')" id="l_method-i-write_i_source">show</a>
+                
+              </p>
+              <div id="method-i-write_i_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/dl/win32/lib/win32/registry.rb, line 749</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">write_i</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">value</span>)
+  <span class="ruby-identifier">write</span> <span class="ruby-identifier">name</span>, <span class="ruby-constant">REG_DWORD</span>, <span class="ruby-identifier">value</span>.<span class="ruby-identifier">to_i</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-write_s">
+            
+              <a name="method-i-write_s"></a><b>write_s</b>(name, value)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>Write value to a registry value named name.</p>
+
+<p>The value type is REG_SZ(<a
+href="Registry.html#method-i-write_s">#write_s</a>), REG_DWORD(<a
+href="Registry.html#method-i-write_i">#write_i</a>), or REG_BINARY(<a
+href="Registry.html#method-i-write_bin">#write_bin</a>).</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-write_s_source')" id="l_method-i-write_s_source">show</a>
+                
+              </p>
+              <div id="method-i-write_s_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/ext/dl/win32/lib/win32/registry.rb, line 739</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">write_s</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">value</span>)
+  <span class="ruby-identifier">write</span> <span class="ruby-identifier">name</span>, <span class="ruby-constant">REG_SZ</span>, <span class="ruby-identifier">value</span>.<span class="ruby-identifier">to_s</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    

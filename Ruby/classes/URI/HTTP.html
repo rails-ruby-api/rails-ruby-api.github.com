@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>URI::HTTP</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            URI::HTTP 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="Generic.html">URI::Generic</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/Users/fschumac/_rvm/src/ruby-1_9_3-p0/lib/open-uri_rb.html">/Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/open-uri.rb</a></li>
+            
+            <li><a href="../../files/Users/fschumac/_rvm/src/ruby-1_9_3-p0/lib/uri/http_rb.html">/Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/uri/http.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>The syntax of <a href="HTTP.html">HTTP</a> URIs is defined in RFC1738
+section 3.3.</p>
+
+<p>Note that the Ruby <a href="../URI.html">URI</a> library allows <a
+href="HTTP.html">HTTP</a> URLs containing usernames and passwords. This is
+not legal as per the RFC, but used to be supported in Internet Explorer 5
+and 6, before the MS04-004 security update. See &lt;URL:<a
+href="http://support.microsoft.com/kb/834489">support.microsoft.com/kb/834489</a>&gt;.</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>B</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-build">build</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>R</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-request_uri">request_uri</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+    <!-- Includes -->
+    <div class="sectiontitle">Included Modules</div>
+    <ul>
+      
+        <li>
+          
+            <a href="../OpenURI/OpenRead.html">
+              OpenURI::OpenRead
+            </a>
+          
+        </li>
+      
+    </ul>
+  
+
+
+
+  
+
+    
+
+    
+
+    
+      <!-- Section constants -->
+      <div class="sectiontitle">Constants</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class="attr-name">DEFAULT_PORT</td>
+            <td>=</td>
+            <td class="attr-value">80</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>A Default port of 80 for <a href="HTTP.html">URI::HTTP</a></p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">COMPONENT</td>
+            <td>=</td>
+            <td class="attr-value">[
+:scheme,
+:userinfo, :host, :port,
+:path,
+:query,
+:fragment
+].freeze</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>An Array of the available components for <a href="HTTP.html">URI::HTTP</a></p></td>
+            </tr>
+          
+        
+      </table>
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-build">
+            
+              <a name="method-c-build"></a><b>build</b>(args)
+            
+          </div>
+          
+          
+            <div class="description">
+              <h2 id="method-c-build-label-Description">Description</h2>
+
+<p>Create a new <a href="HTTP.html">URI::HTTP</a> object from components, with
+syntax checking.</p>
+
+<p>The components accepted are userinfo, host, port, path, query and fragment.</p>
+
+<p>The components should be provided either as an Array, or as a <a
+href="../Hash.html">Hash</a> with keys formed by preceding the component
+names with a colon.</p>
+
+<p>If an Array is used, the components must be passed in the order [userinfo,
+host, port, path, query, fragment].</p>
+
+<p>Example:</p>
+
+<pre class="ruby"><span class="ruby-identifier">newuri</span> = <span class="ruby-constant">URI</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span>.<span class="ruby-identifier">build</span>({:<span class="ruby-identifier">host</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'www.example.com'</span>,
+  :<span class="ruby-identifier">path</span><span class="ruby-operator">&gt;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'/foo/bar'</span>})
+
+<span class="ruby-identifier">newuri</span> = <span class="ruby-constant">URI</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span>.<span class="ruby-identifier">build</span>([<span class="ruby-keyword">nil</span>, <span class="ruby-string">&quot;www.example.com&quot;</span>, <span class="ruby-keyword">nil</span>, <span class="ruby-string">&quot;/path&quot;</span>,
+  <span class="ruby-string">&quot;query&quot;</span>, <span class="ruby-string">'fragment'</span>])
+</pre>
+
+<p>Currently, if passed userinfo components this method generates invalid <a
+href="HTTP.html">HTTP</a> URIs as per RFC 1738.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-build_source')" id="l_method-c-build_source">show</a>
+                
+              </p>
+              <div id="method-c-build_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/uri/http.rb, line 60</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">self</span>.<span class="ruby-identifier">build</span>(<span class="ruby-identifier">args</span>)
+  <span class="ruby-identifier">tmp</span> = <span class="ruby-constant">Util</span><span class="ruby-operator">::</span><span class="ruby-identifier">make_components_hash</span>(<span class="ruby-keyword">self</span>, <span class="ruby-identifier">args</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">super</span>(<span class="ruby-identifier">tmp</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <a name="method-c-new"></a><b>new</b>(*arg)
+            
+          </div>
+          
+          
+            <div class="description">
+              <h2 id="method-c-new-label-Description">Description</h2>
+
+<p>Create a new <a href="HTTP.html">URI::HTTP</a> object from generic <a
+href="../URI.html">URI</a> components as per RFC 2396. No HTTP-specific
+syntax checking (as per RFC 1738) is performed.</p>
+
+<p>Arguments are <code>scheme</code>, <code>userinfo</code>,
+<code>host</code>, <code>port</code>, <code>registry</code>,
+<code>path</code>, <code>opaque</code>, <code>query</code> and
+<code>fragment</code>, in that order.</p>
+
+<p>Example:</p>
+
+<pre>uri = URI::HTTP.new('http', nil, &quot;www.example.com&quot;, nil, &quot;/path&quot;,
+  &quot;query&quot;, 'fragment')</pre>
+
+<p>See also <a href="Generic.html#method-c-new">URI::Generic.new</a></p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/uri/http.rb, line 83</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">initialize</span>(*<span class="ruby-identifier">arg</span>)
+  <span class="ruby-keyword">super</span>(*<span class="ruby-identifier">arg</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-request_uri">
+            
+              <a name="method-i-request_uri"></a><b>request_uri</b>()
+            
+          </div>
+          
+          
+            <div class="description">
+              <h2 id="method-i-request_uri-label-Description">Description</h2>
+
+<p>Returns the full path for an <a href="HTTP.html">HTTP</a> request, as
+required by <a href="../Net/HTTP/Get.html">Net::HTTP::Get</a>.</p>
+
+<p>If the <a href="../URI.html">URI</a> contains a query, the full path is
+URI#path + ‘?’ + URI#query. Otherwise, the path is simply URI#path.</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-request_uri_source')" id="l_method-i-request_uri_source">show</a>
+                
+              </p>
+              <div id="method-i-request_uri_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/uri/http.rb, line 95</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">request_uri</span>
+  <span class="ruby-identifier">r</span> = <span class="ruby-identifier">path_query</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">r</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">r</span>[<span class="ruby-number">0</span>] <span class="ruby-operator">!=</span> <span class="ruby-number">//</span>
+    <span class="ruby-identifier">r</span> = <span class="ruby-string">'/'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">r</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">r</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+    </div>
+  </body>
+</html>    

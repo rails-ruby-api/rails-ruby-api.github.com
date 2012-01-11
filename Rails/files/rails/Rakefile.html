@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Rakefile</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            Rakefile
+        </h1>
+        <ul class="files">
+            <li>rails/Rakefile</li>
+            <li>Last modified: 2012-01-11 14:37:18 +0100</li>
+        </ul>
+    </div>
+
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>#!/usr/bin/env rake</p>
+
+<p>require ‘rdoc/task’ require ‘sdoc’ require ‘net/http’</p>
+
+<p>$:.unshift File.expand_path(‘..’, __FILE__) require “tasks/release”</p>
+
+<p>desc “<a href="../../classes/Build.html">Build</a> gem files for all
+projects” task :build =&gt; “all:build”</p>
+
+<p>desc “Release all gems to gemcutter and create a tag” task :release =&gt;
+“all:release”</p>
+
+<p>PROJECTS = %w(activesupport activemodel actionpack actionmailer
+activeresource activerecord railties)</p>
+
+<p>desc ‘Run all tests by default’ task :default =&gt; %w(test test:isolated)</p>
+
+<p>%w(test test:isolated package gem).each do |task_name|</p>
+
+<pre class="ruby"><span class="ruby-identifier">desc</span> <span class="ruby-node">&quot;Run #{task_name} task for all projects&quot;</span>
+<span class="ruby-identifier">task</span> <span class="ruby-identifier">task_name</span> <span class="ruby-keyword">do</span>
+  <span class="ruby-identifier">errors</span> = []
+  <span class="ruby-constant">PROJECTS</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">project</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">system</span>(<span class="ruby-node">%Q(cd #{project} &amp;&amp; #{$0} #{task_name})</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">errors</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">project</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">fail</span>(<span class="ruby-node">&quot;Errors in #{errors.join(', ')}&quot;</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">errors</span>.<span class="ruby-identifier">empty?</span>
+<span class="ruby-keyword">end</span>
+</pre>
+
+<p>end</p>
+
+<p>desc “Smoke-test all projects” task :smoke do</p>
+
+<pre class="ruby">(<span class="ruby-constant">PROJECTS</span> <span class="ruby-operator">-</span> <span class="ruby-node">%w(activerecord)</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">project</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">system</span> <span class="ruby-node">%Q(cd #{project} &amp;&amp; #{$0} test:isolated)</span>
+<span class="ruby-keyword">end</span>
+<span class="ruby-identifier">system</span> <span class="ruby-node">%Q(cd activerecord &amp;&amp; #{$0} sqlite3:isolated_test)</span>
+</pre>
+
+<p>end</p>
+
+<p>desc “Install gems for all projects.” task :install =&gt; :gem do</p>
+
+<pre class="ruby"><span class="ruby-identifier">version</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-string">&quot;RAILS_VERSION&quot;</span>).<span class="ruby-identifier">strip</span>
+(<span class="ruby-constant">PROJECTS</span> <span class="ruby-operator">-</span> [<span class="ruby-string">&quot;railties&quot;</span>]).<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">project</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;INSTALLING #{project}&quot;</span>
+  <span class="ruby-identifier">system</span>(<span class="ruby-node">&quot;gem install #{project}/pkg/#{project}-#{version}.gem --no-ri --no-rdoc&quot;</span>)
+<span class="ruby-keyword">end</span>
+<span class="ruby-identifier">system</span>(<span class="ruby-node">&quot;gem install railties/pkg/railties-#{version}.gem --no-ri --no-rdoc&quot;</span>)
+<span class="ruby-identifier">system</span>(<span class="ruby-node">&quot;gem install pkg/rails-#{version}.gem --no-ri --no-rdoc&quot;</span>)
+</pre>
+
+<p>end</p>
+
+<p>desc “Generate documentation for the <a
+href="../../classes/Rails.html">Rails</a> framework” RDoc::Task.new do
+|rdoc|</p>
+
+<pre class="ruby"><span class="ruby-constant">RDOC_MAIN</span> = <span class="ruby-string">'RDOC_MAIN.rdoc'</span>
+
+<span class="ruby-comment"># This is a hack.</span>
+<span class="ruby-comment">#</span>
+<span class="ruby-comment"># Backslashes are needed to prevent RDoc from autolinking &quot;Rails&quot; to the</span>
+<span class="ruby-comment"># documentation of the Rails module. On the other hand, as of this</span>
+<span class="ruby-comment"># writing README.rdoc is displayed in the front page of the project in</span>
+<span class="ruby-comment"># GitHub, where backslashes are shown and look weird.</span>
+<span class="ruby-comment">#</span>
+<span class="ruby-comment"># The temporary solution is to have a README.rdoc without backslashes for</span>
+<span class="ruby-comment"># GitHub, and gsub it to generate the main page of the API.</span>
+<span class="ruby-comment">#</span>
+<span class="ruby-comment"># Also, relative links in GitHub have to point to blobs, whereas in the API</span>
+<span class="ruby-comment"># they need to point to files.</span>
+<span class="ruby-comment">#</span>
+<span class="ruby-comment"># The idea for the future is to have totally different files, since the</span>
+<span class="ruby-comment"># API is no longer a generic entry point to Rails and deserves a</span>
+<span class="ruby-comment"># dedicated main page specifically thought as an API entry point.</span>
+<span class="ruby-identifier">rdoc</span>.<span class="ruby-identifier">before_running_rdoc</span> <span class="ruby-keyword">do</span>
+  <span class="ruby-identifier">rdoc_main</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-string">'README.rdoc'</span>)
+
+  <span class="ruby-comment"># The ^(?=\S) assertion prevents code blocks from being processed,</span>
+  <span class="ruby-comment"># since no autolinking happens there and RDoc displays the backslash</span>
+  <span class="ruby-comment"># otherwise.</span>
+  <span class="ruby-identifier">rdoc_main</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp">%r^(?=\S).*?\b(?=Rails)\b/</span>) { <span class="ruby-node">&quot;#$&amp;\\&quot;</span> }
+  <span class="ruby-identifier">rdoc_main</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-regexp">%r{link:blob/master/(\w+)/README\.rdoc}</span>, <span class="ruby-string">&quot;link:files/\\1/README_rdoc.html&quot;</span>)
+
+  <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-constant">RDOC_MAIN</span>, <span class="ruby-string">'w'</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">f</span>.<span class="ruby-identifier">write</span>(<span class="ruby-identifier">rdoc_main</span>)
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">rdoc</span>.<span class="ruby-identifier">rdoc_files</span>.<span class="ruby-identifier">include</span>(<span class="ruby-constant">RDOC_MAIN</span>)
+<span class="ruby-keyword">end</span>
+
+<span class="ruby-identifier">rdoc</span>.<span class="ruby-identifier">rdoc_dir</span> = <span class="ruby-string">'doc/rdoc'</span>
+<span class="ruby-identifier">rdoc</span>.<span class="ruby-identifier">title</span>    = <span class="ruby-string">&quot;Ruby on Rails Documentation&quot;</span>
+
+<span class="ruby-identifier">rdoc</span>.<span class="ruby-identifier">options</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">'-f'</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">'sdoc'</span>
+<span class="ruby-identifier">rdoc</span>.<span class="ruby-identifier">options</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">'-T'</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">'rails'</span>
+<span class="ruby-identifier">rdoc</span>.<span class="ruby-identifier">options</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">'-c'</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">'utf-8'</span>
+<span class="ruby-identifier">rdoc</span>.<span class="ruby-identifier">options</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">'-g'</span> <span class="ruby-comment"># SDoc flag, link methods to GitHub</span>
+<span class="ruby-identifier">rdoc</span>.<span class="ruby-identifier">options</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">'-m'</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">RDOC_MAIN</span>
+
+<span class="ruby-identifier">rdoc</span>.<span class="ruby-identifier">rdoc_files</span>.<span class="ruby-identifier">include</span>(<span class="ruby-string">'railties/CHANGELOG.md'</span>)
+<span class="ruby-identifier">rdoc</span>.<span class="ruby-identifier">rdoc_files</span>.<span class="ruby-identifier">include</span>(<span class="ruby-string">'railties/MIT-LICENSE'</span>)
+<span class="ruby-identifier">rdoc</span>.<span class="ruby-identifier">rdoc_files</span>.<span class="ruby-identifier">include</span>(<span class="ruby-string">'railties/README.rdoc'</span>)
+<span class="ruby-identifier">rdoc</span>.<span class="ruby-identifier">rdoc_files</span>.<span class="ruby-identifier">include</span>(<span class="ruby-string">'railties/lib     .rb'</span>)
+<span class="ruby-identifier">rdoc</span>.<span class="ruby-identifier">rdoc_files</span>.<span class="ruby-identifier">exclude</span>(<span class="ruby-string">'railties/lib/rails/generators/   templates/   *.rb'</span>)
+
+<span class="ruby-identifier">rdoc</span>.<span class="ruby-identifier">rdoc_files</span>.<span class="ruby-identifier">include</span>(<span class="ruby-string">'activerecord/README.rdoc'</span>)
+<span class="ruby-identifier">rdoc</span>.<span class="ruby-identifier">rdoc_files</span>.<span class="ruby-identifier">include</span>(<span class="ruby-string">'activerecord/CHANGELOG.md'</span>)
+<span class="ruby-identifier">rdoc</span>.<span class="ruby-identifier">rdoc_files</span>.<span class="ruby-identifier">include</span>(<span class="ruby-string">'activerecord/lib/active_record/**/*.rb'</span>)
+<span class="ruby-identifier">rdoc</span>.<span class="ruby-identifier">rdoc_files</span>.<span class="ruby-identifier">exclude</span>(<span class="ruby-string">'activerecord/lib/active_record/vendor/*'</span>)
+
+<span class="ruby-identifier">rdoc</span>.<span class="ruby-identifier">rdoc_files</span>.<span class="ruby-identifier">include</span>(<span class="ruby-string">'activeresource/README.rdoc'</span>)
+<span class="ruby-identifier">rdoc</span>.<span class="ruby-identifier">rdoc_files</span>.<span class="ruby-identifier">include</span>(<span class="ruby-string">'activeresource/CHANGELOG.md'</span>)
+<span class="ruby-identifier">rdoc</span>.<span class="ruby-identifier">rdoc_files</span>.<span class="ruby-identifier">include</span>(<span class="ruby-string">'activeresource/lib/active_resource.rb'</span>)
+<span class="ruby-identifier">rdoc</span>.<span class="ruby-identifier">rdoc_files</span>.<span class="ruby-identifier">include</span>(<span class="ruby-string">'activeresource/lib/active_resource/*'</span>)
+
+<span class="ruby-identifier">rdoc</span>.<span class="ruby-identifier">rdoc_files</span>.<span class="ruby-identifier">include</span>(<span class="ruby-string">'actionpack/README.rdoc'</span>)
+<span class="ruby-identifier">rdoc</span>.<span class="ruby-identifier">rdoc_files</span>.<span class="ruby-identifier">include</span>(<span class="ruby-string">'actionpack/CHANGELOG.md'</span>)
+<span class="ruby-identifier">rdoc</span>.<span class="ruby-identifier">rdoc_files</span>.<span class="ruby-identifier">include</span>(<span class="ruby-string">'actionpack/lib/abstract_controller/**/*.rb'</span>)
+<span class="ruby-identifier">rdoc</span>.<span class="ruby-identifier">rdoc_files</span>.<span class="ruby-identifier">include</span>(<span class="ruby-string">'actionpack/lib/action_controller/**/*.rb'</span>)
+<span class="ruby-identifier">rdoc</span>.<span class="ruby-identifier">rdoc_files</span>.<span class="ruby-identifier">include</span>(<span class="ruby-string">'actionpack/lib/action_dispatch/**/*.rb'</span>)
+<span class="ruby-identifier">rdoc</span>.<span class="ruby-identifier">rdoc_files</span>.<span class="ruby-identifier">include</span>(<span class="ruby-string">'actionpack/lib/action_view/**/*.rb'</span>)
+<span class="ruby-identifier">rdoc</span>.<span class="ruby-identifier">rdoc_files</span>.<span class="ruby-identifier">exclude</span>(<span class="ruby-string">'actionpack/lib/action_controller/vendor/*'</span>)
+
+<span class="ruby-identifier">rdoc</span>.<span class="ruby-identifier">rdoc_files</span>.<span class="ruby-identifier">include</span>(<span class="ruby-string">'actionmailer/README.rdoc'</span>)
+<span class="ruby-identifier">rdoc</span>.<span class="ruby-identifier">rdoc_files</span>.<span class="ruby-identifier">include</span>(<span class="ruby-string">'actionmailer/CHANGELOG.md'</span>)
+<span class="ruby-identifier">rdoc</span>.<span class="ruby-identifier">rdoc_files</span>.<span class="ruby-identifier">include</span>(<span class="ruby-string">'actionmailer/lib/action_mailer/base.rb'</span>)
+<span class="ruby-identifier">rdoc</span>.<span class="ruby-identifier">rdoc_files</span>.<span class="ruby-identifier">include</span>(<span class="ruby-string">'actionmailer/lib/action_mailer/mail_helper.rb'</span>)
+<span class="ruby-identifier">rdoc</span>.<span class="ruby-identifier">rdoc_files</span>.<span class="ruby-identifier">exclude</span>(<span class="ruby-string">'actionmailer/lib/action_mailer/vendor/*'</span>)
+
+<span class="ruby-identifier">rdoc</span>.<span class="ruby-identifier">rdoc_files</span>.<span class="ruby-identifier">include</span>(<span class="ruby-string">'activesupport/README.rdoc'</span>)
+<span class="ruby-identifier">rdoc</span>.<span class="ruby-identifier">rdoc_files</span>.<span class="ruby-identifier">include</span>(<span class="ruby-string">'activesupport/CHANGELOG.md'</span>)
+<span class="ruby-identifier">rdoc</span>.<span class="ruby-identifier">rdoc_files</span>.<span class="ruby-identifier">include</span>(<span class="ruby-string">'activesupport/lib/active_support/**/*.rb'</span>)
+<span class="ruby-identifier">rdoc</span>.<span class="ruby-identifier">rdoc_files</span>.<span class="ruby-identifier">exclude</span>(<span class="ruby-string">'activesupport/lib/active_support/vendor/*'</span>)
+
+<span class="ruby-identifier">rdoc</span>.<span class="ruby-identifier">rdoc_files</span>.<span class="ruby-identifier">include</span>(<span class="ruby-string">'activemodel/README.rdoc'</span>)
+<span class="ruby-identifier">rdoc</span>.<span class="ruby-identifier">rdoc_files</span>.<span class="ruby-identifier">include</span>(<span class="ruby-string">'activemodel/CHANGELOG.md'</span>)
+<span class="ruby-identifier">rdoc</span>.<span class="ruby-identifier">rdoc_files</span>.<span class="ruby-identifier">include</span>(<span class="ruby-string">'activemodel/lib/active_model/**/*.rb'</span>)
+</pre>
+
+<p>end</p>
+
+<p># Enhance rdoc task to copy referenced images also task :rdoc do</p>
+
+<pre>FileUtils.mkdir_p &quot;doc/rdoc/files/examples/&quot;
+FileUtils.copy &quot;activerecord/examples/associations.png&quot;, &quot;doc/rdoc/files/examples/associations.png&quot;</pre>
+
+<p>end</p>
+
+<p>desc ‘Bump all versions to match version.rb’ task :update_versions do</p>
+
+<pre class="ruby"><span class="ruby-identifier">require</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-keyword">__FILE__</span>) <span class="ruby-operator">+</span> <span class="ruby-string">&quot;/version&quot;</span>
+
+<span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-string">&quot;RAILS_VERSION&quot;</span>, <span class="ruby-string">&quot;w&quot;</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">f</span>.<span class="ruby-identifier">write</span> <span class="ruby-constant">Rails</span><span class="ruby-operator">::</span><span class="ruby-constant">VERSION</span><span class="ruby-operator">::</span><span class="ruby-constant">STRING</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;\n&quot;</span>
+<span class="ruby-keyword">end</span>
+
+<span class="ruby-identifier">constants</span> = {
+  <span class="ruby-string">&quot;activesupport&quot;</span>   =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;ActiveSupport&quot;</span>,
+  <span class="ruby-string">&quot;activemodel&quot;</span>     =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;ActiveModel&quot;</span>,
+  <span class="ruby-string">&quot;actionpack&quot;</span>      =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;ActionPack&quot;</span>,
+  <span class="ruby-string">&quot;actionmailer&quot;</span>    =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;ActionMailer&quot;</span>,
+  <span class="ruby-string">&quot;activeresource&quot;</span>  =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;ActiveResource&quot;</span>,
+  <span class="ruby-string">&quot;activerecord&quot;</span>    =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;ActiveRecord&quot;</span>,
+  <span class="ruby-string">&quot;railties&quot;</span>        =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Rails&quot;</span>
+}
+
+<span class="ruby-identifier">version_file</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-string">&quot;version.rb&quot;</span>)
+
+<span class="ruby-constant">PROJECTS</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">project</span><span class="ruby-operator">|</span>
+  <span class="ruby-constant">Dir</span>[<span class="ruby-node">&quot;#{project}/lib/*/version.rb&quot;</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">file</span><span class="ruby-operator">|</span>
+    <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">file</span>, <span class="ruby-string">&quot;w&quot;</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">f</span>.<span class="ruby-identifier">write</span> <span class="ruby-identifier">version_file</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">%rRails/</span>, <span class="ruby-identifier">constants</span>[<span class="ruby-identifier">project</span>])
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span>
+</pre>
+
+<p>end</p>
+
+<p># # We have a webhook configured in Github that gets invoked after pushes.
+# This hook triggers the following tasks: # #   * updates the local
+checkout #   * updates <a href="../../classes/Rails.html">Rails</a>
+Contributors #   * generates and publishes edge docs #   * if there’s a new
+stable tag, generates and publishes stable docs # # Everything is automated
+and you do NOT need to run this task normally. # # We publish a new version
+by tagging, and pushing a tag does not trigger # that webhook. Stable docs
+would be updated by any subsequent regular # push, but if you want that to
+happen right away just run this. # desc ‘Publishes docs, run this AFTER a
+new stable tag has been pushed’ task :publish_docs do</p>
+
+<pre class="ruby"><span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">'rails-hooks.hashref.com'</span>).<span class="ruby-identifier">start</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">http</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">request</span>  = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span><span class="ruby-operator">::</span><span class="ruby-constant">Post</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">'/rails-master-hook'</span>)
+  <span class="ruby-identifier">response</span> = <span class="ruby-identifier">http</span>.<span class="ruby-identifier">request</span>(<span class="ruby-identifier">request</span>)
+  <span class="ruby-identifier">puts</span> <span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>
+<span class="ruby-keyword">end</span>
+</pre>
+
+<p>end</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+              </div>
+    </div>
+  </body>
+</html>

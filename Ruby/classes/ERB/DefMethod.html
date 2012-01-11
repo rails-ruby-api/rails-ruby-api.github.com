@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>ERB::DefMethod</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Module</span> 
+            ERB::DefMethod 
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/Users/fschumac/_rvm/src/ruby-1_9_3-p0/lib/erb_rb.html">/Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/erb.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>Utility module to define eRuby script as instance method.</p>
+
+<h3 id="label-Example">Example</h3>
+
+<p>example.rhtml:</p>
+
+<pre>&lt;% for item in @items %&gt;
+&lt;b&gt;&lt;%= item %&gt;&lt;/b&gt;
+&lt;% end %&gt;</pre>
+
+<p>example.rb:</p>
+
+<pre class="ruby"><span class="ruby-identifier">require</span> <span class="ruby-string">'erb'</span>
+<span class="ruby-keyword">class</span> <span class="ruby-constant">MyClass</span>
+  <span class="ruby-identifier">extend</span> <span class="ruby-constant">ERB</span><span class="ruby-operator">::</span><span class="ruby-constant">DefMethod</span>
+  <span class="ruby-identifier">def_erb_method</span>(<span class="ruby-string">'render()'</span>, <span class="ruby-string">'example.rhtml'</span>)
+  <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">items</span>)
+    <span class="ruby-ivar">@items</span> = <span class="ruby-identifier">items</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span>
+<span class="ruby-identifier">print</span> <span class="ruby-constant">MyClass</span>.<span class="ruby-identifier">new</span>([<span class="ruby-value">10</span>,<span class="ruby-value">20</span>,<span class="ruby-value">30</span>]).<span class="ruby-identifier">render</span>()
+</pre>
+
+<p>result:</p>
+
+<pre>&lt;b&gt;10&lt;/b&gt;
+
+&lt;b&gt;20&lt;/b&gt;
+
+&lt;b&gt;30&lt;/b&gt;</pre>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>D</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-def_erb_method">def_erb_method</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-def_erb_method">
+            
+              <a name="method-c-def_erb_method"></a><b>def_erb_method</b>(methodname, erb_or_fname)
+            
+          </div>
+          
+          
+            <div class="description">
+              <p>define <em>methodname</em> as instance method of current module, using <a
+href="../ERB.html">ERB</a> object or eRuby file</p>
+            </div>
+          
+          
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-def_erb_method_source')" id="l_method-c-def_erb_method_source">show</a>
+                
+              </p>
+              <div id="method-c-def_erb_method_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File /Users/fschumac/.rvm/src/ruby-1.9.3-p0/lib/erb.rb, line 976</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">def_erb_method</span>(<span class="ruby-identifier">methodname</span>, <span class="ruby-identifier">erb_or_fname</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">erb_or_fname</span>.<span class="ruby-identifier">kind_of?</span> <span class="ruby-constant">String</span>
+    <span class="ruby-identifier">fname</span> = <span class="ruby-identifier">erb_or_fname</span>
+    <span class="ruby-identifier">erb</span> = <span class="ruby-constant">ERB</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">fname</span>))
+    <span class="ruby-identifier">erb</span>.<span class="ruby-identifier">def_method</span>(<span class="ruby-keyword">self</span>, <span class="ruby-identifier">methodname</span>, <span class="ruby-identifier">fname</span>)
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">erb</span> = <span class="ruby-identifier">erb_or_fname</span>
+    <span class="ruby-identifier">erb</span>.<span class="ruby-identifier">def_method</span>(<span class="ruby-keyword">self</span>, <span class="ruby-identifier">methodname</span>, <span class="ruby-identifier">erb</span>.<span class="ruby-identifier">filename</span> <span class="ruby-operator">||</span> <span class="ruby-string">'(ERB)'</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                        </div>
+    </div>
+  </body>
+</html>    
