@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>grammar.en.rdoc</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../../css/github.css" type="text/css" media="screen" />
+<script src="../../../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            grammar.en.rdoc
+        </h1>
+        <ul class="files">
+            
+            <li>
+                lib/racc/rdoc/grammar.en.rdoc
+                
+            </li>
+            <li>Last modified: 2015-10-26 14:23:32 +0100</li>
+        </ul>
+    </div>
+
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<h1 id="label-Racc+Grammar+File+Reference"><a href="../../../../classes/Racc.html">Racc</a> Grammar <a href="../../../../classes/File.html">File</a> Reference</h1>
+
+<h2 id="label-Global+Structure">Global Structure</h2>
+
+<h2 id="label-Class+Block+and+User+Code+Block"><a href="../../../../classes/Class.html">Class</a> Block and User Code Block</h2>
+
+<p>There are two blocks on toplevel. One is &#39;class&#39; block, another is
+&#39;user code&#39; block. &#39;user code&#39; block MUST be placed after
+&#39;class&#39; block.</p>
+
+<h2 id="label-Comments">Comments</h2>
+
+<p>You can insert comments about all places. Two style comments can be used,
+Ruby style &#39;#.….&#39; and C style &#39;/*.…..*/&#39;.</p>
+
+<h2 id="label-Class+Block"><a href="../../../../classes/Class.html">Class</a> Block</h2>
+
+<p>The class block is formed like this:</p>
+
+<pre><code>class CLASS_NAME
+  [precedance table]
+  [token declarations]
+  [expected number of S/R conflicts]
+  [options]
+  [semantic value conversion]
+  [start rule]
+rule
+  GRAMMARS</code></pre>
+
+<p>CLASS_NAME is a name of parser class. This is the name of generating parser
+class.</p>
+
+<p>If CLASS_NAME includes &#39;::&#39;, <a
+href="../../../../classes/Racc.html">Racc</a> outputs module clause. For
+example, writing “class M::C” causes creating the code below:</p>
+
+<pre><code>module M
+  class C
+    :
+    :
+  end
+end</code></pre>
+
+<h2 id="label-Grammar+Block">Grammar Block</h2>
+
+<p>The grammar block describes grammar which is able to be understood by
+parser. Syntax is:</p>
+
+<pre><code>(token): (token) (token) (token).... (action)
+
+(token): (token) (token) (token).... (action)
+       | (token) (token) (token).... (action)
+       | (token) (token) (token).... (action)</code></pre>
+
+<p>(action) is an action which is executed when its (token)s are found.
+(action) is a ruby code block, which is surrounded by braces:</p>
+
+<pre><code>{ print val[0]
+  puts val[1] }</code></pre>
+
+<p>Note that you cannot use &#39;%&#39; string, here document, &#39;%r&#39;
+regexp in action.</p>
+
+<p>Actions can be omitted. When it is omitted, &#39;&#39; (empty string) is
+used.</p>
+
+<p>A return value of action is a value of left side value ($$). It is value of
+result, or returned value by `return` statement.</p>
+
+<p>Here is an example of whole grammar block.</p>
+
+<pre><code>rule
+  goal: definition rules source { result = val }
+
+  definition:    none      { result = [] }
+    | definition startdesig  { result[0] = val[1] }
+    | definition
+             precrule   # this line continues from upper line
+      {
+        result[1] = val[1]
+      }
+
+  startdesig: START TOKEN</code></pre>
+
+<p>You can use the following special local variables in action:</p>
+
+<pre><code>result ($$)
+</code></pre>
+
+<p>The value of left-hand side (lhs). A default value is <a href="0">val</a>.</p>
+
+<pre><code>val ($1,$2,$3...)</code></pre>
+
+<p>An array of value of right-hand side (rhs).</p>
+
+<pre><code>_values (...$-2,$-1,$0)</code></pre>
+
+<p>A stack of values. DO NOT MODIFY this stack unless you know what you are
+doing.</p>
+
+<h2 id="label-Operator+Precedence">Operator Precedence</h2>
+
+<p>This function is equal to &#39;%prec&#39; in yacc. To designate this block:</p>
+
+<pre><code>prechigh
+  nonassoc &#39;++&#39;
+  left     &#39;*&#39; &#39;/&#39;
+  left     &#39;+&#39; &#39;-&#39;
+  right    &#39;=&#39;
+preclow
+</code></pre>
+
+<p>`right` is yacc&#39;s %right, `left` is yacc&#39;s %left.</p>
+
+<p>`=` + (symbol) means yacc&#39;s %prec:</p>
+
+<pre><code>prechigh
+  nonassoc UMINUS
+  left &#39;*&#39; &#39;/&#39;
+  left &#39;+&#39; &#39;-&#39;
+preclow
+
+rule
+  exp: exp &#39;*&#39; exp
+     | exp &#39;-&#39; exp
+     | &#39;-&#39; exp       =UMINUS   # equals to &quot;%prec UMINUS&quot;
+         :
+         :</code></pre>
+
+<h2 id="label-expect">expect</h2>
+
+<p><a href="../../../../classes/Racc.html">Racc</a> has bison&#39;s “expect”
+directive.</p>
+
+<pre><code># Example
+
+class MyParser
+rule
+  expect 3
+    :
+    :</code></pre>
+
+<p>This directive declares “expected” number of shift/reduce conflicts. If
+“expected” number is equal to real number of conflicts, <a
+href="../../../../classes/Racc.html">Racc</a> does not print conflict
+warning message.</p>
+
+<h2 id="label-Declaring+Tokens">Declaring Tokens</h2>
+
+<p>By declaring tokens, you can avoid many meaningless bugs. If declared token
+does not exist or existing token does not decleared, <a
+href="../../../../classes/Racc.html">Racc</a> output warnings. Declaration
+syntax is:</p>
+
+<pre><code>token TOKEN_NAME AND_IS_THIS
+      ALSO_THIS_IS AGAIN_AND_AGAIN THIS_IS_LAST
+</code></pre>
+
+<h2 id="label-Options">Options</h2>
+
+<p>You can write options for <a href="../../../../classes/Racc.html">Racc</a>
+command in your <a href="../../../../classes/Racc.html">Racc</a> file.</p>
+
+<pre><code>options OPTION OPTION ...</code></pre>
+
+<p>Options are:</p>
+
+<pre><code>omit_action_call
+</code></pre>
+
+<p>omits empty action call or not.</p>
+
+<pre><code>result_var
+</code></pre>
+
+<p>uses local variable “result” or not.</p>
+
+<p>You can use &#39;no_&#39; prefix to invert their meanings.</p>
+
+<h2 id="label-Converting+Token+Symbol">Converting Token <a href="../../../../classes/Symbol.html">Symbol</a></h2>
+
+<p>Token symbols are, as default,</p>
+
+<pre><code>naked token string in Racc file (TOK, XFILE, this_is_token, ...)
+--&gt; symbol (:TOK, :XFILE, :this_is_token, ...)
+quoted string (&#39;:&#39;, &#39;.&#39;, &#39;(&#39;, ...)
+--&gt; same string (&#39;:&#39;, &#39;.&#39;, &#39;(&#39;, ...)</code></pre>
+
+<p>You can change this default by “convert” block. Here is an example:</p>
+
+<pre><code>convert
+  PLUS &#39;PlusClass&#39;      # We use PlusClass for symbol of `PLUS&#39;
+  MIN  &#39;MinusClass&#39;     # We use MinusClass for symbol of `MIN&#39;
+end</code></pre>
+
+<p>We can use almost all ruby value can be used by token symbol, except
+&#39;false&#39; and &#39;nil&#39;.  These cause unexpected parse error.</p>
+
+<p>If you want to use String as token symbol, special care is required. For
+example:</p>
+
+<pre><code>convert
+  class &#39;&quot;cls&quot;&#39;            # in code, &quot;cls&quot;
+  PLUS &#39;&quot;plus\n&quot;&#39;          # in code, &quot;plus\n&quot;
+  MIN  &quot;\&quot;minus#{val}\&quot;&quot;   # in code, \&quot;minus#{val}\&quot;
+end</code></pre>
+
+<h2 id="label-Start+Rule">Start Rule</h2>
+
+<p>&#39;%start&#39; in yacc. This changes start rule.</p>
+
+<pre><code>start real_target
+</code></pre>
+
+<h2 id="label-User+Code+Block">User Code Block</h2>
+
+<p>“User Code Block” is a Ruby source code which is copied to output. There
+are three user code blocks, “header” “inner” and “footer”.</p>
+
+<p>Format of user code is like this:</p>
+
+<pre><code>---- header
+  ruby statement
+  ruby statement
+  ruby statement
+
+---- inner
+  ruby statement
+     :
+     :</code></pre>
+
+<p>If four &#39;-&#39; exist on the line head, <a
+href="../../../../classes/Racc.html">Racc</a> treats it as the beginning of
+the user code block.  The name of the user code block must be one word.</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+              </div>
+
+    </div>
+  </body>
+</html>

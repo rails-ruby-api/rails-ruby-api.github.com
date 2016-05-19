@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>miscellaneous.rdoc</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/github.css" type="text/css" media="screen" />
+<script src="../../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            miscellaneous.rdoc
+        </h1>
+        <ul class="files">
+            
+            <li>
+                doc/syntax/miscellaneous.rdoc
+                
+            </li>
+            <li>Last modified: 2015-12-18 04:39:49 +0100</li>
+        </ul>
+    </div>
+
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<h1 id="label-Miscellaneous+Syntax">Miscellaneous Syntax</h1>
+
+<h2 id="label-Ending+an+Expression">Ending an Expression</h2>
+
+<p>Ruby uses a newline as the end of an expression.  When ending a line with
+an operator, open parentheses, comma, etc. the expression will continue.</p>
+
+<p>You can end an expression with a <code>;</code> (semicolon).  Semicolons
+are most frequently used with <code>ruby -e</code>.</p>
+
+<h2 id="label-Indentation">Indentation</h2>
+
+<p>Ruby does not require any indentation.  Typically, ruby programs are
+indented two spaces.</p>
+
+<p>If you run ruby with warnings enabled and have an indentation mis-match,
+you will receive a warning.</p>
+
+<h2 id="label-alias"><code>alias</code></h2>
+
+<p>The <code>alias</code> keyword is most frequently used to alias methods. 
+When aliasing a method, you can use either its name or a symbol:</p>
+
+<pre><code>alias new_name old_name
+alias :new_name :old_name
+</code></pre>
+
+<p>For methods, Module#alias_method can often be used instead of
+<code>alias</code>.</p>
+
+<p>You can also use <code>alias</code> to alias global variables:</p>
+
+<pre><code>$old = 0
+
+alias $new $old
+
+p $new # prints 0
+</code></pre>
+
+<p>You may use <code>alias</code> in any scope.</p>
+
+<h2 id="label-undef"><code>undef</code></h2>
+
+<p>The <code>undef</code> keyword prevents the current class from responding
+to calls to the named methods.</p>
+
+<pre><code>undef my_method
+</code></pre>
+
+<p>You may use symbols instead of method names:</p>
+
+<pre><code>undef :my_method
+</code></pre>
+
+<p>You may undef multiple methods:</p>
+
+<pre><code>undef method1, method2
+</code></pre>
+
+<p>You may use <code>undef</code> in any scope.  See also Module#undef_method</p>
+
+<h2 id="label-defined-3F"><code>defined?</code></h2>
+
+<p><code>defined?</code> is a keyword that returns a string describing its
+argument:</p>
+
+<pre><code>p defined?(UNDEFINED_CONSTANT) # prints nil
+p defined?(RUBY_VERSION)       # prints &quot;constant&quot;
+p defined?(1 + 1)              # prints &quot;method&quot;
+</code></pre>
+
+<p>You don&#39;t need to use parenthesis with <code>defined?</code>, but they
+are recommended due to the low precedence of <code>defined?</code>.</p>
+
+<p>For example, if you wish to check if an instance variable exists and that
+the instance variable is zero:</p>
+
+<pre><code>defined? @instance_variable &amp;&amp; @instance_variable.zero?
+</code></pre>
+
+<p>This returns <code>&quot;expression&quot;</code>, which is not what you
+want if the instance variable is not defined.</p>
+
+<pre><code>@instance_variable = 1
+defined?(@instance_variable) &amp;&amp; @instance_variable.zero?
+</code></pre>
+
+<p>Adding parentheses when checking if the instance variable is defined is a
+better check.  This correctly returns <code>nil</code> when the instance
+variable is not defined and <code>false</code> when the instance variable
+is not zero.</p>
+
+<p>Using the specific reflection methods such as instance_variable_defined?
+for instance variables or const_defined? for constants is less error prone
+than using <code>defined?</code>.</p>
+
+<h2 id="label-BEGIN+and+END"><code>BEGIN</code> and <code>END</code></h2>
+
+<p><code>BEGIN</code> defines a block that is run before any other code in the
+current file. It is typically used in one-liners with <code>ruby -e</code>.
+Similarly <code>END</code> defines a block that is run after any other
+code.</p>
+
+<p><code>BEGIN</code> must appear at top-level and <code>END</code> will issue
+a warning when you use it inside a method.</p>
+
+<p>Here is an example:</p>
+
+<pre><code>BEGIN {
+  count = 0
+}
+</code></pre>
+
+<p>You must use <code>{</code> and <code>}</code> you may not use
+<code>do</code> and <code>end</code>.</p>
+
+<p>Here is an example one-liner that adds numbers from standard input or any
+files in the argument list:</p>
+
+<pre><code>ruby -ne &#39;BEGIN { count = 0 }; END { puts count }; count += gets.to_i&#39;</code></pre>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+              </div>
+
+    </div>
+  </body>
+</html>

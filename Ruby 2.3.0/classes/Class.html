@@ -1,0 +1,518 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Class</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/github.css" type="text/css" media="screen" />
+<script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            Class 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="Module.html">Module</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../files/class_c.html">class.c</a></li>
+            
+            <li><a href="../files/ext/json/lib/json/common_rb.html">ext/json/lib/json/common.rb</a></li>
+            
+            <li><a href="../files/object_c.html">object.c</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>Extends any <a href="Class.html">Class</a> to include
+<em>json_creatable?</em> method.</p>
+
+<p>Classes in Ruby are first-class objects—each is an instance of class
+<code>Class</code>.</p>
+
+<p>Typically, you create a new class by using:</p>
+
+<pre><code>class Name
+ # some code describing the class behavior
+end
+</code></pre>
+
+<p>When a new class is created, an object of type <a
+href="Class.html">Class</a> is initialized and assigned to a global
+constant (<code>Name</code> in this case).</p>
+
+<p>When <code>Name.new</code> is called to create a new object, the
+<code>new</code> method in <code>Class</code> is run by default. This can
+be demonstrated by overriding <code>new</code> in <code>Class</code>:</p>
+
+<pre><code>class Class
+  alias old_new new
+  def new(*args)
+    print &quot;Creating a new &quot;, self.name, &quot;\n&quot;
+    old_new(*args)
+  end
+end
+
+class Name
+end
+
+n = Name.new
+</code></pre>
+
+<p><em>produces:</em></p>
+
+<pre><code>Creating a new Name
+</code></pre>
+
+<p>Classes, modules, and objects are interrelated. In the diagram that
+follows, the vertical arrows represent inheritance, and the parentheses
+metaclasses. All metaclasses are instances of the class `Class&#39;.</p>
+
+<pre><code>                         +---------+             +-...
+                         |         |             |
+         BasicObject-----|--&gt;(BasicObject)-------|-...
+             ^           |         ^             |
+             |           |         |             |
+          Object---------|-----&gt;(Object)---------|-...
+             ^           |         ^             |
+             |           |         |             |
+             +-------+   |         +--------+    |
+             |       |   |         |        |    |
+             |    Module-|---------|---&gt;(Module)-|-...
+             |       ^   |         |        ^    |
+             |       |   |         |        |    |
+             |     Class-|---------|----&gt;(Class)-|-...
+             |       ^   |         |        ^    |
+             |       +---+         |        +----+
+             |                     |
+obj---&gt;OtherClass----------&gt;(OtherClass)-----------...</code></pre>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>A</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-allocate">allocate</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>J</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-json_creatable-3F">json_creatable?</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-new">new</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>S</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-superclass">superclass</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <b>Class.new(super_class=Object)               &rarr; a_class
+Class.new(super_class=Object) { |mod| ... } &rarr; a_class
+</b>
+            
+            <a href="../classes/Class.html#method-c-new" name="method-c-new" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Creates a new anonymous (unnamed) class with the given superclass (or
+<code>Object</code> if no parameter is given). You can give a class a name
+by assigning the class object to a constant.</p>
+
+<p>If a block is given, it is passed the class object, and the block is
+evaluated in the context of this class using <code>class_eval</code>.</p>
+
+<pre><code>fred = Class.new do
+  def meth1
+    &quot;hello&quot;
+  end
+  def meth2
+    &quot;bye&quot;
+  end
+end
+
+a = fred.new     #=&gt; #&lt;#&lt;Class:0x100381890&gt;:0x100376b98&gt;
+a.meth1          #=&gt; &quot;hello&quot;
+a.meth2          #=&gt; &quot;bye&quot;
+</code></pre>
+
+<p>Assign the class to a constant (name starting uppercase) if you want to
+treat it like a regular class.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre>static VALUE
+rb_class_initialize(int argc, VALUE *argv, VALUE klass)
+{
+    VALUE super;
+
+    if (RCLASS_SUPER(klass) != 0 || klass == rb_cBasicObject) {
+        rb_raise(rb_eTypeError, &quot;already initialized class&quot;);
+    }
+    if (argc == 0) {
+        super = rb_cObject;
+    }
+    else {
+        rb_scan_args(argc, argv, &quot;01&quot;, &amp;super);
+        rb_check_inheritable(super);
+        if (super != rb_cBasicObject &amp;&amp; !RCLASS_SUPER(super)) {
+            rb_raise(rb_eTypeError, &quot;can&#39;t inherit uninitialized class&quot;);
+        }
+    }
+    RCLASS_SET_SUPER(klass, super);
+    rb_make_metaclass(klass, RBASIC(super)-&gt;klass);
+    rb_class_inherited(super, klass);
+    rb_mod_initialize(klass);
+
+    return klass;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-allocate">
+            
+              <b>class.allocate()   &rarr;   obj
+</b>
+            
+            <a href="../classes/Class.html#method-i-allocate" name="method-i-allocate" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Allocates space for a new object of <em>class</em>&#39;s class and does not
+call initialize on the new instance. The returned object must be an
+instance of <em>class</em>.</p>
+
+<pre><code>klass = Class.new do
+  def initialize(*args)
+    @initialized = true
+  end
+
+  def initialized?
+    @initialized || false
+  end
+end
+
+klass.allocate.initialized? #=&gt; false
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-allocate_source')" id="l_method-i-allocate_source">show</a>
+                
+              </p>
+              <div id="method-i-allocate_source" class="dyn-source">
+                <pre>VALUE
+rb_obj_alloc(VALUE klass)
+{
+    VALUE obj;
+    rb_alloc_func_t allocator;
+
+    if (RCLASS_SUPER(klass) == 0 &amp;&amp; klass != rb_cBasicObject) {
+        rb_raise(rb_eTypeError, &quot;can&#39;t instantiate uninitialized class&quot;);
+    }
+    if (FL_TEST(klass, FL_SINGLETON)) {
+        rb_raise(rb_eTypeError, &quot;can&#39;t create instance of singleton class&quot;);
+    }
+    allocator = rb_get_alloc_func(klass);
+    if (!allocator) {
+        rb_undefined_alloc(klass);
+    }
+
+    RUBY_DTRACE_CREATE_HOOK(OBJECT, rb_class2name(klass));
+
+    obj = (*allocator)(klass);
+
+    if (rb_obj_class(obj) != rb_class_real(klass)) {
+        rb_raise(rb_eTypeError, &quot;wrong instance allocation&quot;);
+    }
+    return obj;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-json_creatable-3F">
+            
+              <b>json_creatable?</b>()
+            
+            <a href="../classes/Class.html#method-i-json_creatable-3F" name="method-i-json_creatable-3F" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns true if this class can be used to create an instance from a
+serialised <a href="JSON.html">JSON</a> string. The class has to implement
+a class method <em>json_create</em> that expects a hash as first parameter.
+The hash should include the required data.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-json_creatable-3F_source')" id="l_method-i-json_creatable-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-json_creatable-3F_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/json/lib/json/common.rb, line 482</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">json_creatable?</span>
+  <span class="ruby-identifier">respond_to?</span>(<span class="ruby-value">:json_create</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-new">
+            
+              <b>class.new(args, ...)    &rarr;  obj
+</b>
+            
+            <a href="../classes/Class.html#method-i-new" name="method-i-new" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Calls <code>allocate</code> to create a new object of <em>class</em>&#39;s
+class, then invokes that object&#39;s <code>initialize</code> method,
+passing it <em>args</em>. This is the method that ends up getting called
+whenever an object is constructed using .new.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-new_source')" id="l_method-i-new_source">show</a>
+                
+              </p>
+              <div id="method-i-new_source" class="dyn-source">
+                <pre>VALUE
+rb_class_new_instance(int argc, const VALUE *argv, VALUE klass)
+{
+    VALUE obj;
+
+    obj = rb_obj_alloc(klass);
+    rb_obj_call_init(obj, argc, argv);
+
+    return obj;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-superclass">
+            
+              <b>class.superclass &rarr; a_super_class or nil
+</b>
+            
+            <a href="../classes/Class.html#method-i-superclass" name="method-i-superclass" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the superclass of <em>class</em>, or <code>nil</code>.</p>
+
+<pre><code>File.superclass          #=&gt; IO
+IO.superclass            #=&gt; Object
+Object.superclass        #=&gt; BasicObject
+class Foo; end
+class Bar &lt; Foo; end
+Bar.superclass           #=&gt; Foo
+</code></pre>
+
+<p>Returns nil when the given class does not have a parent class:</p>
+
+<pre><code>BasicObject.superclass   #=&gt; nil
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-superclass_source')" id="l_method-i-superclass_source">show</a>
+                
+              </p>
+              <div id="method-i-superclass_source" class="dyn-source">
+                <pre>VALUE
+rb_class_superclass(VALUE klass)
+{
+    VALUE super = RCLASS_SUPER(klass);
+
+    if (!super) {
+        if (klass == rb_cBasicObject) return Qnil;
+        rb_raise(rb_eTypeError, &quot;uninitialized class&quot;);
+    }
+    while (RB_TYPE_P(super, T_ICLASS)) {
+        super = RCLASS_SUPER(super);
+    }
+    if (!super) {
+        return Qnil;
+    }
+    return super;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+
+    </div>
+  </body>
+</html>    

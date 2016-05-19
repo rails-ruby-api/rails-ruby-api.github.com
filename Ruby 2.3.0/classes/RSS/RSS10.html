@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>RSS::RSS10</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Module</span> 
+            RSS::RSS10 
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/lib/rss/1_0_rb.html">lib/rss/1.0.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<h1 id="module-RSS::RSS10-label-RSS+1.0+support"><a href="../RSS.html">RSS</a> 1.0 support</h1>
+
+<p><a href="../RSS.html">RSS</a> has three different versions. This module
+contains support for version <a
+href="http://web.resource.org/rss/1.0/">1.0</a></p>
+
+<h2 id="module-RSS::RSS10-label-Producing+RSS+1.0">Producing <a href="../RSS.html">RSS</a> 1.0</h2>
+
+<p>Producing our own <a href="../RSS.html">RSS</a> feeds is easy as well.
+Let&#39;s make a very basic feed:</p>
+
+<pre><code>require &quot;rss&quot;
+
+rss = RSS::Maker.make(&quot;1.0&quot;) do |maker|
+  maker.channel.language = &quot;en&quot;
+  maker.channel.author = &quot;matz&quot;
+  maker.channel.about = &quot;About my feed.&quot;
+  maker.channel.updated = Time.now.to_s
+  maker.channel.link = &quot;http://www.ruby-lang.org/en/feeds/news.rss&quot;
+  maker.channel.title = &quot;Example Feed&quot;
+  maker.channel.description = &quot;A longer description of my feed.&quot;
+  maker.items.new_item do |item|
+    item.link = &quot;http://www.ruby-lang.org/en/news/2010/12/25/ruby-1-9-2-p136-is-released/&quot;
+    item.title = &quot;Ruby 1.9.2-p136 is released&quot;
+    item.updated = Time.now.to_s
+  end
+end
+
+puts rss
+</code></pre>
+
+<p>As you can see, this is a very Builder-like DSL. This code will spit out an
+<a href="../RSS.html">RSS</a> 1.0 feed with one item. If we needed a second
+item, we&#39;d make another block with maker.items.new_item and build a
+second one.</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>A</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-append_features">append_features</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+      <!-- Section constants -->
+      <div class="sectiontitle">Constants</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class="attr-name">NSPOOL</td>
+            <td>=</td>
+            <td class="attr-value">{}</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">ELEMENTS</td>
+            <td>=</td>
+            <td class="attr-value">[]</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+      </table>
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-append_features">
+            
+              <b>append_features</b>(klass)
+            
+            <a href="../../classes/RSS/RSS10.html#method-c-append_features" name="method-c-append_features" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-append_features_source')" id="l_method-c-append_features_source">show</a>
+                
+              </p>
+              <div id="method-c-append_features_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rss/1.0.rb, line 42</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">self</span>.<span class="ruby-identifier">append_features</span>(<span class="ruby-identifier">klass</span>)
+  <span class="ruby-keyword">super</span>
+
+  <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">install_must_call_validator</span>(<span class="ruby-string">&#39;&#39;</span>, <span class="ruby-operator">::</span><span class="ruby-constant">RSS</span><span class="ruby-operator">::</span><span class="ruby-constant">URI</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                        </div>
+
+    </div>
+  </body>
+</html>    

@@ -1,0 +1,824 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>WEBrick::BasicLog</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            WEBrick::BasicLog 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/lib/webrick/log_rb.html">lib/webrick/log.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>A generic logging class</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>#</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-3C-3C">&lt;&lt;</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>C</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-close">close</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>D</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-debug">debug</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-debug-3F">debug?</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>E</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-error">error</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-error-3F">error?</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>F</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-fatal">fatal</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-fatal-3F">fatal?</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>I</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-info">info</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-info-3F">info?</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>L</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-log">log</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>W</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-warn">warn</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-warn-3F">warn?</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+      <!-- Section constants -->
+      <div class="sectiontitle">Constants</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class="attr-name">FATAL</td>
+            <td>=</td>
+            <td class="attr-value">1</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Fatal log level which indicates a server crash</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">ERROR</td>
+            <td>=</td>
+            <td class="attr-value">2</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Error log level which indicates a recoverable error</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">WARN</td>
+            <td>=</td>
+            <td class="attr-value">3</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Warning log level which indicates a possible problem</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">INFO</td>
+            <td>=</td>
+            <td class="attr-value">4</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Information log level which indicates possibly useful information</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">DEBUG</td>
+            <td>=</td>
+            <td class="attr-value">5</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Debugging error level for messages used in server development or debugging</p></td>
+            </tr>
+          
+        
+      </table>
+    
+
+
+    
+      <!-- Section attributes -->
+      <div class="sectiontitle">Attributes</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [RW]
+            </td>
+            <td class='attr-name'>level</td>
+            <td class='attr-desc'><p>log-level, messages above this level will be logged</p></td>
+          </tr>
+        
+      </table>
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <b>new</b>(log_file=nil, level=nil)
+            
+            <a href="../../classes/WEBrick/BasicLog.html#method-c-new" name="method-c-new" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Initializes a new logger for <code>log_file</code> that outputs messages at
+<code>level</code> or higher.  <code>log_file</code> can be a filename, an
+IO-like object that responds to <a
+href="BasicLog.html#method-i-3C-3C"><<</a> or nil which outputs to $stderr.</p>
+
+<p>If no level is given <a href="BasicLog.html#INFO">INFO</a> is chosen by
+default</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/webrick/log.rb, line 50</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">initialize</span>(<span class="ruby-identifier">log_file</span>=<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">level</span>=<span class="ruby-keyword">nil</span>)
+  <span class="ruby-ivar">@level</span> = <span class="ruby-identifier">level</span> <span class="ruby-operator">||</span> <span class="ruby-constant">INFO</span>
+  <span class="ruby-keyword">case</span> <span class="ruby-identifier">log_file</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-constant">String</span>
+    <span class="ruby-ivar">@log</span> = <span class="ruby-identifier">open</span>(<span class="ruby-identifier">log_file</span>, <span class="ruby-string">&quot;a+&quot;</span>)
+    <span class="ruby-ivar">@log</span>.<span class="ruby-identifier">sync</span> = <span class="ruby-keyword">true</span>
+    <span class="ruby-ivar">@opened</span> = <span class="ruby-keyword">true</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-constant">NilClass</span>
+    <span class="ruby-ivar">@log</span> = <span class="ruby-identifier">$stderr</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-ivar">@log</span> = <span class="ruby-identifier">log_file</span>  <span class="ruby-comment"># requires &quot;&lt;&lt;&quot;. (see BasicLog#log)</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-3C-3C">
+            
+              <b>&lt;&lt;</b>(obj)
+            
+            <a href="../../classes/WEBrick/BasicLog.html#method-i-3C-3C" name="method-i-3C-3C" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Synonym for log(INFO, obj.to_s)</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-3C-3C_source')" id="l_method-i-3C-3C_source">show</a>
+                
+              </p>
+              <div id="method-i-3C-3C_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/webrick/log.rb, line 84</span>
+<span class="ruby-keyword">def</span> <span class="ruby-operator">&lt;&lt;</span>(<span class="ruby-keyword ruby-title">obj</span>)
+  <span class="ruby-identifier">log</span>(<span class="ruby-constant">INFO</span>, <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">to_s</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-close">
+            
+              <b>close</b>()
+            
+            <a href="../../classes/WEBrick/BasicLog.html#method-i-close" name="method-i-close" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Closes the logger (also closes the log device associated to the logger)</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-close_source')" id="l_method-i-close_source">show</a>
+                
+              </p>
+              <div id="method-i-close_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/webrick/log.rb, line 66</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">close</span>
+  <span class="ruby-ivar">@log</span>.<span class="ruby-identifier">close</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@opened</span>
+  <span class="ruby-ivar">@log</span> = <span class="ruby-keyword">nil</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-debug">
+            
+              <b>debug</b>(msg)
+            
+            <a href="../../classes/WEBrick/BasicLog.html#method-i-debug" name="method-i-debug" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Shortcut for logging a <a href="BasicLog.html#DEBUG">DEBUG</a> message</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-debug_source')" id="l_method-i-debug_source">show</a>
+                
+              </p>
+              <div id="method-i-debug_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/webrick/log.rb, line 97</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">debug</span>(<span class="ruby-identifier">msg</span>) <span class="ruby-identifier">log</span>(<span class="ruby-constant">DEBUG</span>, <span class="ruby-string">&quot;DEBUG &quot;</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">format</span>(<span class="ruby-identifier">msg</span>)); <span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-debug-3F">
+            
+              <b>debug?</b>()
+            
+            <a href="../../classes/WEBrick/BasicLog.html#method-i-debug-3F" name="method-i-debug-3F" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Will the logger output <a href="BasicLog.html#DEBUG">DEBUG</a> messages?</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-debug-3F_source')" id="l_method-i-debug-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-debug-3F_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/webrick/log.rb, line 108</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">debug?</span>; <span class="ruby-ivar">@level</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-constant">DEBUG</span>; <span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-error">
+            
+              <b>error</b>(msg)
+            
+            <a href="../../classes/WEBrick/BasicLog.html#method-i-error" name="method-i-error" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Shortcut for logging an <a href="BasicLog.html#ERROR">ERROR</a> message</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-error_source')" id="l_method-i-error_source">show</a>
+                
+              </p>
+              <div id="method-i-error_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/webrick/log.rb, line 91</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">error</span>(<span class="ruby-identifier">msg</span>) <span class="ruby-identifier">log</span>(<span class="ruby-constant">ERROR</span>, <span class="ruby-string">&quot;ERROR &quot;</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">format</span>(<span class="ruby-identifier">msg</span>)); <span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-error-3F">
+            
+              <b>error?</b>()
+            
+            <a href="../../classes/WEBrick/BasicLog.html#method-i-error-3F" name="method-i-error-3F" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Will the logger output <a href="BasicLog.html#ERROR">ERROR</a> messages?</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-error-3F_source')" id="l_method-i-error-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-error-3F_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/webrick/log.rb, line 102</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">error?</span>; <span class="ruby-ivar">@level</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-constant">ERROR</span>; <span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-fatal">
+            
+              <b>fatal</b>(msg)
+            
+            <a href="../../classes/WEBrick/BasicLog.html#method-i-fatal" name="method-i-fatal" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Shortcut for logging a <a href="BasicLog.html#FATAL">FATAL</a> message</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-fatal_source')" id="l_method-i-fatal_source">show</a>
+                
+              </p>
+              <div id="method-i-fatal_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/webrick/log.rb, line 89</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">fatal</span>(<span class="ruby-identifier">msg</span>) <span class="ruby-identifier">log</span>(<span class="ruby-constant">FATAL</span>, <span class="ruby-string">&quot;FATAL &quot;</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">format</span>(<span class="ruby-identifier">msg</span>)); <span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-fatal-3F">
+            
+              <b>fatal?</b>()
+            
+            <a href="../../classes/WEBrick/BasicLog.html#method-i-fatal-3F" name="method-i-fatal-3F" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Will the logger output <a href="BasicLog.html#FATAL">FATAL</a> messages?</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-fatal-3F_source')" id="l_method-i-fatal-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-fatal-3F_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/webrick/log.rb, line 100</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">fatal?</span>; <span class="ruby-ivar">@level</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-constant">FATAL</span>; <span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-info">
+            
+              <b>info</b>(msg)
+            
+            <a href="../../classes/WEBrick/BasicLog.html#method-i-info" name="method-i-info" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Shortcut for logging an <a href="BasicLog.html#INFO">INFO</a> message</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-info_source')" id="l_method-i-info_source">show</a>
+                
+              </p>
+              <div id="method-i-info_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/webrick/log.rb, line 95</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">info</span>(<span class="ruby-identifier">msg</span>)  <span class="ruby-identifier">log</span>(<span class="ruby-constant">INFO</span>,  <span class="ruby-string">&quot;INFO  &quot;</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">format</span>(<span class="ruby-identifier">msg</span>)); <span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-info-3F">
+            
+              <b>info?</b>()
+            
+            <a href="../../classes/WEBrick/BasicLog.html#method-i-info-3F" name="method-i-info-3F" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Will the logger output <a href="BasicLog.html#INFO">INFO</a> messages?</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-info-3F_source')" id="l_method-i-info-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-info-3F_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/webrick/log.rb, line 106</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">info?</span>;  <span class="ruby-ivar">@level</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-constant">INFO</span>; <span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-log">
+            
+              <b>log</b>(level, data)
+            
+            <a href="../../classes/WEBrick/BasicLog.html#method-i-log" name="method-i-log" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Logs <code>data</code> at <code>level</code> if the given level is above
+the current log level.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-log_source')" id="l_method-i-log_source">show</a>
+                
+              </p>
+              <div id="method-i-log_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/webrick/log.rb, line 75</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">log</span>(<span class="ruby-identifier">level</span>, <span class="ruby-identifier">data</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@log</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">level</span> <span class="ruby-operator">&lt;=</span> <span class="ruby-ivar">@level</span>
+    <span class="ruby-identifier">data</span> <span class="ruby-operator">+=</span> <span class="ruby-string">&quot;\n&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-regexp">/\n\Z/</span> <span class="ruby-operator">!~</span> <span class="ruby-identifier">data</span>
+    <span class="ruby-ivar">@log</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">data</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-warn">
+            
+              <b>warn</b>(msg)
+            
+            <a href="../../classes/WEBrick/BasicLog.html#method-i-warn" name="method-i-warn" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Shortcut for logging a <a href="BasicLog.html#WARN">WARN</a> message</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-warn_source')" id="l_method-i-warn_source">show</a>
+                
+              </p>
+              <div id="method-i-warn_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/webrick/log.rb, line 93</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">warn</span>(<span class="ruby-identifier">msg</span>)  <span class="ruby-identifier">log</span>(<span class="ruby-constant">WARN</span>,  <span class="ruby-string">&quot;WARN  &quot;</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">format</span>(<span class="ruby-identifier">msg</span>)); <span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-warn-3F">
+            
+              <b>warn?</b>()
+            
+            <a href="../../classes/WEBrick/BasicLog.html#method-i-warn-3F" name="method-i-warn-3F" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Will the logger output <a href="BasicLog.html#WARN">WARN</a> messages?</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-warn-3F_source')" id="l_method-i-warn-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-warn-3F_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/webrick/log.rb, line 104</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">warn?</span>;  <span class="ruby-ivar">@level</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-constant">WARN</span>; <span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+
+    </div>
+  </body>
+</html>    

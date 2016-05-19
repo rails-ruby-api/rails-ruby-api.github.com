@@ -1,0 +1,1010 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>NEWS-1.8.7</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            NEWS-1.8.7
+        </h1>
+        <ul class="files">
+            
+            <li>
+                doc/NEWS-1.8.7
+                
+            </li>
+            <li>Last modified: 2014-09-23 02:13:32 +0200</li>
+        </ul>
+    </div>
+
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<h1 id="label-NEWS+for+Ruby+1.8.7"><a href="../NEWS.html">NEWS</a> for Ruby 1.8.7</h1>
+
+<p>This document is a list of user visible feature changes made between
+releases except for bug fixes.</p>
+
+<p>Note that each entry is kept so brief that no reason behind or reference
+information is supplied with.  For a full list of changes with all
+sufficient information, see the <a href="../ChangeLog.html">ChangeLog</a>
+file.</p>
+
+<h2 id="label-Changes+since+the+1.8.6+release">Changes since the 1.8.6 release</h2>
+
+<h3 id="label-Configuration+changes">Configuration changes</h3>
+<ul><li>
+<p>default C flags</p>
+
+<p>Some C compiler flags may be added by default depending on your
+environment.  Specify optflags=.. and warnflags=.. as necessary to override
+them.</p>
+</li><li>
+<p>vendor_ruby directory</p>
+
+<p>A new library directory named `vendor_ruby&#39; is introduced in addition
+to `site_ruby&#39;.  The idea is to separate libraries installed by the
+package system (`vendor&#39;) from manually (`site&#39;) installed
+libraries preventing the former from getting overwritten by the latter,
+while preserving the user option to override vendor libraries with site
+libraries. (`site_ruby&#39; takes precedence over `vendor_ruby&#39;)</p>
+
+<p>If you are a package maintainer, make each library package configure the
+library passing the `–vendor&#39; option to `extconf.rb&#39; so that the
+library files will get installed under `vendor_ruby&#39;.</p>
+
+<p>You can change the directory locations using configure options such as
+`–with-sitedir=DIR&#39; and `–with-vendordir=DIR&#39;.</p>
+</li></ul>
+
+<h3 id="label-Global+constants">Global constants</h3>
+<ul><li>
+<p>new constants</p>
+<ul><li>
+<p>RUBY_COPYRIGHT</p>
+</li><li>
+<p>RUBY_DESCRIPTION</p>
+</li></ul>
+</li></ul>
+
+<h3 id="label-Library+updates+-28outstanding+ones+only-29">Library updates (outstanding ones only)</h3>
+<ul><li>
+<p>new library</p>
+<ul><li>
+<p>securerandom</p>
+</li></ul>
+</li><li>
+<p>builtin classes</p>
+<ul><li>
+<p><a href="../../classes/Array.html#method-i-flatten">Array#flatten</a></p>
+</li><li>
+<p><a href="../../classes/Array.html#method-i-flatten-21">Array#flatten!</a></p>
+
+<p>Takes an optional argument that determines the level of recursion to
+flatten.</p>
+</li><li>
+<p><a href="../../classes/Array.html#method-i-eql-3F">Array#eql?</a></p>
+</li><li>
+<p><a href="../../classes/Array.html#method-i-hash">Array#hash</a></p>
+</li><li>
+<p>Array#==</p>
+</li><li>
+<p>Array#&lt;=&gt;</p>
+
+<p>Handle recursive data properly.</p>
+</li><li>
+<p><a href="../../classes/Array.html#method-i-index">Array#index</a></p>
+</li><li>
+<p><a href="../../classes/Array.html#method-i-rindex">Array#rindex</a></p>
+
+<p>Use a given block if no argument is given.</p>
+</li><li>
+<p><a href="../../classes/Array.html#method-i-collect-21">Array#collect!</a></p>
+</li><li>
+<p><a href="../../classes/Array.html#method-i-map-21">Array#map!</a></p>
+</li><li>
+<p><a href="../../classes/Array.html#method-i-each">Array#each</a></p>
+</li><li>
+<p><a href="../../classes/Array.html#method-i-each_index">Array#each_index</a></p>
+</li><li>
+<p><a
+href="../../classes/Array.html#method-i-reverse_each">Array#reverse_each</a></p>
+</li><li>
+<p><a href="../../classes/Array.html#method-i-reject">Array#reject</a></p>
+</li><li>
+<p><a href="../../classes/Array.html#method-i-reject-21">Array#reject!</a></p>
+</li><li>
+<p><a href="../../classes/Array.html#method-i-delete_if">Array#delete_if</a></p>
+</li><li>
+<p><a href="../../classes/Array.html#method-i-select">Array#select</a></p>
+
+<p>Return an enumerator if no block is given.</p>
+
+<p>Note that map and collect still return an array unlike Ruby 1.9 to keep
+compatibility.</p>
+</li><li>
+<p><a href="../../classes/Array.html#method-i-pop">Array#pop</a></p>
+</li><li>
+<p><a href="../../classes/Array.html#method-i-shift">Array#shift</a></p>
+
+<p>Take an optional argument specifying the number of elements to remove.</p>
+</li><li>
+<p>Array#choice</p>
+</li><li>
+<p><a
+href="../../classes/Array.html#method-i-combination">Array#combination</a></p>
+</li><li>
+<p><a href="../../classes/Array.html#method-i-cycle">Array#cycle</a></p>
+</li><li>
+<p><a href="../../classes/Array.html#method-i-drop">Array#drop</a></p>
+</li><li>
+<p><a href="../../classes/Array.html#method-i-drop_while">Array#drop_while</a></p>
+</li><li>
+<p><a
+href="../../classes/Array.html#method-i-permutation">Array#permutation</a></p>
+</li><li>
+<p><a href="../../classes/Array.html#method-i-product">Array#product</a></p>
+</li><li>
+<p><a href="../../classes/Array.html#method-i-shuffle">Array#shuffle</a></p>
+</li><li>
+<p><a href="../../classes/Array.html#method-i-shuffle-21">Array#shuffle!</a></p>
+</li><li>
+<p><a href="../../classes/Array.html#method-i-take">Array#take</a>,</p>
+</li><li>
+<p><a href="../../classes/Array.html#method-i-take_while">Array#take_while</a></p>
+
+<p>New methods.</p>
+</li><li>
+<p><a href="../../classes/Binding.html#method-i-eval">Binding#eval</a></p>
+
+<p>New method.</p>
+</li><li>
+<p><a href="../../classes/Dir.html#method-i-each">Dir#each</a></p>
+</li><li>
+<p>Dir#foreach</p>
+
+<p>Return an enumerator if no block is given.</p>
+</li><li>
+<p>Enumerable::Enumerator</p>
+
+<p>New class for various enumeration defined by the enumerator library.</p>
+</li><li>
+<p><a
+href="../../classes/Enumerable.html#method-i-each_slice">Enumerable#each_slice</a></p>
+</li><li>
+<p><a
+href="../../classes/Enumerable.html#method-i-each_cons">Enumerable#each_cons</a></p>
+</li><li>
+<p><a href="../../classes/Object.html#method-i-to_enum">Object#to_enum</a></p>
+</li><li>
+<p><a href="../../classes/Object.html#method-i-enum_for">Object#enum_for</a></p>
+
+<p>New methods for various enumeration defined by the enumerator library.</p>
+</li><li>
+<p><a href="../../classes/Enumerable.html#method-i-count">Enumerable#count</a></p>
+</li><li>
+<p><a href="../../classes/Enumerable.html#method-i-cycle">Enumerable#cycle</a></p>
+</li><li>
+<p><a href="../../classes/Enumerable.html#method-i-drop">Enumerable#drop</a></p>
+</li><li>
+<p><a
+href="../../classes/Enumerable.html#method-i-drop_while">Enumerable#drop_while</a></p>
+</li><li>
+<p><a
+href="../../classes/Enumerable.html#method-i-find_index">Enumerable#find_index</a></p>
+</li><li>
+<p><a href="../../classes/Enumerable.html#method-i-first">Enumerable#first</a></p>
+</li><li>
+<p><a
+href="../../classes/Enumerable.html#method-i-group_by">Enumerable#group_by</a></p>
+</li><li>
+<p><a
+href="../../classes/Enumerable.html#method-i-max_by">Enumerable#max_by</a></p>
+</li><li>
+<p><a
+href="../../classes/Enumerable.html#method-i-min_by">Enumerable#min_by</a></p>
+</li><li>
+<p><a
+href="../../classes/Enumerable.html#method-i-minmax">Enumerable#minmax</a></p>
+</li><li>
+<p><a
+href="../../classes/Enumerable.html#method-i-minmax_by">Enumerable#minmax_by</a></p>
+</li><li>
+<p><a
+href="../../classes/Enumerable.html#method-i-none-3F">Enumerable#none?</a></p>
+</li><li>
+<p><a href="../../classes/Enumerable.html#method-i-one-3F">Enumerable#one?</a></p>
+</li><li>
+<p><a href="../../classes/Enumerable.html#method-i-take">Enumerable#take</a></p>
+</li><li>
+<p><a
+href="../../classes/Enumerable.html#method-i-take_while">Enumerable#take_while</a></p>
+
+<p>New methods.</p>
+</li><li>
+<p><a href="../../classes/Enumerable.html#method-i-find">Enumerable#find</a></p>
+</li><li>
+<p><a
+href="../../classes/Enumerable.html#method-i-find_all">Enumerable#find_all</a></p>
+</li><li>
+<p><a
+href="../../classes/Enumerable.html#method-i-partition">Enumerable#partition</a></p>
+</li><li>
+<p><a
+href="../../classes/Enumerable.html#method-i-reject">Enumerable#reject</a></p>
+</li><li>
+<p><a
+href="../../classes/Enumerable.html#method-i-select">Enumerable#select</a></p>
+</li><li>
+<p><a
+href="../../classes/Enumerable.html#method-i-sort_by">Enumerable#sort_by</a></p>
+
+<p>Return an enumerator if no block is given.</p>
+
+<p>Note that map and collect still return an array unlike Ruby 1.9 to keep
+compatibility.</p>
+</li><li>
+<p><a
+href="../../classes/Enumerable.html#method-i-inject">Enumerable#inject</a></p>
+
+<p>Accepts a binary operator instead of a block.</p>
+</li><li>
+<p><a
+href="../../classes/Enumerable.html#method-i-reduce">Enumerable#reduce</a></p>
+
+<p>New alias to inject.</p>
+</li><li>
+<p><a href="../../classes/Enumerable.html#method-i-to_a">Enumerable#to_a</a></p>
+
+<p>Can take optional arguments and pass them to each.</p>
+</li><li>
+<p><a href="../../classes/Hash.html#method-i-eql-3F">Hash#eql?</a></p>
+</li><li>
+<p><a href="../../classes/Hash.html#method-i-hash">Hash#hash</a></p>
+</li><li>
+<p>Hash#==</p>
+
+<p>Handle recursive data properly.</p>
+</li><li>
+<p><a href="../../classes/Hash.html#method-i-delete_if">Hash#delete_if</a></p>
+</li><li>
+<p><a href="../../classes/Hash.html#method-i-each">Hash#each</a></p>
+</li><li>
+<p><a href="../../classes/Hash.html#method-i-each_key">Hash#each_key</a></p>
+</li><li>
+<p><a href="../../classes/Hash.html#method-i-each_pair">Hash#each_pair</a></p>
+</li><li>
+<p><a href="../../classes/Hash.html#method-i-each_value">Hash#each_value</a></p>
+</li><li>
+<p><a href="../../classes/Hash.html#method-i-reject-21">Hash#reject!</a></p>
+</li><li>
+<p><a href="../../classes/Hash.html#method-i-select">Hash#select</a></p>
+</li><li>
+<p><a href="../../classes/ENV.html#method-c-delete_if">ENV.delete_if</a></p>
+</li><li>
+<p><a href="../../classes/ENV.html#method-c-each">ENV.each</a></p>
+</li><li>
+<p><a href="../../classes/ENV.html#method-c-each_key">ENV.each_key</a></p>
+</li><li>
+<p><a href="../../classes/ENV.html#method-c-each_pair">ENV.each_pair</a></p>
+</li><li>
+<p><a href="../../classes/ENV.html#method-c-each_value">ENV.each_value</a></p>
+</li><li>
+<p><a href="../../classes/ENV.html#method-c-reject-21">ENV.reject!</a></p>
+</li><li>
+<p><a href="../../classes/ENV.html#method-c-select">ENV.select</a></p>
+
+<p>Return an enumerator if no block is given.</p>
+</li><li>
+<p><a href="../../classes/GC.html#method-c-stress">GC.stress</a></p>
+</li><li>
+<p><a href="../../classes/GC.html#method-c-stress-3D">GC.stress=</a></p>
+
+<p>New methods.</p>
+</li><li>
+<p><a href="../../classes/Integer.html#method-i-ord">Integer#ord</a></p>
+</li><li>
+<p><a href="../../classes/Integer.html#method-i-odd-3F">Integer#odd?</a></p>
+</li><li>
+<p><a href="../../classes/Integer.html#method-i-even-3F">Integer#even?</a></p>
+</li><li>
+<p><a href="../../classes/Integer.html#method-i-pred">Integer#pred</a></p>
+
+<p>New methods.</p>
+</li><li>
+<p><a href="../../classes/Integer.html#method-i-downto">Integer#downto</a></p>
+</li><li>
+<p><a href="../../classes/Integer.html#method-i-times">Integer#times</a></p>
+</li><li>
+<p><a href="../../classes/Integer.html#method-i-upto">Integer#upto</a></p>
+
+<p>Return an enumerator if no block is given.</p>
+</li><li>
+<p><a href="../../classes/IO.html#method-i-each">IO#each</a></p>
+</li><li>
+<p><a href="../../classes/IO.html#method-i-each_line">IO#each_line</a></p>
+</li><li>
+<p><a href="../../classes/IO.html#method-i-each_byte">IO#each_byte</a></p>
+</li><li>
+<p><a href="../../classes/IO.html#method-c-foreach">IO.foreach</a></p>
+</li><li>
+<p>ARGF.each</p>
+</li><li>
+<p>ARGF.each_line</p>
+</li><li>
+<p>ARGF.each_byte</p>
+
+<p>Return an enumerator if no block is given.</p>
+</li><li>
+<p><a href="../../classes/IO.html#method-i-bytes">IO#bytes</a></p>
+</li><li>
+<p><a href="../../classes/IO.html#method-i-chars">IO#chars</a></p>
+</li><li>
+<p><a href="../../classes/IO.html#method-i-each_char">IO#each_char</a></p>
+</li><li>
+<p><a href="../../classes/IO.html#method-i-getbyte">IO#getbyte</a></p>
+</li><li>
+<p><a href="../../classes/IO.html#method-i-lines">IO#lines</a></p>
+</li><li>
+<p><a href="../../classes/IO.html#method-i-readbyte">IO#readbyte</a></p>
+</li><li>
+<p>ARGF.bytes</p>
+</li><li>
+<p>ARGF.chars</p>
+</li><li>
+<p>ARGF.each_char</p>
+</li><li>
+<p>ARGF.getbyte</p>
+</li><li>
+<p>ARGF.lines</p>
+</li><li>
+<p>ARGF.readbyte</p>
+
+<p>New methods.</p>
+</li><li>
+<p><a href="../../classes/Method.html#method-i-name">Method#name</a></p>
+</li><li>
+<p><a href="../../classes/Method.html#method-i-owner">Method#owner</a></p>
+</li><li>
+<p><a href="../../classes/Method.html#method-i-receiver">Method#receiver</a></p>
+</li><li>
+<p><a
+href="../../classes/UnboundMethod.html#method-i-name">UnboundMethod#name</a></p>
+</li><li>
+<p><a
+href="../../classes/UnboundMethod.html#method-i-owner">UnboundMethod#owner</a></p>
+
+<p>New methods.</p>
+</li><li>
+<p><a
+href="../../classes/Module.html#method-i-class_exec">Module#class_exec</a></p>
+</li><li>
+<p><a
+href="../../classes/Module.html#method-i-module_exec">Module#module_exec</a></p>
+
+<p>New methods.</p>
+</li><li>
+<p><a href="../../classes/Numeric.html#method-i-step">Numeric#step</a></p>
+
+<p>Return an enumerator if no block is given.</p>
+</li><li>
+<p><a
+href="../../classes/BasicObject.html#method-i-instance_exec">BasicObject#instance_exec</a></p>
+</li><li>
+<p><a href="../../classes/Object.html#method-i-tap">Object#tap</a></p>
+
+<p>New methods.</p>
+</li><li>
+<p><a
+href="../../classes/ObjectSpace.html#method-c-each_object">ObjectSpace.each_object</a></p>
+
+<p>Return an enumerator if no block is given.</p>
+</li><li>
+<p><a href="../../classes/Process.html#method-c-exec">Process.exec</a>
+implemented.</p>
+</li><li>
+<p><a href="../../classes/Range.html#method-i-each">Range#each</a></p>
+</li><li>
+<p><a href="../../classes/Range.html#method-i-step">Range#step</a></p>
+
+<p>Return an enumerator if no block is given.</p>
+</li><li>
+<p><a href="../../classes/Regexp.html#method-c-union">Regexp.union</a> accepts
+an array of patterns.</p>
+</li><li>
+<p><a href="../../classes/String.html#method-i-bytes">String#bytes</a></p>
+
+<p>New method</p>
+</li><li>
+<p><a href="../../classes/String.html#method-i-bytesize">String#bytesize</a></p>
+
+<p>New method, returning the size in bytes. (alias length and size)</p>
+</li><li>
+<p><a href="../../classes/String.html#method-i-chars">String#chars</a></p>
+</li><li>
+<p><a href="../../classes/String.html#method-i-each_char">String#each_char</a></p>
+</li><li>
+<p><a href="../../classes/String.html#method-i-lines">String#lines</a></p>
+</li><li>
+<p><a href="../../classes/String.html#method-i-partition">String#partition</a></p>
+</li><li>
+<p><a
+href="../../classes/String.html#method-i-rpartition">String#rpartition</a></p>
+</li><li>
+<p><a
+href="../../classes/String.html#method-i-start_with-3F">String#start_with?</a></p>
+</li><li>
+<p><a
+href="../../classes/String.html#method-i-end_with-3F">String#end_with?</a></p>
+
+<p>New methods.  These are $KCODE aware unlike index, rindex and include?.</p>
+</li><li>
+<p><a href="../../classes/String.html#method-i-each_byte">String#each_byte</a></p>
+</li><li>
+<p>String#each</p>
+</li><li>
+<p><a href="../../classes/String.html#method-i-each_line">String#each_line</a></p>
+</li><li>
+<p><a href="../../classes/String.html#method-i-gsub">String#gsub</a></p>
+
+<p>Return an enumerator if no block is given.</p>
+</li><li>
+<p><a href="../../classes/String.html#method-i-upto">String#upto</a></p>
+
+<p>An optional second argument is added to specify if the last value should be
+included.</p>
+</li><li>
+<p><a href="../../classes/StopIteration.html">StopIteration</a></p>
+
+<p>New exception class that causes <a
+href="../../classes/Kernel.html#method-i-loop">Kernel#loop</a> to stop
+iteration when raised.</p>
+</li><li>
+<p><a href="../../classes/Struct.html#method-i-each">Struct#each</a></p>
+</li><li>
+<p><a href="../../classes/Struct.html#method-i-each_pair">Struct#each_pair</a></p>
+
+<p>Return an enumerator if no block is given.</p>
+</li><li>
+<p><a href="../../classes/Symbol.html#method-i-to_proc">Symbol#to_proc</a></p>
+
+<p>New method.</p>
+</li><li>
+<p>__method__</p>
+
+<p>New global function that returns the name of the current method as a <a
+href="../../classes/Symbol.html">Symbol</a>.</p>
+</li></ul>
+</li><li>
+<p>enumerator</p>
+<ul><li>
+<p><a href="../../classes/Enumerator.html">Enumerator</a> is now a built-in
+module.  The next and rewind methods are implemented using the “generator”
+library.  Use with care and be aware of the performance loss.</p>
+</li></ul>
+</li><li>
+<p>ipaddr</p>
+<ul><li>
+<p>New methods</p>
+<ul><li>
+<p>IPAddr#&lt;=&gt;</p>
+</li><li>
+<p><a href="../../classes/IPAddr.html#method-i-succ">IPAddr#succ</a></p>
+
+<p><a href="../../classes/IPAddr.html">IPAddr</a> objects are now comparable
+and enumerable having these methods.  This also means that it is possible
+to have a <a href="../../classes/Range.html">Range</a> object between two
+<a href="../../classes/IPAddr.html">IPAddr</a> objects.</p>
+</li><li>
+<p><a href="../../classes/IPAddr.html#method-i-to_range">IPAddr#to_range</a></p>
+
+<p>A new method to create a <a href="../../classes/Range.html">Range</a>
+object for the (network) address.</p>
+</li></ul>
+</li><li>
+<p>Type coercion support</p>
+<ul><li>
+<p>IPAddr#&amp;</p>
+</li><li>
+<p>IPAddr#|</p>
+</li><li>
+<p>IPAddr#==</p>
+</li><li>
+<p><a href="../../classes/IPAddr.html#method-i-include-3F">IPAddr#include?</a></p>
+
+<p>These methods now accept a string or an integer instead of an <a
+href="../../classes/IPAddr.html">IPAddr</a> object as the argument.</p>
+</li></ul>
+</li></ul>
+</li><li>
+<p>net/smtp</p>
+<ul><li>
+<p>Support SSL/TLS.</p>
+</li></ul>
+</li><li>
+<p>openssl</p>
+<ul><li>
+<p>New classes</p>
+<ul><li>
+<p><a href="../../classes/OpenSSL/PKey/EC.html">OpenSSL::PKey::EC</a></p>
+</li><li>
+<p><a
+href="../../classes/OpenSSL/PKey/EC/Group.html">OpenSSL::PKey::EC::Group</a></p>
+</li><li>
+<p><a
+href="../../classes/OpenSSL/PKey/EC/Point.html">OpenSSL::PKey::EC::Point</a></p>
+</li><li>
+<p>OpenSSL::PKey::PKCS5</p>
+</li><li>
+<p><a href="../../classes/OpenSSL/SSL/Session.html">OpenSSL::SSL::Session</a></p>
+</li></ul>
+</li><li>
+<p>Documentation!</p>
+</li><li>
+<p>Various new methods (see documentation).</p>
+</li><li>
+<p>Remove redundant module namespace in Cipher, <a
+href="../../classes/Digest.html">Digest</a>, PKCS7, PKCS12. Compatibility
+classes are provided which will be removed in Ruby 1.9.</p>
+</li></ul>
+</li><li>
+<p>shellwords</p>
+<ul><li>
+<p>Add methods for escaping shell-unsafe characters:</p>
+<ul><li>
+<p><a href="../../classes/Shellwords.html#method-c-join">Shellwords.join</a></p>
+</li><li>
+<p><a
+href="../../classes/Shellwords.html#method-c-escape">Shellwords.escape</a></p>
+</li><li>
+<p><a href="../../classes/Array.html#method-i-shelljoin">Array#shelljoin</a></p>
+</li><li>
+<p><a
+href="../../classes/String.html#method-i-shellescape">String#shellescape</a></p>
+</li></ul>
+</li><li>
+<p>Add shorthand methods:</p>
+<ul><li>
+<p><a href="../../classes/Shellwords.html#method-c-split">Shellwords.split</a>
+(alias shellwords)</p>
+</li><li>
+<p><a
+href="../../classes/String.html#method-i-shellsplit">String#shellsplit</a></p>
+</li></ul>
+</li></ul>
+</li><li>
+<p>stringio</p>
+<ul><li>
+<p><a href="../../classes/StringIO.html#method-i-getbyte">StringIO#getbyte</a></p>
+</li><li>
+<p><a
+href="../../classes/IO/generic_readable.html#method-i-readbyte">IO::generic_readable#readbyte</a></p>
+
+<p>New methods. (aliases for compatibility with 1.9)</p>
+</li><li>
+<p><a
+href="../../classes/StringIO.html#method-i-each_char">StringIO#each_char</a></p>
+</li><li>
+<p><a href="../../classes/StringIO.html#method-i-chars">StringIO#chars</a></p>
+
+<p>New methods.</p>
+</li><li>
+<p><a href="../../classes/StringIO.html#method-i-each">StringIO#each</a></p>
+</li><li>
+<p><a
+href="../../classes/StringIO.html#method-i-each_line">StringIO#each_line</a></p>
+</li><li>
+<p><a
+href="../../classes/StringIO.html#method-i-each_byte">StringIO#each_byte</a></p>
+
+<p>Return an enumerator if no block is given.</p>
+</li></ul>
+</li><li>
+<p>tempfile</p>
+<ul><li>
+<p><a href="../../classes/Tempfile.html#method-i-open">Tempfile#open</a> and
+<a href="../../classes/Tempfile.html#method-c-new">Tempfile.new</a> now
+accept a suffix for the temporary file to be created.  To specify a suffix,
+pass an array of [basename, suffix] as the first argument.</p>
+
+<pre><code>Tempfile.open([&#39;image&#39;, &#39;jpg&#39;]) { |tempfile| ... }</code></pre>
+</li></ul>
+</li><li>
+<p>tmpdir</p>
+<ul><li>
+<p>New method:</p>
+<ul><li>
+<p><a href="../../classes/Dir.html#method-c-mktmpdir">Dir.mktmpdir</a></p>
+</li></ul>
+</li></ul>
+</li><li>
+<p>uri</p>
+<ul><li>
+<p>added LDAPS scheme.</p>
+</li><li>
+<p>Change for RFC3986:</p>
+<ul><li>
+<p>FTP</p>
+<ul><li>
+<p>URI(&#39;<a href="ftp://example.com/foo').path">example.com/foo’).path</a>
+#=&gt; &#39;foo&#39;</p>
+</li><li>
+<p>URI(&#39;<a
+href="ftp://example.com/%2Ffoo').path">example.com/%2Ffoo’).path</a> #=&gt;
+&#39;/foo&#39;</p>
+</li><li>
+<p><a
+href="../../classes/URI/FTP.html#method-c-build">URI::FTP.build</a>([nil,
+&#39;example.com&#39;, nil, &#39;/foo&#39;, &#39;i&#39;).to_s #=&gt;
+&#39;<a
+href="ftp://example.com/%2Ffoo;type=i">example.com/%2Ffoo;type=i</a>&#39;</p>
+</li></ul>
+</li><li>
+<p><a href="../../classes/URI.html">URI</a> merge</p>
+<ul><li>
+<p>URI(&#39;<a
+href="http://a/b/c/d;p?q').merge('?y">a/b/c/d;p?q’).merge(‘?y</a>&#39;) ==
+URI(&#39;<a href="http://a/b/c/d;p?y">a/b/c/d;p?y</a>&#39;)</p>
+</li><li>
+<p>URI(&#39;<a
+href="http://a/b/c/d;p?q').merge('/./g">a/b/c/d;p?q’).merge(‘/./g</a>&#39;)
+== URI(&#39;<a href="http://a/g">a/g</a>&#39;)</p>
+</li><li>
+<p>URI(&#39;<a
+href="http://a/b/c/d;p?q').merge('/../g">a/b/c/d;p?q’).merge(‘/../g</a>&#39;)
+== URI(&#39;<a href="http://a/g">a/g</a>&#39;)</p>
+</li><li>
+<p>URI(&#39;<a
+href="http://a/b/c/d;p?q').merge('../../../g">a/b/c/d;p?q’).merge(‘../../../g</a>&#39;)
+== URI(&#39;<a href="http://a/g">a/g</a>&#39;)</p>
+</li><li>
+<p>URI(&#39;<a
+href="http://a/b/c/d;p?q').merge('../../../../g">a/b/c/d;p?q’).merge(‘../../../../g</a>&#39;)
+== URI(&#39;<a href="http://a/g">a/g</a>&#39;)</p>
+</li></ul>
+</li></ul>
+</li></ul>
+</li><li>
+<p>rss</p>
+<ul><li>
+<p>0.1.6 -&gt; 0.2.4</p>
+</li><li>
+<p>Fix image module <a href="../../classes/URI.html">URI</a></p>
+</li><li>
+<p>Atom support</p>
+</li><li>
+<p>ITunes module support</p>
+</li><li>
+<p>Slash module support</p>
+</li><li>
+<p>content:encoded with <a href="../../classes/RSS.html">RSS</a> 2.0 support</p>
+</li></ul>
+</li></ul>
+
+<h3 id="label-Interpreter+Implementation">Interpreter Implementation</h3>
+<ul><li>
+<p>passing a block to a <a href="../../classes/Proc.html">Proc</a>
+[experimental]</p>
+
+<p>This implementation in current shape is known to be buggy/broken,
+especially with nested block invocation.  Take this as an experimental
+feature.</p>
+</li><li>
+<p>stack trace</p>
+
+<p>On non-SystemStackError exception, full stack trace is shown.</p>
+</li></ul>
+
+<h3 id="label-Compatibility+issues+-28excluding+feature+bug+fixes-29">Compatibility issues (excluding feature bug fixes)</h3>
+<ul><li>
+<p><a href="../../classes/String.html#method-i-slice-21">String#slice!</a> had
+some unintentional bugs and they have been fixed because either they
+disagreed with documentation or their respective behavior of slice. 
+Unfortunately, this causes some incompatibilities in the following
+(somewhat rare) cases.</p>
+<ul><li>
+<p>slice! no longer expands the array when an out-of-boundary value is given.</p>
+
+<pre><code># Ruby 1.8.6
+a = [1,2]
+a.slice!(4,0)   #=&gt; nil
+a               #=&gt; [1,2,nil,nil]
+
+# Ruby 1.8.7
+a = [1,2]
+a.slice!(4,0)   #=&gt; nil
+a               #=&gt; [1,2]
+</code></pre>
+</li><li>
+<p>slice! no longer raises an exception but returns nil when a negative length
+or out-of-boundary negative position is given.</p>
+
+<pre><code># Ruby 1.8.6
+a = [1,2]
+a.slice!(1,-1)  #=&gt; (raises IndexError)
+a.slice!(-5,1)  #=&gt; (raises IndexError)
+
+# Ruby 1.8.7
+a = [1,2]
+a.slice!(1,-1)  #=&gt; nil
+a.slice!(-5,1)  #=&gt; nil
+</code></pre>
+</li></ul>
+</li><li>
+<p><a href="../../classes/String.html#method-i-to_i">String#to_i</a>, <a
+href="../../classes/String.html#method-i-hex">String#hex</a> and <a
+href="../../classes/String.html#method-i-oct">String#oct</a> no longer
+accept a sequence of underscores (`__&#39;) as part of a number.</p>
+
+<pre><code># Ruby 1.8.6
+&#39;1__0&#39;.to_i     #=&gt; 10
+&#39;1__0&#39;.to_i(2)  #=&gt; 2  # 0b10
+&#39;1__0&#39;.oct      #=&gt; 8  # 010
+&#39;1__0&#39;.hex      #=&gt; 16 # 0x10
+
+# Ruby 1.8.7
+&#39;1__0&#39;.to_i     #=&gt; 1
+&#39;1__0&#39;.to_i(2)  #=&gt; 1
+&#39;1__0&#39;.oct      #=&gt; 1
+&#39;1__0&#39;.hex      #=&gt; 1
+</code></pre>
+
+<p>The old behavior was inconsistent with Ruby syntax and considered as a bug.</p>
+</li><li>
+<p>date</p>
+<ul><li>
+<p><a href="../../classes/Date.html#method-c-parse">Date.parse</a></p>
+
+<p>&#39;##.##.##&#39; (where each &#39;#&#39; is a digit) is now taken as
+&#39;YY.MM.DD&#39; instead of &#39;MM.DD.YY&#39;.  While the change may
+confuse you, you can always use <a
+href="../../classes/Date.html#method-c-strptime">Date.strptime</a> when you
+know what you are dealing with.</p>
+</li></ul>
+</li><li>
+<p><a href="../../classes/REXML.html">REXML</a></p>
+<ul><li>
+<p><a
+href="../../classes/REXML/Document.html#method-c-entity_expansion_limit-3D">REXML::Document.entity_expansion_limit=</a></p>
+
+<p>New method to set the entity expansion limit. By default the limit is set
+to 10000.  See the following URL for details.</p>
+
+<p><a
+href="http://www.ruby-lang.org/en/news/2008/08/23/dos-vulnerability-in-rexml">www.ruby-lang.org/en/news/2008/08/23/dos-vulnerability-in-rexml</a>/</p>
+</li></ul>
+</li><li>
+<p>stringio</p>
+<ul><li>
+<p><a
+href="../../classes/StringIO.html#method-i-each_byte">StringIO#each_byte</a></p>
+
+<p>The return value changed from nil to self.  This is what the document says
+and the same as each_line() does.</p>
+</li></ul>
+</li><li>
+<p>tempfile</p>
+<ul><li>
+<p>The file name format has changed.  No dots are included by default in
+temporary file names any more.  See above for how to specify a suffix.</p>
+</li></ul>
+</li><li>
+<p>uri</p>
+<ul><li>
+<p>See above for details.</p>
+</li></ul>
+</li></ul>
+
+<h2 id="label-Changes+since+the+1.8.5+release">Changes since the 1.8.5 release</h2>
+
+<h3 id="label-New+platforms-2Fbuild+tools+support">New platforms/build tools support</h3>
+<ul><li>
+<p>IA64 HP-UX</p>
+</li><li>
+<p>Visual C++ 8 SP1</p>
+</li><li>
+<p>autoconf 2.6x</p>
+</li></ul>
+
+<h3 id="label-Global+constants">Global constants</h3>
+<ul><li>
+<p>RUBY_PATCHLEVEL</p>
+
+<p>New constant since 1.8.5-p1.</p>
+</li></ul>
+
+<h3 id="label-Library+updates+-28outstanding+ones+only-29">Library updates (outstanding ones only)</h3>
+<ul><li>
+<p>builtin classes</p>
+<ul><li>
+<p>New method: Kernel#instance_variable_defined?</p>
+</li><li>
+<p>New method: <a
+href="../../classes/Module.html#method-i-class_variable_defined-3F">Module#class_variable_defined?</a></p>
+</li><li>
+<p>New feature: <a href="../../classes/Dir.html#method-c-glob">Dir.glob</a>
+can now take an array of glob patterns.</p>
+</li></ul>
+</li><li>
+<p>date</p>
+<ul><li>
+<p>Updated based on date2 4.0.3.</p>
+</li></ul>
+</li><li>
+<p>digest</p>
+<ul><li>
+<p>New internal APIs for C and Ruby.</p>
+</li><li>
+<p>Support for autoloading.</p>
+
+<pre><code>require &#39;digest&#39;
+
+# autoloads digest/md5
+md = Digest::MD5.digest(&quot;string&quot;)
+</code></pre>
+</li><li>
+<p>New digest class methods: file</p>
+</li><li>
+<p>New digest instance methods: clone, reset, new, inspect, digest_length
+(alias size or length), block_length()</p>
+</li><li>
+<p>New library: digest/bubblebabble</p>
+</li><li>
+<p>New function: Digest(name)</p>
+</li></ul>
+</li><li>
+<p>fileutils</p>
+<ul><li>
+<p>New option for <a
+href="../../classes/FileUtils.html#method-c-cp_r">FileUtils.cp_r</a>:
+:remove_destination</p>
+</li></ul>
+</li><li>
+<p>nkf</p>
+<ul><li>
+<p>Updated based on nkf as of 2007-01-28.</p>
+</li></ul>
+</li><li>
+<p>thread</p>
+<ul><li>
+<p>Replaced with much faster mutex implementation in C.  The former
+implementation, which is slow but considered to be stable, is available
+with a configure option `–disable-fastthread&#39;.</p>
+</li></ul>
+</li><li>
+<p>tk</p>
+<ul><li>
+<p>Updated Tile extension support based on Tile 0.7.8.</p>
+</li><li>
+<p>Support –without-X11 configure option for non-X11 versions of Tcl/Tk (e.g.
+Tcl/Tk Aqua).</p>
+</li><li>
+<p>New sample script: irbtkw.rbw – IRB on Ruby/Tk. It has no trouble about
+STDIN blocking on Windows.</p>
+</li></ul>
+</li><li>
+<p>webrick</p>
+<ul><li>
+<p>New method: <a
+href="../../classes/WEBrick/Cookie.html#method-c-parse_set_cookies">WEBrick::Cookie.parse_set_cookies</a></p>
+</li></ul>
+</li></ul>
+
+<h3 id="label-Compatibility+issues+-28excluding+feature+bug+fixes-29">Compatibility issues (excluding feature bug fixes)</h3>
+<ul><li>
+<p>builtin classes</p>
+<ul><li>
+<p><a href="../../classes/String.html#method-i-intern">String#intern</a> now
+raises <a href="../../classes/SecurityError.html">SecurityError</a> when
+$SAFE level is greater than zero.</p>
+</li></ul>
+</li><li>
+<p>date</p>
+<ul><li>
+<p><a href="../../classes/Time.html#method-i-to_date">Time#to_date</a> and <a
+href="../../classes/Time.html#method-i-to_datetime">Time#to_datetime</a>
+are added as private methods. They cause name conflict error in
+ActiveSupport 1.4.1 and prior, which comes with Rails 1.2.2 and prior. 
+Updating ActiveSupport and/or Rails to the latest versions fixes the
+problem.</p>
+</li></ul>
+</li><li>
+<p>digest</p>
+<ul><li>
+<p>The constructor does no longer take an initial string to feed. The
+following examples show how to migrate:</p>
+
+<pre><code># Before
+md = Digest::MD5.new(&quot;string&quot;)
+# After (works with any version)
+md = Digest::MD5.new.update(&quot;string&quot;)
+
+# Before
+hd = Digest::MD5.new(&quot;string&quot;).hexdigest
+# After (works with any version)
+hd = Digest::MD5.hexdigest(&quot;string&quot;)
+</code></pre>
+</li><li>
+<p>Digest::Base#==</p>
+<ul><li>
+<p>self == string</p>
+
+<p>Automatic detection between binary digest values and hexadecimal digest
+values has been dropped.  It is always assumed that a hexadecimal digest
+value is given for comparison.</p>
+</li><li>
+<p>self == md</p>
+
+<p><a href="../../classes/Digest.html">Digest</a> objects are compared by the
+resulting digest values, not by the exact vector states.</p>
+</li></ul>
+</li></ul>
+</li><li>
+<p>fileutils</p>
+<ul><li>
+<p>A minor implementation change breaks Rake &lt;=0.7.1. Updating Rake to
+0.7.2 or higher fixes the problem.</p>
+</li></ul>
+</li><li>
+<p>tk</p>
+<ul><li>
+<p>Tk::X_Scrollable (Y_Scrollable) is renamed to Tk::XScrollable
+(YScrollable). Tk::X_Scrollable (Y_Scrollable) is still available, but it
+is an alias name.</p>
+</li></ul>
+</li></ul>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+              </div>
+
+    </div>
+  </body>
+</html>

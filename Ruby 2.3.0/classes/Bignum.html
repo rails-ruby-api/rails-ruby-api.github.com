@@ -1,0 +1,2568 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Bignum</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/github.css" type="text/css" media="screen" />
+<script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            Bignum 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="Integer.html">Integer</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../files/bignum_c.html">bignum.c</a></li>
+            
+            <li><a href="../files/lib/mathn_rb.html">lib/mathn.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p><a href="Bignum.html">Bignum</a> objects hold integers outside the range of
+<a href="Fixnum.html">Fixnum</a>. <a href="Bignum.html">Bignum</a> objects
+are created automatically when integer calculations would otherwise
+overflow a <a href="Fixnum.html">Fixnum</a>. When a calculation involving
+<a href="Bignum.html">Bignum</a> objects returns a result that will fit in
+a <a href="Fixnum.html">Fixnum</a>, the result is automatically converted.</p>
+
+<p>For the purposes of the bitwise operations and <code>[]</code>, a <a
+href="Bignum.html">Bignum</a> is treated as if it were an infinite-length
+bitstring with 2&#39;s complement representation.</p>
+
+<p>While <a href="Fixnum.html">Fixnum</a> values are immediate, <a
+href="Bignum.html">Bignum</a> objects are not—assignment and parameter
+passing work with references to objects, not the objects themselves.</p>
+
+<p>When mathn is required Bignum&#39;s division is enhanced to return more
+precise values from mathematical expressions.</p>
+
+<pre><code>(2**72) / ((2**70) * 3)  # =&gt; 4/3
+</code></pre>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>#</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-25">%</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-26">&amp;</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-2A">*</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-2A-2A">**</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-2B">+</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-2D">-</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-2D-40">-@</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-2F">/</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-3C">&lt;</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-3C-3C">&lt;&lt;</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-3C-3D">&lt;=</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-3C-3D-3E">&lt;=&gt;</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-3D-3D">==</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-3D-3D-3D">===</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-3E">&gt;</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-3E-3D">&gt;=</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-3E-3E">&gt;&gt;</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-5B-5D">[]</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-5E">^</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>A</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-abs">abs</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>B</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-bit_length">bit_length</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>C</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-coerce">coerce</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>D</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-div">div</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-divmod">divmod</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>E</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-eql-3F">eql?</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-even-3F">even?</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>F</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-fdiv">fdiv</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>H</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-hash">hash</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>I</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-inspect">inspect</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>M</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-magnitude">magnitude</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-modulo">modulo</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>O</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-odd-3F">odd?</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>R</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-remainder">remainder</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>S</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-size">size</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-to_f">to_f</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-to_s">to_s</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>#</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-7C">|</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-7E">~</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+      <!-- Section constants -->
+      <div class="sectiontitle">Constants</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class="attr-name">GMP_VERSION</td>
+            <td>=</td>
+            <td class="attr-value">rb_sprintf(&quot;GMP %s&quot;, gmp_version)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>The version of loaded GMP.</p></td>
+            </tr>
+          
+        
+      </table>
+    
+
+
+    
+
+
+    <!-- Methods -->
+        
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-25">
+            
+              <b>big % other         &rarr; Numeric</b>
+            
+            <a href="../classes/Bignum.html#method-i-25" name="method-i-25" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns big modulo other. See <a
+href="Numeric.html#method-i-divmod">Numeric#divmod</a> for more
+information.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-25_source')" id="l_method-i-25_source">show</a>
+                
+              </p>
+              <div id="method-i-25_source" class="dyn-source">
+                <pre>VALUE
+rb_big_modulo(VALUE x, VALUE y)
+{
+    VALUE z;
+
+    if (FIXNUM_P(y)) {
+        y = rb_int2big(FIX2LONG(y));
+    }
+    else if (!RB_BIGNUM_TYPE_P(y)) {
+        return rb_num_coerce_bin(x, y, &#39;%&#39;);
+    }
+    bigdivmod(x, y, 0, &amp;z);
+
+    return bignorm(z);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-26">
+            
+              <b>big & numeric   &rarr;  integer
+</b>
+            
+            <a href="../classes/Bignum.html#method-i-26" name="method-i-26" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Performs bitwise <code>and</code> between <em>big</em> and
+<em>numeric</em>.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-26_source')" id="l_method-i-26_source">show</a>
+                
+              </p>
+              <div id="method-i-26_source" class="dyn-source">
+                <pre>VALUE
+rb_big_and(VALUE x, VALUE y)
+{
+    VALUE z;
+    BDIGIT *ds1, *ds2, *zds;
+    long i, xn, yn, n1, n2;
+    BDIGIT hibitsx, hibitsy;
+    BDIGIT hibits1, hibits2;
+    VALUE tmpv;
+    BDIGIT tmph;
+    long tmpn;
+
+    if (!FIXNUM_P(y) &amp;&amp; !RB_BIGNUM_TYPE_P(y)) {
+        return rb_num_coerce_bit(x, y, &#39;&amp;&#39;);
+    }
+
+    hibitsx = abs2twocomp(&amp;x, &amp;xn);
+    if (FIXNUM_P(y)) {
+        return bigand_int(x, xn, hibitsx, FIX2LONG(y));
+    }
+    hibitsy = abs2twocomp(&amp;y, &amp;yn);
+    if (xn &gt; yn) {
+        tmpv = x; x = y; y = tmpv;
+        tmpn = xn; xn = yn; yn = tmpn;
+        tmph = hibitsx; hibitsx = hibitsy; hibitsy = tmph;
+    }
+    n1 = xn;
+    n2 = yn;
+    ds1 = BDIGITS(x);
+    ds2 = BDIGITS(y);
+    hibits1 = hibitsx;
+    hibits2 = hibitsy;
+
+    if (!hibits1)
+        n2 = n1;
+
+    z = bignew(n2, 0);
+    zds = BDIGITS(z);
+
+    for (i=0; i&lt;n1; i++) {
+        zds[i] = ds1[i] &amp; ds2[i];
+    }
+    for (; i&lt;n2; i++) {
+        zds[i] = hibits1 &amp; ds2[i];
+    }
+    twocomp2abs_bang(z, hibits1 &amp;&amp; hibits2);
+    RB_GC_GUARD(x);
+    RB_GC_GUARD(y);
+    return bignorm(z);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-2A">
+            
+              <b>big * other  &rarr; Numeric
+</b>
+            
+            <a href="../classes/Bignum.html#method-i-2A" name="method-i-2A" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Multiplies big and other, returning the result.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-2A_source')" id="l_method-i-2A_source">show</a>
+                
+              </p>
+              <div id="method-i-2A_source" class="dyn-source">
+                <pre>VALUE
+rb_big_mul(VALUE x, VALUE y)
+{
+    if (FIXNUM_P(y)) {
+        y = rb_int2big(FIX2LONG(y));
+    }
+    else if (RB_BIGNUM_TYPE_P(y)) {
+    }
+    else if (RB_FLOAT_TYPE_P(y)) {
+        return DBL2NUM(rb_big2dbl(x) * RFLOAT_VALUE(y));
+    }
+    else {
+        return rb_num_coerce_bin(x, y, &#39;*&#39;);
+    }
+
+    return bignorm(bigmul0(x, y));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-2A-2A">
+            
+              <b>big ** exponent   &rarr; numeric
+</b>
+            
+            <a href="../classes/Bignum.html#method-i-2A-2A" name="method-i-2A-2A" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Raises <em>big</em> to the <em>exponent</em> power (which may be an
+integer, float, or anything that will coerce to a number). The result may
+be a <a href="Fixnum.html">Fixnum</a>, <a href="Bignum.html">Bignum</a>, or
+<a href="Float.html">Float</a></p>
+
+<pre><code>123456789 ** 2      #=&gt; 15241578750190521
+123456789 ** 1.2    #=&gt; 5126464716.09932
+123456789 ** -2     #=&gt; 6.5610001194102e-17
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-2A-2A_source')" id="l_method-i-2A-2A_source">show</a>
+                
+              </p>
+              <div id="method-i-2A-2A_source" class="dyn-source">
+                <pre>VALUE
+rb_big_pow(VALUE x, VALUE y)
+{
+    double d;
+    SIGNED_VALUE yy;
+
+  again:
+    if (y == INT2FIX(0)) return INT2FIX(1);
+    if (RB_FLOAT_TYPE_P(y)) {
+        d = RFLOAT_VALUE(y);
+        if ((!BIGNUM_SIGN(x) &amp;&amp; !BIGZEROP(x)) &amp;&amp; d != round(d))
+            return rb_funcall(rb_complex_raw1(x), rb_intern(&quot;**&quot;), 1, y);
+    }
+    else if (RB_BIGNUM_TYPE_P(y)) {
+        y = bignorm(y);
+        if (FIXNUM_P(y))
+            goto again;
+        rb_warn(&quot;in a**b, b may be too big&quot;);
+        d = rb_big2dbl(y);
+    }
+    else if (FIXNUM_P(y)) {
+        yy = FIX2LONG(y);
+
+        if (yy &lt; 0)
+            return rb_funcall(rb_rational_raw1(x), rb_intern(&quot;**&quot;), 1, y);
+        else {
+            VALUE z = 0;
+            SIGNED_VALUE mask;
+            const size_t xbits = rb_absint_numwords(x, 1, NULL);
+            const size_t BIGLEN_LIMIT = 32*1024*1024;
+
+            if (xbits == (size_t)-1 ||
+                (xbits &gt; BIGLEN_LIMIT) ||
+                (xbits * yy &gt; BIGLEN_LIMIT)) {
+                rb_warn(&quot;in a**b, b may be too big&quot;);
+                d = (double)yy;
+            }
+            else {
+                for (mask = FIXNUM_MAX + 1; mask; mask &gt;&gt;= 1) {
+                    if (z) z = bigsq(z);
+                    if (yy &amp; mask) {
+                        z = z ? bigtrunc(bigmul0(z, x)) : x;
+                    }
+                }
+                return bignorm(z);
+            }
+        }
+    }
+    else {
+        return rb_num_coerce_bin(x, y, rb_intern(&quot;**&quot;));
+    }
+    return DBL2NUM(pow(rb_big2dbl(x), d));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-2B">
+            
+              <b>big + other  &rarr; Numeric
+</b>
+            
+            <a href="../classes/Bignum.html#method-i-2B" name="method-i-2B" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Adds big and other, returning the result.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-2B_source')" id="l_method-i-2B_source">show</a>
+                
+              </p>
+              <div id="method-i-2B_source" class="dyn-source">
+                <pre>VALUE
+rb_big_plus(VALUE x, VALUE y)
+{
+    long n;
+
+    if (FIXNUM_P(y)) {
+        n = FIX2LONG(y);
+        if ((n &gt; 0) != BIGNUM_SIGN(x)) {
+            if (n &lt; 0) {
+                n = -n;
+            }
+            return bigsub_int(x, n);
+        }
+        if (n &lt; 0) {
+            n = -n;
+        }
+        return bigadd_int(x, n);
+    }
+    else if (RB_BIGNUM_TYPE_P(y)) {
+        return bignorm(bigadd(x, y, 1));
+    }
+    else if (RB_FLOAT_TYPE_P(y)) {
+        return DBL2NUM(rb_big2dbl(x) + RFLOAT_VALUE(y));
+    }
+    else {
+        return rb_num_coerce_bin(x, y, &#39;+&#39;);
+    }
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-2D">
+            
+              <b>big - other  &rarr; Numeric
+</b>
+            
+            <a href="../classes/Bignum.html#method-i-2D" name="method-i-2D" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Subtracts other from big, returning the result.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-2D_source')" id="l_method-i-2D_source">show</a>
+                
+              </p>
+              <div id="method-i-2D_source" class="dyn-source">
+                <pre>VALUE
+rb_big_minus(VALUE x, VALUE y)
+{
+    long n;
+
+    if (FIXNUM_P(y)) {
+        n = FIX2LONG(y);
+        if ((n &gt; 0) != BIGNUM_SIGN(x)) {
+            if (n &lt; 0) {
+                n = -n;
+            }
+            return bigadd_int(x, n);
+        }
+        if (n &lt; 0) {
+            n = -n;
+        }
+        return bigsub_int(x, n);
+    }
+    else if (RB_BIGNUM_TYPE_P(y)) {
+        return bignorm(bigadd(x, y, 0));
+    }
+    else if (RB_FLOAT_TYPE_P(y)) {
+        return DBL2NUM(rb_big2dbl(x) - RFLOAT_VALUE(y));
+    }
+    else {
+        return rb_num_coerce_bin(x, y, &#39;-&#39;);
+    }
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-2D-40">
+            
+              <b>-big   &rarr;  integer
+</b>
+            
+            <a href="../classes/Bignum.html#method-i-2D-40" name="method-i-2D-40" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Unary minus (returns an integer whose value is 0-big)</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-2D-40_source')" id="l_method-i-2D-40_source">show</a>
+                
+              </p>
+              <div id="method-i-2D-40_source" class="dyn-source">
+                <pre>VALUE
+rb_big_uminus(VALUE x)
+{
+    VALUE z = rb_big_clone(x);
+
+    BIGNUM_SET_SIGN(z, !BIGNUM_SIGN(x));
+
+    return bignorm(z);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-2F">
+            
+              <b>big / other     &rarr; Numeric
+</b>
+            
+            <a href="../classes/Bignum.html#method-i-2F" name="method-i-2F" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Performs division: the class of the resulting object depends on the class
+of <code>numeric</code> and on the magnitude of the result.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-2F_source')" id="l_method-i-2F_source">show</a>
+                
+              </p>
+              <div id="method-i-2F_source" class="dyn-source">
+                <pre>VALUE
+rb_big_div(VALUE x, VALUE y)
+{
+    return rb_big_divide(x, y, &#39;/&#39;);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-3C">
+            
+              <b>big < real  &rarr;  true or false
+</b>
+            
+            <a href="../classes/Bignum.html#method-i-3C" name="method-i-3C" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns <code>true</code> if the value of <code>big</code> is less than
+that of <code>real</code>.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-3C_source')" id="l_method-i-3C_source">show</a>
+                
+              </p>
+              <div id="method-i-3C_source" class="dyn-source">
+                <pre>static VALUE
+big_lt(VALUE x, VALUE y)
+{
+    return big_op(x, y, big_op_lt);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-3C-3C">
+            
+              <b>big << numeric   &rarr;  integer
+</b>
+            
+            <a href="../classes/Bignum.html#method-i-3C-3C" name="method-i-3C-3C" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Shifts big left <em>numeric</em> positions (right if <em>numeric</em> is
+negative).</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-3C-3C_source')" id="l_method-i-3C-3C_source">show</a>
+                
+              </p>
+              <div id="method-i-3C-3C_source" class="dyn-source">
+                <pre>VALUE
+rb_big_lshift(VALUE x, VALUE y)
+{
+    int lshift_p;
+    size_t shift_numdigits;
+    int shift_numbits;
+
+    for (;;) {
+        if (FIXNUM_P(y)) {
+            long l = FIX2LONG(y);
+            unsigned long shift;
+            if (0 &lt;= l) {
+                lshift_p = 1;
+                shift = l;
+            }
+            else {
+                lshift_p = 0;
+                shift = 1+(unsigned long)(-(l+1));
+            }
+            shift_numbits = (int)(shift &amp; (BITSPERDIG-1));
+            shift_numdigits = shift &gt;&gt; bit_length(BITSPERDIG-1);
+            return bignorm(big_shift3(x, lshift_p, shift_numdigits, shift_numbits));
+        }
+        else if (RB_BIGNUM_TYPE_P(y)) {
+            return bignorm(big_shift2(x, 1, y));
+        }
+        y = rb_to_int(y);
+    }
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-3C-3D">
+            
+              <b>big <= real  &rarr;  true or false
+</b>
+            
+            <a href="../classes/Bignum.html#method-i-3C-3D" name="method-i-3C-3D" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns <code>true</code> if the value of <code>big</code> is less than or
+equal to that of <code>real</code>.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-3C-3D_source')" id="l_method-i-3C-3D_source">show</a>
+                
+              </p>
+              <div id="method-i-3C-3D_source" class="dyn-source">
+                <pre>static VALUE
+big_le(VALUE x, VALUE y)
+{
+    return big_op(x, y, big_op_le);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-3C-3D-3E">
+            
+              <b>big <=> numeric   &rarr; -1, 0, +1 or nil
+</b>
+            
+            <a href="../classes/Bignum.html#method-i-3C-3D-3E" name="method-i-3C-3D-3E" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Comparison—Returns -1, 0, or +1 depending on whether <code>big</code> is
+less than, equal to, or greater than <code>numeric</code>. This is the
+basis for the tests in <a href="Comparable.html">Comparable</a>.</p>
+
+<p><code>nil</code> is returned if the two values are incomparable.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-3C-3D-3E_source')" id="l_method-i-3C-3D-3E_source">show</a>
+                
+              </p>
+              <div id="method-i-3C-3D-3E_source" class="dyn-source">
+                <pre>VALUE
+rb_big_cmp(VALUE x, VALUE y)
+{
+    int cmp;
+
+    if (FIXNUM_P(y)) {
+        x = bignorm(x);
+        if (FIXNUM_P(x)) {
+            if (FIX2LONG(x) &gt; FIX2LONG(y)) return INT2FIX(1);
+            if (FIX2LONG(x) &lt; FIX2LONG(y)) return INT2FIX(-1);
+            return INT2FIX(0);
+        }
+        else {
+            if (BIGNUM_NEGATIVE_P(x)) return INT2FIX(-1);
+            return INT2FIX(1);
+        }
+    }
+    else if (RB_BIGNUM_TYPE_P(y)) {
+    }
+    else if (RB_FLOAT_TYPE_P(y)) {
+        return rb_integer_float_cmp(x, y);
+    }
+    else {
+        return rb_num_coerce_cmp(x, y, rb_intern(&quot;&lt;=&gt;&quot;));
+    }
+
+    if (BIGNUM_SIGN(x) &gt; BIGNUM_SIGN(y)) return INT2FIX(1);
+    if (BIGNUM_SIGN(x) &lt; BIGNUM_SIGN(y)) return INT2FIX(-1);
+
+    cmp = bary_cmp(BDIGITS(x), BIGNUM_LEN(x), BDIGITS(y), BIGNUM_LEN(y));
+    if (BIGNUM_SIGN(x))
+        return INT2FIX(cmp);
+    else
+        return INT2FIX(-cmp);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-3D-3D">
+            
+              <b>big == obj  &rarr; true or false</b>
+            
+            <a href="../classes/Bignum.html#method-i-3D-3D" name="method-i-3D-3D" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns <code>true</code> only if <em>obj</em> has the same value as
+<em>big</em>. Contrast this with <code>Bignum#eql?</code>, which requires
+<em>obj</em> to be a <code>Bignum</code>.</p>
+
+<pre><code>68719476736 == 68719476736.0   #=&gt; true
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-3D-3D_source')" id="l_method-i-3D-3D_source">show</a>
+                
+              </p>
+              <div id="method-i-3D-3D_source" class="dyn-source">
+                <pre>VALUE
+rb_big_eq(VALUE x, VALUE y)
+{
+    if (FIXNUM_P(y)) {
+        if (bignorm(x) == y) return Qtrue;
+        y = rb_int2big(FIX2LONG(y));
+    }
+    else if (RB_BIGNUM_TYPE_P(y)) {
+    }
+    else if (RB_FLOAT_TYPE_P(y)) {
+        return rb_integer_float_eq(x, y);
+    }
+    else {
+        return rb_equal(y, x);
+    }
+    if (BIGNUM_SIGN(x) != BIGNUM_SIGN(y)) return Qfalse;
+    if (BIGNUM_LEN(x) != BIGNUM_LEN(y)) return Qfalse;
+    if (MEMCMP(BDIGITS(x),BDIGITS(y),BDIGIT,BIGNUM_LEN(y)) != 0) return Qfalse;
+    return Qtrue;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-3D-3D-3D">
+            
+              <b>big == obj  &rarr; true or false
+</b>
+            
+            <a href="../classes/Bignum.html#method-i-3D-3D-3D" name="method-i-3D-3D-3D" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns <code>true</code> only if <em>obj</em> has the same value as
+<em>big</em>. Contrast this with <code>Bignum#eql?</code>, which requires
+<em>obj</em> to be a <code>Bignum</code>.</p>
+
+<pre><code>68719476736 == 68719476736.0   #=&gt; true
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-3D-3D-3D_source')" id="l_method-i-3D-3D-3D_source">show</a>
+                
+              </p>
+              <div id="method-i-3D-3D-3D_source" class="dyn-source">
+                <pre>VALUE
+rb_big_eq(VALUE x, VALUE y)
+{
+    if (FIXNUM_P(y)) {
+        if (bignorm(x) == y) return Qtrue;
+        y = rb_int2big(FIX2LONG(y));
+    }
+    else if (RB_BIGNUM_TYPE_P(y)) {
+    }
+    else if (RB_FLOAT_TYPE_P(y)) {
+        return rb_integer_float_eq(x, y);
+    }
+    else {
+        return rb_equal(y, x);
+    }
+    if (BIGNUM_SIGN(x) != BIGNUM_SIGN(y)) return Qfalse;
+    if (BIGNUM_LEN(x) != BIGNUM_LEN(y)) return Qfalse;
+    if (MEMCMP(BDIGITS(x),BDIGITS(y),BDIGIT,BIGNUM_LEN(y)) != 0) return Qfalse;
+    return Qtrue;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-3E">
+            
+              <b>big > real  &rarr;  true or false
+</b>
+            
+            <a href="../classes/Bignum.html#method-i-3E" name="method-i-3E" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns <code>true</code> if the value of <code>big</code> is greater than
+that of <code>real</code>.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-3E_source')" id="l_method-i-3E_source">show</a>
+                
+              </p>
+              <div id="method-i-3E_source" class="dyn-source">
+                <pre>static VALUE
+big_gt(VALUE x, VALUE y)
+{
+    return big_op(x, y, big_op_gt);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-3E-3D">
+            
+              <b>big >= real  &rarr;  true or false
+</b>
+            
+            <a href="../classes/Bignum.html#method-i-3E-3D" name="method-i-3E-3D" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns <code>true</code> if the value of <code>big</code> is greater than
+or equal to that of <code>real</code>.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-3E-3D_source')" id="l_method-i-3E-3D_source">show</a>
+                
+              </p>
+              <div id="method-i-3E-3D_source" class="dyn-source">
+                <pre>static VALUE
+big_ge(VALUE x, VALUE y)
+{
+    return big_op(x, y, big_op_ge);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-3E-3E">
+            
+              <b>big >> numeric   &rarr;  integer
+</b>
+            
+            <a href="../classes/Bignum.html#method-i-3E-3E" name="method-i-3E-3E" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Shifts big right <em>numeric</em> positions (left if <em>numeric</em> is
+negative).</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-3E-3E_source')" id="l_method-i-3E-3E_source">show</a>
+                
+              </p>
+              <div id="method-i-3E-3E_source" class="dyn-source">
+                <pre>VALUE
+rb_big_rshift(VALUE x, VALUE y)
+{
+    int lshift_p;
+    size_t shift_numdigits;
+    int shift_numbits;
+
+    for (;;) {
+        if (FIXNUM_P(y)) {
+            long l = FIX2LONG(y);
+            unsigned long shift;
+            if (0 &lt;= l) {
+                lshift_p = 0;
+                shift = l;
+            }
+            else {
+                lshift_p = 1;
+                shift = 1+(unsigned long)(-(l+1));
+            }
+            shift_numbits = (int)(shift &amp; (BITSPERDIG-1));
+            shift_numdigits = shift &gt;&gt; bit_length(BITSPERDIG-1);
+            return bignorm(big_shift3(x, lshift_p, shift_numdigits, shift_numbits));
+        }
+        else if (RB_BIGNUM_TYPE_P(y)) {
+            return bignorm(big_shift2(x, 0, y));
+        }
+        y = rb_to_int(y);
+    }
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-5B-5D">
+            
+              <b>big[n] &rarr; 0, 1
+</b>
+            
+            <a href="../classes/Bignum.html#method-i-5B-5D" name="method-i-5B-5D" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Bit Reference—Returns the <em>n</em>th bit in the (assumed) binary
+representation of <em>big</em>, where <em><a href="0">big</a></em> is the
+least significant bit.</p>
+
+<pre><code>a = 9**15
+50.downto(0) do |n|
+  print a[n]
+end
+</code></pre>
+
+<p><em>produces:</em></p>
+
+<pre><code>000101110110100000111000011110010100111100010111001
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-5B-5D_source')" id="l_method-i-5B-5D_source">show</a>
+                
+              </p>
+              <div id="method-i-5B-5D_source" class="dyn-source">
+                <pre>static VALUE
+rb_big_aref(VALUE x, VALUE y)
+{
+    BDIGIT *xds;
+    size_t shift;
+    size_t i, s1, s2;
+    long l;
+    BDIGIT bit;
+
+    if (RB_BIGNUM_TYPE_P(y)) {
+        if (!BIGNUM_SIGN(y))
+            return INT2FIX(0);
+        bigtrunc(y);
+        if (BIGSIZE(y) &gt; sizeof(size_t)) {
+          out_of_range:
+            return BIGNUM_SIGN(x) ? INT2FIX(0) : INT2FIX(1);
+        }
+#if SIZEOF_SIZE_T &lt;= SIZEOF_LONG
+        shift = big2ulong(y, &quot;long&quot;);
+#else
+        shift = big2ull(y, &quot;long long&quot;);
+#endif
+    }
+    else {
+        l = NUM2LONG(y);
+        if (l &lt; 0) return INT2FIX(0);
+        shift = (size_t)l;
+    }
+    s1 = shift/BITSPERDIG;
+    s2 = shift%BITSPERDIG;
+    bit = (BDIGIT)1 &lt;&lt; s2;
+
+    if (s1 &gt;= BIGNUM_LEN(x)) goto out_of_range;
+
+    xds = BDIGITS(x);
+    if (BIGNUM_POSITIVE_P(x))
+        return (xds[s1] &amp; bit) ? INT2FIX(1) : INT2FIX(0);
+    if (xds[s1] &amp; (bit-1))
+        return (xds[s1] &amp; bit) ? INT2FIX(0) : INT2FIX(1);
+    for (i = 0; i &lt; s1; i++)
+        if (xds[i])
+            return (xds[s1] &amp; bit) ? INT2FIX(0) : INT2FIX(1);
+    return (xds[s1] &amp; bit) ? INT2FIX(1) : INT2FIX(0);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-5E">
+            
+              <b>big ^ numeric   &rarr;  integer
+</b>
+            
+            <a href="../classes/Bignum.html#method-i-5E" name="method-i-5E" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Performs bitwise +exclusive or+ between <em>big</em> and <em>numeric</em>.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-5E_source')" id="l_method-i-5E_source">show</a>
+                
+              </p>
+              <div id="method-i-5E_source" class="dyn-source">
+                <pre>VALUE
+rb_big_xor(VALUE x, VALUE y)
+{
+    VALUE z;
+    BDIGIT *ds1, *ds2, *zds;
+    long i, xn, yn, n1, n2;
+    BDIGIT hibitsx, hibitsy;
+    BDIGIT hibits1, hibits2;
+    VALUE tmpv;
+    BDIGIT tmph;
+    long tmpn;
+
+    if (!FIXNUM_P(y) &amp;&amp; !RB_BIGNUM_TYPE_P(y)) {
+        return rb_num_coerce_bit(x, y, &#39;^&#39;);
+    }
+
+    hibitsx = abs2twocomp(&amp;x, &amp;xn);
+    if (FIXNUM_P(y)) {
+        return bigxor_int(x, xn, hibitsx, FIX2LONG(y));
+    }
+    hibitsy = abs2twocomp(&amp;y, &amp;yn);
+    if (xn &gt; yn) {
+        tmpv = x; x = y; y = tmpv;
+        tmpn = xn; xn = yn; yn = tmpn;
+        tmph = hibitsx; hibitsx = hibitsy; hibitsy = tmph;
+    }
+    n1 = xn;
+    n2 = yn;
+    ds1 = BDIGITS(x);
+    ds2 = BDIGITS(y);
+    hibits1 = hibitsx;
+    hibits2 = hibitsy;
+
+    z = bignew(n2, 0);
+    zds = BDIGITS(z);
+
+    for (i=0; i&lt;n1; i++) {
+        zds[i] = ds1[i] ^ ds2[i];
+    }
+    for (; i&lt;n2; i++) {
+        zds[i] = hibitsx ^ ds2[i];
+    }
+    twocomp2abs_bang(z, (hibits1 ^ hibits2) != 0);
+    RB_GC_GUARD(x);
+    RB_GC_GUARD(y);
+    return bignorm(z);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-abs">
+            
+              <b>big.abs &rarr; aBignum</b>
+            
+            <a href="../classes/Bignum.html#method-i-abs" name="method-i-abs" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the absolute value of <em>big</em>.</p>
+
+<pre><code>-1234567890987654321.abs   #=&gt; 1234567890987654321
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-abs_source')" id="l_method-i-abs_source">show</a>
+                
+              </p>
+              <div id="method-i-abs_source" class="dyn-source">
+                <pre>static VALUE
+rb_big_abs(VALUE x)
+{
+    if (!BIGNUM_SIGN(x)) {
+        x = rb_big_clone(x);
+        BIGNUM_SET_SIGN(x, 1);
+    }
+    return x;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-bit_length">
+            
+              <b>int.bit_length &rarr; integer
+</b>
+            
+            <a href="../classes/Bignum.html#method-i-bit_length" name="method-i-bit_length" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the number of bits of the value of <em>int</em>.</p>
+
+<p>“the number of bits” means that the bit position of the highest bit which
+is different to the sign bit. (The bit position of the bit 2**n is n+1.) If
+there is no such bit (zero or minus one), zero is returned.</p>
+
+<p>I.e. This method returns ceil(log2(int &lt; 0 ? -int : int+1)).</p>
+
+<pre><code>(-2**10000-1).bit_length  #=&gt; 10001
+(-2**10000).bit_length    #=&gt; 10000
+(-2**10000+1).bit_length  #=&gt; 10000
+
+(-2**1000-1).bit_length   #=&gt; 1001
+(-2**1000).bit_length     #=&gt; 1000
+(-2**1000+1).bit_length   #=&gt; 1000
+
+(2**1000-1).bit_length    #=&gt; 1000
+(2**1000).bit_length      #=&gt; 1001
+(2**1000+1).bit_length    #=&gt; 1001
+
+(2**10000-1).bit_length   #=&gt; 10000
+(2**10000).bit_length     #=&gt; 10001
+(2**10000+1).bit_length   #=&gt; 10001
+</code></pre>
+
+<p>This method can be used to detect overflow in <a
+href="Array.html#method-i-pack">Array#pack</a> as follows.</p>
+
+<pre><code>if n.bit_length &lt; 32
+  [n].pack(&quot;l&quot;) # no overflow
+else
+  raise &quot;overflow&quot;
+end
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-bit_length_source')" id="l_method-i-bit_length_source">show</a>
+                
+              </p>
+              <div id="method-i-bit_length_source" class="dyn-source">
+                <pre>static VALUE
+rb_big_bit_length(VALUE big)
+{
+    int nlz_bits;
+    size_t numbytes;
+
+    static const BDIGIT char_bit[1] = { CHAR_BIT };
+    BDIGIT numbytes_bary[bdigit_roomof(sizeof(size_t))];
+    BDIGIT nlz_bary[1];
+    BDIGIT result_bary[bdigit_roomof(sizeof(size_t)+1)];
+
+    numbytes = rb_absint_size(big, &amp;nlz_bits);
+
+    if (numbytes == 0)
+        return LONG2FIX(0);
+
+    if (BIGNUM_NEGATIVE_P(big) &amp;&amp; rb_absint_singlebit_p(big)) {
+        if (nlz_bits != CHAR_BIT-1) {
+            nlz_bits++;
+        }
+        else {
+            nlz_bits = 0;
+            numbytes--;
+        }
+    }
+
+    if (numbytes &lt;= SIZE_MAX / CHAR_BIT) {
+        return SIZET2NUM(numbytes * CHAR_BIT - nlz_bits);
+    }
+
+    nlz_bary[0] = nlz_bits;
+
+    bary_unpack(BARY_ARGS(numbytes_bary), &amp;numbytes, 1, sizeof(numbytes), 0,
+            INTEGER_PACK_NATIVE_BYTE_ORDER);
+    BARY_SHORT_MUL(result_bary, numbytes_bary, char_bit);
+    BARY_SUB(result_bary, result_bary, nlz_bary);
+
+    return rb_integer_unpack(result_bary, numberof(result_bary), sizeof(BDIGIT), 0,
+            INTEGER_PACK_LSWORD_FIRST|INTEGER_PACK_NATIVE_BYTE_ORDER);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-coerce">
+            
+              <b>big.coerce(numeric)  &rarr;  array
+</b>
+            
+            <a href="../classes/Bignum.html#method-i-coerce" name="method-i-coerce" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns an array with both a <code>numeric</code> and a <code>big</code>
+represented as <a href="Bignum.html">Bignum</a> objects.</p>
+
+<p>This is achieved by converting <code>numeric</code> to a <a
+href="Bignum.html">Bignum</a>.</p>
+
+<p>A <a href="TypeError.html">TypeError</a> is raised if the
+<code>numeric</code> is not a <a href="Fixnum.html">Fixnum</a> or <a
+href="Bignum.html">Bignum</a> type.</p>
+
+<pre><code>(0x3FFFFFFFFFFFFFFF+1).coerce(42)   #=&gt; [42, 4611686018427387904]
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-coerce_source')" id="l_method-i-coerce_source">show</a>
+                
+              </p>
+              <div id="method-i-coerce_source" class="dyn-source">
+                <pre>static VALUE
+rb_big_coerce(VALUE x, VALUE y)
+{
+    if (FIXNUM_P(y)) {
+        y = rb_int2big(FIX2LONG(y));
+    }
+    else if (!RB_BIGNUM_TYPE_P(y)) {
+        rb_raise(rb_eTypeError, &quot;can&#39;t coerce %&quot;PRIsVALUE&quot; to Bignum&quot;,
+                 rb_obj_class(y));
+    }
+    return rb_assoc_new(y, x);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-div">
+            
+              <b>big.div(other)  &rarr; integer
+</b>
+            
+            <a href="../classes/Bignum.html#method-i-div" name="method-i-div" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Performs integer division: returns integer value.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-div_source')" id="l_method-i-div_source">show</a>
+                
+              </p>
+              <div id="method-i-div_source" class="dyn-source">
+                <pre>VALUE
+rb_big_idiv(VALUE x, VALUE y)
+{
+    return rb_big_divide(x, y, rb_intern(&quot;div&quot;));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-divmod">
+            
+              <b>big.divmod(numeric)   &rarr; array
+</b>
+            
+            <a href="../classes/Bignum.html#method-i-divmod" name="method-i-divmod" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>See <code>Numeric#divmod</code>.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-divmod_source')" id="l_method-i-divmod_source">show</a>
+                
+              </p>
+              <div id="method-i-divmod_source" class="dyn-source">
+                <pre>VALUE
+rb_big_divmod(VALUE x, VALUE y)
+{
+    VALUE div, mod;
+
+    if (FIXNUM_P(y)) {
+        y = rb_int2big(FIX2LONG(y));
+    }
+    else if (!RB_BIGNUM_TYPE_P(y)) {
+        return rb_num_coerce_bin(x, y, rb_intern(&quot;divmod&quot;));
+    }
+    bigdivmod(x, y, &amp;div, &amp;mod);
+
+    return rb_assoc_new(bignorm(div), bignorm(mod));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-eql-3F">
+            
+              <b>big.eql?(obj)   &rarr; true or false
+</b>
+            
+            <a href="../classes/Bignum.html#method-i-eql-3F" name="method-i-eql-3F" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns <code>true</code> only if <em>obj</em> is a <code>Bignum</code>
+with the same value as <em>big</em>. Contrast this with
+<code>Bignum#==</code>, which performs type conversions.</p>
+
+<pre><code>68719476736.eql?(68719476736.0)   #=&gt; false
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-eql-3F_source')" id="l_method-i-eql-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-eql-3F_source" class="dyn-source">
+                <pre>VALUE
+rb_big_eql(VALUE x, VALUE y)
+{
+    if (!RB_BIGNUM_TYPE_P(y)) return Qfalse;
+    if (BIGNUM_SIGN(x) != BIGNUM_SIGN(y)) return Qfalse;
+    if (BIGNUM_LEN(x) != BIGNUM_LEN(y)) return Qfalse;
+    if (MEMCMP(BDIGITS(x),BDIGITS(y),BDIGIT,BIGNUM_LEN(y)) != 0) return Qfalse;
+    return Qtrue;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-even-3F">
+            
+              <b>big.even? &rarr; true or false
+</b>
+            
+            <a href="../classes/Bignum.html#method-i-even-3F" name="method-i-even-3F" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns <code>true</code> if <em>big</em> is an even number.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-even-3F_source')" id="l_method-i-even-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-even-3F_source" class="dyn-source">
+                <pre>static VALUE
+rb_big_even_p(VALUE num)
+{
+    if (BIGNUM_LEN(num) != 0 &amp;&amp; BDIGITS(num)[0] &amp; 1) {
+        return Qfalse;
+    }
+    return Qtrue;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-fdiv">
+            
+              <b>big.fdiv(numeric) &rarr; float
+</b>
+            
+            <a href="../classes/Bignum.html#method-i-fdiv" name="method-i-fdiv" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the floating point result of dividing <em>big</em> by
+<em>numeric</em>.</p>
+
+<pre><code>-1234567890987654321.fdiv(13731)      #=&gt; -89910996357705.5
+-1234567890987654321.fdiv(13731.24)   #=&gt; -89909424858035.7
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-fdiv_source')" id="l_method-i-fdiv_source">show</a>
+                
+              </p>
+              <div id="method-i-fdiv_source" class="dyn-source">
+                <pre>VALUE
+rb_big_fdiv(VALUE x, VALUE y)
+{
+    double dx, dy;
+
+    dx = big2dbl(x);
+    if (FIXNUM_P(y)) {
+        dy = (double)FIX2LONG(y);
+        if (isinf(dx))
+            return big_fdiv_int(x, rb_int2big(FIX2LONG(y)));
+    }
+    else if (RB_BIGNUM_TYPE_P(y)) {
+        dy = rb_big2dbl(y);
+        if (isinf(dx) || isinf(dy))
+            return big_fdiv_int(x, y);
+    }
+    else if (RB_FLOAT_TYPE_P(y)) {
+        dy = RFLOAT_VALUE(y);
+        if (isnan(dy))
+            return y;
+        if (isinf(dx))
+            return big_fdiv_float(x, y);
+    }
+    else {
+        return rb_num_coerce_bin(x, y, rb_intern(&quot;fdiv&quot;));
+    }
+    return DBL2NUM(dx / dy);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-hash">
+            
+              <b>big.hash   &rarr; fixnum
+</b>
+            
+            <a href="../classes/Bignum.html#method-i-hash" name="method-i-hash" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Compute a hash based on the value of <em>big</em>.</p>
+
+<p>See also <a href="Object.html#method-i-hash">Object#hash</a>.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-hash_source')" id="l_method-i-hash_source">show</a>
+                
+              </p>
+              <div id="method-i-hash_source" class="dyn-source">
+                <pre>static VALUE
+rb_big_hash(VALUE x)
+{
+    st_index_t hash;
+
+    hash = rb_memhash(BDIGITS(x), sizeof(BDIGIT)*BIGNUM_LEN(x)) ^ BIGNUM_SIGN(x);
+    return INT2FIX(hash);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-inspect">
+            
+              <b>inspect</b>(p1 = v1)
+            
+            <a href="../classes/Bignum.html#method-i-inspect" name="method-i-inspect" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+            <div class="aka">
+              Alias for: <a href="Bignum.html#method-i-to_s">to_s</a>
+            </div>
+          
+          
+          
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-magnitude">
+            
+              <b>big.magnitude &rarr; aBignum</b>
+            
+            <a href="../classes/Bignum.html#method-i-magnitude" name="method-i-magnitude" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the absolute value of <em>big</em>.</p>
+
+<pre><code>-1234567890987654321.abs   #=&gt; 1234567890987654321
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-magnitude_source')" id="l_method-i-magnitude_source">show</a>
+                
+              </p>
+              <div id="method-i-magnitude_source" class="dyn-source">
+                <pre>static VALUE
+rb_big_abs(VALUE x)
+{
+    if (!BIGNUM_SIGN(x)) {
+        x = rb_big_clone(x);
+        BIGNUM_SET_SIGN(x, 1);
+    }
+    return x;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-modulo">
+            
+              <b>big.modulo(other)   &rarr; Numeric</b>
+            
+            <a href="../classes/Bignum.html#method-i-modulo" name="method-i-modulo" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns big modulo other. See <a
+href="Numeric.html#method-i-divmod">Numeric#divmod</a> for more
+information.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-modulo_source')" id="l_method-i-modulo_source">show</a>
+                
+              </p>
+              <div id="method-i-modulo_source" class="dyn-source">
+                <pre>VALUE
+rb_big_modulo(VALUE x, VALUE y)
+{
+    VALUE z;
+
+    if (FIXNUM_P(y)) {
+        y = rb_int2big(FIX2LONG(y));
+    }
+    else if (!RB_BIGNUM_TYPE_P(y)) {
+        return rb_num_coerce_bin(x, y, &#39;%&#39;);
+    }
+    bigdivmod(x, y, 0, &amp;z);
+
+    return bignorm(z);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-odd-3F">
+            
+              <b>big.odd? &rarr; true or false
+</b>
+            
+            <a href="../classes/Bignum.html#method-i-odd-3F" name="method-i-odd-3F" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns <code>true</code> if <em>big</em> is an odd number.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-odd-3F_source')" id="l_method-i-odd-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-odd-3F_source" class="dyn-source">
+                <pre>static VALUE
+rb_big_odd_p(VALUE num)
+{
+    if (BIGNUM_LEN(num) != 0 &amp;&amp; BDIGITS(num)[0] &amp; 1) {
+        return Qtrue;
+    }
+    return Qfalse;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-remainder">
+            
+              <b>big.remainder(numeric)    &rarr; number
+</b>
+            
+            <a href="../classes/Bignum.html#method-i-remainder" name="method-i-remainder" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the remainder after dividing <em>big</em> by <em>numeric</em>.</p>
+
+<pre><code>-1234567890987654321.remainder(13731)      #=&gt; -6966
+-1234567890987654321.remainder(13731.24)   #=&gt; -9906.22531493148
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-remainder_source')" id="l_method-i-remainder_source">show</a>
+                
+              </p>
+              <div id="method-i-remainder_source" class="dyn-source">
+                <pre>static VALUE
+rb_big_remainder(VALUE x, VALUE y)
+{
+    VALUE z;
+
+    if (FIXNUM_P(y)) {
+        y = rb_int2big(FIX2LONG(y));
+    }
+    else if (!RB_BIGNUM_TYPE_P(y)) {
+        return rb_num_coerce_bin(x, y, rb_intern(&quot;remainder&quot;));
+    }
+    bigdivrem(x, y, 0, &amp;z);
+
+    return bignorm(z);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-size">
+            
+              <b>big.size &rarr; integer
+</b>
+            
+            <a href="../classes/Bignum.html#method-i-size" name="method-i-size" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the number of bytes in the machine representation of <em>big</em>.</p>
+
+<pre><code>(256**10 - 1).size   #=&gt; 12
+(256**20 - 1).size   #=&gt; 20
+(256**40 - 1).size   #=&gt; 40
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-size_source')" id="l_method-i-size_source">show</a>
+                
+              </p>
+              <div id="method-i-size_source" class="dyn-source">
+                <pre>static VALUE
+rb_big_size(VALUE big)
+{
+    return SIZET2NUM(BIGSIZE(big));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-to_f">
+            
+              <b>big.to_f &rarr; float
+</b>
+            
+            <a href="../classes/Bignum.html#method-i-to_f" name="method-i-to_f" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Converts <em>big</em> to a <code>Float</code>. If <em>big</em> doesn&#39;t
+fit in a <code>Float</code>, the result is infinity.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-to_f_source')" id="l_method-i-to_f_source">show</a>
+                
+              </p>
+              <div id="method-i-to_f_source" class="dyn-source">
+                <pre>static VALUE
+rb_big_to_f(VALUE x)
+{
+    return DBL2NUM(rb_big2dbl(x));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-to_s">
+            
+              <b>big.to_s(base=10)   &rarr;  string
+</b>
+            
+            <a href="../classes/Bignum.html#method-i-to_s" name="method-i-to_s" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns a string containing the representation of <em>big</em> radix
+<em>base</em> (2 through 36).</p>
+
+<pre><code>12345654321.to_s         #=&gt; &quot;12345654321&quot;
+12345654321.to_s(2)      #=&gt; &quot;1011011111110110111011110000110001&quot;
+12345654321.to_s(8)      #=&gt; &quot;133766736061&quot;
+12345654321.to_s(16)     #=&gt; &quot;2dfdbbc31&quot;
+78546939656932.to_s(36)  #=&gt; &quot;rubyrules&quot;
+</code></pre>
+            </div>
+          
+          
+          
+            <div class="aka">
+              Also aliased as: <a href="Bignum.html#method-i-inspect">inspect</a>
+            </div>
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-to_s_source')" id="l_method-i-to_s_source">show</a>
+                
+              </p>
+              <div id="method-i-to_s_source" class="dyn-source">
+                <pre>static VALUE
+rb_big_to_s(int argc, VALUE *argv, VALUE x)
+{
+    int base;
+
+    if (argc == 0) base = 10;
+    else {
+        VALUE b;
+
+        rb_scan_args(argc, argv, &quot;01&quot;, &amp;b);
+        base = NUM2INT(b);
+    }
+    return rb_big2str(x, base);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-7C">
+            
+              <b>big | numeric   &rarr;  integer
+</b>
+            
+            <a href="../classes/Bignum.html#method-i-7C" name="method-i-7C" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Performs bitwise <code>or</code> between <em>big</em> and <em>numeric</em>.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-7C_source')" id="l_method-i-7C_source">show</a>
+                
+              </p>
+              <div id="method-i-7C_source" class="dyn-source">
+                <pre>VALUE
+rb_big_or(VALUE x, VALUE y)
+{
+    VALUE z;
+    BDIGIT *ds1, *ds2, *zds;
+    long i, xn, yn, n1, n2;
+    BDIGIT hibitsx, hibitsy;
+    BDIGIT hibits1, hibits2;
+    VALUE tmpv;
+    BDIGIT tmph;
+    long tmpn;
+
+    if (!FIXNUM_P(y) &amp;&amp; !RB_BIGNUM_TYPE_P(y)) {
+        return rb_num_coerce_bit(x, y, &#39;|&#39;);
+    }
+
+    hibitsx = abs2twocomp(&amp;x, &amp;xn);
+    if (FIXNUM_P(y)) {
+        return bigor_int(x, xn, hibitsx, FIX2LONG(y));
+    }
+    hibitsy = abs2twocomp(&amp;y, &amp;yn);
+    if (xn &gt; yn) {
+        tmpv = x; x = y; y = tmpv;
+        tmpn = xn; xn = yn; yn = tmpn;
+        tmph = hibitsx; hibitsx = hibitsy; hibitsy = tmph;
+    }
+    n1 = xn;
+    n2 = yn;
+    ds1 = BDIGITS(x);
+    ds2 = BDIGITS(y);
+    hibits1 = hibitsx;
+    hibits2 = hibitsy;
+
+    if (hibits1)
+        n2 = n1;
+
+    z = bignew(n2, 0);
+    zds = BDIGITS(z);
+
+    for (i=0; i&lt;n1; i++) {
+        zds[i] = ds1[i] | ds2[i];
+    }
+    for (; i&lt;n2; i++) {
+        zds[i] = hibits1 | ds2[i];
+    }
+    twocomp2abs_bang(z, hibits1 || hibits2);
+    RB_GC_GUARD(x);
+    RB_GC_GUARD(y);
+    return bignorm(z);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-7E">
+            
+              <b>~big  &rarr;  integer
+</b>
+            
+            <a href="../classes/Bignum.html#method-i-7E" name="method-i-7E" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Inverts the bits in big. As Bignums are conceptually infinite length, the
+result acts as if it had an infinite number of one bits to the left. In hex
+representations, this is displayed as two periods to the left of the
+digits.</p>
+
+<pre><code>sprintf(&quot;%X&quot;, ~0x1122334455)    #=&gt; &quot;..FEEDDCCBBAA&quot;
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-7E_source')" id="l_method-i-7E_source">show</a>
+                
+              </p>
+              <div id="method-i-7E_source" class="dyn-source">
+                <pre>static VALUE
+rb_big_neg(VALUE x)
+{
+    VALUE z = rb_big_clone(x);
+    BDIGIT *ds = BDIGITS(z);
+    long n = BIGNUM_LEN(z);
+
+    if (!n) return INT2FIX(-1);
+
+    if (BIGNUM_POSITIVE_P(z)) {
+        if (bary_add_one(ds, n)) {
+            big_extend_carry(z);
+        }
+        BIGNUM_SET_NEGATIVE_SIGN(z);
+    }
+    else {
+        bary_neg(ds, n);
+        if (bary_add_one(ds, n))
+            return INT2FIX(-1);
+        bary_neg(ds, n);
+        BIGNUM_SET_POSITIVE_SIGN(z);
+    }
+
+    return bignorm(z);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+
+    </div>
+  </body>
+</html>    

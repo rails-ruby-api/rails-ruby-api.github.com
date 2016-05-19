@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>QueJobsManager</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/github.css" type="text/css" media="screen" />
+<script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Module</span> 
+            QueJobsManager 
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../files/activejob/test/support/integration/adapters/que_rb.html">activejob/test/support/integration/adapters/que.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>C</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-clear_jobs">clear_jobs</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>S</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-setup">setup</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-start_workers">start_workers</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-stop_workers">stop_workers</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+        
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-clear_jobs">
+            
+              <b>clear_jobs</b>()
+            
+            <a href="../classes/QueJobsManager.html#method-i-clear_jobs" name="method-i-clear_jobs" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-clear_jobs_source')" id="l_method-i-clear_jobs_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/d7a058f785224a3643244686fae3a31e408f0860/activejob/test/support/integration/adapters/que.rb#L21" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-clear_jobs_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activejob/test/support/integration/adapters/que.rb, line 21</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">clear_jobs</span>
+  <span class="ruby-constant">Que</span>.<span class="ruby-identifier">clear!</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-setup">
+            
+              <b>setup</b>()
+            
+            <a href="../classes/QueJobsManager.html#method-i-setup" name="method-i-setup" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-setup_source')" id="l_method-i-setup_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/d7a058f785224a3643244686fae3a31e408f0860/activejob/test/support/integration/adapters/que.rb#L2" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-setup_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activejob/test/support/integration/adapters/que.rb, line 2</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">setup</span>
+  <span class="ruby-identifier">require</span> <span class="ruby-string">&#39;sequel&#39;</span>
+  <span class="ruby-constant">ActiveJob</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">queue_adapter</span> = <span class="ruby-value">:que</span>
+  <span class="ruby-identifier">que_url</span> = <span class="ruby-constant">ENV</span>[<span class="ruby-string">&#39;QUE_DATABASE_URL&#39;</span>] <span class="ruby-operator">||</span> <span class="ruby-string">&#39;postgres:///active_jobs_que_int_test&#39;</span>
+  <span class="ruby-identifier">uri</span> = <span class="ruby-constant">URI</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">que_url</span>)
+  <span class="ruby-identifier">user</span> = <span class="ruby-identifier">uri</span>.<span class="ruby-identifier">user</span><span class="ruby-operator">||</span><span class="ruby-constant">ENV</span>[<span class="ruby-string">&#39;USER&#39;</span>]
+  <span class="ruby-identifier">pass</span> = <span class="ruby-identifier">uri</span>.<span class="ruby-identifier">password</span>
+  <span class="ruby-identifier">db</span>   = <span class="ruby-identifier">uri</span>.<span class="ruby-identifier">path</span>[<span class="ruby-number">1</span><span class="ruby-operator">..</span><span class="ruby-number">-1</span>]
+  <span class="ruby-node">%x{#{&quot;PGPASSWORD=\&quot;#{pass}\&quot;&quot; if pass} psql -c &#39;drop database if exists &quot;#{db}&quot;&#39; -U #{user} -t template1}</span>
+  <span class="ruby-node">%x{#{&quot;PGPASSWORD=\&quot;#{pass}\&quot;&quot; if pass} psql -c &#39;create database &quot;#{db}&quot;&#39; -U #{user} -t template1}</span>
+  <span class="ruby-constant">Que</span>.<span class="ruby-identifier">connection</span> = <span class="ruby-constant">Sequel</span>.<span class="ruby-identifier">connect</span>(<span class="ruby-identifier">que_url</span>)
+  <span class="ruby-constant">Que</span>.<span class="ruby-identifier">migrate!</span>
+  <span class="ruby-constant">Que</span>.<span class="ruby-identifier">mode</span> = <span class="ruby-value">:off</span>
+  <span class="ruby-constant">Que</span>.<span class="ruby-identifier">worker_count</span> = <span class="ruby-number">1</span>
+<span class="ruby-keyword">rescue</span> <span class="ruby-constant">Sequel</span><span class="ruby-operator">::</span><span class="ruby-constant">DatabaseConnectionError</span>
+  <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Cannot run integration tests for que. To be able to run integration tests for que you need to install and start postgresql.\n&quot;</span>
+  <span class="ruby-identifier">exit</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-start_workers">
+            
+              <b>start_workers</b>()
+            
+            <a href="../classes/QueJobsManager.html#method-i-start_workers" name="method-i-start_workers" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-start_workers_source')" id="l_method-i-start_workers_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/d7a058f785224a3643244686fae3a31e408f0860/activejob/test/support/integration/adapters/que.rb#L25" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-start_workers_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activejob/test/support/integration/adapters/que.rb, line 25</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">start_workers</span>
+  <span class="ruby-ivar">@thread</span> = <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">loop</span> <span class="ruby-keyword">do</span>
+      <span class="ruby-constant">Que</span><span class="ruby-operator">::</span><span class="ruby-constant">Job</span>.<span class="ruby-identifier">work</span>(<span class="ruby-string">&quot;integration_tests&quot;</span>)
+      <span class="ruby-identifier">sleep</span> <span class="ruby-number">0.5</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-stop_workers">
+            
+              <b>stop_workers</b>()
+            
+            <a href="../classes/QueJobsManager.html#method-i-stop_workers" name="method-i-stop_workers" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-stop_workers_source')" id="l_method-i-stop_workers_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/d7a058f785224a3643244686fae3a31e408f0860/activejob/test/support/integration/adapters/que.rb#L34" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-stop_workers_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activejob/test/support/integration/adapters/que.rb, line 34</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">stop_workers</span>
+  <span class="ruby-ivar">@thread</span>.<span class="ruby-identifier">kill</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+
+    </div>
+  </body>
+</html>    

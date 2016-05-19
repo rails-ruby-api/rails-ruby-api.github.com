@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Gem::Ext::ExtConfBuilder</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/github.css" type="text/css" media="screen" />
+<script src="../../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            Gem::Ext::ExtConfBuilder 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="Builder.html">Gem::Ext::Builder</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../../files/lib/rubygems/ext/ext_conf_builder_rb.html">lib/rubygems/ext/ext_conf_builder.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>B</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-build">build</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+      <!-- Section constants -->
+      <div class="sectiontitle">Constants</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class="attr-name">FileEntry</td>
+            <td>=</td>
+            <td class="attr-value">FileUtils::Entry_</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+      </table>
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-build">
+            
+              <b>build</b>(extension, directory, dest_path, results, args=[], lib_dir=nil)
+            
+            <a href="../../../classes/Gem/Ext/ExtConfBuilder.html#method-c-build" name="method-c-build" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-build_source')" id="l_method-c-build_source">show</a>
+                
+              </p>
+              <div id="method-c-build_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/ext/ext_conf_builder.rb, line 14</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">self</span>.<span class="ruby-identifier">build</span>(<span class="ruby-identifier">extension</span>, <span class="ruby-identifier">directory</span>, <span class="ruby-identifier">dest_path</span>, <span class="ruby-identifier">results</span>, <span class="ruby-identifier">args</span>=[], <span class="ruby-identifier">lib_dir</span>=<span class="ruby-keyword">nil</span>)
+  <span class="ruby-comment"># relative path required as some versions of mktmpdir return an absolute</span>
+  <span class="ruby-comment"># path which breaks make if it includes a space in the name</span>
+  <span class="ruby-identifier">tmp_dest</span> = <span class="ruby-identifier">get_relative_path</span>(<span class="ruby-constant">Dir</span>.<span class="ruby-identifier">mktmpdir</span>(<span class="ruby-string">&quot;.gem.&quot;</span>, <span class="ruby-string">&quot;.&quot;</span>))
+
+  <span class="ruby-identifier">t</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-constant">Tempfile</span>.<span class="ruby-identifier">open</span> <span class="ruby-node">%w&quot;siteconf .rb&quot;</span>, <span class="ruby-string">&quot;.&quot;</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">siteconf</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">t</span> = <span class="ruby-identifier">siteconf</span>
+    <span class="ruby-identifier">siteconf</span>.<span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;require &#39;rbconfig&#39;&quot;</span>
+    <span class="ruby-identifier">siteconf</span>.<span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;dest_path = #{tmp_dest.dump}&quot;</span>
+    <span class="ruby-node">%w[sitearchdir sitelibdir]</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">dir</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">siteconf</span>.<span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;RbConfig::MAKEFILE_CONFIG[&#39;#{dir}&#39;] = dest_path&quot;</span>
+      <span class="ruby-identifier">siteconf</span>.<span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;RbConfig::CONFIG[&#39;#{dir}&#39;] = dest_path&quot;</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-identifier">siteconf</span>.<span class="ruby-identifier">flush</span>
+
+    <span class="ruby-identifier">destdir</span> = <span class="ruby-constant">ENV</span>[<span class="ruby-string">&quot;DESTDIR&quot;</span>]
+
+    <span class="ruby-keyword">begin</span>
+      <span class="ruby-identifier">cmd</span> = [<span class="ruby-constant">Gem</span>.<span class="ruby-identifier">ruby</span>, <span class="ruby-string">&quot;-r&quot;</span>, <span class="ruby-identifier">get_relative_path</span>(<span class="ruby-identifier">siteconf</span>.<span class="ruby-identifier">path</span>), <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">extension</span>), <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>].<span class="ruby-identifier">join</span> <span class="ruby-string">&#39; &#39;</span>
+
+      <span class="ruby-keyword">begin</span>
+        <span class="ruby-identifier">run</span> <span class="ruby-identifier">cmd</span>, <span class="ruby-identifier">results</span>
+      <span class="ruby-keyword">ensure</span>
+        <span class="ruby-keyword">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span> <span class="ruby-string">&#39;mkmf.log&#39;</span>
+          <span class="ruby-identifier">results</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&quot;To see why this extension failed to compile, please check&quot;</span>                <span class="ruby-string">&quot; the mkmf.log which can be found here:\n&quot;</span>
+          <span class="ruby-identifier">results</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&quot;  &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">dest_path</span>, <span class="ruby-string">&#39;mkmf.log&#39;</span>) <span class="ruby-operator">+</span> <span class="ruby-string">&quot;\n&quot;</span>
+          <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mv</span> <span class="ruby-string">&#39;mkmf.log&#39;</span>, <span class="ruby-identifier">dest_path</span>
+        <span class="ruby-keyword">end</span>
+        <span class="ruby-identifier">siteconf</span>.<span class="ruby-identifier">unlink</span>
+      <span class="ruby-keyword">end</span>
+
+      <span class="ruby-constant">ENV</span>[<span class="ruby-string">&quot;DESTDIR&quot;</span>] = <span class="ruby-keyword">nil</span>
+
+      <span class="ruby-identifier">make</span> <span class="ruby-identifier">dest_path</span>, <span class="ruby-identifier">results</span>
+
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">tmp_dest</span>
+        <span class="ruby-comment"># TODO remove in RubyGems 3</span>
+        <span class="ruby-keyword">if</span> <span class="ruby-constant">Gem</span>.<span class="ruby-identifier">install_extension_in_lib</span> <span class="ruby-keyword">and</span> <span class="ruby-identifier">lib_dir</span> <span class="ruby-keyword">then</span>
+          <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mkdir_p</span> <span class="ruby-identifier">lib_dir</span>
+          <span class="ruby-identifier">entries</span> = <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">entries</span>(<span class="ruby-identifier">tmp_dest</span>) <span class="ruby-operator">-</span> <span class="ruby-node">%w[. ..]</span>
+          <span class="ruby-identifier">entries</span> = <span class="ruby-identifier">entries</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">entry</span><span class="ruby-operator">|</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span> <span class="ruby-identifier">tmp_dest</span>, <span class="ruby-identifier">entry</span> }
+          <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">cp_r</span> <span class="ruby-identifier">entries</span>, <span class="ruby-identifier">lib_dir</span>, <span class="ruby-value">:remove_destination</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>
+        <span class="ruby-keyword">end</span>
+
+        <span class="ruby-constant">FileEntry</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">tmp_dest</span>).<span class="ruby-identifier">traverse</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">ent</span><span class="ruby-operator">|</span>
+          <span class="ruby-identifier">destent</span> = <span class="ruby-identifier">ent</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">dest_path</span>, <span class="ruby-identifier">ent</span>.<span class="ruby-identifier">rel</span>)
+          <span class="ruby-identifier">destent</span>.<span class="ruby-identifier">exist?</span> <span class="ruby-keyword">or</span> <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mv</span>(<span class="ruby-identifier">ent</span>.<span class="ruby-identifier">path</span>, <span class="ruby-identifier">destent</span>.<span class="ruby-identifier">path</span>)
+        <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">ensure</span>
+      <span class="ruby-constant">ENV</span>[<span class="ruby-string">&quot;DESTDIR&quot;</span>] = <span class="ruby-identifier">destdir</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">t</span>.<span class="ruby-identifier">unlink</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">t</span> <span class="ruby-keyword">and</span> <span class="ruby-identifier">t</span>.<span class="ruby-identifier">path</span>
+
+  <span class="ruby-identifier">results</span>
+<span class="ruby-keyword">ensure</span>
+  <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">rm_rf</span> <span class="ruby-identifier">tmp_dest</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">tmp_dest</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                        </div>
+
+    </div>
+  </body>
+</html>    

@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>AssertSelectEmailTest</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/github.css" type="text/css" media="screen" />
+<script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            AssertSelectEmailTest 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="ActionMailer/TestCase.html">ActionMailer::TestCase</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../files/actionmailer/test/assert_select_email_test_rb.html">actionmailer/test/assert_select_email_test.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+
+
+  
+
+
+  
+  
+
+
+  
+    <!-- Namespace -->
+    <div class="sectiontitle">Namespace</div>
+    <ul>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="AssertSelectEmailTest/AssertMultipartSelectMailer.html">AssertSelectEmailTest::AssertMultipartSelectMailer</a>
+        </li>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="AssertSelectEmailTest/AssertSelectMailer.html">AssertSelectEmailTest::AssertSelectMailer</a>
+        </li>
+      
+    </ul>
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-test_assert_select_email">test_assert_select_email</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_assert_select_email_multipart">test_assert_select_email_multipart</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+        
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-test_assert_select_email">
+            
+              <b>test_assert_select_email</b>()
+            
+            <a href="../classes/AssertSelectEmailTest.html#method-i-test_assert_select_email" name="method-i-test_assert_select_email" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Test assert_select_email</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_assert_select_email_source')" id="l_method-i-test_assert_select_email_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/f4ee114746ddc68db606f63e17e6de28274fc2bd/actionmailer/test/assert_select_email_test.rb#L24" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_assert_select_email_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionmailer/test/assert_select_email_test.rb, line 24</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_assert_select_email</span>
+  <span class="ruby-identifier">assert_raise</span> <span class="ruby-constant">ActiveSupport</span><span class="ruby-operator">::</span><span class="ruby-constant">TestCase</span><span class="ruby-operator">::</span><span class="ruby-constant">Assertion</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">assert_select_email</span> {}
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-constant">AssertSelectMailer</span>.<span class="ruby-identifier">test</span>(<span class="ruby-string">&quot;&lt;div&gt;&lt;p&gt;foo&lt;/p&gt;&lt;p&gt;bar&lt;/p&gt;&lt;/div&gt;&quot;</span>).<span class="ruby-identifier">deliver_now</span>
+  <span class="ruby-identifier">assert_select_email</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">assert_select</span> <span class="ruby-string">&quot;div:root&quot;</span> <span class="ruby-keyword">do</span>
+      <span class="ruby-identifier">assert_select</span> <span class="ruby-string">&quot;p:first-child&quot;</span>, <span class="ruby-string">&quot;foo&quot;</span>
+      <span class="ruby-identifier">assert_select</span> <span class="ruby-string">&quot;p:last-child&quot;</span>, <span class="ruby-string">&quot;bar&quot;</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_assert_select_email_multipart">
+            
+              <b>test_assert_select_email_multipart</b>()
+            
+            <a href="../classes/AssertSelectEmailTest.html#method-i-test_assert_select_email_multipart" name="method-i-test_assert_select_email_multipart" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_assert_select_email_multipart_source')" id="l_method-i-test_assert_select_email_multipart_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/f4ee114746ddc68db606f63e17e6de28274fc2bd/actionmailer/test/assert_select_email_test.rb#L38" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_assert_select_email_multipart_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionmailer/test/assert_select_email_test.rb, line 38</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_assert_select_email_multipart</span>
+  <span class="ruby-constant">AssertMultipartSelectMailer</span>.<span class="ruby-identifier">test</span>(<span class="ruby-identifier">html</span><span class="ruby-operator">:</span> <span class="ruby-string">&quot;&lt;div&gt;&lt;p&gt;foo&lt;/p&gt;&lt;p&gt;bar&lt;/p&gt;&lt;/div&gt;&quot;</span>, <span class="ruby-identifier">text</span><span class="ruby-operator">:</span> <span class="ruby-string">&#39;foo bar&#39;</span>).<span class="ruby-identifier">deliver_now</span>
+  <span class="ruby-identifier">assert_select_email</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">assert_select</span> <span class="ruby-string">&quot;div:root&quot;</span> <span class="ruby-keyword">do</span>
+      <span class="ruby-identifier">assert_select</span> <span class="ruby-string">&quot;p:first-child&quot;</span>, <span class="ruby-string">&quot;foo&quot;</span>
+      <span class="ruby-identifier">assert_select</span> <span class="ruby-string">&quot;p:last-child&quot;</span>, <span class="ruby-string">&quot;bar&quot;</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+
+    </div>
+  </body>
+</html>    

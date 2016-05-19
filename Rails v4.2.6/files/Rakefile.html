@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Rakefile</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/github.css" type="text/css" media="screen" />
+<script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            Rakefile
+        </h1>
+        <ul class="files">
+            
+            <li>
+                Rakefile
+                
+                    <a href="https://github.com/rails/rails/blob/0c232779ece1ff6bf9bce9d55c54ea19867a2170/Rakefile" target="_blank" class="github_url">on GitHub</a>
+                
+            </li>
+            <li>Last modified: 2016-05-19 14:28:33 +0200</li>
+        </ul>
+    </div>
+
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>require &#39;sdoc&#39; require &#39;net/http&#39;</p>
+
+<p>$:.unshift File.expand_path(&#39;..&#39;, __FILE__) require “tasks/release”
+require &#39;railties/lib/rails/api/task&#39;</p>
+
+<p>desc “Build gem files for all projects” task :build =&gt; “all:build”</p>
+
+<p>desc “Release all gems to rubygems and create a tag” task :release =&gt;
+“all:release”</p>
+
+<p>PROJECTS = %w(activesupport activemodel actionpack actionview actionmailer
+activerecord railties activejob)</p>
+
+<p>desc &#39;Run all tests by default&#39; task :default =&gt; %w(test
+test:isolated)</p>
+
+<p>%w(test test:isolated package gem).each do |task_name|</p>
+
+<pre><code>desc &quot;Run #{task_name} task for all projects&quot;
+task task_name do
+  errors = []
+  PROJECTS.each do |project|
+    system(%(cd #{project} &amp;&amp; #{$0} #{task_name})) || errors &lt;&lt; project
+  end
+  fail(&quot;Errors in #{errors.join(&#39;, &#39;)}&quot;) unless errors.empty?
+end
+</code></pre>
+
+<p>end</p>
+
+<p>desc “Smoke-test all projects” task :smoke do</p>
+
+<pre><code>(PROJECTS - %w(activerecord)).each do |project|
+  system %(cd #{project} &amp;&amp; #{$0} test:isolated)
+end
+system %(cd activerecord &amp;&amp; #{$0} sqlite3:isolated_test)
+</code></pre>
+
+<p>end</p>
+
+<p>desc “Install gems for all projects.” task :install =&gt; “all:install”</p>
+
+<p>desc “Generate documentation for the Rails framework” if <a
+href="'EDGE'">ENV</a></p>
+
+<pre><code>Rails::API::EdgeTask.new(&#39;rdoc&#39;)
+</code></pre>
+
+<p>else</p>
+
+<pre><code>Rails::API::StableTask.new(&#39;rdoc&#39;)
+</code></pre>
+
+<p>end</p>
+
+<p>desc &#39;Bump all versions to match <a
+href="RAILS_VERSION.html">RAILS_VERSION</a>&#39; task :update_versions
+=&gt; “all:update_versions”</p>
+
+<p># We have a webhook configured in GitHub that gets invoked after pushes. #
+This hook triggers the following tasks: # #   * updates the local checkout
+#   * updates Rails Contributors #   * generates and publishes edge docs # 
+* if there&#39;s a new stable tag, generates and publishes stable docs # #
+Everything is automated and you do NOT need to run this task normally. desc
+&#39;Publishes docs, run this AFTER a new stable tag has been pushed&#39;
+task :publish_docs do</p>
+
+<pre><code>Net::HTTP.new(&#39;api.rubyonrails.org&#39;, 8080).start do |http|
+  request  = Net::HTTP::Post.new(&#39;/rails-master-hook&#39;)
+  response = http.request(request)
+  puts response.body
+end
+</code></pre>
+
+<p>end</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+              </div>
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,957 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Gem::DependencyList</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            Gem::DependencyList 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/lib/rubygems/dependency_list_rb.html">lib/rubygems/dependency_list.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p><a href="DependencyList.html">Gem::DependencyList</a> is used for
+installing and uninstalling gems in the correct order to avoid conflicts.</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>A</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-add">add</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>C</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-clear">clear</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>D</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-dependency_order">dependency_order</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>E</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-each">each</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>F</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-find_name">find_name</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-from_specs">from_specs</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>O</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-ok-3F">ok?</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-ok_to_remove-3F">ok_to_remove?</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>R</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-remove_by_name">remove_by_name</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-remove_specs_unsatisfied_by">remove_specs_unsatisfied_by</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>S</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-spec_predecessors">spec_predecessors</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-tsort_each_child">tsort_each_child</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-tsort_each_node">tsort_each_node</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>W</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-why_not_ok-3F">why_not_ok?</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+    <!-- Includes -->
+    <div class="sectiontitle">Included Modules</div>
+    <ul>
+      
+        <li>
+          
+            <a href="../Enumerable.html">
+              Enumerable
+            </a>
+          
+        </li>
+      
+        <li>
+          
+            <a href="../TSort.html">
+              TSort
+            </a>
+          
+        </li>
+      
+    </ul>
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+      <!-- Section attributes -->
+      <div class="sectiontitle">Attributes</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [RW]
+            </td>
+            <td class='attr-name'>development</td>
+            <td class='attr-desc'><p>Allows enabling/disabling use of development dependencies</p></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [R]
+            </td>
+            <td class='attr-name'>specs</td>
+            <td class='attr-desc'></td>
+          </tr>
+        
+      </table>
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-from_specs">
+            
+              <b>from_specs</b>()
+            
+            <a href="../../classes/Gem/DependencyList.html#method-c-from_specs" name="method-c-from_specs" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Creates a <a href="DependencyList.html">DependencyList</a> from the current
+specs.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-from_specs_source')" id="l_method-c-from_specs_source">show</a>
+                
+              </p>
+              <div id="method-c-from_specs_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/dependency_list.rb, line 33</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">self</span>.<span class="ruby-identifier">from_specs</span>
+  <span class="ruby-identifier">list</span> = <span class="ruby-identifier">new</span>
+  <span class="ruby-identifier">list</span>.<span class="ruby-identifier">add</span>(<span class="ruby-operator">*</span><span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Specification</span>.<span class="ruby-identifier">to_a</span>)
+  <span class="ruby-identifier">list</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <b>new</b>(development = false)
+            
+            <a href="../../classes/Gem/DependencyList.html#method-c-new" name="method-c-new" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Creates a new <a href="DependencyList.html">DependencyList</a>.  If
+<code>development</code> is true, development dependencies will be
+included.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/dependency_list.rb, line 43</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">initialize</span> <span class="ruby-identifier">development</span> = <span class="ruby-keyword">false</span>
+  <span class="ruby-ivar">@specs</span> = []
+
+  <span class="ruby-ivar">@development</span> = <span class="ruby-identifier">development</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-add">
+            
+              <b>add</b>(*gemspecs)
+            
+            <a href="../../classes/Gem/DependencyList.html#method-i-add" name="method-i-add" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Adds <code>gemspecs</code> to the dependency list.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-add_source')" id="l_method-i-add_source">show</a>
+                
+              </p>
+              <div id="method-i-add_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/dependency_list.rb, line 52</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">add</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">gemspecs</span>)
+  <span class="ruby-ivar">@specs</span>.<span class="ruby-identifier">concat</span> <span class="ruby-identifier">gemspecs</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-clear">
+            
+              <b>clear</b>()
+            
+            <a href="../../classes/Gem/DependencyList.html#method-i-clear" name="method-i-clear" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-clear_source')" id="l_method-i-clear_source">show</a>
+                
+              </p>
+              <div id="method-i-clear_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/dependency_list.rb, line 56</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">clear</span>
+  <span class="ruby-ivar">@specs</span>.<span class="ruby-identifier">clear</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-dependency_order">
+            
+              <b>dependency_order</b>()
+            
+            <a href="../../classes/Gem/DependencyList.html#method-i-dependency_order" name="method-i-dependency_order" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Return a list of the gem specifications in the dependency list, sorted in
+order so that no gemspec in the list depends on a gemspec earlier in the
+list.</p>
+
+<p>This is useful when removing gems from a set of installed gems.  By
+removing them in the returned order, you don&#39;t get into as many
+dependency issues.</p>
+
+<p>If there are circular dependencies (yuck!), then gems will be returned in
+order until only the circular dependents and anything they reference are
+left.  Then arbitrary gemspecs will be returned until the circular
+dependency is broken, after which gems will be returned in dependency order
+again.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-dependency_order_source')" id="l_method-i-dependency_order_source">show</a>
+                
+              </p>
+              <div id="method-i-dependency_order_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/dependency_list.rb, line 75</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">dependency_order</span>
+  <span class="ruby-identifier">sorted</span> = <span class="ruby-identifier">strongly_connected_components</span>.<span class="ruby-identifier">flatten</span>
+
+  <span class="ruby-identifier">result</span> = []
+  <span class="ruby-identifier">seen</span> = {}
+
+  <span class="ruby-identifier">sorted</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">spec</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">index</span> = <span class="ruby-identifier">seen</span>[<span class="ruby-identifier">spec</span>.<span class="ruby-identifier">name</span>] <span class="ruby-keyword">then</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">result</span>[<span class="ruby-identifier">index</span>].<span class="ruby-identifier">version</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">version</span> <span class="ruby-keyword">then</span>
+        <span class="ruby-identifier">result</span>[<span class="ruby-identifier">index</span>] = <span class="ruby-identifier">spec</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">seen</span>[<span class="ruby-identifier">spec</span>.<span class="ruby-identifier">name</span>] = <span class="ruby-identifier">result</span>.<span class="ruby-identifier">length</span>
+      <span class="ruby-identifier">result</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">spec</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">result</span>.<span class="ruby-identifier">reverse</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-each">
+            
+              <b>each</b>(&amp;block)
+            
+            <a href="../../classes/Gem/DependencyList.html#method-i-each" name="method-i-each" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Iterator over <a
+href="DependencyList.html#method-i-dependency_order">#dependency_order</a></p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-each_source')" id="l_method-i-each_source">show</a>
+                
+              </p>
+              <div id="method-i-each_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/dependency_list.rb, line 98</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">each</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+  <span class="ruby-identifier">dependency_order</span>.<span class="ruby-identifier">each</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-find_name">
+            
+              <b>find_name</b>(full_name)
+            
+            <a href="../../classes/Gem/DependencyList.html#method-i-find_name" name="method-i-find_name" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-find_name_source')" id="l_method-i-find_name_source">show</a>
+                
+              </p>
+              <div id="method-i-find_name_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/dependency_list.rb, line 102</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">find_name</span>(<span class="ruby-identifier">full_name</span>)
+  <span class="ruby-ivar">@specs</span>.<span class="ruby-identifier">find</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">spec</span><span class="ruby-operator">|</span> <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">full_name</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">full_name</span> }
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-ok-3F">
+            
+              <b>ok?</b>()
+            
+            <a href="../../classes/Gem/DependencyList.html#method-i-ok-3F" name="method-i-ok-3F" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Are all the dependencies in the list satisfied?</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-ok-3F_source')" id="l_method-i-ok-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-ok-3F_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/dependency_list.rb, line 113</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">ok?</span>
+  <span class="ruby-identifier">why_not_ok?</span>(<span class="ruby-value">:quick</span>).<span class="ruby-identifier">empty?</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-ok_to_remove-3F">
+            
+              <b>ok_to_remove?</b>(full_name, check_dev=true)
+            
+            <a href="../../classes/Gem/DependencyList.html#method-i-ok_to_remove-3F" name="method-i-ok_to_remove-3F" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Is is ok to remove a gemspec from the dependency list?</p>
+
+<p>If removing the gemspec creates breaks a currently ok dependency, then it
+is NOT ok to remove the gemspec.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-ok_to_remove-3F_source')" id="l_method-i-ok_to_remove-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-ok_to_remove-3F_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/dependency_list.rb, line 142</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">ok_to_remove?</span>(<span class="ruby-identifier">full_name</span>, <span class="ruby-identifier">check_dev</span>=<span class="ruby-keyword">true</span>)
+  <span class="ruby-identifier">gem_to_remove</span> = <span class="ruby-identifier">find_name</span> <span class="ruby-identifier">full_name</span>
+
+  <span class="ruby-comment"># If the state is inconsistent, at least don&#39;t crash</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">gem_to_remove</span>
+
+  <span class="ruby-identifier">siblings</span> = <span class="ruby-ivar">@specs</span>.<span class="ruby-identifier">find_all</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">s</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">gem_to_remove</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">&amp;&amp;</span>
+      <span class="ruby-identifier">s</span>.<span class="ruby-identifier">full_name</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">gem_to_remove</span>.<span class="ruby-identifier">full_name</span>
+  }
+
+  <span class="ruby-identifier">deps</span> = []
+
+  <span class="ruby-ivar">@specs</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">spec</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">check</span> = <span class="ruby-identifier">check_dev</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">dependencies</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">runtime_dependencies</span>
+
+    <span class="ruby-identifier">check</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">dep</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">deps</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">dep</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">gem_to_remove</span>.<span class="ruby-identifier">satisfies_requirement?</span>(<span class="ruby-identifier">dep</span>)
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">deps</span>.<span class="ruby-identifier">all?</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">dep</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">siblings</span>.<span class="ruby-identifier">any?</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">s</span>.<span class="ruby-identifier">satisfies_requirement?</span> <span class="ruby-identifier">dep</span>
+    }
+  }
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-remove_by_name">
+            
+              <b>remove_by_name</b>(full_name)
+            
+            <a href="../../classes/Gem/DependencyList.html#method-i-remove_by_name" name="method-i-remove_by_name" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Removes the gemspec matching <code>full_name</code> from the dependency
+list</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-remove_by_name_source')" id="l_method-i-remove_by_name_source">show</a>
+                
+              </p>
+              <div id="method-i-remove_by_name_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/dependency_list.rb, line 185</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">remove_by_name</span>(<span class="ruby-identifier">full_name</span>)
+  <span class="ruby-ivar">@specs</span>.<span class="ruby-identifier">delete_if</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">spec</span><span class="ruby-operator">|</span> <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">full_name</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">full_name</span> }
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-remove_specs_unsatisfied_by">
+            
+              <b>remove_specs_unsatisfied_by</b>(dependencies)
+            
+            <a href="../../classes/Gem/DependencyList.html#method-i-remove_specs_unsatisfied_by" name="method-i-remove_specs_unsatisfied_by" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Remove everything in the <a href="DependencyList.html">DependencyList</a>
+that matches but doesn&#39;t satisfy items in <code>dependencies</code> (a
+hash of gem names to arrays of dependencies).</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-remove_specs_unsatisfied_by_source')" id="l_method-i-remove_specs_unsatisfied_by_source">show</a>
+                
+              </p>
+              <div id="method-i-remove_specs_unsatisfied_by_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/dependency_list.rb, line 175</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">remove_specs_unsatisfied_by</span> <span class="ruby-identifier">dependencies</span>
+  <span class="ruby-identifier">specs</span>.<span class="ruby-identifier">reject!</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">spec</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">dep</span> = <span class="ruby-identifier">dependencies</span>[<span class="ruby-identifier">spec</span>.<span class="ruby-identifier">name</span>]
+    <span class="ruby-identifier">dep</span> <span class="ruby-keyword">and</span> <span class="ruby-keyword">not</span> <span class="ruby-identifier">dep</span>.<span class="ruby-identifier">requirement</span>.<span class="ruby-identifier">satisfied_by?</span> <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">version</span>
+  }
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-spec_predecessors">
+            
+              <b>spec_predecessors</b>()
+            
+            <a href="../../classes/Gem/DependencyList.html#method-i-spec_predecessors" name="method-i-spec_predecessors" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Return a hash of predecessors.  <code>result[spec]</code> is an Array of
+gemspecs that have a dependency satisfied by the named gemspec.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-spec_predecessors_source')" id="l_method-i-spec_predecessors_source">show</a>
+                
+              </p>
+              <div id="method-i-spec_predecessors_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/dependency_list.rb, line 193</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">spec_predecessors</span>
+  <span class="ruby-identifier">result</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">h</span>,<span class="ruby-identifier">k</span><span class="ruby-operator">|</span> <span class="ruby-identifier">h</span>[<span class="ruby-identifier">k</span>] = [] }
+
+  <span class="ruby-identifier">specs</span> = <span class="ruby-ivar">@specs</span>.<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">reverse</span>
+
+  <span class="ruby-identifier">specs</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">spec</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">specs</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">other</span><span class="ruby-operator">|</span>
+      <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">spec</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">other</span>
+
+      <span class="ruby-identifier">other</span>.<span class="ruby-identifier">dependencies</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">dep</span><span class="ruby-operator">|</span>
+        <span class="ruby-keyword">if</span> <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">satisfies_requirement?</span> <span class="ruby-identifier">dep</span> <span class="ruby-keyword">then</span>
+          <span class="ruby-identifier">result</span>[<span class="ruby-identifier">spec</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">other</span>
+        <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">result</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-tsort_each_child">
+            
+              <b>tsort_each_child</b>(node)
+            
+            <a href="../../classes/Gem/DependencyList.html#method-i-tsort_each_child" name="method-i-tsort_each_child" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-tsort_each_child_source')" id="l_method-i-tsort_each_child_source">show</a>
+                
+              </p>
+              <div id="method-i-tsort_each_child_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/dependency_list.rb, line 217</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">tsort_each_child</span>(<span class="ruby-identifier">node</span>)
+  <span class="ruby-identifier">specs</span> = <span class="ruby-ivar">@specs</span>.<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">reverse</span>
+
+  <span class="ruby-identifier">dependencies</span> = <span class="ruby-identifier">node</span>.<span class="ruby-identifier">runtime_dependencies</span>
+  <span class="ruby-identifier">dependencies</span>.<span class="ruby-identifier">push</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">node</span>.<span class="ruby-identifier">development_dependencies</span>) <span class="ruby-keyword">if</span> <span class="ruby-ivar">@development</span>
+
+  <span class="ruby-identifier">dependencies</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">dep</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">specs</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">spec</span><span class="ruby-operator">|</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">satisfies_requirement?</span> <span class="ruby-identifier">dep</span> <span class="ruby-keyword">then</span>
+        <span class="ruby-keyword">yield</span> <span class="ruby-identifier">spec</span>
+        <span class="ruby-keyword">break</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-tsort_each_node">
+            
+              <b>tsort_each_node</b>(&amp;block)
+            
+            <a href="../../classes/Gem/DependencyList.html#method-i-tsort_each_node" name="method-i-tsort_each_node" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-tsort_each_node_source')" id="l_method-i-tsort_each_node_source">show</a>
+                
+              </p>
+              <div id="method-i-tsort_each_node_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/dependency_list.rb, line 213</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">tsort_each_node</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+  <span class="ruby-ivar">@specs</span>.<span class="ruby-identifier">each</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-why_not_ok-3F">
+            
+              <b>why_not_ok?</b>(quick = false)
+            
+            <a href="../../classes/Gem/DependencyList.html#method-i-why_not_ok-3F" name="method-i-why_not_ok-3F" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-why_not_ok-3F_source')" id="l_method-i-why_not_ok-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-why_not_ok-3F_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/dependency_list.rb, line 117</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">why_not_ok?</span> <span class="ruby-identifier">quick</span> = <span class="ruby-keyword">false</span>
+  <span class="ruby-identifier">unsatisfied</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">h</span>,<span class="ruby-identifier">k</span><span class="ruby-operator">|</span> <span class="ruby-identifier">h</span>[<span class="ruby-identifier">k</span>] = [] }
+  <span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">spec</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">runtime_dependencies</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">dep</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">inst</span> = <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Specification</span>.<span class="ruby-identifier">any?</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">installed_spec</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">dep</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">installed_spec</span>.<span class="ruby-identifier">name</span> <span class="ruby-keyword">and</span>
+          <span class="ruby-identifier">dep</span>.<span class="ruby-identifier">requirement</span>.<span class="ruby-identifier">satisfied_by?</span> <span class="ruby-identifier">installed_spec</span>.<span class="ruby-identifier">version</span>
+      }
+
+      <span class="ruby-keyword">unless</span> <span class="ruby-identifier">inst</span> <span class="ruby-keyword">or</span> <span class="ruby-ivar">@specs</span>.<span class="ruby-identifier">find</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span> <span class="ruby-identifier">s</span>.<span class="ruby-identifier">satisfies_requirement?</span> <span class="ruby-identifier">dep</span> } <span class="ruby-keyword">then</span>
+        <span class="ruby-identifier">unsatisfied</span>[<span class="ruby-identifier">spec</span>.<span class="ruby-identifier">name</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">dep</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-identifier">unsatisfied</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">quick</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">unsatisfied</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+
+    </div>
+  </body>
+</html>    

@@ -1,0 +1,778 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>RoutingConcernsTest</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/github.css" type="text/css" media="screen" />
+<script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            RoutingConcernsTest 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="ActionDispatch/IntegrationTest.html">ActionDispatch::IntegrationTest</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../files/actionpack/test/dispatch/routing/concerns_test_rb.html">actionpack/test/dispatch/routing/concerns_test.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+
+
+  
+
+
+  
+  
+
+
+  
+    <!-- Namespace -->
+    <div class="sectiontitle">Namespace</div>
+    <ul>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="RoutingConcernsTest/Reviewable.html">RoutingConcernsTest::Reviewable</a>
+        </li>
+      
+    </ul>
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>A</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-app">app</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-test_accessing_callable_concern_">test_accessing_callable_concern_</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_accessing_concern_from_a_scope">test_accessing_concern_from_a_scope</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_accessing_concern_from_nested_resource">test_accessing_concern_from_nested_resource</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_accessing_concern_from_nested_resources">test_accessing_concern_from_nested_resources</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_accessing_concern_from_resource">test_accessing_concern_from_resource</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_accessing_concern_from_resources">test_accessing_concern_from_resources</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_accessing_concern_from_resources_using_only_option">test_accessing_concern_from_resources_using_only_option</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_accessing_concern_from_resources_with_more_than_one_concern">test_accessing_concern_from_resources_with_more_than_one_concern</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_callable_concerns_accept_options">test_callable_concerns_accept_options</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_concerns_accept_options">test_concerns_accept_options</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_concerns_executes_block_in_context_of_current_mapper">test_concerns_executes_block_in_context_of_current_mapper</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_with_an_invalid_concern_name">test_with_an_invalid_concern_name</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+    <!-- Includes -->
+    <div class="sectiontitle">Included Modules</div>
+    <ul>
+      
+        <li>
+          
+            Routes
+          
+        </li>
+      
+    </ul>
+  
+
+
+
+  
+
+    
+
+    
+
+    
+      <!-- Section constants -->
+      <div class="sectiontitle">Constants</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class="attr-name">Routes</td>
+            <td>=</td>
+            <td class="attr-value">ActionDispatch::Routing::RouteSet.new.tap do |app|
+app.draw do
+concern :commentable do |options|
+resources :comments, options
+end
+
+concern :image_attachable do
+resources :images, only: :index
+end
+
+concern :reviewable, Reviewable
+
+resources :posts, concerns: [:commentable, :image_attachable, :reviewable] do
+resource :video, concerns: :commentable do
+concerns :reviewable, as: :video_reviews
+end
+end
+
+resource :picture, concerns: :commentable do
+resources :posts, concerns: :commentable
+end
+
+scope &quot;/videos&quot; do
+concerns :commentable, except: :destroy
+end
+end
+end</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">APP</td>
+            <td>=</td>
+            <td class="attr-value">RoutedRackApp.new Routes</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+      </table>
+    
+
+
+    
+
+
+    <!-- Methods -->
+        
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-app">
+            
+              <b>app</b>()
+            
+            <a href="../classes/RoutingConcernsTest.html#method-i-app" name="method-i-app" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-app_source')" id="l_method-i-app_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/09eeb3fc04aefaab8beee28f2be8d09b01f9541c/actionpack/test/dispatch/routing/concerns_test.rb#L40" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-app_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionpack/test/dispatch/routing/concerns_test.rb, line 40</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">app</span>; <span class="ruby-constant">APP</span> <span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_accessing_callable_concern_">
+            
+              <b>test_accessing_callable_concern_</b>()
+            
+            <a href="../classes/RoutingConcernsTest.html#method-i-test_accessing_callable_concern_" name="method-i-test_accessing_callable_concern_" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_accessing_callable_concern__source')" id="l_method-i-test_accessing_callable_concern__source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/09eeb3fc04aefaab8beee28f2be8d09b01f9541c/actionpack/test/dispatch/routing/concerns_test.rb#L77" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_accessing_callable_concern__source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionpack/test/dispatch/routing/concerns_test.rb, line 77</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_accessing_callable_concern_</span>
+  <span class="ruby-identifier">get</span> <span class="ruby-string">&quot;/posts/1/reviews/1&quot;</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&quot;200&quot;</span>, <span class="ruby-ivar">@response</span>.<span class="ruby-identifier">code</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&quot;/posts/1/reviews/1&quot;</span>, <span class="ruby-identifier">post_review_path</span>(<span class="ruby-identifier">post_id</span><span class="ruby-operator">:</span> <span class="ruby-number">1</span>, <span class="ruby-identifier">id</span><span class="ruby-operator">:</span> <span class="ruby-number">1</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_accessing_concern_from_a_scope">
+            
+              <b>test_accessing_concern_from_a_scope</b>()
+            
+            <a href="../classes/RoutingConcernsTest.html#method-i-test_accessing_concern_from_a_scope" name="method-i-test_accessing_concern_from_a_scope" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_accessing_concern_from_a_scope_source')" id="l_method-i-test_accessing_concern_from_a_scope_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/09eeb3fc04aefaab8beee28f2be8d09b01f9541c/actionpack/test/dispatch/routing/concerns_test.rb#L89" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_accessing_concern_from_a_scope_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionpack/test/dispatch/routing/concerns_test.rb, line 89</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_accessing_concern_from_a_scope</span>
+  <span class="ruby-identifier">get</span> <span class="ruby-string">&quot;/videos/comments&quot;</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&quot;200&quot;</span>, <span class="ruby-ivar">@response</span>.<span class="ruby-identifier">code</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_accessing_concern_from_nested_resource">
+            
+              <b>test_accessing_concern_from_nested_resource</b>()
+            
+            <a href="../classes/RoutingConcernsTest.html#method-i-test_accessing_concern_from_nested_resource" name="method-i-test_accessing_concern_from_nested_resource" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_accessing_concern_from_nested_resource_source')" id="l_method-i-test_accessing_concern_from_nested_resource_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/09eeb3fc04aefaab8beee28f2be8d09b01f9541c/actionpack/test/dispatch/routing/concerns_test.rb#L54" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_accessing_concern_from_nested_resource_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionpack/test/dispatch/routing/concerns_test.rb, line 54</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_accessing_concern_from_nested_resource</span>
+  <span class="ruby-identifier">get</span> <span class="ruby-string">&quot;/posts/1/video/comments&quot;</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&quot;200&quot;</span>, <span class="ruby-ivar">@response</span>.<span class="ruby-identifier">code</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&quot;/posts/1/video/comments&quot;</span>, <span class="ruby-identifier">post_video_comments_path</span>(<span class="ruby-identifier">post_id</span><span class="ruby-operator">:</span> <span class="ruby-number">1</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_accessing_concern_from_nested_resources">
+            
+              <b>test_accessing_concern_from_nested_resources</b>()
+            
+            <a href="../classes/RoutingConcernsTest.html#method-i-test_accessing_concern_from_nested_resources" name="method-i-test_accessing_concern_from_nested_resources" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_accessing_concern_from_nested_resources_source')" id="l_method-i-test_accessing_concern_from_nested_resources_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/09eeb3fc04aefaab8beee28f2be8d09b01f9541c/actionpack/test/dispatch/routing/concerns_test.rb#L60" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_accessing_concern_from_nested_resources_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionpack/test/dispatch/routing/concerns_test.rb, line 60</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_accessing_concern_from_nested_resources</span>
+  <span class="ruby-identifier">get</span> <span class="ruby-string">&quot;/picture/posts/1/comments&quot;</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&quot;200&quot;</span>, <span class="ruby-ivar">@response</span>.<span class="ruby-identifier">code</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&quot;/picture/posts/1/comments&quot;</span>, <span class="ruby-identifier">picture_post_comments_path</span>(<span class="ruby-identifier">post_id</span><span class="ruby-operator">:</span> <span class="ruby-number">1</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_accessing_concern_from_resource">
+            
+              <b>test_accessing_concern_from_resource</b>()
+            
+            <a href="../classes/RoutingConcernsTest.html#method-i-test_accessing_concern_from_resource" name="method-i-test_accessing_concern_from_resource" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_accessing_concern_from_resource_source')" id="l_method-i-test_accessing_concern_from_resource_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/09eeb3fc04aefaab8beee28f2be8d09b01f9541c/actionpack/test/dispatch/routing/concerns_test.rb#L48" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_accessing_concern_from_resource_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionpack/test/dispatch/routing/concerns_test.rb, line 48</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_accessing_concern_from_resource</span>
+  <span class="ruby-identifier">get</span> <span class="ruby-string">&quot;/picture/comments&quot;</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&quot;200&quot;</span>, <span class="ruby-ivar">@response</span>.<span class="ruby-identifier">code</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&quot;/picture/comments&quot;</span>, <span class="ruby-identifier">picture_comments_path</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_accessing_concern_from_resources">
+            
+              <b>test_accessing_concern_from_resources</b>()
+            
+            <a href="../classes/RoutingConcernsTest.html#method-i-test_accessing_concern_from_resources" name="method-i-test_accessing_concern_from_resources" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_accessing_concern_from_resources_source')" id="l_method-i-test_accessing_concern_from_resources_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/09eeb3fc04aefaab8beee28f2be8d09b01f9541c/actionpack/test/dispatch/routing/concerns_test.rb#L42" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_accessing_concern_from_resources_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionpack/test/dispatch/routing/concerns_test.rb, line 42</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_accessing_concern_from_resources</span>
+  <span class="ruby-identifier">get</span> <span class="ruby-string">&quot;/posts/1/comments&quot;</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&quot;200&quot;</span>, <span class="ruby-ivar">@response</span>.<span class="ruby-identifier">code</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&quot;/posts/1/comments&quot;</span>, <span class="ruby-identifier">post_comments_path</span>(<span class="ruby-identifier">post_id</span><span class="ruby-operator">:</span> <span class="ruby-number">1</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_accessing_concern_from_resources_using_only_option">
+            
+              <b>test_accessing_concern_from_resources_using_only_option</b>()
+            
+            <a href="../classes/RoutingConcernsTest.html#method-i-test_accessing_concern_from_resources_using_only_option" name="method-i-test_accessing_concern_from_resources_using_only_option" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_accessing_concern_from_resources_using_only_option_source')" id="l_method-i-test_accessing_concern_from_resources_using_only_option_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/09eeb3fc04aefaab8beee28f2be8d09b01f9541c/actionpack/test/dispatch/routing/concerns_test.rb#L72" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_accessing_concern_from_resources_using_only_option_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionpack/test/dispatch/routing/concerns_test.rb, line 72</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_accessing_concern_from_resources_using_only_option</span>
+  <span class="ruby-identifier">get</span> <span class="ruby-string">&quot;/posts/1/image/1&quot;</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&quot;404&quot;</span>, <span class="ruby-ivar">@response</span>.<span class="ruby-identifier">code</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_accessing_concern_from_resources_with_more_than_one_concern">
+            
+              <b>test_accessing_concern_from_resources_with_more_than_one_concern</b>()
+            
+            <a href="../classes/RoutingConcernsTest.html#method-i-test_accessing_concern_from_resources_with_more_than_one_concern" name="method-i-test_accessing_concern_from_resources_with_more_than_one_concern" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_accessing_concern_from_resources_with_more_than_one_concern_source')" id="l_method-i-test_accessing_concern_from_resources_with_more_than_one_concern_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/09eeb3fc04aefaab8beee28f2be8d09b01f9541c/actionpack/test/dispatch/routing/concerns_test.rb#L66" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_accessing_concern_from_resources_with_more_than_one_concern_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionpack/test/dispatch/routing/concerns_test.rb, line 66</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_accessing_concern_from_resources_with_more_than_one_concern</span>
+  <span class="ruby-identifier">get</span> <span class="ruby-string">&quot;/posts/1/images&quot;</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&quot;200&quot;</span>, <span class="ruby-ivar">@response</span>.<span class="ruby-identifier">code</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&quot;/posts/1/images&quot;</span>, <span class="ruby-identifier">post_images_path</span>(<span class="ruby-identifier">post_id</span><span class="ruby-operator">:</span> <span class="ruby-number">1</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_callable_concerns_accept_options">
+            
+              <b>test_callable_concerns_accept_options</b>()
+            
+            <a href="../classes/RoutingConcernsTest.html#method-i-test_callable_concerns_accept_options" name="method-i-test_callable_concerns_accept_options" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_callable_concerns_accept_options_source')" id="l_method-i-test_callable_concerns_accept_options_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/09eeb3fc04aefaab8beee28f2be8d09b01f9541c/actionpack/test/dispatch/routing/concerns_test.rb#L83" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_callable_concerns_accept_options_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionpack/test/dispatch/routing/concerns_test.rb, line 83</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_callable_concerns_accept_options</span>
+  <span class="ruby-identifier">get</span> <span class="ruby-string">&quot;/posts/1/video/reviews/1&quot;</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&quot;200&quot;</span>, <span class="ruby-ivar">@response</span>.<span class="ruby-identifier">code</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&quot;/posts/1/video/reviews/1&quot;</span>, <span class="ruby-identifier">post_video_video_review_path</span>(<span class="ruby-identifier">post_id</span><span class="ruby-operator">:</span> <span class="ruby-number">1</span>, <span class="ruby-identifier">id</span><span class="ruby-operator">:</span> <span class="ruby-number">1</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_concerns_accept_options">
+            
+              <b>test_concerns_accept_options</b>()
+            
+            <a href="../classes/RoutingConcernsTest.html#method-i-test_concerns_accept_options" name="method-i-test_concerns_accept_options" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_concerns_accept_options_source')" id="l_method-i-test_concerns_accept_options_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/09eeb3fc04aefaab8beee28f2be8d09b01f9541c/actionpack/test/dispatch/routing/concerns_test.rb#L94" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_concerns_accept_options_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionpack/test/dispatch/routing/concerns_test.rb, line 94</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_concerns_accept_options</span>
+  <span class="ruby-identifier">delete</span> <span class="ruby-string">&quot;/videos/comments/1&quot;</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&quot;404&quot;</span>, <span class="ruby-ivar">@response</span>.<span class="ruby-identifier">code</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_concerns_executes_block_in_context_of_current_mapper">
+            
+              <b>test_concerns_executes_block_in_context_of_current_mapper</b>()
+            
+            <a href="../classes/RoutingConcernsTest.html#method-i-test_concerns_executes_block_in_context_of_current_mapper" name="method-i-test_concerns_executes_block_in_context_of_current_mapper" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_concerns_executes_block_in_context_of_current_mapper_source')" id="l_method-i-test_concerns_executes_block_in_context_of_current_mapper_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/09eeb3fc04aefaab8beee28f2be8d09b01f9541c/actionpack/test/dispatch/routing/concerns_test.rb#L111" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_concerns_executes_block_in_context_of_current_mapper_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionpack/test/dispatch/routing/concerns_test.rb, line 111</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_concerns_executes_block_in_context_of_current_mapper</span>
+  <span class="ruby-identifier">mapper</span> = <span class="ruby-constant">ActionDispatch</span><span class="ruby-operator">::</span><span class="ruby-constant">Routing</span><span class="ruby-operator">::</span><span class="ruby-constant">Mapper</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">ActionDispatch</span><span class="ruby-operator">::</span><span class="ruby-constant">Routing</span><span class="ruby-operator">::</span><span class="ruby-constant">RouteSet</span>.<span class="ruby-identifier">new</span>)
+  <span class="ruby-identifier">mapper</span>.<span class="ruby-identifier">concern</span> <span class="ruby-value">:test_concern</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">resources</span> <span class="ruby-value">:things</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-keyword">self</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">mapper</span>, <span class="ruby-identifier">mapper</span>.<span class="ruby-identifier">concerns</span>(<span class="ruby-value">:test_concern</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_with_an_invalid_concern_name">
+            
+              <b>test_with_an_invalid_concern_name</b>()
+            
+            <a href="../classes/RoutingConcernsTest.html#method-i-test_with_an_invalid_concern_name" name="method-i-test_with_an_invalid_concern_name" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_with_an_invalid_concern_name_source')" id="l_method-i-test_with_an_invalid_concern_name_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/09eeb3fc04aefaab8beee28f2be8d09b01f9541c/actionpack/test/dispatch/routing/concerns_test.rb#L99" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_with_an_invalid_concern_name_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionpack/test/dispatch/routing/concerns_test.rb, line 99</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_with_an_invalid_concern_name</span>
+  <span class="ruby-identifier">e</span> = <span class="ruby-identifier">assert_raise</span> <span class="ruby-constant">ArgumentError</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-constant">ActionDispatch</span><span class="ruby-operator">::</span><span class="ruby-constant">Routing</span><span class="ruby-operator">::</span><span class="ruby-constant">RouteSet</span>.<span class="ruby-identifier">new</span>.<span class="ruby-identifier">tap</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">app</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">app</span>.<span class="ruby-identifier">draw</span> <span class="ruby-keyword">do</span>
+        <span class="ruby-identifier">resources</span> <span class="ruby-value">:posts</span>, <span class="ruby-identifier">concerns</span><span class="ruby-operator">:</span> <span class="ruby-value">:foo</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&quot;No concern named foo was found!&quot;</span>, <span class="ruby-identifier">e</span>.<span class="ruby-identifier">message</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+
+    </div>
+  </body>
+</html>    

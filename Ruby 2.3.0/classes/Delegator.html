@@ -1,0 +1,1038 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Delegator</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/github.css" type="text/css" media="screen" />
+<script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            Delegator 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="BasicObject.html">BasicObject</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../files/lib/delegate_rb.html">lib/delegate.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>This library provides three different ways to delegate method calls to an
+object.  The easiest to use is <a
+href="SimpleDelegator.html">SimpleDelegator</a>.  Pass an object to the
+constructor and all methods supported by the object will be delegated. 
+This object can be changed later.</p>
+
+<p>Going a step further, the top level DelegateClass method allows you to
+easily setup delegation through class inheritance.  This is considerably
+more flexible and thus probably the most common use for this library.</p>
+
+<p>Finally, if you need full control over the delegation scheme, you can
+inherit from the abstract class <a href="Delegator.html">Delegator</a> and
+customize as needed.  (If you find yourself needing this control, have a
+look at <a href="Forwardable.html">Forwardable</a> which is also in the
+standard library.  It may suit your needs better.)</p>
+
+<p>SimpleDelegator&#39;s implementation serves as a nice example of the use of
+Delegator:</p>
+
+<pre><code>class SimpleDelegator &lt; Delegator
+  def __getobj__
+    @delegate_sd_obj # return object we are delegating to, required
+  end
+
+  def __setobj__(obj)
+    @delegate_sd_obj = obj # change delegation object,
+                           # a feature we&#39;re providing
+  end
+end
+</code></pre>
+
+<h2 id="class-Delegator-label-Notes">Notes</h2>
+
+<p>Be advised, <a href="RDoc.html">RDoc</a> will not detect delegated methods.</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>#</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-21">!</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-21-3D">!=</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-3D-3D">==</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-__getobj__">__getobj__</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-__raise__">__raise__</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-__setobj__">__setobj__</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>F</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-freeze">freeze</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>M</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-marshal_dump">marshal_dump</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-marshal_load">marshal_load</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-method_missing">method_missing</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-methods">methods</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>P</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-protected_methods">protected_methods</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-public_methods">public_methods</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>R</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-raise">raise</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-respond_to_missing-3F">respond_to_missing?</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-taint">taint</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-trust">trust</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>U</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-untaint">untaint</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-untrust">untrust</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <b>new</b>(obj)
+            
+            <a href="../classes/Delegator.html#method-c-new" name="method-c-new" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Pass in the <em>obj</em> to delegate method calls to.  All methods
+supported by <em>obj</em> will be delegated to.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/delegate.rb, line 71</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">initialize</span>(<span class="ruby-identifier">obj</span>)
+  <span class="ruby-identifier">__setobj__</span>(<span class="ruby-identifier">obj</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-21">
+            
+              <b>!</b>()
+            
+            <a href="../classes/Delegator.html#method-i-21" name="method-i-21" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Delegates ! to the _<em>getobj</em>_</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-21_source')" id="l_method-i-21_source">show</a>
+                
+              </p>
+              <div id="method-i-21_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/delegate.rb, line 151</span>
+<span class="ruby-keyword">def</span> <span class="ruby-operator">!</span>
+  <span class="ruby-operator">!</span><span class="ruby-keyword ruby-title">__getobj__</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-21-3D">
+            
+              <b>!=</b>(obj)
+            
+            <a href="../classes/Delegator.html#method-i-21-3D" name="method-i-21-3D" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns true if two objects are not considered of equal value.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-21-3D_source')" id="l_method-i-21-3D_source">show</a>
+                
+              </p>
+              <div id="method-i-21-3D_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/delegate.rb, line 143</span>
+<span class="ruby-keyword">def</span> <span class="ruby-operator">!=</span>(<span class="ruby-keyword ruby-title">obj</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">equal?</span>(<span class="ruby-keyword">self</span>)
+  <span class="ruby-identifier">__getobj__</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">obj</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-3D-3D">
+            
+              <b>==</b>(obj)
+            
+            <a href="../classes/Delegator.html#method-i-3D-3D" name="method-i-3D-3D" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns true if two objects are considered of equal value.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-3D-3D_source')" id="l_method-i-3D-3D_source">show</a>
+                
+              </p>
+              <div id="method-i-3D-3D_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/delegate.rb, line 135</span>
+<span class="ruby-keyword">def</span> <span class="ruby-operator">==</span>(<span class="ruby-keyword ruby-title">obj</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">true</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">equal?</span>(<span class="ruby-keyword">self</span>)
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">__getobj__</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">obj</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-__getobj__">
+            
+              <b>__getobj__</b>()
+            
+            <a href="../classes/Delegator.html#method-i-__getobj__" name="method-i-__getobj__" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>This method must be overridden by subclasses and should return the object
+method calls are being delegated to.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-__getobj___source')" id="l_method-i-__getobj___source">show</a>
+                
+              </p>
+              <div id="method-i-__getobj___source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/delegate.rb, line 159</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">__getobj__</span>
+  <span class="ruby-identifier">__raise__</span> <span class="ruby-operator">::</span><span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&quot;need to define `__getobj__&#39;&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-__raise__">
+            
+              <b>__raise__</b>
+            
+            <a href="../classes/Delegator.html#method-i-__raise__" name="method-i-__raise__" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+            <div class="aka">
+              Alias for: <a href="Delegator.html#method-i-raise">raise</a>
+            </div>
+          
+          
+          
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-__setobj__">
+            
+              <b>__setobj__</b>(obj)
+            
+            <a href="../classes/Delegator.html#method-i-__setobj__" name="method-i-__setobj__" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>This method must be overridden by subclasses and change the object delegate
+to <em>obj</em>.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-__setobj___source')" id="l_method-i-__setobj___source">show</a>
+                
+              </p>
+              <div id="method-i-__setobj___source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/delegate.rb, line 167</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">__setobj__</span>(<span class="ruby-identifier">obj</span>)
+  <span class="ruby-identifier">__raise__</span> <span class="ruby-operator">::</span><span class="ruby-constant">NotImplementedError</span>, <span class="ruby-string">&quot;need to define `__setobj__&#39;&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-freeze">
+            
+              <b>freeze</b>
+            
+            <a href="../classes/Delegator.html#method-i-freeze" name="method-i-freeze" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Freeze both the object returned by _<em>getobj</em>_ and self.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-freeze_source')" id="l_method-i-freeze_source">show</a>
+                
+              </p>
+              <div id="method-i-freeze_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/delegate.rb, line 229</span>
+  </pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-marshal_dump">
+            
+              <b>marshal_dump</b>()
+            
+            <a href="../classes/Delegator.html#method-i-marshal_dump" name="method-i-marshal_dump" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Serialization support for the object returned by _<em>getobj</em>_.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-marshal_dump_source')" id="l_method-i-marshal_dump_source">show</a>
+                
+              </p>
+              <div id="method-i-marshal_dump_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/delegate.rb, line 174</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">marshal_dump</span>
+  <span class="ruby-identifier">ivars</span> = <span class="ruby-identifier">instance_variables</span>.<span class="ruby-identifier">reject</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">var</span><span class="ruby-operator">|</span> <span class="ruby-regexp">/\A@delegate_/</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">var</span>}
+  [
+    <span class="ruby-value">:__v2__</span>,
+    <span class="ruby-identifier">ivars</span>, <span class="ruby-identifier">ivars</span>.<span class="ruby-identifier">map</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">var</span><span class="ruby-operator">|</span> <span class="ruby-identifier">instance_variable_get</span>(<span class="ruby-identifier">var</span>)},
+    <span class="ruby-identifier">__getobj__</span>
+  ]
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-marshal_load">
+            
+              <b>marshal_load</b>(data)
+            
+            <a href="../classes/Delegator.html#method-i-marshal_load" name="method-i-marshal_load" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Reinitializes delegation from a serialized object.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-marshal_load_source')" id="l_method-i-marshal_load_source">show</a>
+                
+              </p>
+              <div id="method-i-marshal_load_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/delegate.rb, line 186</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">marshal_load</span>(<span class="ruby-identifier">data</span>)
+  <span class="ruby-identifier">version</span>, <span class="ruby-identifier">vars</span>, <span class="ruby-identifier">values</span>, <span class="ruby-identifier">obj</span> = <span class="ruby-identifier">data</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">version</span> <span class="ruby-operator">==</span> <span class="ruby-value">:__v2__</span>
+    <span class="ruby-identifier">vars</span>.<span class="ruby-identifier">each_with_index</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">var</span>, <span class="ruby-identifier">i</span><span class="ruby-operator">|</span> <span class="ruby-identifier">instance_variable_set</span>(<span class="ruby-identifier">var</span>, <span class="ruby-identifier">values</span>[<span class="ruby-identifier">i</span>])}
+    <span class="ruby-identifier">__setobj__</span>(<span class="ruby-identifier">obj</span>)
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">__setobj__</span>(<span class="ruby-identifier">data</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-method_missing">
+            
+              <b>method_missing</b>(m, *args, &amp;block)
+            
+            <a href="../classes/Delegator.html#method-i-method_missing" name="method-i-method_missing" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Handles the magic of delegation through _<em>getobj</em>_.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-method_missing_source')" id="l_method-i-method_missing_source">show</a>
+                
+              </p>
+              <div id="method-i-method_missing_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/delegate.rb, line 78</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">method_missing</span>(<span class="ruby-identifier">m</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+  <span class="ruby-identifier">r</span> = <span class="ruby-keyword">true</span>
+  <span class="ruby-identifier">target</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">__getobj__</span> {<span class="ruby-identifier">r</span> = <span class="ruby-keyword">false</span>}
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">r</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">target</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">m</span>)
+    <span class="ruby-identifier">target</span>.<span class="ruby-identifier">__send__</span>(<span class="ruby-identifier">m</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+  <span class="ruby-keyword">elsif</span> <span class="ruby-operator">::</span><span class="ruby-constant">Kernel</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">m</span>, <span class="ruby-keyword">true</span>)
+    <span class="ruby-operator">::</span><span class="ruby-constant">Kernel</span>.<span class="ruby-identifier">instance_method</span>(<span class="ruby-identifier">m</span>).<span class="ruby-identifier">bind</span>(<span class="ruby-keyword">self</span>).(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-keyword">super</span>(<span class="ruby-identifier">m</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-methods">
+            
+              <b>methods</b>(all=true)
+            
+            <a href="../classes/Delegator.html#method-i-methods" name="method-i-methods" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the methods available to this delegate object as the union of this
+object&#39;s and _<em>getobj</em>_ methods.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-methods_source')" id="l_method-i-methods_source">show</a>
+                
+              </p>
+              <div id="method-i-methods_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/delegate.rb, line 110</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">methods</span>(<span class="ruby-identifier">all</span>=<span class="ruby-keyword">true</span>)
+  <span class="ruby-identifier">__getobj__</span>.<span class="ruby-identifier">methods</span>(<span class="ruby-identifier">all</span>) <span class="ruby-operator">|</span> <span class="ruby-keyword">super</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-protected_methods">
+            
+              <b>protected_methods</b>(all=true)
+            
+            <a href="../classes/Delegator.html#method-i-protected_methods" name="method-i-protected_methods" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the methods available to this delegate object as the union of this
+object&#39;s and _<em>getobj</em>_ protected methods.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-protected_methods_source')" id="l_method-i-protected_methods_source">show</a>
+                
+              </p>
+              <div id="method-i-protected_methods_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/delegate.rb, line 126</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">protected_methods</span>(<span class="ruby-identifier">all</span>=<span class="ruby-keyword">true</span>)
+  <span class="ruby-identifier">__getobj__</span>.<span class="ruby-identifier">protected_methods</span>(<span class="ruby-identifier">all</span>) <span class="ruby-operator">|</span> <span class="ruby-keyword">super</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-public_methods">
+            
+              <b>public_methods</b>(all=true)
+            
+            <a href="../classes/Delegator.html#method-i-public_methods" name="method-i-public_methods" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the methods available to this delegate object as the union of this
+object&#39;s and _<em>getobj</em>_ public methods.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-public_methods_source')" id="l_method-i-public_methods_source">show</a>
+                
+              </p>
+              <div id="method-i-public_methods_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/delegate.rb, line 118</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">public_methods</span>(<span class="ruby-identifier">all</span>=<span class="ruby-keyword">true</span>)
+  <span class="ruby-identifier">__getobj__</span>.<span class="ruby-identifier">public_methods</span>(<span class="ruby-identifier">all</span>) <span class="ruby-operator">|</span> <span class="ruby-keyword">super</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-raise">
+            
+              <b>raise</b>
+            
+            <a href="../classes/Delegator.html#method-i-raise" name="method-i-raise" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Use __raise__ if your <a href="Delegator.html">Delegator</a> does not have
+a object to delegate the raise method call.</p>
+            </div>
+          
+          
+          
+            <div class="aka">
+              Also aliased as: <a href="Delegator.html#method-i-__raise__">__raise__</a>
+            </div>
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-raise_source')" id="l_method-i-raise_source">show</a>
+                
+              </p>
+              <div id="method-i-raise_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/delegate.rb, line 67</span>
+  </pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-respond_to_missing-3F">
+            
+              <b>respond_to_missing?</b>(m, include_private)
+            
+            <a href="../classes/Delegator.html#method-i-respond_to_missing-3F" name="method-i-respond_to_missing-3F" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Checks for a method provided by this the delegate object by forwarding the
+call through _<em>getobj</em>_.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-respond_to_missing-3F_source')" id="l_method-i-respond_to_missing-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-respond_to_missing-3F_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/delegate.rb, line 95</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">respond_to_missing?</span>(<span class="ruby-identifier">m</span>, <span class="ruby-identifier">include_private</span>)
+  <span class="ruby-identifier">r</span> = <span class="ruby-keyword">true</span>
+  <span class="ruby-identifier">target</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">__getobj__</span> {<span class="ruby-identifier">r</span> = <span class="ruby-keyword">false</span>}
+  <span class="ruby-identifier">r</span> <span class="ruby-operator">&amp;&amp;=</span> <span class="ruby-identifier">target</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">m</span>, <span class="ruby-identifier">include_private</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">r</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">include_private</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">target</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">m</span>, <span class="ruby-keyword">false</span>)
+    <span class="ruby-identifier">warn</span> <span class="ruby-node">&quot;#{caller(3)[0]}: delegator does not forward private method \##{m}&quot;</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">r</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-taint">
+            
+              <b>taint</b>
+            
+            <a href="../classes/Delegator.html#method-i-taint" name="method-i-taint" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Taint both the object returned by _<em>getobj</em>_ and self.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-taint_source')" id="l_method-i-taint_source">show</a>
+                
+              </p>
+              <div id="method-i-taint_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/delegate.rb, line 219</span>
+  </pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-trust">
+            
+              <b>trust</b>
+            
+            <a href="../classes/Delegator.html#method-i-trust" name="method-i-trust" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Trust both the object returned by _<em>getobj</em>_ and self.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-trust_source')" id="l_method-i-trust_source">show</a>
+                
+              </p>
+              <div id="method-i-trust_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/delegate.rb, line 209</span>
+  </pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-untaint">
+            
+              <b>untaint</b>
+            
+            <a href="../classes/Delegator.html#method-i-untaint" name="method-i-untaint" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Untaint both the object returned by _<em>getobj</em>_ and self.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-untaint_source')" id="l_method-i-untaint_source">show</a>
+                
+              </p>
+              <div id="method-i-untaint_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/delegate.rb, line 224</span>
+  </pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-untrust">
+            
+              <b>untrust</b>
+            
+            <a href="../classes/Delegator.html#method-i-untrust" name="method-i-untrust" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Untrust both the object returned by _<em>getobj</em>_ and self.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-untrust_source')" id="l_method-i-untrust_source">show</a>
+                
+              </p>
+              <div id="method-i-untrust_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/delegate.rb, line 214</span>
+  </pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+
+    </div>
+  </body>
+</html>    

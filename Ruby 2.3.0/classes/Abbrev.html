@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Abbrev</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/github.css" type="text/css" media="screen" />
+<script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Module</span> 
+            Abbrev 
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../files/lib/abbrev_rb.html">lib/abbrev.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>Calculates the set of unambiguous abbreviations for a given set of strings.</p>
+
+<pre><code>require &#39;abbrev&#39;
+require &#39;pp&#39;
+
+pp Abbrev.abbrev([&#39;ruby&#39;])
+#=&gt;  {&quot;ruby&quot;=&gt;&quot;ruby&quot;, &quot;rub&quot;=&gt;&quot;ruby&quot;, &quot;ru&quot;=&gt;&quot;ruby&quot;, &quot;r&quot;=&gt;&quot;ruby&quot;}
+
+pp Abbrev.abbrev(%w{ ruby rules })
+</code></pre>
+
+<p><em>Generates:</em></p>
+
+<pre><code>{ &quot;ruby&quot;  =&gt;  &quot;ruby&quot;,
+  &quot;rub&quot;   =&gt;  &quot;ruby&quot;,
+  &quot;rules&quot; =&gt;  &quot;rules&quot;,
+  &quot;rule&quot;  =&gt;  &quot;rules&quot;,
+  &quot;rul&quot;   =&gt;  &quot;rules&quot; }
+</code></pre>
+
+<p>It also provides an array core extension, <a
+href="Array.html#method-i-abbrev">Array#abbrev</a>.</p>
+
+<pre><code>pp %w{ summer winter }.abbrev
+</code></pre>
+
+<p><em>Generates:</em></p>
+
+<pre><code>{ &quot;summer&quot;  =&gt; &quot;summer&quot;,
+  &quot;summe&quot;   =&gt; &quot;summer&quot;,
+  &quot;summ&quot;    =&gt; &quot;summer&quot;,
+  &quot;sum&quot;     =&gt; &quot;summer&quot;,
+  &quot;su&quot;      =&gt; &quot;summer&quot;,
+  &quot;s&quot;       =&gt; &quot;summer&quot;,
+  &quot;winter&quot;  =&gt; &quot;winter&quot;,
+  &quot;winte&quot;   =&gt; &quot;winter&quot;,
+  &quot;wint&quot;    =&gt; &quot;winter&quot;,
+  &quot;win&quot;     =&gt; &quot;winter&quot;,
+  &quot;wi&quot;      =&gt; &quot;winter&quot;,
+  &quot;w&quot;       =&gt; &quot;winter&quot; }
+</code></pre>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>A</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-abbrev">abbrev</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-abbrev">
+            
+              <b>abbrev</b>(words, pattern = nil)
+            
+            <a href="../classes/Abbrev.html#method-c-abbrev" name="method-c-abbrev" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Given a set of strings, calculate the set of unambiguous abbreviations for
+those strings, and return a hash where the keys are all the possible
+abbreviations and the values are the full strings.</p>
+
+<p>Thus, given <code>words</code> is “car” and “cone”, the keys pointing to
+“car” would be “ca” and “car”, while those pointing to “cone” would be
+“co”, “con”, and “cone”.</p>
+
+<pre><code>require &#39;abbrev&#39;
+
+Abbrev.abbrev(%w{ car cone })
+#=&gt; {&quot;ca&quot;=&gt;&quot;car&quot;, &quot;con&quot;=&gt;&quot;cone&quot;, &quot;co&quot;=&gt;&quot;cone&quot;, &quot;car&quot;=&gt;&quot;car&quot;, &quot;cone&quot;=&gt;&quot;cone&quot;}
+</code></pre>
+
+<p>The optional <code>pattern</code> parameter is a pattern or a string. Only
+input strings that match the pattern or start with the string are included
+in the output hash.</p>
+
+<pre><code>Abbrev.abbrev(%w{car box cone crab}, /b/)
+#=&gt; {&quot;box&quot;=&gt;&quot;box&quot;, &quot;bo&quot;=&gt;&quot;box&quot;, &quot;b&quot;=&gt;&quot;box&quot;, &quot;crab&quot; =&gt; &quot;crab&quot;}
+
+Abbrev.abbrev(%w{car box cone}, &#39;ca&#39;)
+#=&gt; {&quot;car&quot;=&gt;&quot;car&quot;, &quot;ca&quot;=&gt;&quot;car&quot;}
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-abbrev_source')" id="l_method-c-abbrev_source">show</a>
+                
+              </p>
+              <div id="method-c-abbrev_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/abbrev.rb, line 73</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">abbrev</span>(<span class="ruby-identifier">words</span>, <span class="ruby-identifier">pattern</span> = <span class="ruby-keyword">nil</span>)
+  <span class="ruby-identifier">table</span> = {}
+  <span class="ruby-identifier">seen</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>(<span class="ruby-number">0</span>)
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">pattern</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">String</span>)
+    <span class="ruby-identifier">pattern</span> = <span class="ruby-node">/\A#{Regexp.quote(pattern)}/</span>  <span class="ruby-comment"># regard as a prefix</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">words</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">word</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">word</span>.<span class="ruby-identifier">empty?</span>
+    <span class="ruby-identifier">word</span>.<span class="ruby-identifier">size</span>.<span class="ruby-identifier">downto</span>(<span class="ruby-number">1</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">len</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">abbrev</span> = <span class="ruby-identifier">word</span>[<span class="ruby-number">0</span><span class="ruby-operator">...</span><span class="ruby-identifier">len</span>]
+
+      <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">pattern</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">pattern</span> <span class="ruby-operator">!~</span> <span class="ruby-identifier">abbrev</span>
+
+      <span class="ruby-keyword">case</span> <span class="ruby-identifier">seen</span>[<span class="ruby-identifier">abbrev</span>] <span class="ruby-operator">+=</span> <span class="ruby-number">1</span>
+      <span class="ruby-keyword">when</span> <span class="ruby-number">1</span>
+        <span class="ruby-identifier">table</span>[<span class="ruby-identifier">abbrev</span>] = <span class="ruby-identifier">word</span>
+      <span class="ruby-keyword">when</span> <span class="ruby-number">2</span>
+        <span class="ruby-identifier">table</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">abbrev</span>)
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-keyword">break</span>
+      <span class="ruby-keyword">end</span>
+    }
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">words</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">word</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">pattern</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">pattern</span> <span class="ruby-operator">!~</span> <span class="ruby-identifier">word</span>
+
+    <span class="ruby-identifier">table</span>[<span class="ruby-identifier">word</span>] = <span class="ruby-identifier">word</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">table</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                        </div>
+
+    </div>
+  </body>
+</html>    

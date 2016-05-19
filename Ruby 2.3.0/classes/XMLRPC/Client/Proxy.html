@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>XMLRPC::Client::Proxy</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/github.css" type="text/css" media="screen" />
+<script src="../../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            XMLRPC::Client::Proxy 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../../Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../../files/lib/xmlrpc/client_rb.html">lib/xmlrpc/client.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>XML-RPC calls look nicer!</p>
+
+<p>You can call any method onto objects of that class - the object handles <a
+href="Proxy.html#method-i-method_missing">#method_missing</a> and will
+forward the method call to a XML-RPC server.</p>
+
+<p>Don&#39;t use this class directly, instead use the public instance method
+<a href="../Client.html#method-i-proxy">XMLRPC::Client#proxy</a> or <a
+href="../Client.html#method-i-proxy2">XMLRPC::Client#proxy2</a>.</p>
+
+<pre><code>require &quot;xmlrpc/client&quot;
+
+server = XMLRPC::Client.new(&quot;www.ruby-lang.org&quot;, &quot;/RPC2&quot;, 80)
+
+michael  = server.proxy(&quot;michael&quot;)
+michael2 = server.proxy(&quot;michael&quot;, 4)
+
+# both calls should return the same value &#39;9&#39;.
+p michael.add(4,5)
+p michael2.add(5)
+</code></pre>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>M</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-method_missing">method_missing</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <b>new</b>(server, prefix, args=[], meth=:call, delim=&quot;.&quot;)
+            
+            <a href="../../../classes/XMLRPC/Client/Proxy.html#method-c-new" name="method-c-new" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Creates an object which provides <a
+href="Proxy.html#method-i-method_missing">#method_missing</a>.</p>
+
+<p>The given <code>server</code> must be an instance of <a
+href="../Client.html">XMLRPC::Client</a>, which is the XML-RPC server to be
+used for a XML-RPC call.</p>
+
+<p><code>prefix</code> and <code>delim</code> will be prepended to the method
+name called onto this object.</p>
+
+<p>An optional parameter <code>meth</code> is the method to use for a RPC. It
+can be either, call, call2, call_async, call2_async</p>
+
+<p><code>args</code> are arguments which are automatically given to every
+XML-RPC call before being provided through <code>method_missing</code>.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/xmlrpc/client.rb, line 592</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">initialize</span>(<span class="ruby-identifier">server</span>, <span class="ruby-identifier">prefix</span>, <span class="ruby-identifier">args</span>=[], <span class="ruby-identifier">meth</span>=<span class="ruby-value">:call</span>, <span class="ruby-identifier">delim</span>=<span class="ruby-string">&quot;.&quot;</span>)
+  <span class="ruby-ivar">@server</span> = <span class="ruby-identifier">server</span>
+  <span class="ruby-ivar">@prefix</span> = <span class="ruby-identifier">prefix</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">prefix</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">delim</span> <span class="ruby-operator">:</span> <span class="ruby-string">&quot;&quot;</span>
+  <span class="ruby-ivar">@args</span>   = <span class="ruby-identifier">args</span>
+  <span class="ruby-ivar">@meth</span>   = <span class="ruby-identifier">meth</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-method_missing">
+            
+              <b>method_missing</b>(mid, *args)
+            
+            <a href="../../../classes/XMLRPC/Client/Proxy.html#method-i-method_missing" name="method-i-method_missing" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Every method call is forwarded to the XML-RPC server defined in
+XMLRPC::Client::Proxy#new.</p>
+
+<p>Note: Inherited methods from class <a href="../../Object.html">Object</a>
+cannot be used as XML-RPC names, because they get around
+<code>method_missing</code>.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-method_missing_source')" id="l_method-i-method_missing_source">show</a>
+                
+              </p>
+              <div id="method-i-method_missing_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/xmlrpc/client.rb, line 604</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">method_missing</span>(<span class="ruby-identifier">mid</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+  <span class="ruby-identifier">pre</span> = <span class="ruby-ivar">@prefix</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">mid</span>.<span class="ruby-identifier">to_s</span>
+  <span class="ruby-identifier">arg</span> = <span class="ruby-ivar">@args</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">args</span>
+  <span class="ruby-ivar">@server</span>.<span class="ruby-identifier">send</span>(<span class="ruby-ivar">@meth</span>, <span class="ruby-identifier">pre</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">arg</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+
+    </div>
+  </body>
+</html>    

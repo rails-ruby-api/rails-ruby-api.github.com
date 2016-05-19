@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>LoggerSilence</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/github.css" type="text/css" media="screen" />
+<script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Module</span> 
+            LoggerSilence 
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../files/activesupport/lib/active_support/logger_silence_rb.html">activesupport/lib/active_support/logger_silence.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>A</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-after_initialize">after_initialize</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>L</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-level">level</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-local_log_id">local_log_id</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>S</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-silence">silence</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+        
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-after_initialize">
+            
+              <b>after_initialize</b>()
+            
+            <a href="../classes/LoggerSilence.html#method-i-after_initialize" name="method-i-after_initialize" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-after_initialize_source')" id="l_method-i-after_initialize_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/a2a652a512d6ee5488eb5e2d9dea310ec34e5b59/activesupport/lib/active_support/logger_silence.rb#L14" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-after_initialize_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activesupport/lib/active_support/logger_silence.rb, line 14</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">after_initialize</span>
+  <span class="ruby-ivar">@local_levels</span> = <span class="ruby-constant">ThreadSafe</span><span class="ruby-operator">::</span><span class="ruby-constant">Cache</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">:initial_capacity</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-number">2</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-level">
+            
+              <b>level</b>()
+            
+            <a href="../classes/LoggerSilence.html#method-i-level" name="method-i-level" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-level_source')" id="l_method-i-level_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/a2a652a512d6ee5488eb5e2d9dea310ec34e5b59/activesupport/lib/active_support/logger_silence.rb#L22" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-level_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activesupport/lib/active_support/logger_silence.rb, line 22</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">level</span>
+  <span class="ruby-identifier">local_levels</span>[<span class="ruby-identifier">local_log_id</span>] <span class="ruby-operator">||</span> <span class="ruby-keyword">super</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-local_log_id">
+            
+              <b>local_log_id</b>()
+            
+            <a href="../classes/LoggerSilence.html#method-i-local_log_id" name="method-i-local_log_id" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-local_log_id_source')" id="l_method-i-local_log_id_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/a2a652a512d6ee5488eb5e2d9dea310ec34e5b59/activesupport/lib/active_support/logger_silence.rb#L18" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-local_log_id_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activesupport/lib/active_support/logger_silence.rb, line 18</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">local_log_id</span>
+  <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">current</span>.<span class="ruby-identifier">__id__</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-silence">
+            
+              <b>silence</b>(temporary_level = Logger::ERROR)
+            
+            <a href="../classes/LoggerSilence.html#method-i-silence" name="method-i-silence" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Silences the logger for the duration of the block.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-silence_source')" id="l_method-i-silence_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/a2a652a512d6ee5488eb5e2d9dea310ec34e5b59/activesupport/lib/active_support/logger_silence.rb#L27" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-silence_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activesupport/lib/active_support/logger_silence.rb, line 27</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">silence</span>(<span class="ruby-identifier">temporary_level</span> = <span class="ruby-constant">Logger</span><span class="ruby-operator">::</span><span class="ruby-constant">ERROR</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">silencer</span>
+    <span class="ruby-keyword">begin</span>
+      <span class="ruby-identifier">old_local_level</span>            = <span class="ruby-identifier">local_levels</span>[<span class="ruby-identifier">local_log_id</span>]
+      <span class="ruby-identifier">local_levels</span>[<span class="ruby-identifier">local_log_id</span>] = <span class="ruby-identifier">temporary_level</span>
+
+      <span class="ruby-keyword">yield</span> <span class="ruby-keyword">self</span>
+    <span class="ruby-keyword">ensure</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">old_local_level</span>
+        <span class="ruby-identifier">local_levels</span>[<span class="ruby-identifier">local_log_id</span>] = <span class="ruby-identifier">old_local_level</span>
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-identifier">local_levels</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">local_log_id</span>)
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-keyword">yield</span> <span class="ruby-keyword">self</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+
+    </div>
+  </body>
+</html>    

@@ -1,0 +1,577 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>WEBrick::HTTPUtils::FormData</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/github.css" type="text/css" media="screen" />
+<script src="../../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            WEBrick::HTTPUtils::FormData 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../../String.html">String</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../../files/lib/webrick/httputils_rb.html">lib/webrick/httputils.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>Stores multipart form data.  <a href="FormData.html">FormData</a> objects
+are created when <a
+href="../HTTPUtils.html#method-c-parse_form_data">WEBrick::HTTPUtils.parse_form_data</a>
+is called.</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>#</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-3C-3C">&lt;&lt;</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-5B-5D">[]</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>A</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-append_data">append_data</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>E</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-each_data">each_data</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>L</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-list">list</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-to_ary">to_ary</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-to_s">to_s</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+      <!-- Section constants -->
+      <div class="sectiontitle">Constants</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class="attr-name">EmptyRawHeader</td>
+            <td>=</td>
+            <td class="attr-value">[].freeze</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">EmptyHeader</td>
+            <td>=</td>
+            <td class="attr-value">{}.freeze</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+      </table>
+    
+
+
+    
+      <!-- Section attributes -->
+      <div class="sectiontitle">Attributes</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [RW]
+            </td>
+            <td class='attr-name'>filename</td>
+            <td class='attr-desc'><p>The filename of the form data part</p></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [RW]
+            </td>
+            <td class='attr-name'>name</td>
+            <td class='attr-desc'><p>The name of the form data part</p></td>
+          </tr>
+        
+      </table>
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <b>new</b>(*args)
+            
+            <a href="../../../classes/WEBrick/HTTPUtils/FormData.html#method-c-new" name="method-c-new" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Creates a new <a href="FormData.html">FormData</a> object.</p>
+
+<p><code>args</code> is an Array of form data entries.  One <a
+href="FormData.html">FormData</a> will be created for each entry.</p>
+
+<p>This is called by <a
+href="../HTTPUtils.html#method-c-parse_form_data">WEBrick::HTTPUtils.parse_form_data</a>
+for you</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/webrick/httputils.rb, line 265</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">initialize</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+  <span class="ruby-ivar">@name</span> = <span class="ruby-ivar">@filename</span> = <span class="ruby-ivar">@next_data</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">empty?</span>
+    <span class="ruby-ivar">@raw_header</span> = []
+    <span class="ruby-ivar">@header</span> = <span class="ruby-keyword">nil</span>
+    <span class="ruby-keyword">super</span>(<span class="ruby-string">&quot;&quot;</span>)
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-ivar">@raw_header</span> = <span class="ruby-constant">EmptyRawHeader</span>
+    <span class="ruby-ivar">@header</span> = <span class="ruby-constant">EmptyHeader</span>
+    <span class="ruby-keyword">super</span>(<span class="ruby-identifier">args</span>.<span class="ruby-identifier">shift</span>)
+    <span class="ruby-keyword">unless</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">empty?</span>
+      <span class="ruby-ivar">@next_data</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-3C-3C">
+            
+              <b>&lt;&lt;</b>(str)
+            
+            <a href="../../../classes/WEBrick/HTTPUtils/FormData.html#method-i-3C-3C" name="method-i-3C-3C" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Adds <code>str</code> to this <a href="FormData.html">FormData</a> which
+may be the body, a header or a header entry.</p>
+
+<p>This is called by <a
+href="../HTTPUtils.html#method-c-parse_form_data">WEBrick::HTTPUtils.parse_form_data</a>
+for you</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-3C-3C_source')" id="l_method-i-3C-3C_source">show</a>
+                
+              </p>
+              <div id="method-i-3C-3C_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/webrick/httputils.rb, line 298</span>
+<span class="ruby-keyword">def</span> <span class="ruby-operator">&lt;&lt;</span>(<span class="ruby-keyword ruby-title">str</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@header</span>
+    <span class="ruby-keyword">super</span>
+  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">str</span> <span class="ruby-operator">==</span> <span class="ruby-constant">CRLF</span>
+    <span class="ruby-ivar">@header</span> = <span class="ruby-constant">HTTPUtils</span><span class="ruby-operator">::</span><span class="ruby-identifier">parse_header</span>(<span class="ruby-ivar">@raw_header</span>.<span class="ruby-identifier">join</span>)
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">cd</span> = <span class="ruby-keyword">self</span>[<span class="ruby-string">&#39;content-disposition&#39;</span>]
+      <span class="ruby-keyword">if</span> <span class="ruby-regexp">/\s+name=&quot;(.*?)&quot;/</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">cd</span> <span class="ruby-keyword">then</span> <span class="ruby-ivar">@name</span> = <span class="ruby-node">$1</span> <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-regexp">/\s+filename=&quot;(.*?)&quot;/</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">cd</span> <span class="ruby-keyword">then</span> <span class="ruby-ivar">@filename</span> = <span class="ruby-node">$1</span> <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-ivar">@raw_header</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">str</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">self</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-5B-5D">
+            
+              <b>[]</b>(*key)
+            
+            <a href="../../../classes/WEBrick/HTTPUtils/FormData.html#method-i-5B-5D" name="method-i-5B-5D" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Retrieves the header at the first entry in <code>key</code></p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-5B-5D_source')" id="l_method-i-5B-5D_source">show</a>
+                
+              </p>
+              <div id="method-i-5B-5D_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/webrick/httputils.rb, line 284</span>
+<span class="ruby-keyword">def</span> <span class="ruby-operator">[]</span>(<span class="ruby-operator">*</span><span class="ruby-keyword ruby-title">key</span>)
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-ivar">@header</span>[<span class="ruby-identifier">key</span>[<span class="ruby-number">0</span>].<span class="ruby-identifier">downcase</span>].<span class="ruby-identifier">join</span>(<span class="ruby-string">&quot;, &quot;</span>)
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">StandardError</span>, <span class="ruby-constant">NameError</span>
+    <span class="ruby-keyword">super</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-append_data">
+            
+              <b>append_data</b>(data)
+            
+            <a href="../../../classes/WEBrick/HTTPUtils/FormData.html#method-i-append_data" name="method-i-append_data" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Adds <code>data</code> at the end of the chain of entries</p>
+
+<p>This is called by <a
+href="../HTTPUtils.html#method-c-parse_form_data">WEBrick::HTTPUtils.parse_form_data</a>
+for you.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-append_data_source')" id="l_method-i-append_data_source">show</a>
+                
+              </p>
+              <div id="method-i-append_data_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/webrick/httputils.rb, line 318</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">append_data</span>(<span class="ruby-identifier">data</span>)
+  <span class="ruby-identifier">tmp</span> = <span class="ruby-keyword">self</span>
+  <span class="ruby-keyword">while</span> <span class="ruby-identifier">tmp</span>
+    <span class="ruby-keyword">unless</span> <span class="ruby-identifier">tmp</span>.<span class="ruby-identifier">next_data</span>
+      <span class="ruby-identifier">tmp</span>.<span class="ruby-identifier">next_data</span> = <span class="ruby-identifier">data</span>
+      <span class="ruby-keyword">break</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">tmp</span> = <span class="ruby-identifier">tmp</span>.<span class="ruby-identifier">next_data</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">self</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-each_data">
+            
+              <b>each_data</b>()
+            
+            <a href="../../../classes/WEBrick/HTTPUtils/FormData.html#method-i-each_data" name="method-i-each_data" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Yields each entry in this <a href="FormData.html">FormData</a></p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-each_data_source')" id="l_method-i-each_data_source">show</a>
+                
+              </p>
+              <div id="method-i-each_data_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/webrick/httputils.rb, line 333</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">each_data</span>
+  <span class="ruby-identifier">tmp</span> = <span class="ruby-keyword">self</span>
+  <span class="ruby-keyword">while</span> <span class="ruby-identifier">tmp</span>
+    <span class="ruby-identifier">next_data</span> = <span class="ruby-identifier">tmp</span>.<span class="ruby-identifier">next_data</span>
+    <span class="ruby-keyword">yield</span>(<span class="ruby-identifier">tmp</span>)
+    <span class="ruby-identifier">tmp</span> = <span class="ruby-identifier">next_data</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-list">
+            
+              <b>list</b>()
+            
+            <a href="../../../classes/WEBrick/HTTPUtils/FormData.html#method-i-list" name="method-i-list" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns all the <a href="FormData.html">FormData</a> as an Array</p>
+            </div>
+          
+          
+          
+            <div class="aka">
+              Also aliased as: <a href="FormData.html#method-i-to_ary">to_ary</a>
+            </div>
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-list_source')" id="l_method-i-list_source">show</a>
+                
+              </p>
+              <div id="method-i-list_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/webrick/httputils.rb, line 345</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">list</span>
+  <span class="ruby-identifier">ret</span> = []
+  <span class="ruby-identifier">each_data</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">data</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">ret</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">data</span>.<span class="ruby-identifier">to_s</span>
+  }
+  <span class="ruby-identifier">ret</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-to_ary">
+            
+              <b>to_ary</b>()
+            
+            <a href="../../../classes/WEBrick/HTTPUtils/FormData.html#method-i-to_ary" name="method-i-to_ary" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>A <a href="FormData.html">FormData</a> will behave like an Array</p>
+            </div>
+          
+          
+          
+
+          
+            <div class="aka">
+              Alias for: <a href="FormData.html#method-i-list">list</a>
+            </div>
+          
+          
+          
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-to_s">
+            
+              <b>to_s</b>()
+            
+            <a href="../../../classes/WEBrick/HTTPUtils/FormData.html#method-i-to_s" name="method-i-to_s" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>This FormData&#39;s body</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-to_s_source')" id="l_method-i-to_s_source">show</a>
+                
+              </p>
+              <div id="method-i-to_s_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/webrick/httputils.rb, line 361</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">to_s</span>
+  <span class="ruby-constant">String</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+
+    </div>
+  </body>
+</html>    

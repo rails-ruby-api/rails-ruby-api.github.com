@@ -1,0 +1,1528 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>TransactionCallbacksTest</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/github.css" type="text/css" media="screen" />
+<script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            TransactionCallbacksTest 
+            
+                <span class="parent">&lt; 
+                    
+                    ActiveRecord::TestCase
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../files/activerecord/test/cases/transaction_callbacks_test_rb.html">activerecord/test/cases/transaction_callbacks_test.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+
+
+  
+
+
+  
+  
+
+
+  
+    <!-- Namespace -->
+    <div class="sectiontitle">Namespace</div>
+    <ul>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="TransactionCallbacksTest/ReplyWithCallbacks.html">TransactionCallbacksTest::ReplyWithCallbacks</a>
+        </li>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="TransactionCallbacksTest/TopicWithCallbacks.html">TransactionCallbacksTest::TopicWithCallbacks</a>
+        </li>
+      
+    </ul>
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>C</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-commit_db_transaction">commit_db_transaction</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>S</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-setup">setup</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-test_after_commit_callback_should_not_swallow_errors">test_after_commit_callback_should_not_swallow_errors</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_after_commit_callback_when_raise_should_not_restore_state">test_after_commit_callback_when_raise_should_not_restore_state</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_after_commit_callbacks_should_validate_on_condition">test_after_commit_callbacks_should_validate_on_condition</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_after_commit_should_not_raise_when_raise_in_transactional_callbacks_false">test_after_commit_should_not_raise_when_raise_in_transactional_callbacks_false</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_after_rollback_callback_should_not_swallow_errors_when_set_to_raise">test_after_rollback_callback_should_not_swallow_errors_when_set_to_raise</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_after_rollback_callback_when_raise_should_restore_state">test_after_rollback_callback_when_raise_should_restore_state</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_after_rollback_callbacks_should_validate_on_condition">test_after_rollback_callbacks_should_validate_on_condition</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_after_transaction_callbacks_should_prevent_callbacks_from_being_called">test_after_transaction_callbacks_should_prevent_callbacks_from_being_called</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_call_after_commit_after_transaction_commits">test_call_after_commit_after_transaction_commits</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_call_after_rollback_after_transaction_rollsback">test_call_after_rollback_after_transaction_rollsback</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_call_after_rollback_when_commit_fails">test_call_after_rollback_when_commit_fails</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_only_call_after_commit_on_create_after_transaction_commits_for_new_record">test_only_call_after_commit_on_create_after_transaction_commits_for_new_record</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_only_call_after_commit_on_create_after_transaction_commits_for_new_record_if_create_succeeds_creating_through_association">test_only_call_after_commit_on_create_after_transaction_commits_for_new_record_if_create_succeeds_creating_through_association</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_only_call_after_commit_on_create_and_doesnt_leaky">test_only_call_after_commit_on_create_and_doesnt_leaky</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_only_call_after_commit_on_destroy_after_transaction_commits_for_destroyed_record">test_only_call_after_commit_on_destroy_after_transaction_commits_for_destroyed_record</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_only_call_after_commit_on_top_level_transactions">test_only_call_after_commit_on_top_level_transactions</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_only_call_after_commit_on_update_after_transaction_commits_for_existing_record">test_only_call_after_commit_on_update_after_transaction_commits_for_existing_record</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_only_call_after_commit_on_update_after_transaction_commits_for_existing_record_on_touch">test_only_call_after_commit_on_update_after_transaction_commits_for_existing_record_on_touch</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_only_call_after_rollback_on_create_after_transaction_rollsback_for_new_record">test_only_call_after_rollback_on_create_after_transaction_rollsback_for_new_record</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_only_call_after_rollback_on_destroy_after_transaction_rollsback_for_destroyed_record">test_only_call_after_rollback_on_destroy_after_transaction_rollsback_for_destroyed_record</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_only_call_after_rollback_on_records_rolled_back_to_a_savepoint">test_only_call_after_rollback_on_records_rolled_back_to_a_savepoint</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_only_call_after_rollback_on_records_rolled_back_to_a_savepoint_when_release_savepoint_fails">test_only_call_after_rollback_on_records_rolled_back_to_a_savepoint_when_release_savepoint_fails</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_only_call_after_rollback_on_update_after_transaction_rollsback_for_existing_record">test_only_call_after_rollback_on_update_after_transaction_rollsback_for_existing_record</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_only_call_after_rollback_on_update_after_transaction_rollsback_for_existing_record_on_touch">test_only_call_after_rollback_on_update_after_transaction_rollsback_for_existing_record_on_touch</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_saving_a_record_with_a_belongs_to_that_specifies_touching_the_parent_should_call_callbacks_on_the_parent_object">test_saving_a_record_with_a_belongs_to_that_specifies_touching_the_parent_should_call_callbacks_on_the_parent_object</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+        
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-commit_db_transaction">
+            
+              <b>commit_db_transaction</b>()
+            
+            <a href="../classes/TransactionCallbacksTest.html#method-i-commit_db_transaction" name="method-i-commit_db_transaction" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-commit_db_transaction_source')" id="l_method-i-commit_db_transaction_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/fea048f9b4e5730a38ed94c068fb6a0ead1c94e7/activerecord/test/cases/transaction_callbacks_test.rb#L206" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-commit_db_transaction_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/transaction_callbacks_test.rb, line 206</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">commit_db_transaction</span>; <span class="ruby-identifier">raise</span> <span class="ruby-string">&quot;boom!&quot;</span>; <span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-setup">
+            
+              <b>setup</b>()
+            
+            <a href="../classes/TransactionCallbacksTest.html#method-i-setup" name="method-i-setup" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-setup_source')" id="l_method-i-setup_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/fea048f9b4e5730a38ed94c068fb6a0ead1c94e7/activerecord/test/cases/transaction_callbacks_test.rb#L74" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-setup_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/transaction_callbacks_test.rb, line 74</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">setup</span>
+  <span class="ruby-ivar">@first</span> = <span class="ruby-constant">TopicWithCallbacks</span>.<span class="ruby-identifier">find</span>(<span class="ruby-number">1</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_after_commit_callback_should_not_swallow_errors">
+            
+              <b>test_after_commit_callback_should_not_swallow_errors</b>()
+            
+            <a href="../classes/TransactionCallbacksTest.html#method-i-test_after_commit_callback_should_not_swallow_errors" name="method-i-test_after_commit_callback_should_not_swallow_errors" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_after_commit_callback_should_not_swallow_errors_source')" id="l_method-i-test_after_commit_callback_should_not_swallow_errors_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/fea048f9b4e5730a38ed94c068fb6a0ead1c94e7/activerecord/test/cases/transaction_callbacks_test.rb#L310" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_after_commit_callback_should_not_swallow_errors_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/transaction_callbacks_test.rb, line 310</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_after_commit_callback_should_not_swallow_errors</span>
+  <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">after_commit_block</span>{ <span class="ruby-identifier">fail</span> <span class="ruby-string">&quot;boom&quot;</span> }
+  <span class="ruby-identifier">assert_raises</span>(<span class="ruby-constant">RuntimeError</span>) <span class="ruby-keyword">do</span>
+    <span class="ruby-constant">Topic</span>.<span class="ruby-identifier">transaction</span> <span class="ruby-keyword">do</span>
+      <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">save!</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_after_commit_callback_when_raise_should_not_restore_state">
+            
+              <b>test_after_commit_callback_when_raise_should_not_restore_state</b>()
+            
+            <a href="../classes/TransactionCallbacksTest.html#method-i-test_after_commit_callback_when_raise_should_not_restore_state" name="method-i-test_after_commit_callback_when_raise_should_not_restore_state" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_after_commit_callback_when_raise_should_not_restore_state_source')" id="l_method-i-test_after_commit_callback_when_raise_should_not_restore_state_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/fea048f9b4e5730a38ed94c068fb6a0ead1c94e7/activerecord/test/cases/transaction_callbacks_test.rb#L319" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_after_commit_callback_when_raise_should_not_restore_state_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/transaction_callbacks_test.rb, line 319</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_after_commit_callback_when_raise_should_not_restore_state</span>
+  <span class="ruby-identifier">first</span> = <span class="ruby-constant">TopicWithCallbacks</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-identifier">second</span> = <span class="ruby-constant">TopicWithCallbacks</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-identifier">first</span>.<span class="ruby-identifier">after_commit_block</span>{ <span class="ruby-identifier">fail</span> <span class="ruby-string">&quot;boom&quot;</span> }
+  <span class="ruby-identifier">second</span>.<span class="ruby-identifier">after_commit_block</span>{ <span class="ruby-identifier">fail</span> <span class="ruby-string">&quot;boom&quot;</span> }
+
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-constant">Topic</span>.<span class="ruby-identifier">transaction</span> <span class="ruby-keyword">do</span>
+      <span class="ruby-identifier">first</span>.<span class="ruby-identifier">save!</span>
+      <span class="ruby-identifier">assert_not_nil</span> <span class="ruby-identifier">first</span>.<span class="ruby-identifier">id</span>
+      <span class="ruby-identifier">second</span>.<span class="ruby-identifier">save!</span>
+      <span class="ruby-identifier">assert_not_nil</span> <span class="ruby-identifier">second</span>.<span class="ruby-identifier">id</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">rescue</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">assert_not_nil</span> <span class="ruby-identifier">first</span>.<span class="ruby-identifier">id</span>
+  <span class="ruby-identifier">assert_not_nil</span> <span class="ruby-identifier">second</span>.<span class="ruby-identifier">id</span>
+  <span class="ruby-identifier">assert</span> <span class="ruby-identifier">first</span>.<span class="ruby-identifier">reload</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_after_commit_callbacks_should_validate_on_condition">
+            
+              <b>test_after_commit_callbacks_should_validate_on_condition</b>()
+            
+            <a href="../classes/TransactionCallbacksTest.html#method-i-test_after_commit_callbacks_should_validate_on_condition" name="method-i-test_after_commit_callbacks_should_validate_on_condition" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_after_commit_callbacks_should_validate_on_condition_source')" id="l_method-i-test_after_commit_callbacks_should_validate_on_condition_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/fea048f9b4e5730a38ed94c068fb6a0ead1c94e7/activerecord/test/cases/transaction_callbacks_test.rb#L378" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_after_commit_callbacks_should_validate_on_condition_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/transaction_callbacks_test.rb, line 378</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_after_commit_callbacks_should_validate_on_condition</span>
+  <span class="ruby-identifier">assert_raise</span>(<span class="ruby-constant">ArgumentError</span>) { <span class="ruby-constant">Topic</span>.<span class="ruby-identifier">after_commit</span>(<span class="ruby-identifier">on</span><span class="ruby-operator">:</span> <span class="ruby-value">:save</span>) }
+  <span class="ruby-identifier">e</span> = <span class="ruby-identifier">assert_raise</span>(<span class="ruby-constant">ArgumentError</span>) { <span class="ruby-constant">Topic</span>.<span class="ruby-identifier">after_commit</span>(<span class="ruby-identifier">on</span><span class="ruby-operator">:</span> <span class="ruby-string">&#39;create&#39;</span>) }
+  <span class="ruby-identifier">assert_match</span>(<span class="ruby-regexp">/:on conditions for after_commit and after_rollback callbacks have to be one of \[:create, :destroy, :update\]/</span>, <span class="ruby-identifier">e</span>.<span class="ruby-identifier">message</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_after_commit_should_not_raise_when_raise_in_transactional_callbacks_false">
+            
+              <b>test_after_commit_should_not_raise_when_raise_in_transactional_callbacks_false</b>()
+            
+            <a href="../classes/TransactionCallbacksTest.html#method-i-test_after_commit_should_not_raise_when_raise_in_transactional_callbacks_false" name="method-i-test_after_commit_should_not_raise_when_raise_in_transactional_callbacks_false" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_after_commit_should_not_raise_when_raise_in_transactional_callbacks_false_source')" id="l_method-i-test_after_commit_should_not_raise_when_raise_in_transactional_callbacks_false_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/fea048f9b4e5730a38ed94c068fb6a0ead1c94e7/activerecord/test/cases/transaction_callbacks_test.rb#L301" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_after_commit_should_not_raise_when_raise_in_transactional_callbacks_false_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/transaction_callbacks_test.rb, line 301</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_after_commit_should_not_raise_when_raise_in_transactional_callbacks_false</span>
+  <span class="ruby-identifier">old_transaction_config</span> = <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">raise_in_transactional_callbacks</span>
+  <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">raise_in_transactional_callbacks</span> = <span class="ruby-keyword">false</span>
+  <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">after_commit_block</span>{ <span class="ruby-identifier">fail</span> <span class="ruby-string">&quot;boom&quot;</span> }
+  <span class="ruby-constant">Topic</span>.<span class="ruby-identifier">transaction</span> { <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">save!</span> }
+<span class="ruby-keyword">ensure</span>
+  <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">raise_in_transactional_callbacks</span> = <span class="ruby-identifier">old_transaction_config</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_after_rollback_callback_should_not_swallow_errors_when_set_to_raise">
+            
+              <b>test_after_rollback_callback_should_not_swallow_errors_when_set_to_raise</b>()
+            
+            <a href="../classes/TransactionCallbacksTest.html#method-i-test_after_rollback_callback_should_not_swallow_errors_when_set_to_raise" name="method-i-test_after_rollback_callback_should_not_swallow_errors_when_set_to_raise" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_after_rollback_callback_should_not_swallow_errors_when_set_to_raise_source')" id="l_method-i-test_after_rollback_callback_should_not_swallow_errors_when_set_to_raise_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/fea048f9b4e5730a38ed94c068fb6a0ead1c94e7/activerecord/test/cases/transaction_callbacks_test.rb#L339" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_after_rollback_callback_should_not_swallow_errors_when_set_to_raise_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/transaction_callbacks_test.rb, line 339</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_after_rollback_callback_should_not_swallow_errors_when_set_to_raise</span>
+  <span class="ruby-identifier">error_class</span> = <span class="ruby-constant">Class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">StandardError</span>)
+  <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">after_rollback_block</span>{ <span class="ruby-identifier">raise</span> <span class="ruby-identifier">error_class</span> }
+  <span class="ruby-identifier">assert_raises</span>(<span class="ruby-identifier">error_class</span>) <span class="ruby-keyword">do</span>
+    <span class="ruby-constant">Topic</span>.<span class="ruby-identifier">transaction</span> <span class="ruby-keyword">do</span>
+      <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">save!</span>
+      <span class="ruby-identifier">raise</span> <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Rollback</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_after_rollback_callback_when_raise_should_restore_state">
+            
+              <b>test_after_rollback_callback_when_raise_should_restore_state</b>()
+            
+            <a href="../classes/TransactionCallbacksTest.html#method-i-test_after_rollback_callback_when_raise_should_restore_state" name="method-i-test_after_rollback_callback_when_raise_should_restore_state" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_after_rollback_callback_when_raise_should_restore_state_source')" id="l_method-i-test_after_rollback_callback_when_raise_should_restore_state_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/fea048f9b4e5730a38ed94c068fb6a0ead1c94e7/activerecord/test/cases/transaction_callbacks_test.rb#L350" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_after_rollback_callback_when_raise_should_restore_state_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/transaction_callbacks_test.rb, line 350</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_after_rollback_callback_when_raise_should_restore_state</span>
+  <span class="ruby-identifier">error_class</span> = <span class="ruby-constant">Class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">StandardError</span>)
+
+  <span class="ruby-identifier">first</span> = <span class="ruby-constant">TopicWithCallbacks</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-identifier">second</span> = <span class="ruby-constant">TopicWithCallbacks</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-identifier">first</span>.<span class="ruby-identifier">after_rollback_block</span>{ <span class="ruby-identifier">raise</span> <span class="ruby-identifier">error_class</span> }
+  <span class="ruby-identifier">second</span>.<span class="ruby-identifier">after_rollback_block</span>{ <span class="ruby-identifier">raise</span> <span class="ruby-identifier">error_class</span> }
+
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-constant">Topic</span>.<span class="ruby-identifier">transaction</span> <span class="ruby-keyword">do</span>
+      <span class="ruby-identifier">first</span>.<span class="ruby-identifier">save!</span>
+      <span class="ruby-identifier">assert_not_nil</span> <span class="ruby-identifier">first</span>.<span class="ruby-identifier">id</span>
+      <span class="ruby-identifier">second</span>.<span class="ruby-identifier">save!</span>
+      <span class="ruby-identifier">assert_not_nil</span> <span class="ruby-identifier">second</span>.<span class="ruby-identifier">id</span>
+      <span class="ruby-identifier">raise</span> <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Rollback</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">rescue</span> <span class="ruby-identifier">error_class</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">assert_nil</span> <span class="ruby-identifier">first</span>.<span class="ruby-identifier">id</span>
+  <span class="ruby-identifier">assert_nil</span> <span class="ruby-identifier">second</span>.<span class="ruby-identifier">id</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_after_rollback_callbacks_should_validate_on_condition">
+            
+              <b>test_after_rollback_callbacks_should_validate_on_condition</b>()
+            
+            <a href="../classes/TransactionCallbacksTest.html#method-i-test_after_rollback_callbacks_should_validate_on_condition" name="method-i-test_after_rollback_callbacks_should_validate_on_condition" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_after_rollback_callbacks_should_validate_on_condition_source')" id="l_method-i-test_after_rollback_callbacks_should_validate_on_condition_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/fea048f9b4e5730a38ed94c068fb6a0ead1c94e7/activerecord/test/cases/transaction_callbacks_test.rb#L372" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_after_rollback_callbacks_should_validate_on_condition_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/transaction_callbacks_test.rb, line 372</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_after_rollback_callbacks_should_validate_on_condition</span>
+  <span class="ruby-identifier">assert_raise</span>(<span class="ruby-constant">ArgumentError</span>) { <span class="ruby-constant">Topic</span>.<span class="ruby-identifier">after_rollback</span>(<span class="ruby-identifier">on</span><span class="ruby-operator">:</span> <span class="ruby-value">:save</span>) }
+  <span class="ruby-identifier">e</span> = <span class="ruby-identifier">assert_raise</span>(<span class="ruby-constant">ArgumentError</span>) { <span class="ruby-constant">Topic</span>.<span class="ruby-identifier">after_rollback</span>(<span class="ruby-identifier">on</span><span class="ruby-operator">:</span> <span class="ruby-string">&#39;create&#39;</span>) }
+  <span class="ruby-identifier">assert_match</span>(<span class="ruby-regexp">/:on conditions for after_commit and after_rollback callbacks have to be one of \[:create, :destroy, :update\]/</span>, <span class="ruby-identifier">e</span>.<span class="ruby-identifier">message</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_after_transaction_callbacks_should_prevent_callbacks_from_being_called">
+            
+              <b>test_after_transaction_callbacks_should_prevent_callbacks_from_being_called</b>()
+            
+            <a href="../classes/TransactionCallbacksTest.html#method-i-test_after_transaction_callbacks_should_prevent_callbacks_from_being_called" name="method-i-test_after_transaction_callbacks_should_prevent_callbacks_from_being_called" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_after_transaction_callbacks_should_prevent_callbacks_from_being_called_source')" id="l_method-i-test_after_transaction_callbacks_should_prevent_callbacks_from_being_called_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/fea048f9b4e5730a38ed94c068fb6a0ead1c94e7/activerecord/test/cases/transaction_callbacks_test.rb#L269" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_after_transaction_callbacks_should_prevent_callbacks_from_being_called_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/transaction_callbacks_test.rb, line 269</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_after_transaction_callbacks_should_prevent_callbacks_from_being_called</span>
+  <span class="ruby-identifier">old_transaction_config</span> = <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">raise_in_transactional_callbacks</span>
+  <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">raise_in_transactional_callbacks</span> = <span class="ruby-keyword">false</span>
+
+  <span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">@first</span>.<span class="ruby-identifier">last_after_transaction_error=</span>(<span class="ruby-identifier">e</span>); <span class="ruby-ivar">@last_transaction_error</span> = <span class="ruby-identifier">e</span>; <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">@first</span>.<span class="ruby-identifier">last_after_transaction_error</span>; <span class="ruby-ivar">@last_transaction_error</span>; <span class="ruby-keyword">end</span>
+  <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">after_commit_block</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span> <span class="ruby-identifier">r</span>.<span class="ruby-identifier">last_after_transaction_error</span> = <span class="ruby-value">:commit</span>; <span class="ruby-identifier">raise</span> <span class="ruby-string">&quot;fail!&quot;</span>;}
+  <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">after_rollback_block</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span> <span class="ruby-identifier">r</span>.<span class="ruby-identifier">last_after_transaction_error</span> = <span class="ruby-value">:rollback</span>; <span class="ruby-identifier">raise</span> <span class="ruby-string">&quot;fail!&quot;</span>;}
+
+  <span class="ruby-identifier">second</span> = <span class="ruby-constant">TopicWithCallbacks</span>.<span class="ruby-identifier">find</span>(<span class="ruby-number">3</span>)
+  <span class="ruby-identifier">second</span>.<span class="ruby-identifier">after_commit_block</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span> <span class="ruby-identifier">r</span>.<span class="ruby-identifier">history</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value">:after_commit</span>}
+  <span class="ruby-identifier">second</span>.<span class="ruby-identifier">after_rollback_block</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span> <span class="ruby-identifier">r</span>.<span class="ruby-identifier">history</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value">:after_rollback</span>}
+
+  <span class="ruby-constant">Topic</span>.<span class="ruby-identifier">transaction</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">save!</span>
+    <span class="ruby-identifier">second</span>.<span class="ruby-identifier">save!</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">:commit</span>, <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">last_after_transaction_error</span>
+  <span class="ruby-identifier">assert_equal</span> [<span class="ruby-value">:after_commit</span>], <span class="ruby-identifier">second</span>.<span class="ruby-identifier">history</span>
+
+  <span class="ruby-identifier">second</span>.<span class="ruby-identifier">history</span>.<span class="ruby-identifier">clear</span>
+  <span class="ruby-constant">Topic</span>.<span class="ruby-identifier">transaction</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">save!</span>
+    <span class="ruby-identifier">second</span>.<span class="ruby-identifier">save!</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Rollback</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">:rollback</span>, <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">last_after_transaction_error</span>
+  <span class="ruby-identifier">assert_equal</span> [<span class="ruby-value">:after_rollback</span>], <span class="ruby-identifier">second</span>.<span class="ruby-identifier">history</span>
+<span class="ruby-keyword">ensure</span>
+  <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">raise_in_transactional_callbacks</span> = <span class="ruby-identifier">old_transaction_config</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_call_after_commit_after_transaction_commits">
+            
+              <b>test_call_after_commit_after_transaction_commits</b>()
+            
+            <a href="../classes/TransactionCallbacksTest.html#method-i-test_call_after_commit_after_transaction_commits" name="method-i-test_call_after_commit_after_transaction_commits" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_call_after_commit_after_transaction_commits_source')" id="l_method-i-test_call_after_commit_after_transaction_commits_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/fea048f9b4e5730a38ed94c068fb6a0ead1c94e7/activerecord/test/cases/transaction_callbacks_test.rb#L78" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_call_after_commit_after_transaction_commits_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/transaction_callbacks_test.rb, line 78</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_call_after_commit_after_transaction_commits</span>
+  <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">after_commit_block</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span> <span class="ruby-identifier">r</span>.<span class="ruby-identifier">history</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value">:after_commit</span>}
+  <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">after_rollback_block</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span> <span class="ruby-identifier">r</span>.<span class="ruby-identifier">history</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value">:after_rollback</span>}
+
+  <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">save!</span>
+  <span class="ruby-identifier">assert_equal</span> [<span class="ruby-value">:after_commit</span>], <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">history</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_call_after_rollback_after_transaction_rollsback">
+            
+              <b>test_call_after_rollback_after_transaction_rollsback</b>()
+            
+            <a href="../classes/TransactionCallbacksTest.html#method-i-test_call_after_rollback_after_transaction_rollsback" name="method-i-test_call_after_rollback_after_transaction_rollsback" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_call_after_rollback_after_transaction_rollsback_source')" id="l_method-i-test_call_after_rollback_after_transaction_rollsback_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/fea048f9b4e5730a38ed94c068fb6a0ead1c94e7/activerecord/test/cases/transaction_callbacks_test.rb#L145" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_call_after_rollback_after_transaction_rollsback_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/transaction_callbacks_test.rb, line 145</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_call_after_rollback_after_transaction_rollsback</span>
+  <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">after_commit_block</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span> <span class="ruby-identifier">r</span>.<span class="ruby-identifier">history</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value">:after_commit</span>}
+  <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">after_rollback_block</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span> <span class="ruby-identifier">r</span>.<span class="ruby-identifier">history</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value">:after_rollback</span>}
+
+  <span class="ruby-constant">Topic</span>.<span class="ruby-identifier">transaction</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">save!</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Rollback</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">assert_equal</span> [<span class="ruby-value">:after_rollback</span>], <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">history</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_call_after_rollback_when_commit_fails">
+            
+              <b>test_call_after_rollback_when_commit_fails</b>()
+            
+            <a href="../classes/TransactionCallbacksTest.html#method-i-test_call_after_rollback_when_commit_fails" name="method-i-test_call_after_rollback_when_commit_fails" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_call_after_rollback_when_commit_fails_source')" id="l_method-i-test_call_after_rollback_when_commit_fails_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/fea048f9b4e5730a38ed94c068fb6a0ead1c94e7/activerecord/test/cases/transaction_callbacks_test.rb#L202" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_call_after_rollback_when_commit_fails_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/transaction_callbacks_test.rb, line 202</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_call_after_rollback_when_commit_fails</span>
+  <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">connection</span>.<span class="ruby-identifier">singleton_class</span>.<span class="ruby-identifier">send</span>(<span class="ruby-value">:alias_method</span>, <span class="ruby-value">:real_method_commit_db_transaction</span>, <span class="ruby-value">:commit_db_transaction</span>)
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">connection</span>.<span class="ruby-identifier">singleton_class</span>.<span class="ruby-identifier">class_eval</span> <span class="ruby-keyword">do</span>
+      <span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">commit_db_transaction</span>; <span class="ruby-identifier">raise</span> <span class="ruby-string">&quot;boom!&quot;</span>; <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">after_commit_block</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span> <span class="ruby-identifier">r</span>.<span class="ruby-identifier">history</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value">:after_commit</span>}
+    <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">after_rollback_block</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span> <span class="ruby-identifier">r</span>.<span class="ruby-identifier">history</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value">:after_rollback</span>}
+
+    <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@first</span>.<span class="ruby-identifier">save</span> <span class="ruby-keyword">rescue</span> <span class="ruby-keyword">nil</span>
+    <span class="ruby-identifier">assert_equal</span> [<span class="ruby-value">:after_rollback</span>], <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">history</span>
+  <span class="ruby-keyword">ensure</span>
+    <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">connection</span>.<span class="ruby-identifier">singleton_class</span>.<span class="ruby-identifier">send</span>(<span class="ruby-value">:remove_method</span>, <span class="ruby-value">:commit_db_transaction</span>)
+    <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">connection</span>.<span class="ruby-identifier">singleton_class</span>.<span class="ruby-identifier">send</span>(<span class="ruby-value">:alias_method</span>, <span class="ruby-value">:commit_db_transaction</span>, <span class="ruby-value">:real_method_commit_db_transaction</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_only_call_after_commit_on_create_after_transaction_commits_for_new_record">
+            
+              <b>test_only_call_after_commit_on_create_after_transaction_commits_for_new_record</b>()
+            
+            <a href="../classes/TransactionCallbacksTest.html#method-i-test_only_call_after_commit_on_create_after_transaction_commits_for_new_record" name="method-i-test_only_call_after_commit_on_create_after_transaction_commits_for_new_record" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_only_call_after_commit_on_create_after_transaction_commits_for_new_record_source')" id="l_method-i-test_only_call_after_commit_on_create_after_transaction_commits_for_new_record_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/fea048f9b4e5730a38ed94c068fb6a0ead1c94e7/activerecord/test/cases/transaction_callbacks_test.rb#L100" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_only_call_after_commit_on_create_after_transaction_commits_for_new_record_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/transaction_callbacks_test.rb, line 100</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_only_call_after_commit_on_create_after_transaction_commits_for_new_record</span>
+  <span class="ruby-identifier">new_record</span> = <span class="ruby-constant">TopicWithCallbacks</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">:title</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;New topic&quot;</span>, <span class="ruby-value">:written_on</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Date</span>.<span class="ruby-identifier">today</span>)
+  <span class="ruby-identifier">add_transaction_execution_blocks</span> <span class="ruby-identifier">new_record</span>
+
+  <span class="ruby-identifier">new_record</span>.<span class="ruby-identifier">save!</span>
+  <span class="ruby-identifier">assert_equal</span> [<span class="ruby-value">:commit_on_create</span>], <span class="ruby-identifier">new_record</span>.<span class="ruby-identifier">history</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_only_call_after_commit_on_create_after_transaction_commits_for_new_record_if_create_succeeds_creating_through_association">
+            
+              <b>test_only_call_after_commit_on_create_after_transaction_commits_for_new_record_if_create_succeeds_creating_through_association</b>()
+            
+            <a href="../classes/TransactionCallbacksTest.html#method-i-test_only_call_after_commit_on_create_after_transaction_commits_for_new_record_if_create_succeeds_creating_through_association" name="method-i-test_only_call_after_commit_on_create_after_transaction_commits_for_new_record_if_create_succeeds_creating_through_association" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_only_call_after_commit_on_create_after_transaction_commits_for_new_record_if_create_succeeds_creating_through_association_source')" id="l_method-i-test_only_call_after_commit_on_create_after_transaction_commits_for_new_record_if_create_succeeds_creating_through_association_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/fea048f9b4e5730a38ed94c068fb6a0ead1c94e7/activerecord/test/cases/transaction_callbacks_test.rb#L108" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_only_call_after_commit_on_create_after_transaction_commits_for_new_record_if_create_succeeds_creating_through_association_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/transaction_callbacks_test.rb, line 108</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_only_call_after_commit_on_create_after_transaction_commits_for_new_record_if_create_succeeds_creating_through_association</span>
+  <span class="ruby-identifier">topic</span> = <span class="ruby-constant">TopicWithCallbacks</span>.<span class="ruby-identifier">create!</span>(<span class="ruby-value">:title</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;New topic&quot;</span>, <span class="ruby-value">:written_on</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Date</span>.<span class="ruby-identifier">today</span>)
+  <span class="ruby-identifier">reply</span> = <span class="ruby-identifier">topic</span>.<span class="ruby-identifier">replies</span>.<span class="ruby-identifier">create</span>
+
+  <span class="ruby-identifier">assert_equal</span> [], <span class="ruby-identifier">reply</span>.<span class="ruby-identifier">history</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_only_call_after_commit_on_create_and_doesnt_leaky">
+            
+              <b>test_only_call_after_commit_on_create_and_doesnt_leaky</b>()
+            
+            <a href="../classes/TransactionCallbacksTest.html#method-i-test_only_call_after_commit_on_create_and_doesnt_leaky" name="method-i-test_only_call_after_commit_on_create_and_doesnt_leaky" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_only_call_after_commit_on_create_and_doesnt_leaky_source')" id="l_method-i-test_only_call_after_commit_on_create_and_doesnt_leaky_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/fea048f9b4e5730a38ed94c068fb6a0ead1c94e7/activerecord/test/cases/transaction_callbacks_test.rb#L115" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_only_call_after_commit_on_create_and_doesnt_leaky_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/transaction_callbacks_test.rb, line 115</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_only_call_after_commit_on_create_and_doesnt_leaky</span>
+  <span class="ruby-identifier">r</span> = <span class="ruby-constant">ReplyWithCallbacks</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">content</span><span class="ruby-operator">:</span> <span class="ruby-string">&#39;foo&#39;</span>)
+  <span class="ruby-identifier">r</span>.<span class="ruby-identifier">save_on_after_create</span> = <span class="ruby-keyword">true</span>
+  <span class="ruby-identifier">r</span>.<span class="ruby-identifier">save!</span>
+  <span class="ruby-identifier">r</span>.<span class="ruby-identifier">content</span> = <span class="ruby-string">&#39;bar&#39;</span>
+  <span class="ruby-identifier">r</span>.<span class="ruby-identifier">save!</span>
+  <span class="ruby-identifier">r</span>.<span class="ruby-identifier">save!</span>
+  <span class="ruby-identifier">assert_equal</span> [<span class="ruby-value">:commit_on_create</span>], <span class="ruby-identifier">r</span>.<span class="ruby-identifier">history</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_only_call_after_commit_on_destroy_after_transaction_commits_for_destroyed_record">
+            
+              <b>test_only_call_after_commit_on_destroy_after_transaction_commits_for_destroyed_record</b>()
+            
+            <a href="../classes/TransactionCallbacksTest.html#method-i-test_only_call_after_commit_on_destroy_after_transaction_commits_for_destroyed_record" name="method-i-test_only_call_after_commit_on_destroy_after_transaction_commits_for_destroyed_record" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_only_call_after_commit_on_destroy_after_transaction_commits_for_destroyed_record_source')" id="l_method-i-test_only_call_after_commit_on_destroy_after_transaction_commits_for_destroyed_record_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/fea048f9b4e5730a38ed94c068fb6a0ead1c94e7/activerecord/test/cases/transaction_callbacks_test.rb#L93" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_only_call_after_commit_on_destroy_after_transaction_commits_for_destroyed_record_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/transaction_callbacks_test.rb, line 93</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_only_call_after_commit_on_destroy_after_transaction_commits_for_destroyed_record</span>
+  <span class="ruby-identifier">add_transaction_execution_blocks</span> <span class="ruby-ivar">@first</span>
+
+  <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">destroy</span>
+  <span class="ruby-identifier">assert_equal</span> [<span class="ruby-value">:commit_on_destroy</span>], <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">history</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_only_call_after_commit_on_top_level_transactions">
+            
+              <b>test_only_call_after_commit_on_top_level_transactions</b>()
+            
+            <a href="../classes/TransactionCallbacksTest.html#method-i-test_only_call_after_commit_on_top_level_transactions" name="method-i-test_only_call_after_commit_on_top_level_transactions" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_only_call_after_commit_on_top_level_transactions_source')" id="l_method-i-test_only_call_after_commit_on_top_level_transactions_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/fea048f9b4e5730a38ed94c068fb6a0ead1c94e7/activerecord/test/cases/transaction_callbacks_test.rb#L132" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_only_call_after_commit_on_top_level_transactions_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/transaction_callbacks_test.rb, line 132</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_only_call_after_commit_on_top_level_transactions</span>
+  <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">after_commit_block</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span> <span class="ruby-identifier">r</span>.<span class="ruby-identifier">history</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value">:after_commit</span>}
+  <span class="ruby-identifier">assert</span> <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">history</span>.<span class="ruby-identifier">empty?</span>
+
+  <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">transaction</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">transaction</span>(<span class="ruby-identifier">requires_new</span><span class="ruby-operator">:</span> <span class="ruby-keyword">true</span>) <span class="ruby-keyword">do</span>
+      <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">touch</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">assert</span> <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">history</span>.<span class="ruby-identifier">empty?</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">assert_equal</span> [<span class="ruby-value">:after_commit</span>], <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">history</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_only_call_after_commit_on_update_after_transaction_commits_for_existing_record">
+            
+              <b>test_only_call_after_commit_on_update_after_transaction_commits_for_existing_record</b>()
+            
+            <a href="../classes/TransactionCallbacksTest.html#method-i-test_only_call_after_commit_on_update_after_transaction_commits_for_existing_record" name="method-i-test_only_call_after_commit_on_update_after_transaction_commits_for_existing_record" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_only_call_after_commit_on_update_after_transaction_commits_for_existing_record_source')" id="l_method-i-test_only_call_after_commit_on_update_after_transaction_commits_for_existing_record_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/fea048f9b4e5730a38ed94c068fb6a0ead1c94e7/activerecord/test/cases/transaction_callbacks_test.rb#L86" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_only_call_after_commit_on_update_after_transaction_commits_for_existing_record_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/transaction_callbacks_test.rb, line 86</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_only_call_after_commit_on_update_after_transaction_commits_for_existing_record</span>
+  <span class="ruby-identifier">add_transaction_execution_blocks</span> <span class="ruby-ivar">@first</span>
+
+  <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">save!</span>
+  <span class="ruby-identifier">assert_equal</span> [<span class="ruby-value">:commit_on_update</span>], <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">history</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_only_call_after_commit_on_update_after_transaction_commits_for_existing_record_on_touch">
+            
+              <b>test_only_call_after_commit_on_update_after_transaction_commits_for_existing_record_on_touch</b>()
+            
+            <a href="../classes/TransactionCallbacksTest.html#method-i-test_only_call_after_commit_on_update_after_transaction_commits_for_existing_record_on_touch" name="method-i-test_only_call_after_commit_on_update_after_transaction_commits_for_existing_record_on_touch" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_only_call_after_commit_on_update_after_transaction_commits_for_existing_record_on_touch_source')" id="l_method-i-test_only_call_after_commit_on_update_after_transaction_commits_for_existing_record_on_touch_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/fea048f9b4e5730a38ed94c068fb6a0ead1c94e7/activerecord/test/cases/transaction_callbacks_test.rb#L125" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_only_call_after_commit_on_update_after_transaction_commits_for_existing_record_on_touch_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/transaction_callbacks_test.rb, line 125</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_only_call_after_commit_on_update_after_transaction_commits_for_existing_record_on_touch</span>
+  <span class="ruby-identifier">add_transaction_execution_blocks</span> <span class="ruby-ivar">@first</span>
+
+  <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">touch</span>
+  <span class="ruby-identifier">assert_equal</span> [<span class="ruby-value">:commit_on_update</span>], <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">history</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_only_call_after_rollback_on_create_after_transaction_rollsback_for_new_record">
+            
+              <b>test_only_call_after_rollback_on_create_after_transaction_rollsback_for_new_record</b>()
+            
+            <a href="../classes/TransactionCallbacksTest.html#method-i-test_only_call_after_rollback_on_create_after_transaction_rollsback_for_new_record" name="method-i-test_only_call_after_rollback_on_create_after_transaction_rollsback_for_new_record" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_only_call_after_rollback_on_create_after_transaction_rollsback_for_new_record_source')" id="l_method-i-test_only_call_after_rollback_on_create_after_transaction_rollsback_for_new_record_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/fea048f9b4e5730a38ed94c068fb6a0ead1c94e7/activerecord/test/cases/transaction_callbacks_test.rb#L190" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_only_call_after_rollback_on_create_after_transaction_rollsback_for_new_record_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/transaction_callbacks_test.rb, line 190</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_only_call_after_rollback_on_create_after_transaction_rollsback_for_new_record</span>
+  <span class="ruby-identifier">new_record</span> = <span class="ruby-constant">TopicWithCallbacks</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">:title</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;New topic&quot;</span>, <span class="ruby-value">:written_on</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Date</span>.<span class="ruby-identifier">today</span>)
+  <span class="ruby-identifier">add_transaction_execution_blocks</span> <span class="ruby-identifier">new_record</span>
+
+  <span class="ruby-constant">Topic</span>.<span class="ruby-identifier">transaction</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">new_record</span>.<span class="ruby-identifier">save!</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Rollback</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">assert_equal</span> [<span class="ruby-value">:rollback_on_create</span>], <span class="ruby-identifier">new_record</span>.<span class="ruby-identifier">history</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_only_call_after_rollback_on_destroy_after_transaction_rollsback_for_destroyed_record">
+            
+              <b>test_only_call_after_rollback_on_destroy_after_transaction_rollsback_for_destroyed_record</b>()
+            
+            <a href="../classes/TransactionCallbacksTest.html#method-i-test_only_call_after_rollback_on_destroy_after_transaction_rollsback_for_destroyed_record" name="method-i-test_only_call_after_rollback_on_destroy_after_transaction_rollsback_for_destroyed_record" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_only_call_after_rollback_on_destroy_after_transaction_rollsback_for_destroyed_record_source')" id="l_method-i-test_only_call_after_rollback_on_destroy_after_transaction_rollsback_for_destroyed_record_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/fea048f9b4e5730a38ed94c068fb6a0ead1c94e7/activerecord/test/cases/transaction_callbacks_test.rb#L179" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_only_call_after_rollback_on_destroy_after_transaction_rollsback_for_destroyed_record_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/transaction_callbacks_test.rb, line 179</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_only_call_after_rollback_on_destroy_after_transaction_rollsback_for_destroyed_record</span>
+  <span class="ruby-identifier">add_transaction_execution_blocks</span> <span class="ruby-ivar">@first</span>
+
+  <span class="ruby-constant">Topic</span>.<span class="ruby-identifier">transaction</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">destroy</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Rollback</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">assert_equal</span> [<span class="ruby-value">:rollback_on_destroy</span>], <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">history</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_only_call_after_rollback_on_records_rolled_back_to_a_savepoint">
+            
+              <b>test_only_call_after_rollback_on_records_rolled_back_to_a_savepoint</b>()
+            
+            <a href="../classes/TransactionCallbacksTest.html#method-i-test_only_call_after_rollback_on_records_rolled_back_to_a_savepoint" name="method-i-test_only_call_after_rollback_on_records_rolled_back_to_a_savepoint" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_only_call_after_rollback_on_records_rolled_back_to_a_savepoint_source')" id="l_method-i-test_only_call_after_rollback_on_records_rolled_back_to_a_savepoint_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/fea048f9b4e5730a38ed94c068fb6a0ead1c94e7/activerecord/test/cases/transaction_callbacks_test.rb#L220" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_only_call_after_rollback_on_records_rolled_back_to_a_savepoint_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/transaction_callbacks_test.rb, line 220</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_only_call_after_rollback_on_records_rolled_back_to_a_savepoint</span>
+  <span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">@first</span>.<span class="ruby-identifier">rollbacks</span>(<span class="ruby-identifier">i</span>=<span class="ruby-number">0</span>); <span class="ruby-ivar">@rollbacks</span> <span class="ruby-operator">||=</span> <span class="ruby-number">0</span>; <span class="ruby-ivar">@rollbacks</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">i</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">i</span>; <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">@first</span>.<span class="ruby-identifier">commits</span>(<span class="ruby-identifier">i</span>=<span class="ruby-number">0</span>); <span class="ruby-ivar">@commits</span> <span class="ruby-operator">||=</span> <span class="ruby-number">0</span>; <span class="ruby-ivar">@commits</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">i</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">i</span>; <span class="ruby-keyword">end</span>
+  <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">after_rollback_block</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span> <span class="ruby-identifier">r</span>.<span class="ruby-identifier">rollbacks</span>(<span class="ruby-number">1</span>)}
+  <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">after_commit_block</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span> <span class="ruby-identifier">r</span>.<span class="ruby-identifier">commits</span>(<span class="ruby-number">1</span>)}
+
+  <span class="ruby-identifier">second</span> = <span class="ruby-constant">TopicWithCallbacks</span>.<span class="ruby-identifier">find</span>(<span class="ruby-number">3</span>)
+  <span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">second</span>.<span class="ruby-identifier">rollbacks</span>(<span class="ruby-identifier">i</span>=<span class="ruby-number">0</span>); <span class="ruby-ivar">@rollbacks</span> <span class="ruby-operator">||=</span> <span class="ruby-number">0</span>; <span class="ruby-ivar">@rollbacks</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">i</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">i</span>; <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">second</span>.<span class="ruby-identifier">commits</span>(<span class="ruby-identifier">i</span>=<span class="ruby-number">0</span>); <span class="ruby-ivar">@commits</span> <span class="ruby-operator">||=</span> <span class="ruby-number">0</span>; <span class="ruby-ivar">@commits</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">i</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">i</span>; <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">second</span>.<span class="ruby-identifier">after_rollback_block</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span> <span class="ruby-identifier">r</span>.<span class="ruby-identifier">rollbacks</span>(<span class="ruby-number">1</span>)}
+  <span class="ruby-identifier">second</span>.<span class="ruby-identifier">after_commit_block</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span> <span class="ruby-identifier">r</span>.<span class="ruby-identifier">commits</span>(<span class="ruby-number">1</span>)}
+
+  <span class="ruby-constant">Topic</span>.<span class="ruby-identifier">transaction</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">save!</span>
+    <span class="ruby-constant">Topic</span>.<span class="ruby-identifier">transaction</span>(<span class="ruby-value">:requires_new</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>) <span class="ruby-keyword">do</span>
+      <span class="ruby-identifier">second</span>.<span class="ruby-identifier">save!</span>
+      <span class="ruby-identifier">raise</span> <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Rollback</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-number">1</span>, <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">commits</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-number">0</span>, <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">rollbacks</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-number">0</span>, <span class="ruby-identifier">second</span>.<span class="ruby-identifier">commits</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-number">1</span>, <span class="ruby-identifier">second</span>.<span class="ruby-identifier">rollbacks</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_only_call_after_rollback_on_records_rolled_back_to_a_savepoint_when_release_savepoint_fails">
+            
+              <b>test_only_call_after_rollback_on_records_rolled_back_to_a_savepoint_when_release_savepoint_fails</b>()
+            
+            <a href="../classes/TransactionCallbacksTest.html#method-i-test_only_call_after_rollback_on_records_rolled_back_to_a_savepoint_when_release_savepoint_fails" name="method-i-test_only_call_after_rollback_on_records_rolled_back_to_a_savepoint_when_release_savepoint_fails" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_only_call_after_rollback_on_records_rolled_back_to_a_savepoint_when_release_savepoint_fails_source')" id="l_method-i-test_only_call_after_rollback_on_records_rolled_back_to_a_savepoint_when_release_savepoint_fails_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/fea048f9b4e5730a38ed94c068fb6a0ead1c94e7/activerecord/test/cases/transaction_callbacks_test.rb#L246" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_only_call_after_rollback_on_records_rolled_back_to_a_savepoint_when_release_savepoint_fails_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/transaction_callbacks_test.rb, line 246</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_only_call_after_rollback_on_records_rolled_back_to_a_savepoint_when_release_savepoint_fails</span>
+  <span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">@first</span>.<span class="ruby-identifier">rollbacks</span>(<span class="ruby-identifier">i</span>=<span class="ruby-number">0</span>); <span class="ruby-ivar">@rollbacks</span> <span class="ruby-operator">||=</span> <span class="ruby-number">0</span>; <span class="ruby-ivar">@rollbacks</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">i</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">i</span>; <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">@first</span>.<span class="ruby-identifier">commits</span>(<span class="ruby-identifier">i</span>=<span class="ruby-number">0</span>); <span class="ruby-ivar">@commits</span> <span class="ruby-operator">||=</span> <span class="ruby-number">0</span>; <span class="ruby-ivar">@commits</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">i</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">i</span>; <span class="ruby-keyword">end</span>
+
+  <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">after_rollback_block</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span> <span class="ruby-identifier">r</span>.<span class="ruby-identifier">rollbacks</span>(<span class="ruby-number">1</span>)}
+  <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">after_commit_block</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span> <span class="ruby-identifier">r</span>.<span class="ruby-identifier">commits</span>(<span class="ruby-number">1</span>)}
+
+  <span class="ruby-constant">Topic</span>.<span class="ruby-identifier">transaction</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">save</span>
+    <span class="ruby-constant">Topic</span>.<span class="ruby-identifier">transaction</span>(<span class="ruby-value">:requires_new</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>) <span class="ruby-keyword">do</span>
+      <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">save!</span>
+      <span class="ruby-identifier">raise</span> <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Rollback</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-constant">Topic</span>.<span class="ruby-identifier">transaction</span>(<span class="ruby-value">:requires_new</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>) <span class="ruby-keyword">do</span>
+      <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">save!</span>
+      <span class="ruby-identifier">raise</span> <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Rollback</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-number">1</span>, <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">commits</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-number">2</span>, <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">rollbacks</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_only_call_after_rollback_on_update_after_transaction_rollsback_for_existing_record">
+            
+              <b>test_only_call_after_rollback_on_update_after_transaction_rollsback_for_existing_record</b>()
+            
+            <a href="../classes/TransactionCallbacksTest.html#method-i-test_only_call_after_rollback_on_update_after_transaction_rollsback_for_existing_record" name="method-i-test_only_call_after_rollback_on_update_after_transaction_rollsback_for_existing_record" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_only_call_after_rollback_on_update_after_transaction_rollsback_for_existing_record_source')" id="l_method-i-test_only_call_after_rollback_on_update_after_transaction_rollsback_for_existing_record_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/fea048f9b4e5730a38ed94c068fb6a0ead1c94e7/activerecord/test/cases/transaction_callbacks_test.rb#L157" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_only_call_after_rollback_on_update_after_transaction_rollsback_for_existing_record_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/transaction_callbacks_test.rb, line 157</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_only_call_after_rollback_on_update_after_transaction_rollsback_for_existing_record</span>
+  <span class="ruby-identifier">add_transaction_execution_blocks</span> <span class="ruby-ivar">@first</span>
+
+  <span class="ruby-constant">Topic</span>.<span class="ruby-identifier">transaction</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">save!</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Rollback</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">assert_equal</span> [<span class="ruby-value">:rollback_on_update</span>], <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">history</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_only_call_after_rollback_on_update_after_transaction_rollsback_for_existing_record_on_touch">
+            
+              <b>test_only_call_after_rollback_on_update_after_transaction_rollsback_for_existing_record_on_touch</b>()
+            
+            <a href="../classes/TransactionCallbacksTest.html#method-i-test_only_call_after_rollback_on_update_after_transaction_rollsback_for_existing_record_on_touch" name="method-i-test_only_call_after_rollback_on_update_after_transaction_rollsback_for_existing_record_on_touch" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_only_call_after_rollback_on_update_after_transaction_rollsback_for_existing_record_on_touch_source')" id="l_method-i-test_only_call_after_rollback_on_update_after_transaction_rollsback_for_existing_record_on_touch_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/fea048f9b4e5730a38ed94c068fb6a0ead1c94e7/activerecord/test/cases/transaction_callbacks_test.rb#L168" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_only_call_after_rollback_on_update_after_transaction_rollsback_for_existing_record_on_touch_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/transaction_callbacks_test.rb, line 168</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_only_call_after_rollback_on_update_after_transaction_rollsback_for_existing_record_on_touch</span>
+  <span class="ruby-identifier">add_transaction_execution_blocks</span> <span class="ruby-ivar">@first</span>
+
+  <span class="ruby-constant">Topic</span>.<span class="ruby-identifier">transaction</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">touch</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Rollback</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">assert_equal</span> [<span class="ruby-value">:rollback_on_update</span>], <span class="ruby-ivar">@first</span>.<span class="ruby-identifier">history</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_saving_a_record_with_a_belongs_to_that_specifies_touching_the_parent_should_call_callbacks_on_the_parent_object">
+            
+              <b>test_saving_a_record_with_a_belongs_to_that_specifies_touching_the_parent_should_call_callbacks_on_the_parent_object</b>()
+            
+            <a href="../classes/TransactionCallbacksTest.html#method-i-test_saving_a_record_with_a_belongs_to_that_specifies_touching_the_parent_should_call_callbacks_on_the_parent_object" name="method-i-test_saving_a_record_with_a_belongs_to_that_specifies_touching_the_parent_should_call_callbacks_on_the_parent_object" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_saving_a_record_with_a_belongs_to_that_specifies_touching_the_parent_should_call_callbacks_on_the_parent_object_source')" id="l_method-i-test_saving_a_record_with_a_belongs_to_that_specifies_touching_the_parent_should_call_callbacks_on_the_parent_object_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/fea048f9b4e5730a38ed94c068fb6a0ead1c94e7/activerecord/test/cases/transaction_callbacks_test.rb#L384" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_saving_a_record_with_a_belongs_to_that_specifies_touching_the_parent_should_call_callbacks_on_the_parent_object_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/transaction_callbacks_test.rb, line 384</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_saving_a_record_with_a_belongs_to_that_specifies_touching_the_parent_should_call_callbacks_on_the_parent_object</span>
+  <span class="ruby-identifier">pet</span>   = <span class="ruby-constant">Pet</span>.<span class="ruby-identifier">first</span>
+  <span class="ruby-identifier">owner</span> = <span class="ruby-identifier">pet</span>.<span class="ruby-identifier">owner</span>
+  <span class="ruby-identifier">flag</span> = <span class="ruby-keyword">false</span>
+
+  <span class="ruby-identifier">owner</span>.<span class="ruby-identifier">on_after_commit</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">flag</span> = <span class="ruby-keyword">true</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">pet</span>.<span class="ruby-identifier">name</span> = <span class="ruby-string">&quot;Fluffy the Third&quot;</span>
+  <span class="ruby-identifier">pet</span>.<span class="ruby-identifier">save</span>
+
+  <span class="ruby-identifier">assert</span> <span class="ruby-identifier">flag</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+
+    </div>
+  </body>
+</html>    

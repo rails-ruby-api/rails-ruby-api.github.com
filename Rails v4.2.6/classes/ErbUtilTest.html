@@ -1,0 +1,711 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>ErbUtilTest</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/github.css" type="text/css" media="screen" />
+<script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            ErbUtilTest 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="ActiveSupport/TestCase.html">ActiveSupport::TestCase</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../files/actionview/test/template/erb_util_test_rb.html">actionview/test/template/erb_util_test.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+
+
+  
+
+
+  
+  
+
+
+  
+    <!-- Namespace -->
+    <div class="sectiontitle">Namespace</div>
+    <ul>
+      
+        <li>
+          <span class="type">MODULE</span>
+          <a href="ErbUtilTest/ERB.html">ErbUtilTest::ERB</a>
+        </li>
+      
+    </ul>
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-test_html_escape">test_html_escape</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_html_escape_is_html_safe">test_html_escape_is_html_safe</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_html_escape_once">test_html_escape_once</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_html_escape_once_returns_safe_strings_when_passed_safe_strings">test_html_escape_once_returns_safe_strings_when_passed_safe_strings</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_html_escape_once_returns_unsafe_strings_when_passed_unsafe_strings">test_html_escape_once_returns_unsafe_strings_when_passed_unsafe_strings</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_html_escape_passes_html_escape_unmodified">test_html_escape_passes_html_escape_unmodified</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_json_escape">test_json_escape</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_json_escape_does_not_alter_json_string_meaning">test_json_escape_does_not_alter_json_string_meaning</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_json_escape_is_idempotent">test_json_escape_is_idempotent</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_json_escape_returns_safe_strings_when_passed_safe_strings">test_json_escape_returns_safe_strings_when_passed_safe_strings</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_json_escape_returns_unsafe_strings_when_passed_unsafe_strings">test_json_escape_returns_unsafe_strings_when_passed_unsafe_strings</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_rest_in_ascii">test_rest_in_ascii</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+    <!-- Includes -->
+    <div class="sectiontitle">Included Modules</div>
+    <ul>
+      
+        <li>
+          
+            <a href="ErbUtilTest/ERB/Util.html">
+              ErbUtilTest::ERB::Util
+            </a>
+          
+        </li>
+      
+    </ul>
+  
+
+
+
+  
+
+    
+
+    
+
+    
+      <!-- Section constants -->
+      <div class="sectiontitle">Constants</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class="attr-name">HTML_ESCAPE_TEST_CASES</td>
+            <td>=</td>
+            <td class="attr-value">[
+[&#39;&lt;br&gt;&#39;, &#39;&amp;lt;br&amp;gt;&#39;],
+[&#39;a &amp; b&#39;, &#39;a &amp;amp; b&#39;],
+[&#39;&quot;quoted&quot; string&#39;, &#39;&amp;quot;quoted&amp;quot; string&#39;],
+[&quot;&#39;quoted&#39; string&quot;, &#39;&amp;#39;quoted&amp;#39; string&#39;],
+[
+&#39;&lt;script type=&quot;application/javascript&quot;&gt;alert(&quot;You are \&#39;pwned\&#39;!&quot;)&lt;/script&gt;&#39;,
+&#39;&amp;lt;script type=&amp;quot;application/javascript&amp;quot;&amp;gt;alert(&amp;quot;You are &amp;#39;pwned&amp;#39;!&amp;quot;)&amp;lt;/script&amp;gt;&#39;
+]
+]</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">JSON_ESCAPE_TEST_CASES</td>
+            <td>=</td>
+            <td class="attr-value">[
+[&#39;1&#39;, &#39;1&#39;],
+[&#39;null&#39;, &#39;null&#39;],
+[&#39;&quot;&amp;&quot;&#39;, &#39;&quot;\u0026&quot;&#39;],
+[&#39;&quot;&lt;/script&gt;&quot;&#39;, &#39;&quot;\u003c/script\u003e&quot;&#39;],
+[&#39;[&quot;&lt;/script&gt;&quot;]&#39;, &#39;[&quot;\u003c/script\u003e&quot;]&#39;],
+[&#39;{&quot;name&quot;:&quot;&lt;/script&gt;&quot;}&#39;, &#39;{&quot;name&quot;:&quot;\u003c/script\u003e&quot;}&#39;],
+[%({&quot;name&quot;:&quot;d\u2028h\u2029h&quot;}), &#39;{&quot;name&quot;:&quot;d\u2028h\u2029h&quot;}&#39;]
+]</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+      </table>
+    
+
+
+    
+
+
+    <!-- Methods -->
+        
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-test_html_escape">
+            
+              <b>test_html_escape</b>()
+            
+            <a href="../classes/ErbUtilTest.html#method-i-test_html_escape" name="method-i-test_html_escape" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_html_escape_source')" id="l_method-i-test_html_escape_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/41de23ec030f79f00aff3bf00640e855de42a9b8/actionview/test/template/erb_util_test.rb#L40" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_html_escape_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionview/test/template/erb_util_test.rb, line 40</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_html_escape</span>
+  <span class="ruby-constant">HTML_ESCAPE_TEST_CASES</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span>(<span class="ruby-identifier">raw</span>, <span class="ruby-identifier">expected</span>)<span class="ruby-operator">|</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">expected</span>, <span class="ruby-identifier">html_escape</span>(<span class="ruby-identifier">raw</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_html_escape_is_html_safe">
+            
+              <b>test_html_escape_is_html_safe</b>()
+            
+            <a href="../classes/ErbUtilTest.html#method-i-test_html_escape_is_html_safe" name="method-i-test_html_escape_is_html_safe" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_html_escape_is_html_safe_source')" id="l_method-i-test_html_escape_is_html_safe_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/41de23ec030f79f00aff3bf00640e855de42a9b8/actionview/test/template/erb_util_test.rb#L74" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_html_escape_is_html_safe_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionview/test/template/erb_util_test.rb, line 74</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_html_escape_is_html_safe</span>
+  <span class="ruby-identifier">escaped</span> = <span class="ruby-identifier">h</span>(<span class="ruby-string">&quot;&lt;p&gt;&quot;</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&quot;&amp;lt;p&amp;gt;&quot;</span>, <span class="ruby-identifier">escaped</span>
+  <span class="ruby-identifier">assert</span> <span class="ruby-identifier">escaped</span>.<span class="ruby-identifier">html_safe?</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_html_escape_once">
+            
+              <b>test_html_escape_once</b>()
+            
+            <a href="../classes/ErbUtilTest.html#method-i-test_html_escape_once" name="method-i-test_html_escape_once" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_html_escape_once_source')" id="l_method-i-test_html_escape_once_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/41de23ec030f79f00aff3bf00640e855de42a9b8/actionview/test/template/erb_util_test.rb#L93" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_html_escape_once_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionview/test/template/erb_util_test.rb, line 93</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_html_escape_once</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&#39;1 &amp;lt;&amp;gt;&amp;amp;&amp;quot;&amp;#39; 2 &amp;amp; 3&#39;</span>, <span class="ruby-identifier">html_escape_once</span>(<span class="ruby-string">&#39;1 &lt;&gt;&amp;&quot;\ 2 &amp;amp; 3&#39;</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-node">&quot; &amp;#X27; &amp;#x27; &amp;#x03BB; &amp;#X03bb; &amp;quot; &amp;#39; &amp;lt; &amp;gt; &quot;</span>, <span class="ruby-identifier">html_escape_once</span>(<span class="ruby-node">&quot; &amp;#X27; &amp;#x27; &amp;#x03BB; &amp;#X03bb; \&quot; &#39; &lt; &gt; &quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_html_escape_once_returns_safe_strings_when_passed_safe_strings">
+            
+              <b>test_html_escape_once_returns_safe_strings_when_passed_safe_strings</b>()
+            
+            <a href="../classes/ErbUtilTest.html#method-i-test_html_escape_once_returns_safe_strings_when_passed_safe_strings" name="method-i-test_html_escape_once_returns_safe_strings_when_passed_safe_strings" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_html_escape_once_returns_safe_strings_when_passed_safe_strings_source')" id="l_method-i-test_html_escape_once_returns_safe_strings_when_passed_safe_strings_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/41de23ec030f79f00aff3bf00640e855de42a9b8/actionview/test/template/erb_util_test.rb#L103" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_html_escape_once_returns_safe_strings_when_passed_safe_strings_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionview/test/template/erb_util_test.rb, line 103</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_html_escape_once_returns_safe_strings_when_passed_safe_strings</span>
+  <span class="ruby-identifier">value</span> = <span class="ruby-identifier">html_escape_once</span>(<span class="ruby-string">&#39;1 &lt; 2 &amp;amp; 3&#39;</span>.<span class="ruby-identifier">html_safe</span>)
+  <span class="ruby-identifier">assert</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">html_safe?</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_html_escape_once_returns_unsafe_strings_when_passed_unsafe_strings">
+            
+              <b>test_html_escape_once_returns_unsafe_strings_when_passed_unsafe_strings</b>()
+            
+            <a href="../classes/ErbUtilTest.html#method-i-test_html_escape_once_returns_unsafe_strings_when_passed_unsafe_strings" name="method-i-test_html_escape_once_returns_unsafe_strings_when_passed_unsafe_strings" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_html_escape_once_returns_unsafe_strings_when_passed_unsafe_strings_source')" id="l_method-i-test_html_escape_once_returns_unsafe_strings_when_passed_unsafe_strings_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/41de23ec030f79f00aff3bf00640e855de42a9b8/actionview/test/template/erb_util_test.rb#L98" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_html_escape_once_returns_unsafe_strings_when_passed_unsafe_strings_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionview/test/template/erb_util_test.rb, line 98</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_html_escape_once_returns_unsafe_strings_when_passed_unsafe_strings</span>
+  <span class="ruby-identifier">value</span> = <span class="ruby-identifier">html_escape_once</span>(<span class="ruby-string">&#39;1 &lt; 2 &amp;amp; 3&#39;</span>)
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-identifier">value</span>.<span class="ruby-identifier">html_safe?</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_html_escape_passes_html_escape_unmodified">
+            
+              <b>test_html_escape_passes_html_escape_unmodified</b>()
+            
+            <a href="../classes/ErbUtilTest.html#method-i-test_html_escape_passes_html_escape_unmodified" name="method-i-test_html_escape_passes_html_escape_unmodified" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_html_escape_passes_html_escape_unmodified_source')" id="l_method-i-test_html_escape_passes_html_escape_unmodified_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/41de23ec030f79f00aff3bf00640e855de42a9b8/actionview/test/template/erb_util_test.rb#L80" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_html_escape_passes_html_escape_unmodified_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionview/test/template/erb_util_test.rb, line 80</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_html_escape_passes_html_escape_unmodified</span>
+  <span class="ruby-identifier">escaped</span> = <span class="ruby-identifier">h</span>(<span class="ruby-string">&quot;&lt;p&gt;&quot;</span>.<span class="ruby-identifier">html_safe</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&quot;&lt;p&gt;&quot;</span>, <span class="ruby-identifier">escaped</span>
+  <span class="ruby-identifier">assert</span> <span class="ruby-identifier">escaped</span>.<span class="ruby-identifier">html_safe?</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_json_escape">
+            
+              <b>test_json_escape</b>()
+            
+            <a href="../classes/ErbUtilTest.html#method-i-test_json_escape" name="method-i-test_json_escape" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_json_escape_source')" id="l_method-i-test_json_escape_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/41de23ec030f79f00aff3bf00640e855de42a9b8/actionview/test/template/erb_util_test.rb#L46" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_json_escape_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionview/test/template/erb_util_test.rb, line 46</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_json_escape</span>
+  <span class="ruby-constant">JSON_ESCAPE_TEST_CASES</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span>(<span class="ruby-identifier">raw</span>, <span class="ruby-identifier">expected</span>)<span class="ruby-operator">|</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">expected</span>, <span class="ruby-identifier">json_escape</span>(<span class="ruby-identifier">raw</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_json_escape_does_not_alter_json_string_meaning">
+            
+              <b>test_json_escape_does_not_alter_json_string_meaning</b>()
+            
+            <a href="../classes/ErbUtilTest.html#method-i-test_json_escape_does_not_alter_json_string_meaning" name="method-i-test_json_escape_does_not_alter_json_string_meaning" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_json_escape_does_not_alter_json_string_meaning_source')" id="l_method-i-test_json_escape_does_not_alter_json_string_meaning_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/41de23ec030f79f00aff3bf00640e855de42a9b8/actionview/test/template/erb_util_test.rb#L52" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_json_escape_does_not_alter_json_string_meaning_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionview/test/template/erb_util_test.rb, line 52</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_json_escape_does_not_alter_json_string_meaning</span>
+  <span class="ruby-constant">JSON_ESCAPE_TEST_CASES</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span>(<span class="ruby-identifier">raw</span>, <span class="ruby-identifier">_</span>)<span class="ruby-operator">|</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-constant">ActiveSupport</span><span class="ruby-operator">::</span><span class="ruby-constant">JSON</span>.<span class="ruby-identifier">decode</span>(<span class="ruby-identifier">raw</span>), <span class="ruby-constant">ActiveSupport</span><span class="ruby-operator">::</span><span class="ruby-constant">JSON</span>.<span class="ruby-identifier">decode</span>(<span class="ruby-identifier">json_escape</span>(<span class="ruby-identifier">raw</span>))
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_json_escape_is_idempotent">
+            
+              <b>test_json_escape_is_idempotent</b>()
+            
+            <a href="../classes/ErbUtilTest.html#method-i-test_json_escape_is_idempotent" name="method-i-test_json_escape_is_idempotent" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_json_escape_is_idempotent_source')" id="l_method-i-test_json_escape_is_idempotent_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/41de23ec030f79f00aff3bf00640e855de42a9b8/actionview/test/template/erb_util_test.rb#L58" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_json_escape_is_idempotent_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionview/test/template/erb_util_test.rb, line 58</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_json_escape_is_idempotent</span>
+  <span class="ruby-constant">JSON_ESCAPE_TEST_CASES</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span>(<span class="ruby-identifier">raw</span>, <span class="ruby-identifier">_</span>)<span class="ruby-operator">|</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">json_escape</span>(<span class="ruby-identifier">raw</span>), <span class="ruby-identifier">json_escape</span>(<span class="ruby-identifier">json_escape</span>(<span class="ruby-identifier">raw</span>))
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_json_escape_returns_safe_strings_when_passed_safe_strings">
+            
+              <b>test_json_escape_returns_safe_strings_when_passed_safe_strings</b>()
+            
+            <a href="../classes/ErbUtilTest.html#method-i-test_json_escape_returns_safe_strings_when_passed_safe_strings" name="method-i-test_json_escape_returns_safe_strings_when_passed_safe_strings" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_json_escape_returns_safe_strings_when_passed_safe_strings_source')" id="l_method-i-test_json_escape_returns_safe_strings_when_passed_safe_strings_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/41de23ec030f79f00aff3bf00640e855de42a9b8/actionview/test/template/erb_util_test.rb#L69" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_json_escape_returns_safe_strings_when_passed_safe_strings_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionview/test/template/erb_util_test.rb, line 69</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_json_escape_returns_safe_strings_when_passed_safe_strings</span>
+  <span class="ruby-identifier">value</span> = <span class="ruby-identifier">json_escape</span>(<span class="ruby-string">&quot;asdf&quot;</span>.<span class="ruby-identifier">html_safe</span>)
+  <span class="ruby-identifier">assert</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">html_safe?</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_json_escape_returns_unsafe_strings_when_passed_unsafe_strings">
+            
+              <b>test_json_escape_returns_unsafe_strings_when_passed_unsafe_strings</b>()
+            
+            <a href="../classes/ErbUtilTest.html#method-i-test_json_escape_returns_unsafe_strings_when_passed_unsafe_strings" name="method-i-test_json_escape_returns_unsafe_strings_when_passed_unsafe_strings" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_json_escape_returns_unsafe_strings_when_passed_unsafe_strings_source')" id="l_method-i-test_json_escape_returns_unsafe_strings_when_passed_unsafe_strings_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/41de23ec030f79f00aff3bf00640e855de42a9b8/actionview/test/template/erb_util_test.rb#L64" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_json_escape_returns_unsafe_strings_when_passed_unsafe_strings_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionview/test/template/erb_util_test.rb, line 64</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_json_escape_returns_unsafe_strings_when_passed_unsafe_strings</span>
+  <span class="ruby-identifier">value</span> = <span class="ruby-identifier">json_escape</span>(<span class="ruby-string">&quot;asdf&quot;</span>)
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-identifier">value</span>.<span class="ruby-identifier">html_safe?</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_rest_in_ascii">
+            
+              <b>test_rest_in_ascii</b>()
+            
+            <a href="../classes/ErbUtilTest.html#method-i-test_rest_in_ascii" name="method-i-test_rest_in_ascii" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_rest_in_ascii_source')" id="l_method-i-test_rest_in_ascii_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/41de23ec030f79f00aff3bf00640e855de42a9b8/actionview/test/template/erb_util_test.rb#L86" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_rest_in_ascii_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionview/test/template/erb_util_test.rb, line 86</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_rest_in_ascii</span>
+  (<span class="ruby-number">0</span><span class="ruby-operator">..</span><span class="ruby-number">127</span>).<span class="ruby-identifier">to_a</span>.<span class="ruby-identifier">map</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">int</span><span class="ruby-operator">|</span> <span class="ruby-identifier">int</span>.<span class="ruby-identifier">chr</span> }.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">chr</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-string">%Q(&#39;&quot;&amp;&lt;&gt;)</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">chr</span>)
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">chr</span>, <span class="ruby-identifier">html_escape</span>(<span class="ruby-identifier">chr</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+
+    </div>
+  </body>
+</html>    

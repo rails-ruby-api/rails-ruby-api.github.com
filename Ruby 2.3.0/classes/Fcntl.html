@@ -1,0 +1,449 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Fcntl</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/github.css" type="text/css" media="screen" />
+<script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Module</span> 
+            Fcntl 
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../files/ext/fcntl/fcntl_c.html">ext/fcntl/fcntl.c</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p><a href="Fcntl.html">Fcntl</a> loads the constants defined in the
+system&#39;s &lt;fcntl.h&gt; C header file, and used with both the fcntl(2)
+and open(2) POSIX system calls.</p>
+
+<p>To perform a fcntl(2) operation, use IO::fcntl.</p>
+
+<p>To perform an open(2) operation, use <a
+href="IO.html#method-c-sysopen">IO.sysopen</a>.</p>
+
+<p>The set of operations and constants available depends upon specific
+operating system.  Some values listed below may not be supported on your
+system.</p>
+
+<p>See your fcntl(2) man page for complete details.</p>
+
+<p>Open /tmp/tempfile as a write-only file that is created if it doesn&#39;t
+exist:</p>
+
+<pre><code>require &#39;fcntl&#39;
+
+fd = IO.sysopen(&#39;/tmp/tempfile&#39;,
+                Fcntl::O_WRONLY | Fcntl::O_EXCL | Fcntl::O_CREAT)
+f = IO.open(fd)
+f.syswrite(&quot;TEMP DATA&quot;)
+f.close
+</code></pre>
+
+<p>Get the flags on file <code>s</code>:</p>
+
+<pre><code>m = s.fcntl(Fcntl::F_GETFL, 0)
+</code></pre>
+
+<p><a href="Set.html">Set</a> the non-blocking flag on <code>f</code> in
+addition to the existing flags in <code>m</code>.</p>
+
+<pre><code>f.fcntl(Fcntl::F_SETFL, Fcntl::O_NONBLOCK|m)
+</code></pre>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+      <!-- Section constants -->
+      <div class="sectiontitle">Constants</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class="attr-name">F_DUPFD</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fcntl.html#F_DUPFD">F_DUPFD</a></p>
+
+<p>Duplicate a file descriptor to the mimimum unused file descriptor greater
+than or equal to the argument.</p>
+
+<p>The close-on-exec flag of the duplicated file descriptor is set. (Ruby uses
+F_DUPFD_CLOEXEC internally if available to avoid race condition.  <a
+href="Fcntl.html#F_SETFD">F_SETFD</a> is used if F_DUPFD_CLOEXEC is not
+available.)</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">F_GETFD</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fcntl.html#F_GETFD">F_GETFD</a></p>
+
+<p>Read the close-on-exec flag of a file descriptor.</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">F_GETLK</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fcntl.html#F_GETLK">F_GETLK</a></p>
+
+<p>Determine whether a given region of a file is locked.  This uses one of the
+F_*LK flags.</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">F_SETFD</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fcntl.html#F_SETFD">F_SETFD</a></p>
+
+<p><a href="Set.html">Set</a> the close-on-exec flag of a file descriptor.</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">F_GETFL</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fcntl.html#F_GETFL">F_GETFL</a></p>
+
+<p>Get the file descriptor flags.  This will be one or more of the O_* flags.</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">F_SETFL</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fcntl.html#F_SETFL">F_SETFL</a></p>
+
+<p><a href="Set.html">Set</a> the file descriptor flags.  This will be one or
+more of the O_* flags.</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">F_SETLK</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fcntl.html#F_SETLK">F_SETLK</a></p>
+
+<p>Acquire a lock on a region of a file.  This uses one of the F_*LCK flags.</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">F_SETLKW</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fcntl.html#F_SETLKW">F_SETLKW</a></p>
+
+<p>Acquire a lock on a region of a file, waiting if necessary.  This uses one
+of the F_*LCK flags</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">FD_CLOEXEC</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fcntl.html#FD_CLOEXEC">FD_CLOEXEC</a></p>
+
+<p>the value of the close-on-exec flag.</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">F_RDLCK</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fcntl.html#F_RDLCK">F_RDLCK</a></p>
+
+<p>Read lock for a region of a file</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">F_UNLCK</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fcntl.html#F_UNLCK">F_UNLCK</a></p>
+
+<p>Remove lock for a region of a file</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">F_WRLCK</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fcntl.html#F_WRLCK">F_WRLCK</a></p>
+
+<p>Write lock for a region of a file</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">O_CREAT</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fcntl.html#O_CREAT">O_CREAT</a></p>
+
+<p>Create the file if it doesn&#39;t exist</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">O_EXCL</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fcntl.html#O_EXCL">O_EXCL</a></p>
+
+<p>Used with <a href="Fcntl.html#O_CREAT">O_CREAT</a>, fail if the file exists</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">O_NOCTTY</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fcntl.html#O_NOCTTY">O_NOCTTY</a></p>
+
+<p>Open TTY without it becoming the controlling TTY</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">O_TRUNC</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fcntl.html#O_TRUNC">O_TRUNC</a></p>
+
+<p>Truncate the file on open</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">O_APPEND</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fcntl.html#O_APPEND">O_APPEND</a></p>
+
+<p>Open the file in append mode</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">O_NONBLOCK</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fcntl.html#O_NONBLOCK">O_NONBLOCK</a></p>
+
+<p>Open the file in non-blocking mode</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">O_NDELAY</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fcntl.html#O_NDELAY">O_NDELAY</a></p>
+
+<p>Open the file in non-blocking mode</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">O_RDONLY</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fcntl.html#O_RDONLY">O_RDONLY</a></p>
+
+<p>Open the file in read-only mode</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">O_RDWR</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fcntl.html#O_RDWR">O_RDWR</a></p>
+
+<p>Open the file in read-write mode</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">O_WRONLY</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fcntl.html#O_WRONLY">O_WRONLY</a></p>
+
+<p>Open the file in write-only mode.</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">O_ACCMODE</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fcntl.html#O_ACCMODE">O_ACCMODE</a></p>
+
+<p>Mask to extract the read/write flags</p></td>
+            </tr>
+          
+        
+      </table>
+    
+
+
+    
+
+
+    <!-- Methods -->
+              </div>
+
+    </div>
+  </body>
+</html>    

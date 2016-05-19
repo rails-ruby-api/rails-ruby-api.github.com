@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Gem::RequestSet::Lockfile::Parser</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../../css/github.css" type="text/css" media="screen" />
+<script src="../../../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            Gem::RequestSet::Lockfile::Parser 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../../../Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../../../files/lib/rubygems/request_set/lockfile/parser_rb.html">lib/rubygems/request_set/lockfile/parser.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>frozen_string_literal: false</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>P</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-parse">parse</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <b>new</b>(tokenizer, set, platforms, filename = nil)
+            
+            <a href="../../../../classes/Gem/RequestSet/Lockfile/Parser.html#method-c-new" name="method-c-new" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Parses lockfiles</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/request_set/lockfile/parser.rb, line 6</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">initialize</span> <span class="ruby-identifier">tokenizer</span>, <span class="ruby-identifier">set</span>, <span class="ruby-identifier">platforms</span>, <span class="ruby-identifier">filename</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-ivar">@tokens</span>    = <span class="ruby-identifier">tokenizer</span>
+  <span class="ruby-ivar">@filename</span>  = <span class="ruby-identifier">filename</span>
+  <span class="ruby-ivar">@set</span>       = <span class="ruby-identifier">set</span>
+  <span class="ruby-ivar">@platforms</span> = <span class="ruby-identifier">platforms</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-parse">
+            
+              <b>parse</b>()
+            
+            <a href="../../../../classes/Gem/RequestSet/Lockfile/Parser.html#method-i-parse" name="method-i-parse" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-parse_source')" id="l_method-i-parse_source">show</a>
+                
+              </p>
+              <div id="method-i-parse_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/request_set/lockfile/parser.rb, line 13</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">parse</span>
+  <span class="ruby-keyword">until</span> <span class="ruby-ivar">@tokens</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">token</span> = <span class="ruby-identifier">get</span>
+
+    <span class="ruby-keyword">case</span> <span class="ruby-identifier">token</span>.<span class="ruby-identifier">type</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-value">:section</span> <span class="ruby-keyword">then</span>
+      <span class="ruby-ivar">@tokens</span>.<span class="ruby-identifier">skip</span> <span class="ruby-value">:newline</span>
+
+      <span class="ruby-keyword">case</span> <span class="ruby-identifier">token</span>.<span class="ruby-identifier">value</span>
+      <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;DEPENDENCIES&#39;</span> <span class="ruby-keyword">then</span>
+        <span class="ruby-identifier">parse_DEPENDENCIES</span>
+      <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;GIT&#39;</span> <span class="ruby-keyword">then</span>
+        <span class="ruby-identifier">parse_GIT</span>
+      <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;GEM&#39;</span> <span class="ruby-keyword">then</span>
+        <span class="ruby-identifier">parse_GEM</span>
+      <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;PATH&#39;</span> <span class="ruby-keyword">then</span>
+        <span class="ruby-identifier">parse_PATH</span>
+      <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;PLATFORMS&#39;</span> <span class="ruby-keyword">then</span>
+        <span class="ruby-identifier">parse_PLATFORMS</span>
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-identifier">token</span> = <span class="ruby-identifier">get</span> <span class="ruby-keyword">until</span> <span class="ruby-ivar">@tokens</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-keyword">or</span> <span class="ruby-identifier">peek</span>.<span class="ruby-identifier">first</span> <span class="ruby-operator">==</span> <span class="ruby-value">:section</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;BUG: unhandled token #{token.type} (#{token.value.inspect}) at line #{token.line} column #{token.column}&quot;</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+
+    </div>
+  </body>
+</html>    

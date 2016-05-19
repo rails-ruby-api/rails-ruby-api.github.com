@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Gem::Resolver::APISpecification</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/github.css" type="text/css" media="screen" />
+<script src="../../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            Gem::Resolver::APISpecification 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="Specification.html">Gem::Resolver::Specification</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../../files/lib/rubygems/resolver/api_specification_rb.html">lib/rubygems/resolver/api_specification.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>frozen_string_literal: false</p>
+
+<p>Represents a specification retrieved via the rubygems.org API.</p>
+
+<p>This is used to avoid loading the full Specification object when all we
+need is the name, version, and dependencies.</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <b>new</b>(set, api_data)
+            
+            <a href="../../../classes/Gem/Resolver/APISpecification.html#method-c-new" name="method-c-new" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Creates an <a href="APISpecification.html">APISpecification</a> for the
+given <code>set</code> from the rubygems.org <code>api_data</code>.</p>
+
+<p>See <a
+href="http://guides.rubygems.org/rubygems-org-api/#misc_methods">guides.rubygems.org/rubygems-org-api/#misc_methods</a>
+for the format of the <code>api_data</code>.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/resolver/api_specification.rb, line 17</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">initialize</span>(<span class="ruby-identifier">set</span>, <span class="ruby-identifier">api_data</span>)
+  <span class="ruby-keyword">super</span>()
+
+  <span class="ruby-ivar">@set</span> = <span class="ruby-identifier">set</span>
+  <span class="ruby-ivar">@name</span> = <span class="ruby-identifier">api_data</span>[<span class="ruby-value">:name</span>]
+  <span class="ruby-ivar">@version</span> = <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Version</span>.<span class="ruby-identifier">new</span> <span class="ruby-identifier">api_data</span>[<span class="ruby-value">:number</span>]
+  <span class="ruby-ivar">@platform</span> = <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Platform</span>.<span class="ruby-identifier">new</span> <span class="ruby-identifier">api_data</span>[<span class="ruby-value">:platform</span>]
+  <span class="ruby-ivar">@dependencies</span> = <span class="ruby-identifier">api_data</span>[<span class="ruby-value">:dependencies</span>].<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">name</span>, <span class="ruby-identifier">ver</span><span class="ruby-operator">|</span>
+    <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Dependency</span>.<span class="ruby-identifier">new</span> <span class="ruby-identifier">name</span>, <span class="ruby-identifier">ver</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp">/\s*,\s*/</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                        </div>
+
+    </div>
+  </body>
+</html>    

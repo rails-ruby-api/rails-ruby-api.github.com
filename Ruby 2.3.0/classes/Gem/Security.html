@@ -1,0 +1,1413 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Gem::Security</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Module</span> 
+            Gem::Security 
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/lib/rubygems/install_update_options_rb.html">lib/rubygems/install_update_options.rb</a></li>
+            
+            <li><a href="../../files/lib/rubygems/package_rb.html">lib/rubygems/package.rb</a></li>
+            
+            <li><a href="../../files/lib/rubygems/package/old_rb.html">lib/rubygems/package/old.rb</a></li>
+            
+            <li><a href="../../files/lib/rubygems/security_rb.html">lib/rubygems/security.rb</a></li>
+            
+            <li><a href="../../files/lib/rubygems/security/policies_rb.html">lib/rubygems/security/policies.rb</a></li>
+            
+            <li><a href="../../files/lib/rubygems/security/policy_rb.html">lib/rubygems/security/policy.rb</a></li>
+            
+            <li><a href="../../files/lib/rubygems/security/signer_rb.html">lib/rubygems/security/signer.rb</a></li>
+            
+            <li><a href="../../files/lib/rubygems/security/trust_dir_rb.html">lib/rubygems/security/trust_dir.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<h1 id="module-Gem::Security-label-Signing+gems">Signing gems</h1>
+
+<p>The <a href="Security.html">Gem::Security</a> implements cryptographic
+signatures for gems.  The section below is a step-by-step guide to using
+signed gems and generating your own.</p>
+
+<h2 id="module-Gem::Security-label-Walkthrough">Walkthrough</h2>
+
+<h3 id="module-Gem::Security-label-Building+your+certificate">Building your certificate</h3>
+
+<p>In order to start signing your gems, you&#39;ll need to build a private key
+and a self-signed certificate.  Here&#39;s how:</p>
+
+<pre><code># build a private key and certificate for yourself:
+$ gem cert --build you@example.com</code></pre>
+
+<p>This could take anywhere from a few seconds to a minute or two, depending
+on the speed of your computer (public key algorithms aren&#39;t exactly the
+speediest crypto algorithms in the world).  When it&#39;s finished,
+you&#39;ll see the files “gem-private_key.pem” and “gem-public_cert.pem” in
+the current directory.</p>
+
+<p>First things first: Move both files to ~/.gem if you don&#39;t already have
+a key and certificate in that directory.  Ensure the file permissions make
+the key unreadable by others (by default the file is saved securely).</p>
+
+<p>Keep your private key hidden; if it&#39;s compromised, someone can sign
+packages as you (note: PKI has ways of mitigating the risk of stolen keys;
+more on that later).</p>
+
+<h3 id="module-Gem::Security-label-Signing+Gems">Signing Gems</h3>
+
+<p>In RubyGems 2 and newer there is no extra work to sign a gem.  RubyGems
+will automatically find your key and certificate in your home directory and
+use them to sign newly packaged gems.</p>
+
+<p>If your certificate is not self-signed (signed by a third party) RubyGems
+will attempt to load the certificate chain from the trusted certificates.
+Use <code>gem cert --add signing_cert.pem</code> to add your signers as
+trusted certificates.  See below for further information on certificate
+chains.</p>
+
+<p>If you build your gem it will automatically be signed.  If you peek inside
+your gem file, you&#39;ll see a couple of new files have been added:</p>
+
+<pre><code>$ tar tf your-gem-1.0.gem
+metadata.gz
+metadata.gz.sum
+metadata.gz.sig # metadata signature
+data.tar.gz
+data.tar.gz.sum
+data.tar.gz.sig # data signature</code></pre>
+
+<h3 id="module-Gem::Security-label-Manually+signing+gems">Manually signing gems</h3>
+
+<p>If you wish to store your key in a separate secure location you&#39;ll need
+to set your gems up for signing by hand.  To do this, set the
+<code>signing_key</code> and <code>cert_chain</code> in the gemspec before
+packaging your gem:</p>
+
+<pre><code>s.signing_key = &#39;/secure/path/to/gem-private_key.pem&#39;
+s.cert_chain = %w[/secure/path/to/gem-public_cert.pem]
+</code></pre>
+
+<p>When you package your gem with these options set RubyGems will
+automatically load your key and certificate from the secure paths.</p>
+
+<h3 id="module-Gem::Security-label-Signed+gems+and+security+policies">Signed gems and security policies</h3>
+
+<p>Now let&#39;s verify the signature.  Go ahead and install the gem, but add
+the following options: <code>-P HighSecurity</code>, like this:</p>
+
+<pre><code># install the gem with using the security policy &quot;HighSecurity&quot;
+$ sudo gem install your.gem -P HighSecurity</code></pre>
+
+<p>The <code>-P</code> option sets your security policy – we&#39;ll talk about
+that in just a minute.  Eh, what&#39;s this?</p>
+
+<pre><code>$ gem install -P HighSecurity your-gem-1.0.gem
+ERROR:  While executing gem ... (Gem::Security::Exception)
+    root cert /CN=you/DC=example is not trusted</code></pre>
+
+<p>The culprit here is the security policy.  RubyGems has several different
+security policies.  Let&#39;s take a short break and go over the security
+policies.  Here&#39;s a list of the available security policies, and a
+brief description of each one:</p>
+<ul><li>
+<p><a href="Security.html#NoSecurity">NoSecurity</a> - Well, no security at
+all.  Signed packages are treated like unsigned packages.</p>
+</li><li>
+<p><a href="Security.html#LowSecurity">LowSecurity</a> - Pretty much no
+security.  If a package is signed then RubyGems will make sure the
+signature matches the signing certificate, and that the signing certificate
+hasn&#39;t expired, but that&#39;s it.  A malicious user could easily
+circumvent this kind of security.</p>
+</li><li>
+<p><a href="Security.html#MediumSecurity">MediumSecurity</a> - Better than <a
+href="Security.html#LowSecurity">LowSecurity</a> and <a
+href="Security.html#NoSecurity">NoSecurity</a>, but still fallible. 
+Package contents are verified against the signing certificate, and the
+signing certificate is checked for validity, and checked against the rest
+of the certificate chain (if you don&#39;t know what a certificate chain
+is, stay tuned, we&#39;ll get to that). The biggest improvement over <a
+href="Security.html#LowSecurity">LowSecurity</a> is that <a
+href="Security.html#MediumSecurity">MediumSecurity</a> won&#39;t install
+packages that are signed by untrusted sources. Unfortunately, <a
+href="Security.html#MediumSecurity">MediumSecurity</a> still isn&#39;t
+totally secure – a malicious user can still unpack the gem, strip the
+signatures, and distribute the gem unsigned.</p>
+</li><li>
+<p><a href="Security.html#HighSecurity">HighSecurity</a> - Here&#39;s the
+bugger that got us into this mess. The <a
+href="Security.html#HighSecurity">HighSecurity</a> policy is identical to
+the <a href="Security.html#MediumSecurity">MediumSecurity</a> policy,
+except that it does not allow unsigned gems.  A malicious user doesn&#39;t
+have a whole lot of options here; they can&#39;t modify the package
+contents without invalidating the signature, and they can&#39;t modify or
+remove signature or the signing certificate chain, or RubyGems will simply
+refuse to install the package.  Oh well, maybe they&#39;ll have better luck
+causing problems for CPAN users instead :).</p>
+</li></ul>
+
+<p>The reason RubyGems refused to install your shiny new signed gem was
+because it was from an untrusted source.  Well, your code is infallible
+(naturally), so you need to add yourself as a trusted source:</p>
+
+<pre><code># add trusted certificate
+gem cert --add ~/.gem/gem-public_cert.pem</code></pre>
+
+<p>You&#39;ve now added your public certificate as a trusted source.  Now you
+can install packages signed by your private key without any hassle. 
+Let&#39;s try the install command above again:</p>
+
+<pre><code># install the gem with using the HighSecurity policy (and this time
+# without any shenanigans)
+$ gem install -P HighSecurity your-gem-1.0.gem
+Successfully installed your-gem-1.0
+1 gem installed</code></pre>
+
+<p>This time RubyGems will accept your signed package and begin installing.</p>
+
+<p>While you&#39;re waiting for RubyGems to work it&#39;s magic, have a look
+at some of the other security commands by running <code>gem help
+cert</code>:</p>
+
+<pre><code>Options:
+  -a, --add CERT                   Add a trusted certificate.
+  -l, --list [FILTER]              List trusted certificates where the
+                                   subject contains FILTER
+  -r, --remove FILTER              Remove trusted certificates where the
+                                   subject contains FILTER
+  -b, --build EMAIL_ADDR           Build private key and self-signed
+                                   certificate for EMAIL_ADDR
+  -C, --certificate CERT           Signing certificate for --sign
+  -K, --private-key KEY            Key for --sign or --build
+  -s, --sign CERT                  Signs CERT with the key from -K
+                                   and the certificate from -C</code></pre>
+
+<p>We&#39;ve already covered the <code>--build</code> option, and the
+<code>--add</code>, <code>--list</code>, and <code>--remove</code> commands
+seem fairly straightforward; they allow you to add, list, and remove the
+certificates in your trusted certificate list.  But what&#39;s with this
+<code>--sign</code> option?</p>
+
+<h3 id="module-Gem::Security-label-Certificate+chains">Certificate chains</h3>
+
+<p>To answer that question, let&#39;s take a look at “certificate chains”, a
+concept I mentioned earlier.  There are a couple of problems with
+self-signed certificates: first of all, self-signed certificates don&#39;t
+offer a whole lot of security.  Sure, the certificate says Yukihiro
+Matsumoto, but how do I know it was actually generated and signed by matz
+himself unless he gave me the certificate in person?</p>
+
+<p>The second problem is scalability.  Sure, if there are 50 gem authors, then
+I have 50 trusted certificates, no problem.  What if there are 500 gem
+authors?  1000?  Having to constantly add new trusted certificates is a
+pain, and it actually makes the trust system less secure by encouraging
+RubyGems users to blindly trust new certificates.</p>
+
+<p>Here&#39;s where certificate chains come in.  A certificate chain
+establishes an arbitrarily long chain of trust between an issuing
+certificate and a child certificate.  So instead of trusting certificates
+on a per-developer basis, we use the PKI concept of certificate chains to
+build a logical hierarchy of trust.  Here&#39;s a hypothetical example of a
+trust hierarchy based (roughly) on geography:</p>
+
+<pre><code>                    --------------------------
+                    | rubygems@rubygems.org |
+                    --------------------------
+                                |
+              -----------------------------------
+              |                                 |
+  ----------------------------    -----------------------------
+  |  seattlerb@seattlerb.org |    | dcrubyists@richkilmer.com |
+  ----------------------------    -----------------------------
+       |                |                 |             |
+---------------   ----------------   -----------   --------------
+|   drbrain   |   |   zenspider  |   | pabs@dc |   | tomcope@dc |
+---------------   ----------------   -----------   --------------</code></pre>
+
+<p>Now, rather than having 4 trusted certificates (one for drbrain, zenspider,
+pabs@dc, and tomecope@dc), a user could actually get by with one
+certificate, the “rubygems@rubygems.org” certificate.</p>
+
+<p>Here&#39;s how it works:</p>
+
+<p>I install “rdoc-3.12.gem”, a package signed by “drbrain”.  I&#39;ve never
+heard of “drbrain”, but his certificate has a valid signature from the
+“seattle.rb@seattlerb.org” certificate, which in turn has a valid signature
+from the “rubygems@rubygems.org” certificate.  Voila!  At this point,
+it&#39;s much more reasonable for me to trust a package signed by
+“drbrain”, because I can establish a chain to “rubygems@rubygems.org”,
+which I do trust.</p>
+
+<h3 id="module-Gem::Security-label-Signing+certificates">Signing certificates</h3>
+
+<p>The <code>--sign</code> option allows all this to happen.  A developer
+creates their build certificate with the <code>--build</code> option, then
+has their certificate signed by taking it with them to their next regional
+Ruby meetup (in our hypothetical example), and it&#39;s signed there by the
+person holding the regional RubyGems signing certificate, which is signed
+at the next RubyConf by the holder of the top-level RubyGems certificate. 
+At each point the issuer runs the same command:</p>
+
+<pre><code># sign a certificate with the specified key and certificate
+# (note that this modifies client_cert.pem!)
+$ gem cert -K /mnt/floppy/issuer-priv_key.pem -C issuer-pub_cert.pem
+   --sign client_cert.pem</code></pre>
+
+<p>Then the holder of issued certificate (in this case, your buddy “drbrain”),
+can start using this signed certificate to sign RubyGems.  By the way, in
+order to let everyone else know about his new fancy signed certificate,
+“drbrain” would save his newly signed certificate as
+<code>~/.gem/gem-public_cert.pem</code></p>
+
+<p>Obviously this RubyGems trust infrastructure doesn&#39;t exist yet.  Also,
+in the “real world”, issuers actually generate the child certificate from a
+certificate request, rather than sign an existing certificate.  And our
+hypothetical infrastructure is missing a certificate revocation system.
+These are that can be fixed in the future…</p>
+
+<p>At this point you should know how to do all of these new and interesting
+things:</p>
+<ul><li>
+<p>build a gem signing key and certificate</p>
+</li><li>
+<p>adjust your security policy</p>
+</li><li>
+<p>modify your trusted certificate list</p>
+</li><li>
+<p>sign a certificate</p>
+</li></ul>
+
+<h2 id="module-Gem::Security-label-Manually+verifying+signatures">Manually verifying signatures</h2>
+
+<p>In case you don&#39;t trust RubyGems you can verify gem signatures
+manually:</p>
+<ol><li>
+<p>Fetch and unpack the gem</p>
+
+<pre><code>gem fetch some_signed_gem
+tar -xf some_signed_gem-1.0.gem</code></pre>
+</li><li>
+<p>Grab the public key from the gemspec</p>
+
+<pre><code>gem spec some_signed_gem-1.0.gem cert_chain | \
+  ruby -ryaml -e &#39;puts YAML.load_documents($stdin)&#39; &gt; public_key.crt</code></pre>
+</li><li>
+<p>Generate a SHA1 hash of the data.tar.gz</p>
+
+<pre><code>openssl dgst -sha1 &lt; data.tar.gz &gt; my.hash
+</code></pre>
+</li><li>
+<p>Verify the signature</p>
+
+<pre><code>openssl rsautl -verify -inkey public_key.crt -certin \
+  -in data.tar.gz.sig &gt; verified.hash</code></pre>
+</li><li>
+<p>Compare your hash to the verified hash</p>
+
+<pre><code>diff -s verified.hash my.hash</code></pre>
+</li><li>
+<p>Repeat 5 and 6 with metadata.gz</p>
+</li></ol>
+
+<h2 id="module-Gem::Security-label-OpenSSL+Reference"><a href="../OpenSSL.html">OpenSSL</a> Reference</h2>
+
+<p>The .pem files generated by –build and –sign are PEM files.  Here&#39;s a
+couple of useful <a href="../OpenSSL.html">OpenSSL</a> commands for
+manipulating them:</p>
+
+<pre><code># convert a PEM format X509 certificate into DER format:
+# (note: Windows .cer files are X509 certificates in DER format)
+$ openssl x509 -in input.pem -outform der -out output.der
+
+# print out the certificate in a human-readable format:
+$ openssl x509 -in input.pem -noout -text</code></pre>
+
+<p>And you can do the same thing with the private key file as well:</p>
+
+<pre><code># convert a PEM format RSA key into DER format:
+$ openssl rsa -in input_key.pem -outform der -out output_key.der
+
+# print out the key in a human readable format:
+$ openssl rsa -in input_key.pem -noout -text</code></pre>
+
+<h2 id="module-Gem::Security-label-Bugs-2FTODO">Bugs/TODO</h2>
+<ul><li>
+<p>There&#39;s no way to define a system-wide trust list.</p>
+</li><li>
+<p>custom security policies (from a YAML file, etc)</p>
+</li><li>
+<p>Simple method to generate a signed certificate request</p>
+</li><li>
+<p>Support for OCSP, SCVP, CRLs, or some other form of cert status check (list
+is in order of preference)</p>
+</li><li>
+<p>Support for encrypted private keys</p>
+</li><li>
+<p>Some sort of semi-formal trust hierarchy (see long-winded explanation
+above)</p>
+</li><li>
+<p>Path discovery (for gem certificate chains that don&#39;t have a
+self-signed root) – by the way, since we don&#39;t have this, THE ROOT OF
+THE CERTIFICATE CHAIN MUST BE SELF SIGNED if <a
+href="Security/Policy.html#attribute-i-verify_root">Gem::Security::Policy#verify_root</a>
+is true (and it is for the <a
+href="Security.html#MediumSecurity">MediumSecurity</a> and <a
+href="Security.html#HighSecurity">HighSecurity</a> policies)</p>
+</li><li>
+<p>Better explanation of X509 naming (ie, we don&#39;t have to use email
+addresses)</p>
+</li><li>
+<p>Honor AIA field (see note about OCSP above)</p>
+</li><li>
+<p>Honor extension restrictions</p>
+</li><li>
+<p>Might be better to store the certificate chain as a PKCS#7 or PKCS#12 file,
+instead of an array embedded in the metadata.</p>
+</li><li>
+<p>Flexible signature and key algorithms, not hard-coded to RSA and SHA1.</p>
+</li></ul>
+
+<h2 id="module-Gem::Security-label-Original+author">Original author</h2>
+
+<p>Paul Duncan &lt;pabs@pablotron.org&gt; <a
+href="http://pablotron.org">pablotron.org</a>/</p>
+
+<p>frozen_string_literal: false</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+    <!-- Namespace -->
+    <div class="sectiontitle">Namespace</div>
+    <ul>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="Security/Exception.html">Gem::Security::Exception</a>
+        </li>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="Security/Policy.html">Gem::Security::Policy</a>
+        </li>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="Security/Signer.html">Gem::Security::Signer</a>
+        </li>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="Security/TrustDir.html">Gem::Security::TrustDir</a>
+        </li>
+      
+    </ul>
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>A</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-alt_name_or_x509_entry">alt_name_or_x509_entry</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>C</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-create_cert">create_cert</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-create_cert_email">create_cert_email</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-create_cert_self_signed">create_cert_self_signed</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-create_key">create_key</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>E</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-email_to_name">email_to_name</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>R</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-re_sign">re_sign</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-reset">reset</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>S</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-sign">sign</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-trust_dir">trust_dir</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-trusted_certificates">trusted_certificates</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>W</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-write">write</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+      <!-- Section constants -->
+      <div class="sectiontitle">Constants</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class="attr-name">DIGEST_ALGORITHM</td>
+            <td>=</td>
+            <td class="attr-value">if defined?(OpenSSL::Digest) then
+OpenSSL::Digest::SHA1
+end</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="../Digest.html">Digest</a> algorithm used to sign gems</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">DIGEST_NAME</td>
+            <td>=</td>
+            <td class="attr-value"># :nodoc:
+if DIGEST_ALGORITHM then
+DIGEST_ALGORITHM.new.name
+end</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Used internally to select the signing digest from all computed digests</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_ALGORITHM</td>
+            <td>=</td>
+            <td class="attr-value">if defined?(OpenSSL::PKey) then
+OpenSSL::PKey::RSA
+end</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Algorithm for creating the key pair used to sign gems</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_LENGTH</td>
+            <td>=</td>
+            <td class="attr-value">2048</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Length of keys created by <a
+href="Security.html#KEY_ALGORITHM">KEY_ALGORITHM</a></p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">KEY_CIPHER</td>
+            <td>=</td>
+            <td class="attr-value">OpenSSL::Cipher.new(&#39;AES-256-CBC&#39;) if defined?(OpenSSL::Cipher)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Cipher used to encrypt the key pair used to sign gems. Must be in the list
+returned by <a
+href="../OpenSSL/Cipher.html#method-c-ciphers">OpenSSL::Cipher.ciphers</a></p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">ONE_YEAR</td>
+            <td>=</td>
+            <td class="attr-value">86400 * 365</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>One year in seconds</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">EXTENSIONS</td>
+            <td>=</td>
+            <td class="attr-value">{
+&#39;basicConstraints&#39;     =&gt; &#39;CA:FALSE&#39;,
+&#39;keyUsage&#39;             =&gt;
+&#39;keyEncipherment,dataEncipherment,digitalSignature&#39;,
+&#39;subjectKeyIdentifier&#39; =&gt; &#39;hash&#39;,
+}</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>The default set of extensions are:</p>
+<ul><li>
+<p>The certificate is not a certificate authority</p>
+</li><li>
+<p>The key for the certificate may be used for key and data encipherment and
+digital signatures</p>
+</li><li>
+<p>The certificate contains a subject key identifier</p>
+</li></ul></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">NoSecurity</td>
+            <td>=</td>
+            <td class="attr-value">Policy.new(
+&#39;No Security&#39;,
+:verify_data      =&gt; false,
+:verify_signer    =&gt; false,
+:verify_chain     =&gt; false,
+:verify_root      =&gt; false,
+:only_trusted     =&gt; false,
+:only_signed      =&gt; false
+)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>No security policy: all package signature checks are disabled.</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">AlmostNoSecurity</td>
+            <td>=</td>
+            <td class="attr-value">Policy.new(
+&#39;Almost No Security&#39;,
+:verify_data      =&gt; true,
+:verify_signer    =&gt; false,
+:verify_chain     =&gt; false,
+:verify_root      =&gt; false,
+:only_trusted     =&gt; false,
+:only_signed      =&gt; false
+)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>AlmostNo security policy: only verify that the signing certificate is the
+one that actually signed the data.  Make no attempt to verify the signing
+certificate chain.</p>
+
+<p>This policy is basically useless. better than nothing, but can still be
+easily spoofed, and is not recommended.</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">LowSecurity</td>
+            <td>=</td>
+            <td class="attr-value">Policy.new(
+&#39;Low Security&#39;,
+:verify_data      =&gt; true,
+:verify_signer    =&gt; true,
+:verify_chain     =&gt; false,
+:verify_root      =&gt; false,
+:only_trusted     =&gt; false,
+:only_signed      =&gt; false
+)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Low security policy: only verify that the signing certificate is actually
+the gem signer, and that the signing certificate is valid.</p>
+
+<p>This policy is better than nothing, but can still be easily spoofed, and is
+not recommended.</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">MediumSecurity</td>
+            <td>=</td>
+            <td class="attr-value">Policy.new(
+&#39;Medium Security&#39;,
+:verify_data      =&gt; true,
+:verify_signer    =&gt; true,
+:verify_chain     =&gt; true,
+:verify_root      =&gt; true,
+:only_trusted     =&gt; true,
+:only_signed      =&gt; false
+)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Medium security policy: verify the signing certificate, verify the signing
+certificate chain all the way to the root certificate, and only trust root
+certificates that we have explicitly allowed trust for.</p>
+
+<p>This security policy is reasonable, but it allows unsigned packages, so a
+malicious person could simply delete the package signature and pass the gem
+off as unsigned.</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">HighSecurity</td>
+            <td>=</td>
+            <td class="attr-value">Policy.new(
+&#39;High Security&#39;,
+:verify_data      =&gt; true,
+:verify_signer    =&gt; true,
+:verify_chain     =&gt; true,
+:verify_root      =&gt; true,
+:only_trusted     =&gt; true,
+:only_signed      =&gt; true
+)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>High security policy: only allow signed gems to be installed, verify the
+signing certificate, verify the signing certificate chain all the way to
+the root certificate, and only trust root certificates that we have
+explicitly allowed trust for.</p>
+
+<p>This security policy is significantly more difficult to bypass, and offers
+a reasonable guarantee that the contents of the gem have not been altered.</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">SigningPolicy</td>
+            <td>=</td>
+            <td class="attr-value">Policy.new(
+&#39;Signing Policy&#39;,
+:verify_data      =&gt; false,
+:verify_signer    =&gt; true,
+:verify_chain     =&gt; true,
+:verify_root      =&gt; true,
+:only_trusted     =&gt; false,
+:only_signed      =&gt; false
+)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Security/Policy.html">Policy</a> used to verify a certificate and
+key when signing a gem</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">Policies</td>
+            <td>=</td>
+            <td class="attr-value">{
+&#39;NoSecurity&#39;       =&gt; NoSecurity,
+&#39;AlmostNoSecurity&#39; =&gt; AlmostNoSecurity,
+&#39;LowSecurity&#39;      =&gt; LowSecurity,
+&#39;MediumSecurity&#39;   =&gt; MediumSecurity,
+&#39;HighSecurity&#39;     =&gt; HighSecurity,
+# SigningPolicy is not intended for use by `gem -P` so do not list it
+}</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="../Hash.html">Hash</a> of configured security policies</p></td>
+            </tr>
+          
+        
+      </table>
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-alt_name_or_x509_entry">
+            
+              <b>alt_name_or_x509_entry</b>(certificate, x509_entry)
+            
+            <a href="../../classes/Gem/Security.html#method-c-alt_name_or_x509_entry" name="method-c-alt_name_or_x509_entry" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-alt_name_or_x509_entry_source')" id="l_method-c-alt_name_or_x509_entry_source">show</a>
+                
+              </p>
+              <div id="method-c-alt_name_or_x509_entry_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/security.rb, line 394</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">self</span>.<span class="ruby-identifier">alt_name_or_x509_entry</span> <span class="ruby-identifier">certificate</span>, <span class="ruby-identifier">x509_entry</span>
+  <span class="ruby-identifier">alt_name</span> = <span class="ruby-identifier">certificate</span>.<span class="ruby-identifier">extensions</span>.<span class="ruby-identifier">find</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">extension</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">extension</span>.<span class="ruby-identifier">oid</span> <span class="ruby-operator">==</span> <span class="ruby-node">&quot;#{x509_entry}AltName&quot;</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">alt_name</span>.<span class="ruby-identifier">value</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">alt_name</span>
+
+  <span class="ruby-identifier">certificate</span>.<span class="ruby-identifier">send</span> <span class="ruby-identifier">x509_entry</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-create_cert">
+            
+              <b>create_cert</b>(subject, key, age = ONE_YEAR, extensions = EXTENSIONS, serial = 1)
+            
+            <a href="../../classes/Gem/Security.html#method-c-create_cert" name="method-c-create_cert" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Creates an unsigned certificate for <code>subject</code> and
+<code>key</code>.  The lifetime of the key is from the current time to
+<code>age</code> which defaults to one year.</p>
+
+<p>The <code>extensions</code> restrict the key to the indicated uses.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-create_cert_source')" id="l_method-c-create_cert_source">show</a>
+                
+              </p>
+              <div id="method-c-create_cert_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/security.rb, line 410</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">self</span>.<span class="ruby-identifier">create_cert</span> <span class="ruby-identifier">subject</span>, <span class="ruby-identifier">key</span>, <span class="ruby-identifier">age</span> = <span class="ruby-constant">ONE_YEAR</span>, <span class="ruby-identifier">extensions</span> = <span class="ruby-constant">EXTENSIONS</span>,
+                     <span class="ruby-identifier">serial</span> = <span class="ruby-number">1</span>
+  <span class="ruby-identifier">cert</span> = <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">X509</span><span class="ruby-operator">::</span><span class="ruby-constant">Certificate</span>.<span class="ruby-identifier">new</span>
+
+  <span class="ruby-identifier">cert</span>.<span class="ruby-identifier">public_key</span> = <span class="ruby-identifier">key</span>.<span class="ruby-identifier">public_key</span>
+  <span class="ruby-identifier">cert</span>.<span class="ruby-identifier">version</span>    = <span class="ruby-number">2</span>
+  <span class="ruby-identifier">cert</span>.<span class="ruby-identifier">serial</span>     = <span class="ruby-identifier">serial</span>
+
+  <span class="ruby-identifier">cert</span>.<span class="ruby-identifier">not_before</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>
+  <span class="ruby-identifier">cert</span>.<span class="ruby-identifier">not_after</span>  = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">age</span>
+
+  <span class="ruby-identifier">cert</span>.<span class="ruby-identifier">subject</span>    = <span class="ruby-identifier">subject</span>
+
+  <span class="ruby-identifier">ef</span> = <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">X509</span><span class="ruby-operator">::</span><span class="ruby-constant">ExtensionFactory</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">cert</span>
+
+  <span class="ruby-identifier">cert</span>.<span class="ruby-identifier">extensions</span> = <span class="ruby-identifier">extensions</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">ext_name</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">ef</span>.<span class="ruby-identifier">create_extension</span> <span class="ruby-identifier">ext_name</span>, <span class="ruby-identifier">value</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">cert</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-create_cert_email">
+            
+              <b>create_cert_email</b>(email, key, age = ONE_YEAR, extensions = EXTENSIONS)
+            
+            <a href="../../classes/Gem/Security.html#method-c-create_cert_email" name="method-c-create_cert_email" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Creates a self-signed certificate with an issuer and subject from
+<code>email</code>, a subject alternative name of <code>email</code> and
+the given <code>extensions</code> for the <code>key</code>.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-create_cert_email_source')" id="l_method-c-create_cert_email_source">show</a>
+                
+              </p>
+              <div id="method-c-create_cert_email_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/security.rb, line 437</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">self</span>.<span class="ruby-identifier">create_cert_email</span> <span class="ruby-identifier">email</span>, <span class="ruby-identifier">key</span>, <span class="ruby-identifier">age</span> = <span class="ruby-constant">ONE_YEAR</span>, <span class="ruby-identifier">extensions</span> = <span class="ruby-constant">EXTENSIONS</span>
+  <span class="ruby-identifier">subject</span> = <span class="ruby-identifier">email_to_name</span> <span class="ruby-identifier">email</span>
+
+  <span class="ruby-identifier">extensions</span> = <span class="ruby-identifier">extensions</span>.<span class="ruby-identifier">merge</span> <span class="ruby-string">&quot;subjectAltName&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;email:#{email}&quot;</span>
+
+  <span class="ruby-identifier">create_cert_self_signed</span> <span class="ruby-identifier">subject</span>, <span class="ruby-identifier">key</span>, <span class="ruby-identifier">age</span>, <span class="ruby-identifier">extensions</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-create_cert_self_signed">
+            
+              <b>create_cert_self_signed</b>(subject, key, age = ONE_YEAR, extensions = EXTENSIONS, serial = 1)
+            
+            <a href="../../classes/Gem/Security.html#method-c-create_cert_self_signed" name="method-c-create_cert_self_signed" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Creates a self-signed certificate with an issuer and subject of
+<code>subject</code> and the given <code>extensions</code> for the
+<code>key</code>.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-create_cert_self_signed_source')" id="l_method-c-create_cert_self_signed_source">show</a>
+                
+              </p>
+              <div id="method-c-create_cert_self_signed_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/security.rb, line 449</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">self</span>.<span class="ruby-identifier">create_cert_self_signed</span> <span class="ruby-identifier">subject</span>, <span class="ruby-identifier">key</span>, <span class="ruby-identifier">age</span> = <span class="ruby-constant">ONE_YEAR</span>,
+                                 <span class="ruby-identifier">extensions</span> = <span class="ruby-constant">EXTENSIONS</span>, <span class="ruby-identifier">serial</span> = <span class="ruby-number">1</span>
+  <span class="ruby-identifier">certificate</span> = <span class="ruby-identifier">create_cert</span> <span class="ruby-identifier">subject</span>, <span class="ruby-identifier">key</span>, <span class="ruby-identifier">age</span>, <span class="ruby-identifier">extensions</span>
+
+  <span class="ruby-identifier">sign</span> <span class="ruby-identifier">certificate</span>, <span class="ruby-identifier">key</span>, <span class="ruby-identifier">certificate</span>, <span class="ruby-identifier">age</span>, <span class="ruby-identifier">extensions</span>, <span class="ruby-identifier">serial</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-create_key">
+            
+              <b>create_key</b>(length = KEY_LENGTH, algorithm = KEY_ALGORITHM)
+            
+            <a href="../../classes/Gem/Security.html#method-c-create_key" name="method-c-create_key" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Creates a new key pair of the specified <code>length</code> and
+<code>algorithm</code>.  The default is a 2048 bit RSA key.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-create_key_source')" id="l_method-c-create_key_source">show</a>
+                
+              </p>
+              <div id="method-c-create_key_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/security.rb, line 460</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">self</span>.<span class="ruby-identifier">create_key</span> <span class="ruby-identifier">length</span> = <span class="ruby-constant">KEY_LENGTH</span>, <span class="ruby-identifier">algorithm</span> = <span class="ruby-constant">KEY_ALGORITHM</span>
+  <span class="ruby-identifier">algorithm</span>.<span class="ruby-identifier">new</span> <span class="ruby-identifier">length</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-email_to_name">
+            
+              <b>email_to_name</b>(email_address)
+            
+            <a href="../../classes/Gem/Security.html#method-c-email_to_name" name="method-c-email_to_name" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Turns <code>email_address</code> into an <a
+href="../OpenSSL/X509/Name.html">OpenSSL::X509::Name</a></p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-email_to_name_source')" id="l_method-c-email_to_name_source">show</a>
+                
+              </p>
+              <div id="method-c-email_to_name_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/security.rb, line 467</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">self</span>.<span class="ruby-identifier">email_to_name</span> <span class="ruby-identifier">email_address</span>
+  <span class="ruby-identifier">email_address</span> = <span class="ruby-identifier">email_address</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">/[^\w@.-]+/i</span>, <span class="ruby-string">&#39;_&#39;</span>)
+
+  <span class="ruby-identifier">cn</span>, <span class="ruby-identifier">dcs</span> = <span class="ruby-identifier">email_address</span>.<span class="ruby-identifier">split</span> <span class="ruby-string">&#39;@&#39;</span>
+
+  <span class="ruby-identifier">dcs</span> = <span class="ruby-identifier">dcs</span>.<span class="ruby-identifier">split</span> <span class="ruby-string">&#39;.&#39;</span>
+
+  <span class="ruby-identifier">name</span> = <span class="ruby-node">&quot;CN=#{cn}/#{dcs.map { |dc| &quot;DC=#{dc}&quot; }.join &#39;/&#39;}&quot;</span>
+
+  <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">X509</span><span class="ruby-operator">::</span><span class="ruby-constant">Name</span>.<span class="ruby-identifier">parse</span> <span class="ruby-identifier">name</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-re_sign">
+            
+              <b>re_sign</b>(expired_certificate, private_key, age = ONE_YEAR, extensions = EXTENSIONS)
+            
+            <a href="../../classes/Gem/Security.html#method-c-re_sign" name="method-c-re_sign" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Signs <code>expired_certificate</code> with <code>private_key</code> if the
+keys match and the expired certificate was self-signed.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-re_sign_source')" id="l_method-c-re_sign_source">show</a>
+                
+              </p>
+              <div id="method-c-re_sign_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/security.rb, line 485</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">self</span>.<span class="ruby-identifier">re_sign</span> <span class="ruby-identifier">expired_certificate</span>, <span class="ruby-identifier">private_key</span>, <span class="ruby-identifier">age</span> = <span class="ruby-constant">ONE_YEAR</span>,
+                 <span class="ruby-identifier">extensions</span> = <span class="ruby-constant">EXTENSIONS</span>
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Security</span><span class="ruby-operator">::</span><span class="ruby-constant">Exception</span>,
+        <span class="ruby-string">&quot;incorrect signing key for re-signing &quot;</span> <span class="ruby-operator">+</span>
+        <span class="ruby-node">&quot;#{expired_certificate.subject}&quot;</span> <span class="ruby-keyword">unless</span>
+    <span class="ruby-identifier">expired_certificate</span>.<span class="ruby-identifier">public_key</span>.<span class="ruby-identifier">to_pem</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">private_key</span>.<span class="ruby-identifier">public_key</span>.<span class="ruby-identifier">to_pem</span>
+
+  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">expired_certificate</span>.<span class="ruby-identifier">subject</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">==</span>
+         <span class="ruby-identifier">expired_certificate</span>.<span class="ruby-identifier">issuer</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-keyword">then</span>
+    <span class="ruby-identifier">subject</span> = <span class="ruby-identifier">alt_name_or_x509_entry</span> <span class="ruby-identifier">expired_certificate</span>, <span class="ruby-value">:subject</span>
+    <span class="ruby-identifier">issuer</span>  = <span class="ruby-identifier">alt_name_or_x509_entry</span> <span class="ruby-identifier">expired_certificate</span>, <span class="ruby-value">:issuer</span>
+
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Security</span><span class="ruby-operator">::</span><span class="ruby-constant">Exception</span>,
+          <span class="ruby-node">&quot;#{subject} is not self-signed, contact #{issuer} &quot;</span> <span class="ruby-operator">+</span>
+          <span class="ruby-string">&quot;to obtain a valid certificate&quot;</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">serial</span> = <span class="ruby-identifier">expired_certificate</span>.<span class="ruby-identifier">serial</span> <span class="ruby-operator">+</span> <span class="ruby-number">1</span>
+
+  <span class="ruby-identifier">create_cert_self_signed</span>(<span class="ruby-identifier">expired_certificate</span>.<span class="ruby-identifier">subject</span>, <span class="ruby-identifier">private_key</span>, <span class="ruby-identifier">age</span>,
+                          <span class="ruby-identifier">extensions</span>, <span class="ruby-identifier">serial</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-reset">
+            
+              <b>reset</b>()
+            
+            <a href="../../classes/Gem/Security.html#method-c-reset" name="method-c-reset" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Resets the trust directory for verifying gems.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-reset_source')" id="l_method-c-reset_source">show</a>
+                
+              </p>
+              <div id="method-c-reset_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/security.rb, line 511</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">self</span>.<span class="ruby-identifier">reset</span>
+  <span class="ruby-ivar">@trust_dir</span> = <span class="ruby-keyword">nil</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-sign">
+            
+              <b>sign</b>(certificate, signing_key, signing_cert, age = ONE_YEAR, extensions = EXTENSIONS, serial = 1)
+            
+            <a href="../../classes/Gem/Security.html#method-c-sign" name="method-c-sign" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Sign the public key from <code>certificate</code> with the
+<code>signing_key</code> and <code>signing_cert</code>, using the
+Gem::Security::DIGEST_ALGORITHM.  Uses the default certificate validity
+range and extensions.</p>
+
+<p>Returns the newly signed certificate.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-sign_source')" id="l_method-c-sign_source">show</a>
+                
+              </p>
+              <div id="method-c-sign_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/security.rb, line 522</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">self</span>.<span class="ruby-identifier">sign</span> <span class="ruby-identifier">certificate</span>, <span class="ruby-identifier">signing_key</span>, <span class="ruby-identifier">signing_cert</span>,
+              <span class="ruby-identifier">age</span> = <span class="ruby-constant">ONE_YEAR</span>, <span class="ruby-identifier">extensions</span> = <span class="ruby-constant">EXTENSIONS</span>, <span class="ruby-identifier">serial</span> = <span class="ruby-number">1</span>
+  <span class="ruby-identifier">signee_subject</span> = <span class="ruby-identifier">certificate</span>.<span class="ruby-identifier">subject</span>
+  <span class="ruby-identifier">signee_key</span>     = <span class="ruby-identifier">certificate</span>.<span class="ruby-identifier">public_key</span>
+
+  <span class="ruby-identifier">alt_name</span> = <span class="ruby-identifier">certificate</span>.<span class="ruby-identifier">extensions</span>.<span class="ruby-identifier">find</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">extension</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">extension</span>.<span class="ruby-identifier">oid</span> <span class="ruby-operator">==</span> <span class="ruby-string">&#39;subjectAltName&#39;</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">extensions</span> = <span class="ruby-identifier">extensions</span>.<span class="ruby-identifier">merge</span> <span class="ruby-string">&#39;subjectAltName&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">alt_name</span>.<span class="ruby-identifier">value</span> <span class="ruby-keyword">if</span>
+    <span class="ruby-identifier">alt_name</span>
+
+  <span class="ruby-identifier">issuer_alt_name</span> = <span class="ruby-identifier">signing_cert</span>.<span class="ruby-identifier">extensions</span>.<span class="ruby-identifier">find</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">extension</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">extension</span>.<span class="ruby-identifier">oid</span> <span class="ruby-operator">==</span> <span class="ruby-string">&#39;subjectAltName&#39;</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">extensions</span> = <span class="ruby-identifier">extensions</span>.<span class="ruby-identifier">merge</span> <span class="ruby-string">&#39;issuerAltName&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">issuer_alt_name</span>.<span class="ruby-identifier">value</span> <span class="ruby-keyword">if</span>
+    <span class="ruby-identifier">issuer_alt_name</span>
+
+  <span class="ruby-identifier">signed</span> = <span class="ruby-identifier">create_cert</span> <span class="ruby-identifier">signee_subject</span>, <span class="ruby-identifier">signee_key</span>, <span class="ruby-identifier">age</span>, <span class="ruby-identifier">extensions</span>, <span class="ruby-identifier">serial</span>
+  <span class="ruby-identifier">signed</span>.<span class="ruby-identifier">issuer</span> = <span class="ruby-identifier">signing_cert</span>.<span class="ruby-identifier">subject</span>
+
+  <span class="ruby-identifier">signed</span>.<span class="ruby-identifier">sign</span> <span class="ruby-identifier">signing_key</span>, <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Security</span><span class="ruby-operator">::</span><span class="ruby-constant">DIGEST_ALGORITHM</span>.<span class="ruby-identifier">new</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-trust_dir">
+            
+              <b>trust_dir</b>()
+            
+            <a href="../../classes/Gem/Security.html#method-c-trust_dir" name="method-c-trust_dir" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns a <a href="Security/TrustDir.html">Gem::Security::TrustDir</a>
+which wraps the directory where trusted certificates live.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-trust_dir_source')" id="l_method-c-trust_dir_source">show</a>
+                
+              </p>
+              <div id="method-c-trust_dir_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/security.rb, line 551</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">self</span>.<span class="ruby-identifier">trust_dir</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-ivar">@trust_dir</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@trust_dir</span>
+
+  <span class="ruby-identifier">dir</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span> <span class="ruby-constant">Gem</span>.<span class="ruby-identifier">user_home</span>, <span class="ruby-string">&#39;.gem&#39;</span>, <span class="ruby-string">&#39;trust&#39;</span>
+
+  <span class="ruby-ivar">@trust_dir</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Security</span><span class="ruby-operator">::</span><span class="ruby-constant">TrustDir</span>.<span class="ruby-identifier">new</span> <span class="ruby-identifier">dir</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-trusted_certificates">
+            
+              <b>trusted_certificates</b>(&amp;block)
+            
+            <a href="../../classes/Gem/Security.html#method-c-trusted_certificates" name="method-c-trusted_certificates" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Enumerates the trusted certificates via <a
+href="Security/TrustDir.html">Gem::Security::TrustDir</a>.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-trusted_certificates_source')" id="l_method-c-trusted_certificates_source">show</a>
+                
+              </p>
+              <div id="method-c-trusted_certificates_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/security.rb, line 562</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">self</span>.<span class="ruby-identifier">trusted_certificates</span> <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>
+  <span class="ruby-identifier">trust_dir</span>.<span class="ruby-identifier">each_certificate</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-write">
+            
+              <b>write</b>(pemmable, path, permissions = 0600, passphrase = nil, cipher = KEY_CIPHER)
+            
+            <a href="../../classes/Gem/Security.html#method-c-write" name="method-c-write" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Writes <code>pemmable</code>, which must respond to <code>to_pem</code> to
+<code>path</code> with the given <code>permissions</code>. If passed
+<code>cipher</code> and <code>passphrase</code> those arguments will be
+passed to <code>to_pem</code>.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-write_source')" id="l_method-c-write_source">show</a>
+                
+              </p>
+              <div id="method-c-write_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/security.rb, line 571</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">self</span>.<span class="ruby-identifier">write</span> <span class="ruby-identifier">pemmable</span>, <span class="ruby-identifier">path</span>, <span class="ruby-identifier">permissions</span> = <span class="ruby-number">0600</span>, <span class="ruby-identifier">passphrase</span> = <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">cipher</span> = <span class="ruby-constant">KEY_CIPHER</span>
+  <span class="ruby-identifier">path</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span> <span class="ruby-identifier">path</span>
+
+  <span class="ruby-identifier">open</span> <span class="ruby-identifier">path</span>, <span class="ruby-string">&#39;wb&#39;</span>, <span class="ruby-identifier">permissions</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">io</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">passphrase</span> <span class="ruby-keyword">and</span> <span class="ruby-identifier">cipher</span>
+      <span class="ruby-identifier">io</span>.<span class="ruby-identifier">write</span> <span class="ruby-identifier">pemmable</span>.<span class="ruby-identifier">to_pem</span> <span class="ruby-identifier">cipher</span>, <span class="ruby-identifier">passphrase</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">io</span>.<span class="ruby-identifier">write</span> <span class="ruby-identifier">pemmable</span>.<span class="ruby-identifier">to_pem</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">path</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                        </div>
+
+    </div>
+  </body>
+</html>    

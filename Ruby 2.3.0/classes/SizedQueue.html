@@ -1,0 +1,699 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>SizedQueue</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/github.css" type="text/css" media="screen" />
+<script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            SizedQueue 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../files/thread_sync_c.html">thread_sync.c</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>This class represents queues of specified size capacity.  The push
+operation may be blocked if the capacity is full.</p>
+
+<p>See <a href="Queue.html">Queue</a> for an example of how a <a
+href="SizedQueue.html">SizedQueue</a> works.</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>#</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-3C-3C">&lt;&lt;</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>C</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-clear">clear</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-close">close</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>D</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-deq">deq</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>E</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-enq">enq</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>M</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-max">max</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-max-3D">max=</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-num_waiting">num_waiting</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>P</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-pop">pop</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-push">push</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>S</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-shift">shift</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <b>new(max)
+</b>
+            
+            <a href="../classes/SizedQueue.html#method-c-new" name="method-c-new" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Creates a fixed-length queue with a maximum size of <code>max</code>.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre>static VALUE
+rb_szqueue_initialize(VALUE self, VALUE vmax)
+{
+    long max;
+
+    max = NUM2LONG(vmax);
+    if (max &lt;= 0) {
+        rb_raise(rb_eArgError, &quot;queue size must be positive&quot;);
+    }
+
+    RSTRUCT_SET(self, QUEUE_QUE, ary_buf_new());
+    RSTRUCT_SET(self, QUEUE_WAITERS, ary_buf_new());
+    RSTRUCT_SET(self, SZQUEUE_WAITERS, ary_buf_new());
+    RSTRUCT_SET(self, SZQUEUE_MAX, vmax);
+
+    return self;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-3C-3C">
+            
+              <b>&lt;&lt;</b>(*args)
+            
+            <a href="../classes/SizedQueue.html#method-i-3C-3C" name="method-i-3C-3C" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Alias for <a href="SizedQueue.html#method-i-push">push</a>.</p>
+            </div>
+          
+          
+          
+
+          
+            <div class="aka">
+              Alias for: <a href="SizedQueue.html#method-i-push">push</a>
+            </div>
+          
+          
+          
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-clear">
+            
+              <b>clear</b>()
+            
+            <a href="../classes/SizedQueue.html#method-i-clear" name="method-i-clear" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Removes all objects from the queue.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-clear_source')" id="l_method-i-clear_source">show</a>
+                
+              </p>
+              <div id="method-i-clear_source" class="dyn-source">
+                <pre>static VALUE
+rb_szqueue_clear(VALUE self)
+{
+    rb_ary_clear(GET_QUEUE_QUE(self));
+    wakeup_all_threads(GET_SZQUEUE_WAITERS(self));
+    return self;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-close">
+            
+              <b>close(exception=false)
+</b>
+            
+            <a href="../classes/SizedQueue.html#method-i-close" name="method-i-close" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Similar to <a href="Queue.html#method-i-close">Queue#close</a>.</p>
+
+<p>The difference is behavior with waiting enqueuing threads.</p>
+
+<p>If there are waiting enqueuing threads, they are interrupted by raising
+ClosedQueueError(&#39;queue closed&#39;).</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-close_source')" id="l_method-i-close_source">show</a>
+                
+              </p>
+              <div id="method-i-close_source" class="dyn-source">
+                <pre>static VALUE
+rb_szqueue_close(VALUE self)
+{
+    return queue_do_close(self, TRUE);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-deq">
+            
+              <b>deq</b>(*args)
+            
+            <a href="../classes/SizedQueue.html#method-i-deq" name="method-i-deq" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Alias for <a href="SizedQueue.html#method-i-push">push</a>.</p>
+            </div>
+          
+          
+          
+
+          
+            <div class="aka">
+              Alias for: <a href="SizedQueue.html#method-i-pop">pop</a>
+            </div>
+          
+          
+          
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-enq">
+            
+              <b>enq</b>(*args)
+            
+            <a href="../classes/SizedQueue.html#method-i-enq" name="method-i-enq" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+            <div class="aka">
+              Alias for: <a href="SizedQueue.html#method-i-push">push</a>
+            </div>
+          
+          
+          
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-max">
+            
+              <b>max</b>()
+            
+            <a href="../classes/SizedQueue.html#method-i-max" name="method-i-max" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the maximum size of the queue.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-max_source')" id="l_method-i-max_source">show</a>
+                
+              </p>
+              <div id="method-i-max_source" class="dyn-source">
+                <pre>static VALUE
+rb_szqueue_max_get(VALUE self)
+{
+    return GET_SZQUEUE_MAX(self);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-max-3D">
+            
+              <b>max=(number)
+</b>
+            
+            <a href="../classes/SizedQueue.html#method-i-max-3D" name="method-i-max-3D" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Sets the maximum size of the queue to the given <code>number</code>.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-max-3D_source')" id="l_method-i-max-3D_source">show</a>
+                
+              </p>
+              <div id="method-i-max-3D_source" class="dyn-source">
+                <pre>static VALUE
+rb_szqueue_max_set(VALUE self, VALUE vmax)
+{
+    long max = NUM2LONG(vmax), diff = 0;
+    VALUE t;
+
+    if (max &lt;= 0) {
+        rb_raise(rb_eArgError, &quot;queue size must be positive&quot;);
+    }
+    if ((unsigned long)max &gt; GET_SZQUEUE_ULONGMAX(self)) {
+        diff = max - GET_SZQUEUE_ULONGMAX(self);
+    }
+    RSTRUCT_SET(self, SZQUEUE_MAX, vmax);
+    while (diff-- &gt; 0 &amp;&amp; !NIL_P(t = rb_ary_shift(GET_SZQUEUE_WAITERS(self)))) {
+        rb_thread_wakeup_alive(t);
+    }
+    return vmax;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-num_waiting">
+            
+              <b>num_waiting</b>()
+            
+            <a href="../classes/SizedQueue.html#method-i-num_waiting" name="method-i-num_waiting" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the number of threads waiting on the queue.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-num_waiting_source')" id="l_method-i-num_waiting_source">show</a>
+                
+              </p>
+              <div id="method-i-num_waiting_source" class="dyn-source">
+                <pre>static VALUE
+rb_szqueue_num_waiting(VALUE self)
+{
+    long len = queue_num_waiting(self) + szqueue_num_waiting_producer(self);
+    return ULONG2NUM(len);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-pop">
+            
+              <b>pop(non_block=false)
+deq(non_block=false)
+shift(non_block=false)
+</b>
+            
+            <a href="../classes/SizedQueue.html#method-i-pop" name="method-i-pop" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Retrieves data from the queue.</p>
+
+<p>If the queue is empty, the calling thread is suspended until data is pushed
+onto the queue. If <code>non_block</code> is true, the thread isn&#39;t
+suspended, and an exception is raised.</p>
+            </div>
+          
+          
+          
+            <div class="aka">
+              Also aliased as: <a href="SizedQueue.html#method-i-deq">deq</a>, <a href="SizedQueue.html#method-i-shift">shift</a>
+            </div>
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-pop_source')" id="l_method-i-pop_source">show</a>
+                
+              </p>
+              <div id="method-i-pop_source" class="dyn-source">
+                <pre>static VALUE
+rb_szqueue_pop(int argc, VALUE *argv, VALUE self)
+{
+    int should_block = queue_pop_should_block(argc, argv);
+    return szqueue_do_pop(self, should_block);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-push">
+            
+              <b>push(object, non_block=false)
+enq(object, non_block=false)
+<<(object)
+</b>
+            
+            <a href="../classes/SizedQueue.html#method-i-push" name="method-i-push" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Pushes <code>object</code> to the queue.</p>
+
+<p>If there is no space left in the queue, waits until space becomes
+available, unless <code>non_block</code> is true.  If
+<code>non_block</code> is true, the thread isn&#39;t suspended, and an
+exception is raised.</p>
+            </div>
+          
+          
+          
+            <div class="aka">
+              Also aliased as: <a href="SizedQueue.html#method-i-enq">enq</a>, <a href="SizedQueue.html#method-i-3C-3C">&lt;&lt;</a>
+            </div>
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-push_source')" id="l_method-i-push_source">show</a>
+                
+              </p>
+              <div id="method-i-push_source" class="dyn-source">
+                <pre>static VALUE
+rb_szqueue_push(int argc, VALUE *argv, VALUE self)
+{
+    struct waiting_delete args;
+    int should_block = szqueue_push_should_block(argc, argv);
+    args.waiting = GET_SZQUEUE_WAITERS(self);
+    args.th      = rb_thread_current();
+
+    while (queue_length(self) &gt;= GET_SZQUEUE_ULONGMAX(self)) {
+        if (!should_block) {
+            rb_raise(rb_eThreadError, &quot;queue full&quot;);
+        }
+        else if (queue_closed_p(self)) {
+            goto closed;
+        }
+        else {
+            rb_ary_push(args.waiting, args.th);
+            rb_ensure((VALUE (*)())rb_thread_sleep_deadly, (VALUE)0, queue_delete_from_waiting, (VALUE)&amp;args);
+        }
+    }
+
+    if (queue_closed_p(self)) {
+      closed:
+        raise_closed_queue_error(self);
+    }
+
+    return queue_do_push(self, argv[0]);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-shift">
+            
+              <b>shift</b>(*args)
+            
+            <a href="../classes/SizedQueue.html#method-i-shift" name="method-i-shift" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Alias for <a href="SizedQueue.html#method-i-pop">pop</a>.</p>
+            </div>
+          
+          
+          
+
+          
+            <div class="aka">
+              Alias for: <a href="SizedQueue.html#method-i-pop">pop</a>
+            </div>
+          
+          
+          
+          </div>
+                    </div>
+
+    </div>
+  </body>
+</html>    

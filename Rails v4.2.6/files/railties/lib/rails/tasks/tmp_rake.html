@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>tmp.rake</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../../../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../../../css/github.css" type="text/css" media="screen" />
+<script src="../../../../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            tmp.rake
+        </h1>
+        <ul class="files">
+            
+            <li>
+                railties/lib/rails/tasks/tmp.rake
+                
+                    <a href="https://github.com/rails/rails/blob/5ad7f8ab418f0c760dbb584f7c78d94ce32e9ee3/railties/lib/rails/tasks/tmp.rake" target="_blank" class="github_url">on GitHub</a>
+                
+            </li>
+            <li>Last modified: 2016-05-19 14:28:33 +0200</li>
+        </ul>
+    </div>
+
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>namespace :tmp do</p>
+
+<pre><code>desc &quot;Clear session, cache, and socket files from tmp/ (narrow w/ tmp:sessions:clear, tmp:cache:clear, tmp:sockets:clear)&quot;
+task clear: [ &quot;tmp:sessions:clear&quot;,  &quot;tmp:cache:clear&quot;, &quot;tmp:sockets:clear&quot;]
+
+tmp_dirs = [ &#39;tmp/sessions&#39;,
+             &#39;tmp/cache&#39;,
+             &#39;tmp/sockets&#39;,
+             &#39;tmp/pids&#39;,
+             &#39;tmp/cache/assets/development&#39;,
+             &#39;tmp/cache/assets/test&#39;,
+             &#39;tmp/cache/assets/production&#39; ]
+
+tmp_dirs.each { |d| directory d }
+
+desc &quot;Creates tmp directories for sessions, cache, sockets, and pids&quot;
+task create: tmp_dirs
+
+namespace :sessions do
+  # desc &quot;Clears all files in tmp/sessions&quot;
+  task :clear do
+    FileUtils.rm(Dir[&#39;tmp/sessions/[^.]*&#39;])
+  end
+end
+
+namespace :cache do
+  # desc &quot;Clears all files and directories in tmp/cache&quot;
+  task :clear do
+    FileUtils.rm_rf(Dir[&#39;tmp/cache/[^.]*&#39;])
+  end
+end
+
+namespace :sockets do
+  # desc &quot;Clears all files in tmp/sockets&quot;
+  task :clear do
+    FileUtils.rm(Dir[&#39;tmp/sockets/[^.]*&#39;])
+  end
+end
+
+namespace :pids do
+  # desc &quot;Clears all files in tmp/pids&quot;
+  task :clear do
+    FileUtils.rm(Dir[&#39;tmp/pids/[^.]*&#39;])
+  end
+end
+</code></pre>
+
+<p>end</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+              </div>
+
+    </div>
+  </body>
+</html>

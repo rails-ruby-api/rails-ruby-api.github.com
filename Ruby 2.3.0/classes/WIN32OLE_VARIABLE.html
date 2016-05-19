@@ -1,0 +1,613 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>WIN32OLE_VARIABLE</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/github.css" type="text/css" media="screen" />
+<script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            WIN32OLE_VARIABLE 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../files/ext/win32ole/win32ole_variable_c.html">ext/win32ole/win32ole_variable.c</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p><code>WIN32OLE_VARIABLE</code> objects represent OLE variable information.</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>I</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-inspect">inspect</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-name">name</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>O</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-ole_type">ole_type</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-ole_type_detail">ole_type_detail</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-to_s">to_s</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>V</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-value">value</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-variable_kind">variable_kind</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-varkind">varkind</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-visible-3F">visible?</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+        
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-inspect">
+            
+              <b>WIN32OLE_VARIABLE#inspect &rarr; String
+</b>
+            
+            <a href="../classes/WIN32OLE_VARIABLE.html#method-i-inspect" name="method-i-inspect" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the OLE variable name and the value with class name.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-inspect_source')" id="l_method-i-inspect_source">show</a>
+                
+              </p>
+              <div id="method-i-inspect_source" class="dyn-source">
+                <pre>static VALUE
+folevariable_inspect(VALUE self)
+{
+    VALUE v = rb_inspect(folevariable_value(self));
+    VALUE n = folevariable_name(self);
+    VALUE detail = rb_sprintf(&quot;%&quot;PRIsVALUE&quot;=%&quot;PRIsVALUE, n, v);
+    return make_inspect(&quot;WIN32OLE_VARIABLE&quot;, detail);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-name">
+            
+              <b>WIN32OLE_VARIABLE#name
+</b>
+            
+            <a href="../classes/WIN32OLE_VARIABLE.html#method-i-name" name="method-i-name" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the name of variable.</p>
+
+<pre><code>tobj = WIN32OLE_TYPE.new(&#39;Microsoft Excel 9.0 Object Library&#39;, &#39;XlSheetType&#39;)
+variables = tobj.variables
+variables.each do |variable|
+  puts &quot;#{variable.name}&quot;
+end
+
+The result of above script is following:
+  xlChart
+  xlDialogSheet
+  xlExcel4IntlMacroSheet
+  xlExcel4MacroSheet
+  xlWorksheet
+</code></pre>
+            </div>
+          
+          
+          
+            <div class="aka">
+              Also aliased as: <a href="WIN32OLE_VARIABLE.html#method-i-to_s">to_s</a>
+            </div>
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-name_source')" id="l_method-i-name_source">show</a>
+                
+              </p>
+              <div id="method-i-name_source" class="dyn-source">
+                <pre>static VALUE
+folevariable_name(VALUE self)
+{
+    return rb_ivar_get(self, rb_intern(&quot;name&quot;));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-ole_type">
+            
+              <b>WIN32OLE_VARIABLE#ole_type
+</b>
+            
+            <a href="../classes/WIN32OLE_VARIABLE.html#method-i-ole_type" name="method-i-ole_type" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns OLE type string.</p>
+
+<pre><code>tobj = WIN32OLE_TYPE.new(&#39;Microsoft Excel 9.0 Object Library&#39;, &#39;XlSheetType&#39;)
+variables = tobj.variables
+variables.each do |variable|
+  puts &quot;#{variable.ole_type} #{variable.name}&quot;
+end
+
+The result of above script is following:
+  INT xlChart
+  INT xlDialogSheet
+  INT xlExcel4IntlMacroSheet
+  INT xlExcel4MacroSheet
+  INT xlWorksheet</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-ole_type_source')" id="l_method-i-ole_type_source">show</a>
+                
+              </p>
+              <div id="method-i-ole_type_source" class="dyn-source">
+                <pre>static VALUE
+folevariable_ole_type(VALUE self)
+{
+    struct olevariabledata *pvar;
+    TypedData_Get_Struct(self, struct olevariabledata, &amp;olevariable_datatype, pvar);
+    return ole_variable_ole_type(pvar-&gt;pTypeInfo, pvar-&gt;index);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-ole_type_detail">
+            
+              <b>WIN32OLE_VARIABLE#ole_type_detail
+</b>
+            
+            <a href="../classes/WIN32OLE_VARIABLE.html#method-i-ole_type_detail" name="method-i-ole_type_detail" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns detail information of type. The information is array of type.</p>
+
+<pre><code>tobj = WIN32OLE_TYPE.new(&#39;DirectX 7 for Visual Basic Type Library&#39;, &#39;D3DCLIPSTATUS&#39;)
+variable = tobj.variables.find {|variable| variable.name == &#39;lFlags&#39;}
+tdetail  = variable.ole_type_detail
+p tdetail # =&gt; [&quot;USERDEFINED&quot;, &quot;CONST_D3DCLIPSTATUSFLAGS&quot;]
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-ole_type_detail_source')" id="l_method-i-ole_type_detail_source">show</a>
+                
+              </p>
+              <div id="method-i-ole_type_detail_source" class="dyn-source">
+                <pre>static VALUE
+folevariable_ole_type_detail(VALUE self)
+{
+    struct olevariabledata *pvar;
+    TypedData_Get_Struct(self, struct olevariabledata, &amp;olevariable_datatype, pvar);
+    return ole_variable_ole_type_detail(pvar-&gt;pTypeInfo, pvar-&gt;index);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-to_s">
+            
+              <b>to_s</b>()
+            
+            <a href="../classes/WIN32OLE_VARIABLE.html#method-i-to_s" name="method-i-to_s" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+            <div class="aka">
+              Alias for: <a href="WIN32OLE_VARIABLE.html#method-i-name">name</a>
+            </div>
+          
+          
+          
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-value">
+            
+              <b>WIN32OLE_VARIABLE#value
+</b>
+            
+            <a href="../classes/WIN32OLE_VARIABLE.html#method-i-value" name="method-i-value" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns value if value is exists. If the value does not exist, this method
+returns nil.</p>
+
+<pre><code>tobj = WIN32OLE_TYPE.new(&#39;Microsoft Excel 9.0 Object Library&#39;, &#39;XlSheetType&#39;)
+variables = tobj.variables
+variables.each do |variable|
+  puts &quot;#{variable.name} #{variable.value}&quot;
+end
+
+The result of above script is following:
+  xlChart = -4109
+  xlDialogSheet = -4116
+  xlExcel4IntlMacroSheet = 4
+  xlExcel4MacroSheet = 3
+  xlWorksheet = -4167
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-value_source')" id="l_method-i-value_source">show</a>
+                
+              </p>
+              <div id="method-i-value_source" class="dyn-source">
+                <pre>static VALUE
+folevariable_value(VALUE self)
+{
+    struct olevariabledata *pvar;
+    TypedData_Get_Struct(self, struct olevariabledata, &amp;olevariable_datatype, pvar);
+    return ole_variable_value(pvar-&gt;pTypeInfo, pvar-&gt;index);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-variable_kind">
+            
+              <b>WIN32OLE_VARIABLE#variable_kind
+</b>
+            
+            <a href="../classes/WIN32OLE_VARIABLE.html#method-i-variable_kind" name="method-i-variable_kind" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns variable kind string.</p>
+
+<pre><code>tobj = WIN32OLE_TYPE.new(&#39;Microsoft Excel 9.0 Object Library&#39;, &#39;XlSheetType&#39;)
+variables = tobj.variables
+variables.each do |variable|
+  puts &quot;#{variable.name} #{variable.variable_kind}&quot;
+end
+
+The result of above script is following:
+  xlChart CONSTANT
+  xlDialogSheet CONSTANT
+  xlExcel4IntlMacroSheet CONSTANT
+  xlExcel4MacroSheet CONSTANT
+  xlWorksheet CONSTANT</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-variable_kind_source')" id="l_method-i-variable_kind_source">show</a>
+                
+              </p>
+              <div id="method-i-variable_kind_source" class="dyn-source">
+                <pre>static VALUE
+folevariable_variable_kind(VALUE self)
+{
+    struct olevariabledata *pvar;
+    TypedData_Get_Struct(self, struct olevariabledata, &amp;olevariable_datatype, pvar);
+    return ole_variable_kind(pvar-&gt;pTypeInfo, pvar-&gt;index);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-varkind">
+            
+              <b>WIN32OLE_VARIABLE#varkind
+</b>
+            
+            <a href="../classes/WIN32OLE_VARIABLE.html#method-i-varkind" name="method-i-varkind" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the number which represents variable kind.</p>
+
+<pre><code>tobj = WIN32OLE_TYPE.new(&#39;Microsoft Excel 9.0 Object Library&#39;, &#39;XlSheetType&#39;)
+variables = tobj.variables
+variables.each do |variable|
+  puts &quot;#{variable.name} #{variable.varkind}&quot;
+end
+
+The result of above script is following:
+   xlChart 2
+   xlDialogSheet 2
+   xlExcel4IntlMacroSheet 2
+   xlExcel4MacroSheet 2
+   xlWorksheet 2</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-varkind_source')" id="l_method-i-varkind_source">show</a>
+                
+              </p>
+              <div id="method-i-varkind_source" class="dyn-source">
+                <pre>static VALUE
+folevariable_varkind(VALUE self)
+{
+    struct olevariabledata *pvar;
+    TypedData_Get_Struct(self, struct olevariabledata, &amp;olevariable_datatype, pvar);
+    return ole_variable_varkind(pvar-&gt;pTypeInfo, pvar-&gt;index);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-visible-3F">
+            
+              <b>WIN32OLE_VARIABLE#visible?
+</b>
+            
+            <a href="../classes/WIN32OLE_VARIABLE.html#method-i-visible-3F" name="method-i-visible-3F" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns true if the variable is public.</p>
+
+<pre><code>tobj = WIN32OLE_TYPE.new(&#39;Microsoft Excel 9.0 Object Library&#39;, &#39;XlSheetType&#39;)
+variables = tobj.variables
+variables.each do |variable|
+  puts &quot;#{variable.name} #{variable.visible?}&quot;
+end
+
+The result of above script is following:
+  xlChart true
+  xlDialogSheet true
+  xlExcel4IntlMacroSheet true
+  xlExcel4MacroSheet true
+  xlWorksheet true</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-visible-3F_source')" id="l_method-i-visible-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-visible-3F_source" class="dyn-source">
+                <pre>static VALUE
+folevariable_visible(VALUE self)
+{
+    struct olevariabledata *pvar;
+    TypedData_Get_Struct(self, struct olevariabledata, &amp;olevariable_datatype, pvar);
+    return ole_variable_visible(pvar-&gt;pTypeInfo, pvar-&gt;index);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+
+    </div>
+  </body>
+</html>    

@@ -1,0 +1,695 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>BulkAlterTableMigrationsTest</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/github.css" type="text/css" media="screen" />
+<script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            BulkAlterTableMigrationsTest 
+            
+                <span class="parent">&lt; 
+                    
+                    ActiveRecord::TestCase
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../files/activerecord/test/cases/migration_test_rb.html">activerecord/test/cases/migration_test.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>C</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-column">column</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-columns">columns</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>I</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-index">index</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-indexes">indexes</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>S</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-setup">setup</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-test_adding_indexes">test_adding_indexes</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_adding_multiple_columns">test_adding_multiple_columns</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_changing_columns">test_changing_columns</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_removing_columns">test_removing_columns</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_removing_index">test_removing_index</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>W</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-with_bulk_change_table">with_bulk_change_table</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+        
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-setup">
+            
+              <b>setup</b>()
+            
+            <a href="../classes/BulkAlterTableMigrationsTest.html#method-i-setup" name="method-i-setup" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-setup_source')" id="l_method-i-setup_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/9ae210ba091bc9f54de08da4be1540f0a9782771/activerecord/test/cases/migration_test.rb#L577" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-setup_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/migration_test.rb, line 577</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">setup</span>
+  <span class="ruby-ivar">@connection</span> = <span class="ruby-constant">Person</span>.<span class="ruby-identifier">connection</span>
+  <span class="ruby-ivar">@connection</span>.<span class="ruby-identifier">create_table</span>(<span class="ruby-value">:delete_me</span>, <span class="ruby-value">:force</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">t</span><span class="ruby-operator">|</span> }
+  <span class="ruby-constant">Person</span>.<span class="ruby-identifier">reset_column_information</span>
+  <span class="ruby-constant">Person</span>.<span class="ruby-identifier">reset_sequence_name</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_adding_indexes">
+            
+              <b>test_adding_indexes</b>()
+            
+            <a href="../classes/BulkAlterTableMigrationsTest.html#method-i-test_adding_indexes" name="method-i-test_adding_indexes" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_adding_indexes_source')" id="l_method-i-test_adding_indexes_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/9ae210ba091bc9f54de08da4be1540f0a9782771/activerecord/test/cases/migration_test.rb#L622" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_adding_indexes_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/migration_test.rb, line 622</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_adding_indexes</span>
+  <span class="ruby-identifier">with_bulk_change_table</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">t</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">t</span>.<span class="ruby-identifier">string</span> <span class="ruby-value">:username</span>
+    <span class="ruby-identifier">t</span>.<span class="ruby-identifier">string</span> <span class="ruby-value">:name</span>
+    <span class="ruby-identifier">t</span>.<span class="ruby-identifier">integer</span> <span class="ruby-value">:age</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-comment"># Adding an index fires a query every time to check if an index already exists or not</span>
+  <span class="ruby-identifier">assert_queries</span>(<span class="ruby-number">3</span>) <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">with_bulk_change_table</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">t</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">t</span>.<span class="ruby-identifier">index</span> <span class="ruby-value">:username</span>, <span class="ruby-value">:unique</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>, <span class="ruby-value">:name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:awesome_username_index</span>
+      <span class="ruby-identifier">t</span>.<span class="ruby-identifier">index</span> [<span class="ruby-value">:name</span>, <span class="ruby-value">:age</span>]
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-number">2</span>, <span class="ruby-identifier">indexes</span>.<span class="ruby-identifier">size</span>
+
+  <span class="ruby-identifier">name_age_index</span> = <span class="ruby-identifier">index</span>(<span class="ruby-value">:index_delete_me_on_name_and_age</span>)
+  <span class="ruby-identifier">assert_equal</span> [<span class="ruby-string">&#39;name&#39;</span>, <span class="ruby-string">&#39;age&#39;</span>].<span class="ruby-identifier">sort</span>, <span class="ruby-identifier">name_age_index</span>.<span class="ruby-identifier">columns</span>.<span class="ruby-identifier">sort</span>
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span> <span class="ruby-identifier">name_age_index</span>.<span class="ruby-identifier">unique</span>
+
+  <span class="ruby-identifier">assert</span> <span class="ruby-identifier">index</span>(<span class="ruby-value">:awesome_username_index</span>).<span class="ruby-identifier">unique</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_adding_multiple_columns">
+            
+              <b>test_adding_multiple_columns</b>()
+            
+            <a href="../classes/BulkAlterTableMigrationsTest.html#method-i-test_adding_multiple_columns" name="method-i-test_adding_multiple_columns" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_adding_multiple_columns_source')" id="l_method-i-test_adding_multiple_columns_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/9ae210ba091bc9f54de08da4be1540f0a9782771/activerecord/test/cases/migration_test.rb#L588" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_adding_multiple_columns_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/migration_test.rb, line 588</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_adding_multiple_columns</span>
+  <span class="ruby-identifier">assert_queries</span>(<span class="ruby-number">1</span>) <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">with_bulk_change_table</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">t</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">t</span>.<span class="ruby-identifier">column</span> <span class="ruby-value">:name</span>, <span class="ruby-value">:string</span>
+      <span class="ruby-identifier">t</span>.<span class="ruby-identifier">string</span> <span class="ruby-value">:qualification</span>, <span class="ruby-value">:experience</span>
+      <span class="ruby-identifier">t</span>.<span class="ruby-identifier">integer</span> <span class="ruby-value">:age</span>, <span class="ruby-value">:default</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-number">0</span>
+      <span class="ruby-identifier">t</span>.<span class="ruby-identifier">date</span> <span class="ruby-value">:birthdate</span>
+      <span class="ruby-identifier">t</span>.<span class="ruby-identifier">timestamps</span> <span class="ruby-identifier">null</span><span class="ruby-operator">:</span> <span class="ruby-keyword">true</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-number">8</span>, <span class="ruby-identifier">columns</span>.<span class="ruby-identifier">size</span>
+  [<span class="ruby-value">:name</span>, <span class="ruby-value">:qualification</span>, <span class="ruby-value">:experience</span>].<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span> <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">:string</span>, <span class="ruby-identifier">column</span>(<span class="ruby-identifier">s</span>).<span class="ruby-identifier">type</span> }
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&#39;0&#39;</span>, <span class="ruby-identifier">column</span>(<span class="ruby-value">:age</span>).<span class="ruby-identifier">default</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_changing_columns">
+            
+              <b>test_changing_columns</b>()
+            
+            <a href="../classes/BulkAlterTableMigrationsTest.html#method-i-test_changing_columns" name="method-i-test_changing_columns" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_changing_columns_source')" id="l_method-i-test_changing_columns_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/9ae210ba091bc9f54de08da4be1540f0a9782771/activerecord/test/cases/migration_test.rb#L667" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_changing_columns_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/migration_test.rb, line 667</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_changing_columns</span>
+  <span class="ruby-identifier">with_bulk_change_table</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">t</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">t</span>.<span class="ruby-identifier">string</span> <span class="ruby-value">:name</span>
+    <span class="ruby-identifier">t</span>.<span class="ruby-identifier">date</span> <span class="ruby-value">:birthdate</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span> <span class="ruby-identifier">column</span>(<span class="ruby-value">:name</span>).<span class="ruby-identifier">default</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">:date</span>, <span class="ruby-identifier">column</span>(<span class="ruby-value">:birthdate</span>).<span class="ruby-identifier">type</span>
+
+  <span class="ruby-comment"># One query for columns (delete_me table)</span>
+  <span class="ruby-comment"># One query for primary key (delete_me table)</span>
+  <span class="ruby-comment"># One query to do the bulk change</span>
+  <span class="ruby-identifier">assert_queries</span>(<span class="ruby-number">3</span>, <span class="ruby-value">:ignore_none</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>) <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">with_bulk_change_table</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">t</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">t</span>.<span class="ruby-identifier">change</span> <span class="ruby-value">:name</span>, <span class="ruby-value">:string</span>, <span class="ruby-value">:default</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;NONAME&#39;</span>
+      <span class="ruby-identifier">t</span>.<span class="ruby-identifier">change</span> <span class="ruby-value">:birthdate</span>, <span class="ruby-value">:datetime</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&#39;NONAME&#39;</span>, <span class="ruby-identifier">column</span>(<span class="ruby-value">:name</span>).<span class="ruby-identifier">default</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">:datetime</span>, <span class="ruby-identifier">column</span>(<span class="ruby-value">:birthdate</span>).<span class="ruby-identifier">type</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_removing_columns">
+            
+              <b>test_removing_columns</b>()
+            
+            <a href="../classes/BulkAlterTableMigrationsTest.html#method-i-test_removing_columns" name="method-i-test_removing_columns" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_removing_columns_source')" id="l_method-i-test_removing_columns_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/9ae210ba091bc9f54de08da4be1540f0a9782771/activerecord/test/cases/migration_test.rb#L604" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_removing_columns_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/migration_test.rb, line 604</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_removing_columns</span>
+  <span class="ruby-identifier">with_bulk_change_table</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">t</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">t</span>.<span class="ruby-identifier">string</span> <span class="ruby-value">:qualification</span>, <span class="ruby-value">:experience</span>
+  <span class="ruby-keyword">end</span>
+
+  [<span class="ruby-value">:qualification</span>, <span class="ruby-value">:experience</span>].<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span> <span class="ruby-identifier">assert</span> <span class="ruby-identifier">column</span>(<span class="ruby-identifier">c</span>) }
+
+  <span class="ruby-identifier">assert_queries</span>(<span class="ruby-number">1</span>) <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">with_bulk_change_table</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">t</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">t</span>.<span class="ruby-identifier">remove</span> <span class="ruby-value">:qualification</span>, <span class="ruby-value">:experience</span>
+      <span class="ruby-identifier">t</span>.<span class="ruby-identifier">string</span> <span class="ruby-value">:qualification_experience</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  [<span class="ruby-value">:qualification</span>, <span class="ruby-value">:experience</span>].<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span> <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span> <span class="ruby-identifier">column</span>(<span class="ruby-identifier">c</span>) }
+  <span class="ruby-identifier">assert</span> <span class="ruby-identifier">column</span>(<span class="ruby-value">:qualification_experience</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_removing_index">
+            
+              <b>test_removing_index</b>()
+            
+            <a href="../classes/BulkAlterTableMigrationsTest.html#method-i-test_removing_index" name="method-i-test_removing_index" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_removing_index_source')" id="l_method-i-test_removing_index_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/9ae210ba091bc9f54de08da4be1540f0a9782771/activerecord/test/cases/migration_test.rb#L646" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_removing_index_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/migration_test.rb, line 646</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_removing_index</span>
+  <span class="ruby-identifier">with_bulk_change_table</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">t</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">t</span>.<span class="ruby-identifier">string</span> <span class="ruby-value">:name</span>
+    <span class="ruby-identifier">t</span>.<span class="ruby-identifier">index</span> <span class="ruby-value">:name</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">assert</span> <span class="ruby-identifier">index</span>(<span class="ruby-value">:index_delete_me_on_name</span>)
+
+  <span class="ruby-identifier">assert_queries</span>(<span class="ruby-number">3</span>) <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">with_bulk_change_table</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">t</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">t</span>.<span class="ruby-identifier">remove_index</span> <span class="ruby-value">:name</span>
+      <span class="ruby-identifier">t</span>.<span class="ruby-identifier">index</span> <span class="ruby-value">:name</span>, <span class="ruby-value">:name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:new_name_index</span>, <span class="ruby-value">:unique</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span> <span class="ruby-identifier">index</span>(<span class="ruby-value">:index_delete_me_on_name</span>)
+
+  <span class="ruby-identifier">new_name_index</span> = <span class="ruby-identifier">index</span>(<span class="ruby-value">:new_name_index</span>)
+  <span class="ruby-identifier">assert</span> <span class="ruby-identifier">new_name_index</span>.<span class="ruby-identifier">unique</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+              
+      <div class="sectiontitle">Instance Protected methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-column">
+            
+              <b>column</b>(name)
+            
+            <a href="../classes/BulkAlterTableMigrationsTest.html#method-i-column" name="method-i-column" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-column_source')" id="l_method-i-column_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/9ae210ba091bc9f54de08da4be1540f0a9782771/activerecord/test/cases/migration_test.rb#L701" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-column_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/migration_test.rb, line 701</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">column</span>(<span class="ruby-identifier">name</span>)
+  <span class="ruby-identifier">columns</span>.<span class="ruby-identifier">detect</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">name</span>.<span class="ruby-identifier">to_s</span> }
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-columns">
+            
+              <b>columns</b>()
+            
+            <a href="../classes/BulkAlterTableMigrationsTest.html#method-i-columns" name="method-i-columns" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-columns_source')" id="l_method-i-columns_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/9ae210ba091bc9f54de08da4be1540f0a9782771/activerecord/test/cases/migration_test.rb#L705" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-columns_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/migration_test.rb, line 705</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">columns</span>
+  <span class="ruby-ivar">@columns</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Person</span>.<span class="ruby-identifier">connection</span>.<span class="ruby-identifier">columns</span>(<span class="ruby-string">&#39;delete_me&#39;</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-index">
+            
+              <b>index</b>(name)
+            
+            <a href="../classes/BulkAlterTableMigrationsTest.html#method-i-index" name="method-i-index" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-index_source')" id="l_method-i-index_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/9ae210ba091bc9f54de08da4be1540f0a9782771/activerecord/test/cases/migration_test.rb#L709" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-index_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/migration_test.rb, line 709</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">index</span>(<span class="ruby-identifier">name</span>)
+  <span class="ruby-identifier">indexes</span>.<span class="ruby-identifier">detect</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span> <span class="ruby-identifier">i</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">name</span>.<span class="ruby-identifier">to_s</span> }
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-indexes">
+            
+              <b>indexes</b>()
+            
+            <a href="../classes/BulkAlterTableMigrationsTest.html#method-i-indexes" name="method-i-indexes" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-indexes_source')" id="l_method-i-indexes_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/9ae210ba091bc9f54de08da4be1540f0a9782771/activerecord/test/cases/migration_test.rb#L713" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-indexes_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/migration_test.rb, line 713</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">indexes</span>
+  <span class="ruby-ivar">@indexes</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Person</span>.<span class="ruby-identifier">connection</span>.<span class="ruby-identifier">indexes</span>(<span class="ruby-string">&#39;delete_me&#39;</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-with_bulk_change_table">
+            
+              <b>with_bulk_change_table</b>()
+            
+            <a href="../classes/BulkAlterTableMigrationsTest.html#method-i-with_bulk_change_table" name="method-i-with_bulk_change_table" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-with_bulk_change_table_source')" id="l_method-i-with_bulk_change_table_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/9ae210ba091bc9f54de08da4be1540f0a9782771/activerecord/test/cases/migration_test.rb#L692" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-with_bulk_change_table_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/migration_test.rb, line 692</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">with_bulk_change_table</span>
+  <span class="ruby-comment"># Reset columns/indexes cache as we&#39;re changing the table</span>
+  <span class="ruby-ivar">@columns</span> = <span class="ruby-ivar">@indexes</span> = <span class="ruby-keyword">nil</span>
+
+  <span class="ruby-constant">Person</span>.<span class="ruby-identifier">connection</span>.<span class="ruby-identifier">change_table</span>(<span class="ruby-value">:delete_me</span>, <span class="ruby-value">:bulk</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">t</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">yield</span> <span class="ruby-identifier">t</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+
+    </div>
+  </body>
+</html>    

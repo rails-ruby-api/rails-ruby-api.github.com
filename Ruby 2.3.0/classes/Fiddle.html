@@ -1,0 +1,1392 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Fiddle</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/github.css" type="text/css" media="screen" />
+<script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Module</span> 
+            Fiddle 
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../files/ext/fiddle/closure_c.html">ext/fiddle/closure.c</a></li>
+            
+            <li><a href="../files/ext/fiddle/fiddle_c.html">ext/fiddle/fiddle.c</a></li>
+            
+            <li><a href="../files/ext/fiddle/lib/fiddle_rb.html">ext/fiddle/lib/fiddle.rb</a></li>
+            
+            <li><a href="../files/ext/fiddle/lib/fiddle/closure_rb.html">ext/fiddle/lib/fiddle/closure.rb</a></li>
+            
+            <li><a href="../files/ext/fiddle/lib/fiddle/cparser_rb.html">ext/fiddle/lib/fiddle/cparser.rb</a></li>
+            
+            <li><a href="../files/ext/fiddle/lib/fiddle/function_rb.html">ext/fiddle/lib/fiddle/function.rb</a></li>
+            
+            <li><a href="../files/ext/fiddle/lib/fiddle/import_rb.html">ext/fiddle/lib/fiddle/import.rb</a></li>
+            
+            <li><a href="../files/ext/fiddle/lib/fiddle/pack_rb.html">ext/fiddle/lib/fiddle/pack.rb</a></li>
+            
+            <li><a href="../files/ext/fiddle/lib/fiddle/struct_rb.html">ext/fiddle/lib/fiddle/struct.rb</a></li>
+            
+            <li><a href="../files/ext/fiddle/lib/fiddle/types_rb.html">ext/fiddle/lib/fiddle/types.rb</a></li>
+            
+            <li><a href="../files/ext/fiddle/lib/fiddle/value_rb.html">ext/fiddle/lib/fiddle/value.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>A libffi wrapper for Ruby.</p>
+
+<h2 id="module-Fiddle-label-Description">Description</h2>
+
+<p><a href="Fiddle.html">Fiddle</a> is an extension to translate a foreign
+function interface (FFI) with ruby.</p>
+
+<p>It wraps <a href="http://sourceware.org/libffi/">libffi</a>, a popular C
+library which provides a portable interface that allows code written in one
+language to call code written in another language.</p>
+
+<h2 id="module-Fiddle-label-Example">Example</h2>
+
+<p>Here we will use <a href="Fiddle/Function.html">Fiddle::Function</a> to
+wrap <a href="http://linux.die.net/man/3/floor">floor(3) from libm</a></p>
+
+<pre><code>require &#39;fiddle&#39;
+
+libm = Fiddle.dlopen(&#39;/lib/libm.so.6&#39;)
+
+floor = Fiddle::Function.new(
+  libm[&#39;floor&#39;],
+  [Fiddle::TYPE_DOUBLE],
+  Fiddle::TYPE_DOUBLE
+)
+
+puts floor.call(3.14159) #=&gt; 3.0
+</code></pre>
+
+<p>frozen_string_literal: false</p>
+
+<p>frozen_string_literal: false</p>
+
+<p>frozen_string_literal: false</p>
+
+<p>frozen_string_literal: false</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+    <!-- Namespace -->
+    <div class="sectiontitle">Namespace</div>
+    <ul>
+      
+        <li>
+          <span class="type">MODULE</span>
+          <a href="Fiddle/BasicTypes.html">Fiddle::BasicTypes</a>
+        </li>
+      
+        <li>
+          <span class="type">MODULE</span>
+          <a href="Fiddle/CParser.html">Fiddle::CParser</a>
+        </li>
+      
+        <li>
+          <span class="type">MODULE</span>
+          <a href="Fiddle/CStructBuilder.html">Fiddle::CStructBuilder</a>
+        </li>
+      
+        <li>
+          <span class="type">MODULE</span>
+          <a href="Fiddle/Importer.html">Fiddle::Importer</a>
+        </li>
+      
+        <li>
+          <span class="type">MODULE</span>
+          <a href="Fiddle/Win32Types.html">Fiddle::Win32Types</a>
+        </li>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="Fiddle/CStruct.html">Fiddle::CStruct</a>
+        </li>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="Fiddle/CStructEntity.html">Fiddle::CStructEntity</a>
+        </li>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="Fiddle/CUnion.html">Fiddle::CUnion</a>
+        </li>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="Fiddle/CUnionEntity.html">Fiddle::CUnionEntity</a>
+        </li>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="Fiddle/Closure.html">Fiddle::Closure</a>
+        </li>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="Fiddle/CompositeHandler.html">Fiddle::CompositeHandler</a>
+        </li>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="Fiddle/DLError.html">Fiddle::DLError</a>
+        </li>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="Fiddle/Function.html">Fiddle::Function</a>
+        </li>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="Fiddle/Handle.html">Fiddle::Handle</a>
+        </li>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="Fiddle/Pointer.html">Fiddle::Pointer</a>
+        </li>
+      
+    </ul>
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>D</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-dlopen">dlopen</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-dlunwrap">dlunwrap</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-dlwrap">dlwrap</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>F</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-free">free</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>L</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-last_error">last_error</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-last_error-3D">last_error=</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>M</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-malloc">malloc</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>R</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-realloc">realloc</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>W</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-win32_last_error">win32_last_error</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-win32_last_error-3D">win32_last_error=</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+      <!-- Section constants -->
+      <div class="sectiontitle">Constants</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class="attr-name">TYPE_VOID</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fiddle.html#TYPE_VOID">TYPE_VOID</a></p>
+
+<p>C type - void</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">TYPE_VOIDP</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fiddle.html#TYPE_VOIDP">TYPE_VOIDP</a></p>
+
+<p>C type - void*</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">TYPE_CHAR</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fiddle.html#TYPE_CHAR">TYPE_CHAR</a></p>
+
+<p>C type - char</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">TYPE_SHORT</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fiddle.html#TYPE_SHORT">TYPE_SHORT</a></p>
+
+<p>C type - short</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">TYPE_INT</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fiddle.html#TYPE_INT">TYPE_INT</a></p>
+
+<p>C type - int</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">TYPE_LONG</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fiddle.html#TYPE_LONG">TYPE_LONG</a></p>
+
+<p>C type - long</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">TYPE_LONG_LONG</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fiddle.html#TYPE_LONG_LONG">TYPE_LONG_LONG</a></p>
+
+<p>C type - long long</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">TYPE_FLOAT</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fiddle.html#TYPE_FLOAT">TYPE_FLOAT</a></p>
+
+<p>C type - float</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">TYPE_DOUBLE</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fiddle.html#TYPE_DOUBLE">TYPE_DOUBLE</a></p>
+
+<p>C type - double</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">TYPE_SIZE_T</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fiddle.html#TYPE_SIZE_T">TYPE_SIZE_T</a></p>
+
+<p>C type - size_t</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">TYPE_SSIZE_T</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fiddle.html#TYPE_SSIZE_T">TYPE_SSIZE_T</a></p>
+
+<p>C type - ssize_t</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">TYPE_PTRDIFF_T</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fiddle.html#TYPE_PTRDIFF_T">TYPE_PTRDIFF_T</a></p>
+
+<p>C type - ptrdiff_t</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">TYPE_INTPTR_T</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fiddle.html#TYPE_INTPTR_T">TYPE_INTPTR_T</a></p>
+
+<p>C type - intptr_t</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">TYPE_UINTPTR_T</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fiddle.html#TYPE_UINTPTR_T">TYPE_UINTPTR_T</a></p>
+
+<p>C type - uintptr_t</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">ALIGN_VOIDP</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fiddle.html#ALIGN_VOIDP">ALIGN_VOIDP</a></p>
+
+<p>The alignment size of a void*</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">ALIGN_CHAR</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fiddle.html#ALIGN_CHAR">ALIGN_CHAR</a></p>
+
+<p>The alignment size of a char</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">ALIGN_SHORT</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fiddle.html#ALIGN_SHORT">ALIGN_SHORT</a></p>
+
+<p>The alignment size of a short</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">ALIGN_INT</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fiddle.html#ALIGN_INT">ALIGN_INT</a></p>
+
+<p>The alignment size of an int</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">ALIGN_LONG</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fiddle.html#ALIGN_LONG">ALIGN_LONG</a></p>
+
+<p>The alignment size of a long</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">ALIGN_LONG_LONG</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fiddle.html#ALIGN_LONG_LONG">ALIGN_LONG_LONG</a></p>
+
+<p>The alignment size of a long long</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">ALIGN_FLOAT</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fiddle.html#ALIGN_FLOAT">ALIGN_FLOAT</a></p>
+
+<p>The alignment size of a float</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">ALIGN_DOUBLE</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fiddle.html#ALIGN_DOUBLE">ALIGN_DOUBLE</a></p>
+
+<p>The alignment size of a double</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">ALIGN_SIZE_T</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fiddle.html#ALIGN_SIZE_T">ALIGN_SIZE_T</a></p>
+
+<p>The alignment size of a size_t</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">ALIGN_SSIZE_T</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fiddle.html#ALIGN_SSIZE_T">ALIGN_SSIZE_T</a></p>
+
+<p>The alignment size of a ssize_t</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">ALIGN_PTRDIFF_T</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fiddle.html#ALIGN_PTRDIFF_T">ALIGN_PTRDIFF_T</a></p>
+
+<p>The alignment size of a ptrdiff_t</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">ALIGN_INTPTR_T</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fiddle.html#ALIGN_INTPTR_T">ALIGN_INTPTR_T</a></p>
+
+<p>The alignment size of a intptr_t</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">ALIGN_UINTPTR_T</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fiddle.html#ALIGN_UINTPTR_T">ALIGN_UINTPTR_T</a></p>
+
+<p>The alignment size of a uintptr_t</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">WINDOWS</td>
+            <td>=</td>
+            <td class="attr-value">Qtrue</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Returns a boolean regarding whether the host is WIN32</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">SIZEOF_VOIDP</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fiddle.html#SIZEOF_VOIDP">SIZEOF_VOIDP</a></p>
+
+<p>size of a void*</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">SIZEOF_CHAR</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fiddle.html#SIZEOF_CHAR">SIZEOF_CHAR</a></p>
+
+<p>size of a char</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">SIZEOF_SHORT</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fiddle.html#SIZEOF_SHORT">SIZEOF_SHORT</a></p>
+
+<p>size of a short</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">SIZEOF_INT</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fiddle.html#SIZEOF_INT">SIZEOF_INT</a></p>
+
+<p>size of an int</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">SIZEOF_LONG</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fiddle.html#SIZEOF_LONG">SIZEOF_LONG</a></p>
+
+<p>size of a long</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">SIZEOF_LONG_LONG</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fiddle.html#SIZEOF_LONG_LONG">SIZEOF_LONG_LONG</a></p>
+
+<p>size of a long long</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">SIZEOF_FLOAT</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fiddle.html#SIZEOF_FLOAT">SIZEOF_FLOAT</a></p>
+
+<p>size of a float</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">SIZEOF_DOUBLE</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fiddle.html#SIZEOF_DOUBLE">SIZEOF_DOUBLE</a></p>
+
+<p>size of a double</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">SIZEOF_SIZE_T</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fiddle.html#SIZEOF_SIZE_T">SIZEOF_SIZE_T</a></p>
+
+<p>size of a size_t</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">SIZEOF_SSIZE_T</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fiddle.html#SIZEOF_SSIZE_T">SIZEOF_SSIZE_T</a></p>
+
+<p>size of a ssize_t</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">SIZEOF_PTRDIFF_T</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fiddle.html#SIZEOF_PTRDIFF_T">SIZEOF_PTRDIFF_T</a></p>
+
+<p>size of a ptrdiff_t</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">SIZEOF_INTPTR_T</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fiddle.html#SIZEOF_INTPTR_T">SIZEOF_INTPTR_T</a></p>
+
+<p>size of a intptr_t</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">SIZEOF_UINTPTR_T</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fiddle.html#SIZEOF_UINTPTR_T">SIZEOF_UINTPTR_T</a></p>
+
+<p>size of a uintptr_t</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">RUBY_FREE</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fiddle.html#RUBY_FREE">RUBY_FREE</a></p>
+
+<p>Address of the ruby_xfree() function</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">BUILD_RUBY_PLATFORM</td>
+            <td>=</td>
+            <td class="attr-value">Document-const</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="Fiddle.html#BUILD_RUBY_PLATFORM">BUILD_RUBY_PLATFORM</a></p>
+
+<p>Platform built against (i.e. “x86_64-linux”, etc.)</p>
+
+<p>See also RUBY_PLATFORM</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">RTLD_GLOBAL</td>
+            <td>=</td>
+            <td class="attr-value">Handle::RTLD_GLOBAL # :nodoc:</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Add constants for backwards compat</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">RTLD_LAZY</td>
+            <td>=</td>
+            <td class="attr-value">Handle::RTLD_LAZY</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">RTLD_NOW</td>
+            <td>=</td>
+            <td class="attr-value">Handle::RTLD_NOW</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+      </table>
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-dlopen">
+            
+              <b>dlopen(library) => Fiddle::Handle
+</b>
+            
+            <a href="../classes/Fiddle.html#method-c-dlopen" name="method-c-dlopen" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Creates a new handler that opens <code>library</code>, and returns an
+instance of <a href="Fiddle/Handle.html">Fiddle::Handle</a>.</p>
+
+<p>If <code>nil</code> is given for the <code>library</code>,
+Fiddle::Handle::DEFAULT is used, which is the equivalent to RTLD_DEFAULT.
+See <code>man 3 dlopen</code> for more.</p>
+
+<pre><code>lib = Fiddle.dlopen(nil)
+</code></pre>
+
+<p>The default is dependent on OS, and provide a handle for all libraries
+already loaded. For example, in most cases you can use this to access
+<code>libc</code> functions, or ruby functions like
+<code>rb_str_new</code>.</p>
+
+<p>See <a href="Fiddle/Handle.html#method-c-new">Fiddle::Handle.new</a> for
+more.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-dlopen_source')" id="l_method-c-dlopen_source">show</a>
+                
+              </p>
+              <div id="method-c-dlopen_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/fiddle/lib/fiddle.rb, line 46</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">dlopen</span> <span class="ruby-identifier">library</span>
+  <span class="ruby-constant">Fiddle</span><span class="ruby-operator">::</span><span class="ruby-constant">Handle</span>.<span class="ruby-identifier">new</span> <span class="ruby-identifier">library</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-dlunwrap">
+            
+              <b>Fiddle.dlunwrap(addr)
+</b>
+            
+            <a href="../classes/Fiddle.html#method-c-dlunwrap" name="method-c-dlunwrap" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the hexadecimal representation of a memory pointer address
+<code>addr</code></p>
+
+<p>Example:</p>
+
+<pre><code>lib = Fiddle.dlopen(&#39;/lib64/libc-2.15.so&#39;)
+=&gt; #&lt;Fiddle::Handle:0x00000001342460&gt;
+
+lib[&#39;strcpy&#39;].to_s(16)
+=&gt; &quot;7f59de6dd240&quot;
+
+Fiddle.dlunwrap(Fiddle.dlwrap(lib[&#39;strcpy&#39;].to_s(16)))
+=&gt; &quot;7f59de6dd240&quot;</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-dlunwrap_source')" id="l_method-c-dlunwrap_source">show</a>
+                
+              </p>
+              <div id="method-c-dlunwrap_source" class="dyn-source">
+                <pre>VALUE
+rb_fiddle_ptr2value(VALUE self, VALUE addr)
+{
+    return (VALUE)NUM2PTR(addr);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-dlwrap">
+            
+              <b>Fiddle.dlwrap(val)
+</b>
+            
+            <a href="../classes/Fiddle.html#method-c-dlwrap" name="method-c-dlwrap" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns a memory pointer of a function&#39;s hexadecimal address location
+<code>val</code></p>
+
+<p>Example:</p>
+
+<pre><code>lib = Fiddle.dlopen(&#39;/lib64/libc-2.15.so&#39;)
+=&gt; #&lt;Fiddle::Handle:0x00000001342460&gt;
+
+Fiddle.dlwrap(lib[&#39;strcpy&#39;].to_s(16))
+=&gt; 25522520</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-dlwrap_source')" id="l_method-c-dlwrap_source">show</a>
+                
+              </p>
+              <div id="method-c-dlwrap_source" class="dyn-source">
+                <pre>static VALUE
+rb_fiddle_value2ptr(VALUE self, VALUE val)
+{
+    return PTR2NUM((void*)val);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-free">
+            
+              <b>Fiddle.free(addr)
+</b>
+            
+            <a href="../classes/Fiddle.html#method-c-free" name="method-c-free" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Free the memory at address <code>addr</code></p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-free_source')" id="l_method-c-free_source">show</a>
+                
+              </p>
+              <div id="method-c-free_source" class="dyn-source">
+                <pre>VALUE
+rb_fiddle_free(VALUE self, VALUE addr)
+{
+    void *ptr = NUM2PTR(addr);
+
+    ruby_xfree(ptr);
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-last_error">
+            
+              <b>last_error</b>()
+            
+            <a href="../classes/Fiddle.html#method-c-last_error" name="method-c-last_error" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the last <code>Error</code> of the current executing
+<code>Thread</code> or nil if none</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-last_error_source')" id="l_method-c-last_error_source">show</a>
+                
+              </p>
+              <div id="method-c-last_error_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/fiddle/lib/fiddle.rb, line 21</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">self</span>.<span class="ruby-identifier">last_error</span>
+  <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">current</span>[<span class="ruby-value">:__FIDDLE_LAST_ERROR__</span>]
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-last_error-3D">
+            
+              <b>last_error=</b>(error)
+            
+            <a href="../classes/Fiddle.html#method-c-last_error-3D" name="method-c-last_error-3D" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Sets the last <code>Error</code> of the current executing
+<code>Thread</code> to <code>error</code></p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-last_error-3D_source')" id="l_method-c-last_error-3D_source">show</a>
+                
+              </p>
+              <div id="method-c-last_error-3D_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/fiddle/lib/fiddle.rb, line 26</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">self</span>.<span class="ruby-identifier">last_error=</span> <span class="ruby-identifier">error</span>
+  <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">current</span>[<span class="ruby-value">:__DL2_LAST_ERROR__</span>] = <span class="ruby-identifier">error</span>
+  <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">current</span>[<span class="ruby-value">:__FIDDLE_LAST_ERROR__</span>] = <span class="ruby-identifier">error</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-malloc">
+            
+              <b>Fiddle.malloc(size)
+</b>
+            
+            <a href="../classes/Fiddle.html#method-c-malloc" name="method-c-malloc" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Allocate <code>size</code> bytes of memory and return the integer memory
+address for the allocated memory.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-malloc_source')" id="l_method-c-malloc_source">show</a>
+                
+              </p>
+              <div id="method-c-malloc_source" class="dyn-source">
+                <pre>static VALUE
+rb_fiddle_malloc(VALUE self, VALUE size)
+{
+    void *ptr;
+
+    ptr = (void*)ruby_xmalloc(NUM2SIZET(size));
+    return PTR2NUM(ptr);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-realloc">
+            
+              <b>Fiddle.realloc(addr, size)
+</b>
+            
+            <a href="../classes/Fiddle.html#method-c-realloc" name="method-c-realloc" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Change the size of the memory allocated at the memory location
+<code>addr</code> to <code>size</code> bytes.  Returns the memory address
+of the reallocated memory, which may be different than the address passed
+in.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-realloc_source')" id="l_method-c-realloc_source">show</a>
+                
+              </p>
+              <div id="method-c-realloc_source" class="dyn-source">
+                <pre>static VALUE
+rb_fiddle_realloc(VALUE self, VALUE addr, VALUE size)
+{
+    void *ptr = NUM2PTR(addr);
+
+    ptr = (void*)ruby_xrealloc(ptr, NUM2SIZET(size));
+    return PTR2NUM(ptr);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-win32_last_error">
+            
+              <b>win32_last_error</b>()
+            
+            <a href="../classes/Fiddle.html#method-c-win32_last_error" name="method-c-win32_last_error" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the last win32 <code>Error</code> of the current executing
+<code>Thread</code> or nil if none</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-win32_last_error_source')" id="l_method-c-win32_last_error_source">show</a>
+                
+              </p>
+              <div id="method-c-win32_last_error_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/fiddle/lib/fiddle.rb, line 10</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">self</span>.<span class="ruby-identifier">win32_last_error</span>
+  <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">current</span>[<span class="ruby-value">:__FIDDLE_WIN32_LAST_ERROR__</span>]
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-win32_last_error-3D">
+            
+              <b>win32_last_error=</b>(error)
+            
+            <a href="../classes/Fiddle.html#method-c-win32_last_error-3D" name="method-c-win32_last_error-3D" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Sets the last win32 <code>Error</code> of the current executing
+<code>Thread</code> to <code>error</code></p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-win32_last_error-3D_source')" id="l_method-c-win32_last_error-3D_source">show</a>
+                
+              </p>
+              <div id="method-c-win32_last_error-3D_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/fiddle/lib/fiddle.rb, line 15</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">self</span>.<span class="ruby-identifier">win32_last_error=</span> <span class="ruby-identifier">error</span>
+  <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">current</span>[<span class="ruby-value">:__FIDDLE_WIN32_LAST_ERROR__</span>] = <span class="ruby-identifier">error</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                        </div>
+
+    </div>
+  </body>
+</html>    

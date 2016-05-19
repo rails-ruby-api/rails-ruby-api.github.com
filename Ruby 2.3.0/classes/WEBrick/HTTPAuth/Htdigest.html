@@ -1,0 +1,512 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>WEBrick::HTTPAuth::Htdigest</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/github.css" type="text/css" media="screen" />
+<script src="../../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            WEBrick::HTTPAuth::Htdigest 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../../Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../../files/lib/webrick/httpauth/htdigest_rb.html">lib/webrick/httpauth/htdigest.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p><a href="Htdigest.html">Htdigest</a> accesses apache-compatible digest
+password files.  Passwords are matched to a realm where they are valid. 
+For security, the path for a digest password database should be stored
+outside of the paths available to the HTTP server.</p>
+
+<p><a href="Htdigest.html">Htdigest</a> is intended for use with <a
+href="DigestAuth.html">WEBrick::HTTPAuth::DigestAuth</a> and stores
+passwords using cryptographic hashes.</p>
+
+<pre><code>htpasswd = WEBrick::HTTPAuth::Htdigest.new &#39;my_password_file&#39;
+htpasswd.set_passwd &#39;my realm&#39;, &#39;username&#39;, &#39;password&#39;
+htpasswd.flush
+</code></pre>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>D</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-delete_passwd">delete_passwd</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>E</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-each">each</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>F</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-flush">flush</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>G</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-get_passwd">get_passwd</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>R</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-reload">reload</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>S</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-set_passwd">set_passwd</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+    <!-- Includes -->
+    <div class="sectiontitle">Included Modules</div>
+    <ul>
+      
+        <li>
+          
+            <a href="UserDB.html">
+              WEBrick::HTTPAuth::UserDB
+            </a>
+          
+        </li>
+      
+    </ul>
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <b>new</b>(path)
+            
+            <a href="../../../classes/WEBrick/HTTPAuth/Htdigest.html#method-c-new" name="method-c-new" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Open a digest password database at <code>path</code></p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/webrick/httpauth/htdigest.rb, line 37</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">initialize</span>(<span class="ruby-identifier">path</span>)
+  <span class="ruby-ivar">@path</span> = <span class="ruby-identifier">path</span>
+  <span class="ruby-ivar">@mtime</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">at</span>(<span class="ruby-number">0</span>)
+  <span class="ruby-ivar">@digest</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-ivar">@mutex</span> = <span class="ruby-constant">Mutex</span><span class="ruby-operator">::</span><span class="ruby-identifier">new</span>
+  <span class="ruby-ivar">@auth_type</span> = <span class="ruby-constant">DigestAuth</span>
+  <span class="ruby-identifier">open</span>(<span class="ruby-ivar">@path</span>,<span class="ruby-string">&quot;a&quot;</span>).<span class="ruby-identifier">close</span> <span class="ruby-keyword">unless</span> <span class="ruby-constant">File</span><span class="ruby-operator">::</span><span class="ruby-identifier">exist?</span>(<span class="ruby-ivar">@path</span>)
+  <span class="ruby-identifier">reload</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-delete_passwd">
+            
+              <b>delete_passwd</b>(realm, user)
+            
+            <a href="../../../classes/WEBrick/HTTPAuth/Htdigest.html#method-i-delete_passwd" name="method-i-delete_passwd" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Removes a password from the database for <code>user</code> in
+<code>realm</code>.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-delete_passwd_source')" id="l_method-i-delete_passwd_source">show</a>
+                
+              </p>
+              <div id="method-i-delete_passwd_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/webrick/httpauth/htdigest.rb, line 113</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">delete_passwd</span>(<span class="ruby-identifier">realm</span>, <span class="ruby-identifier">user</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">hash</span> = <span class="ruby-ivar">@digest</span>[<span class="ruby-identifier">realm</span>]
+    <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">user</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-each">
+            
+              <b>each</b>()
+            
+            <a href="../../../classes/WEBrick/HTTPAuth/Htdigest.html#method-i-each" name="method-i-each" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Iterate passwords in the database.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-each_source')" id="l_method-i-each_source">show</a>
+                
+              </p>
+              <div id="method-i-each_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/webrick/httpauth/htdigest.rb, line 122</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">each</span> <span class="ruby-comment"># :yields: [user, realm, password_hash]</span>
+  <span class="ruby-ivar">@digest</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">each</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">realm</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">hash</span> = <span class="ruby-ivar">@digest</span>[<span class="ruby-identifier">realm</span>]
+    <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">each</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">user</span><span class="ruby-operator">|</span>
+      <span class="ruby-keyword">yield</span>([<span class="ruby-identifier">user</span>, <span class="ruby-identifier">realm</span>, <span class="ruby-identifier">hash</span>[<span class="ruby-identifier">user</span>]])
+    }
+  }
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-flush">
+            
+              <b>flush</b>(output=nil)
+            
+            <a href="../../../classes/WEBrick/HTTPAuth/Htdigest.html#method-i-flush" name="method-i-flush" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Flush the password database.  If <code>output</code> is given the database
+will be written there instead of to the original path.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-flush_source')" id="l_method-i-flush_source">show</a>
+                
+              </p>
+              <div id="method-i-flush_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/webrick/httpauth/htdigest.rb, line 72</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">flush</span>(<span class="ruby-identifier">output</span>=<span class="ruby-keyword">nil</span>)
+  <span class="ruby-identifier">output</span> <span class="ruby-operator">||=</span> <span class="ruby-ivar">@path</span>
+  <span class="ruby-identifier">tmp</span> = <span class="ruby-constant">Tempfile</span>.<span class="ruby-identifier">create</span>(<span class="ruby-string">&quot;htpasswd&quot;</span>, <span class="ruby-constant">File</span><span class="ruby-operator">::</span><span class="ruby-identifier">dirname</span>(<span class="ruby-identifier">output</span>))
+  <span class="ruby-identifier">renamed</span> = <span class="ruby-keyword">false</span>
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-identifier">each</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">item</span><span class="ruby-operator">|</span> <span class="ruby-identifier">tmp</span>.<span class="ruby-identifier">puts</span>(<span class="ruby-identifier">item</span>.<span class="ruby-identifier">join</span>(<span class="ruby-string">&quot;:&quot;</span>)) }
+    <span class="ruby-identifier">tmp</span>.<span class="ruby-identifier">close</span>
+    <span class="ruby-constant">File</span><span class="ruby-operator">::</span><span class="ruby-identifier">rename</span>(<span class="ruby-identifier">tmp</span>.<span class="ruby-identifier">path</span>, <span class="ruby-identifier">output</span>)
+    <span class="ruby-identifier">renamed</span> = <span class="ruby-keyword">true</span>
+  <span class="ruby-keyword">ensure</span>
+    <span class="ruby-identifier">tmp</span>.<span class="ruby-identifier">close</span> <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">tmp</span>.<span class="ruby-identifier">closed?</span>
+    <span class="ruby-constant">File</span>.<span class="ruby-identifier">unlink</span>(<span class="ruby-identifier">tmp</span>.<span class="ruby-identifier">path</span>) <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">renamed</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-get_passwd">
+            
+              <b>get_passwd</b>(realm, user, reload_db)
+            
+            <a href="../../../classes/WEBrick/HTTPAuth/Htdigest.html#method-i-get_passwd" name="method-i-get_passwd" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Retrieves a password from the database for <code>user</code> in
+<code>realm</code>.  If <code>reload_db</code> is true the database will be
+reloaded first.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-get_passwd_source')" id="l_method-i-get_passwd_source">show</a>
+                
+              </p>
+              <div id="method-i-get_passwd_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/webrick/httpauth/htdigest.rb, line 91</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">get_passwd</span>(<span class="ruby-identifier">realm</span>, <span class="ruby-identifier">user</span>, <span class="ruby-identifier">reload_db</span>)
+  <span class="ruby-identifier">reload</span>() <span class="ruby-keyword">if</span> <span class="ruby-identifier">reload_db</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">hash</span> = <span class="ruby-ivar">@digest</span>[<span class="ruby-identifier">realm</span>]
+    <span class="ruby-identifier">hash</span>[<span class="ruby-identifier">user</span>]
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-reload">
+            
+              <b>reload</b>()
+            
+            <a href="../../../classes/WEBrick/HTTPAuth/Htdigest.html#method-i-reload" name="method-i-reload" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Reloads passwords from the database</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-reload_source')" id="l_method-i-reload_source">show</a>
+                
+              </p>
+              <div id="method-i-reload_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/webrick/httpauth/htdigest.rb, line 50</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">reload</span>
+  <span class="ruby-identifier">mtime</span> = <span class="ruby-constant">File</span><span class="ruby-operator">::</span><span class="ruby-identifier">mtime</span>(<span class="ruby-ivar">@path</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">mtime</span> <span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@mtime</span>
+    <span class="ruby-ivar">@digest</span>.<span class="ruby-identifier">clear</span>
+    <span class="ruby-identifier">open</span>(<span class="ruby-ivar">@path</span>){<span class="ruby-operator">|</span><span class="ruby-identifier">io</span><span class="ruby-operator">|</span>
+      <span class="ruby-keyword">while</span> <span class="ruby-identifier">line</span> = <span class="ruby-identifier">io</span>.<span class="ruby-identifier">gets</span>
+        <span class="ruby-identifier">line</span>.<span class="ruby-identifier">chomp!</span>
+        <span class="ruby-identifier">user</span>, <span class="ruby-identifier">realm</span>, <span class="ruby-identifier">pass</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-regexp">/:/</span>, <span class="ruby-number">3</span>)
+        <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@digest</span>[<span class="ruby-identifier">realm</span>]
+          <span class="ruby-ivar">@digest</span>[<span class="ruby-identifier">realm</span>] = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
+        <span class="ruby-keyword">end</span>
+        <span class="ruby-ivar">@digest</span>[<span class="ruby-identifier">realm</span>][<span class="ruby-identifier">user</span>] = <span class="ruby-identifier">pass</span>
+      <span class="ruby-keyword">end</span>
+    }
+    <span class="ruby-ivar">@mtime</span> = <span class="ruby-identifier">mtime</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-set_passwd">
+            
+              <b>set_passwd</b>(realm, user, pass)
+            
+            <a href="../../../classes/WEBrick/HTTPAuth/Htdigest.html#method-i-set_passwd" name="method-i-set_passwd" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Sets a password in the database for <code>user</code> in <code>realm</code>
+to <code>pass</code>.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-set_passwd_source')" id="l_method-i-set_passwd_source">show</a>
+                
+              </p>
+              <div id="method-i-set_passwd_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/webrick/httpauth/htdigest.rb, line 101</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">set_passwd</span>(<span class="ruby-identifier">realm</span>, <span class="ruby-identifier">user</span>, <span class="ruby-identifier">pass</span>)
+  <span class="ruby-ivar">@mutex</span>.<span class="ruby-identifier">synchronize</span>{
+    <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@digest</span>[<span class="ruby-identifier">realm</span>]
+      <span class="ruby-ivar">@digest</span>[<span class="ruby-identifier">realm</span>] = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-ivar">@digest</span>[<span class="ruby-identifier">realm</span>][<span class="ruby-identifier">user</span>] = <span class="ruby-identifier">make_passwd</span>(<span class="ruby-identifier">realm</span>, <span class="ruby-identifier">user</span>, <span class="ruby-identifier">pass</span>)
+  }
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+
+    </div>
+  </body>
+</html>    

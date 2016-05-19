@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>IPSocket</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/github.css" type="text/css" media="screen" />
+<script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            IPSocket 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="BasicSocket.html">BasicSocket</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../files/ext/socket/ipsocket_c.html">ext/socket/ipsocket.c</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p><a href="IPSocket.html">IPSocket</a> is the super class of <a
+href="TCPSocket.html">TCPSocket</a> and <a
+href="UDPSocket.html">UDPSocket</a>.</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>A</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-addr">addr</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>G</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-getaddress">getaddress</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>P</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-peeraddr">peeraddr</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>R</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-recvfrom">recvfrom</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-getaddress">
+            
+              <b>IPSocket.getaddress(host)        => ipaddress
+</b>
+            
+            <a href="../classes/IPSocket.html#method-c-getaddress" name="method-c-getaddress" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Lookups the IP address of <em>host</em>.</p>
+
+<pre><code>IPSocket.getaddress(&quot;localhost&quot;)     #=&gt; &quot;127.0.0.1&quot;
+IPSocket.getaddress(&quot;ip6-localhost&quot;) #=&gt; &quot;::1&quot;
+</code></pre>
+            </div>
+          
+          
+          
+            <div class="aka">
+              Also aliased as: <a href="IPSocket.html#method-c-getaddress_orig">getaddress_orig</a>
+            </div>
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-getaddress_source')" id="l_method-c-getaddress_source">show</a>
+                
+              </p>
+              <div id="method-c-getaddress_source" class="dyn-source">
+                <pre>static VALUE
+ip_s_getaddress(VALUE obj, VALUE host)
+{
+    union_sockaddr addr;
+    struct rb_addrinfo *res = rsock_addrinfo(host, Qnil, AF_UNSPEC, SOCK_STREAM, 0);
+    socklen_t len = res-&gt;ai-&gt;ai_addrlen;
+
+    /* just take the first one */
+    memcpy(&amp;addr, res-&gt;ai-&gt;ai_addr, len);
+    rb_freeaddrinfo(res);
+
+    return rsock_make_ipaddr(&amp;addr.addr, len);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-addr">
+            
+              <b>ipsocket.addr([reverse_lookup]) => [address_family, port, hostname, numeric_address]
+</b>
+            
+            <a href="../classes/IPSocket.html#method-i-addr" name="method-i-addr" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the local address as an array which contains address_family, port,
+hostname and numeric_address.</p>
+
+<p>If <code>reverse_lookup</code> is <code>true</code> or
+<code>:hostname</code>, hostname is obtained from numeric_address using
+reverse lookup. Or if it is <code>false</code>, or <code>:numeric</code>,
+hostname is same as numeric_address. Or if it is <code>nil</code> or
+omitted, obeys to <code>ipsocket.do_not_reverse_lookup</code>. See
+<code>Socket.getaddrinfo</code> also.</p>
+
+<pre><code>TCPSocket.open(&quot;www.ruby-lang.org&quot;, 80) {|sock|
+  p sock.addr #=&gt; [&quot;AF_INET&quot;, 49429, &quot;hal&quot;, &quot;192.168.0.128&quot;]
+  p sock.addr(true)  #=&gt; [&quot;AF_INET&quot;, 49429, &quot;hal&quot;, &quot;192.168.0.128&quot;]
+  p sock.addr(false) #=&gt; [&quot;AF_INET&quot;, 49429, &quot;192.168.0.128&quot;, &quot;192.168.0.128&quot;]
+  p sock.addr(:hostname)  #=&gt; [&quot;AF_INET&quot;, 49429, &quot;hal&quot;, &quot;192.168.0.128&quot;]
+  p sock.addr(:numeric)   #=&gt; [&quot;AF_INET&quot;, 49429, &quot;192.168.0.128&quot;, &quot;192.168.0.128&quot;]
+}
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-addr_source')" id="l_method-i-addr_source">show</a>
+                
+              </p>
+              <div id="method-i-addr_source" class="dyn-source">
+                <pre>static VALUE
+ip_addr(int argc, VALUE *argv, VALUE sock)
+{
+    rb_io_t *fptr;
+    union_sockaddr addr;
+    socklen_t len = (socklen_t)sizeof addr;
+    int norevlookup;
+
+    GetOpenFile(sock, fptr);
+
+    if (argc &lt; 1 || !rsock_revlookup_flag(argv[0], &amp;norevlookup))
+        norevlookup = fptr-&gt;mode &amp; FMODE_NOREVLOOKUP;
+    if (getsockname(fptr-&gt;fd, &amp;addr.addr, &amp;len) &lt; 0)
+        rb_sys_fail(&quot;getsockname(2)&quot;);
+    return rsock_ipaddr(&amp;addr.addr, len, norevlookup);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-peeraddr">
+            
+              <b>ipsocket.peeraddr([reverse_lookup]) => [address_family, port, hostname, numeric_address]
+</b>
+            
+            <a href="../classes/IPSocket.html#method-i-peeraddr" name="method-i-peeraddr" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the remote address as an array which contains address_family, port,
+hostname and numeric_address. It is defined for connection oriented socket
+such as <a href="TCPSocket.html">TCPSocket</a>.</p>
+
+<p>If <code>reverse_lookup</code> is <code>true</code> or
+<code>:hostname</code>, hostname is obtained from numeric_address using
+reverse lookup. Or if it is <code>false</code>, or <code>:numeric</code>,
+hostname is same as numeric_address. Or if it is <code>nil</code> or
+omitted, obeys to <code>ipsocket.do_not_reverse_lookup</code>. See
+<code>Socket.getaddrinfo</code> also.</p>
+
+<pre><code>TCPSocket.open(&quot;www.ruby-lang.org&quot;, 80) {|sock|
+  p sock.peeraddr #=&gt; [&quot;AF_INET&quot;, 80, &quot;carbon.ruby-lang.org&quot;, &quot;221.186.184.68&quot;]
+  p sock.peeraddr(true)  #=&gt; [&quot;AF_INET&quot;, 80, &quot;carbon.ruby-lang.org&quot;, &quot;221.186.184.68&quot;]
+  p sock.peeraddr(false) #=&gt; [&quot;AF_INET&quot;, 80, &quot;221.186.184.68&quot;, &quot;221.186.184.68&quot;]
+  p sock.peeraddr(:hostname) #=&gt; [&quot;AF_INET&quot;, 80, &quot;carbon.ruby-lang.org&quot;, &quot;221.186.184.68&quot;]
+  p sock.peeraddr(:numeric)  #=&gt; [&quot;AF_INET&quot;, 80, &quot;221.186.184.68&quot;, &quot;221.186.184.68&quot;]
+}
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-peeraddr_source')" id="l_method-i-peeraddr_source">show</a>
+                
+              </p>
+              <div id="method-i-peeraddr_source" class="dyn-source">
+                <pre>static VALUE
+ip_peeraddr(int argc, VALUE *argv, VALUE sock)
+{
+    rb_io_t *fptr;
+    union_sockaddr addr;
+    socklen_t len = (socklen_t)sizeof addr;
+    int norevlookup;
+
+    GetOpenFile(sock, fptr);
+
+    if (argc &lt; 1 || !rsock_revlookup_flag(argv[0], &amp;norevlookup))
+        norevlookup = fptr-&gt;mode &amp; FMODE_NOREVLOOKUP;
+    if (getpeername(fptr-&gt;fd, &amp;addr.addr, &amp;len) &lt; 0)
+        rb_sys_fail(&quot;getpeername(2)&quot;);
+    return rsock_ipaddr(&amp;addr.addr, len, norevlookup);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-recvfrom">
+            
+              <b>ipsocket.recvfrom(maxlen)        => [mesg, ipaddr]
+ipsocket.recvfrom(maxlen, flags) => [mesg, ipaddr]
+</b>
+            
+            <a href="../classes/IPSocket.html#method-i-recvfrom" name="method-i-recvfrom" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Receives a message and return the message as a string and an address which
+the message come from.</p>
+
+<p><em>maxlen</em> is the maximum number of bytes to receive.</p>
+
+<p><em>flags</em> should be a bitwise OR of Socket::MSG_* constants.</p>
+
+<p>ipaddr is same as IPSocket#{peeraddr,addr}.</p>
+
+<pre><code>u1 = UDPSocket.new
+u1.bind(&quot;127.0.0.1&quot;, 4913)
+u2 = UDPSocket.new
+u2.send &quot;uuuu&quot;, 0, &quot;127.0.0.1&quot;, 4913
+p u1.recvfrom(10) #=&gt; [&quot;uuuu&quot;, [&quot;AF_INET&quot;, 33230, &quot;localhost&quot;, &quot;127.0.0.1&quot;]]
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-recvfrom_source')" id="l_method-i-recvfrom_source">show</a>
+                
+              </p>
+              <div id="method-i-recvfrom_source" class="dyn-source">
+                <pre>static VALUE
+ip_recvfrom(int argc, VALUE *argv, VALUE sock)
+{
+    return rsock_s_recvfrom(sock, argc, argv, RECV_IP);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+
+    </div>
+  </body>
+</html>    

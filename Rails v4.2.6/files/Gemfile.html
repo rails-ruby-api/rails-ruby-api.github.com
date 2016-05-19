@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Gemfile</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/github.css" type="text/css" media="screen" />
+<script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            Gemfile
+        </h1>
+        <ul class="files">
+            
+            <li>
+                Gemfile
+                
+                    <a href="https://github.com/rails/rails/blob/bf73395378484284dd97a92b3cdb22399efc359f/Gemfile" target="_blank" class="github_url">on GitHub</a>
+                
+            </li>
+            <li>Last modified: 2016-05-19 14:28:33 +0200</li>
+        </ul>
+    </div>
+
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>source &#39;<a href="https://rubygems.org">rubygems.org</a>&#39;</p>
+
+<p>gemspec</p>
+
+<p># We need a newish Rake since Active <a href="../classes/Job.html">Job</a>
+sets its test tasks&#39; descriptions. gem &#39;rake&#39;, &#39;&gt;=
+10.3&#39;</p>
+
+<p># This needs to be with require false as it is # loaded after loading the
+test library to # ensure correct loading order gem &#39;mocha&#39;,
+&#39;~&gt; 0.14&#39;, require: false</p>
+
+<p>gem &#39;rack-cache&#39;, &#39;~&gt; 1.2&#39; gem &#39;jquery-rails&#39;,
+&#39;~&gt; 4.0&#39; gem &#39;coffee-rails&#39;, &#39;~&gt; 4.1.0&#39; gem
+&#39;turbolinks&#39;</p>
+
+<p>gem &#39;sprockets&#39;, &#39;~&gt; 3.0.0.rc.1&#39; gem &#39;execjs&#39;,
+&#39;&lt; 2.5&#39;</p>
+
+<p># require: false so bcrypt is loaded only when has_secure_password is used.
+# This is to avoid <a href="../classes/ActiveModel.html">ActiveModel</a>
+(and by extension the entire framework) # being dependent on a binary
+library. gem &#39;bcrypt&#39;, &#39;~&gt; 3.1.10&#39;, require: false</p>
+
+<p># This needs to be with require false to avoid # it being automatically
+loaded by sprockets gem &#39;uglifier&#39;, &#39;&gt;= 1.3.0&#39;, require:
+false</p>
+
+<p>group :doc do</p>
+
+<pre><code>gem &#39;sdoc&#39;, &#39;~&gt; 0.4.0&#39;
+gem &#39;redcarpet&#39;, &#39;~&gt; 3.1.2&#39;, platforms: :ruby
+gem &#39;w3c_validators&#39;
+gem &#39;kindlerb&#39;, &#39;0.1.1&#39;
+gem &#39;mustache&#39;, &#39;~&gt; 0.99.8&#39;
+</code></pre>
+
+<p>end</p>
+
+<p># AS gem &#39;dalli&#39;, &#39;&gt;= 2.2.1&#39;</p>
+
+<p># <a href="../classes/ActiveJob.html">ActiveJob</a> group :job do</p>
+
+<pre><code>gem &#39;resque&#39;, require: false
+gem &#39;resque-scheduler&#39;, require: false
+gem &#39;sidekiq&#39;, require: false
+gem &#39;sucker_punch&#39;, &#39;&lt; 2.0&#39;, require: false
+gem &#39;delayed_job&#39;, require: false
+gem &#39;queue_classic&#39;, require: false, platforms: :ruby
+gem &#39;sneakers&#39;, &#39;0.1.1.pre&#39;, require: false
+gem &#39;que&#39;, require: false
+gem &#39;backburner&#39;, require: false
+gem &#39;qu-rails&#39;, github: &quot;bkeepers/qu&quot;, branch: &quot;master&quot;, require: false
+gem &#39;qu-redis&#39;, require: false
+gem &#39;delayed_job_active_record&#39;, require: false
+gem &#39;sequel&#39;, require: false
+gem &#39;amq-protocol&#39;, &#39;&lt; 2.0.0&#39;, require: false
+</code></pre>
+
+<p>end</p>
+
+<p># Add your own local bundler stuff local_gemfile = File.dirname(__FILE__) +
+“/.Gemfile” instance_eval File.read local_gemfile if File.exist?
+local_gemfile</p>
+
+<p>group :test do</p>
+
+<pre><code># FIX: Our test suite isn&#39;t ready to run in random order yet
+gem &#39;minitest&#39;, &#39;&lt; 5.3.4&#39;
+
+platforms :mri_19 do
+  gem &#39;ruby-prof&#39;, &#39;~&gt; 0.11.2&#39;
+end
+
+# platforms :mri_19, :mri_20 do
+#   gem &#39;debugger&#39;
+# end
+
+platforms :mri do
+  gem &#39;stackprof&#39;
+end
+
+gem &#39;benchmark-ips&#39;
+</code></pre>
+
+<p>end</p>
+
+<p>platforms :ruby do</p>
+
+<pre><code>gem &#39;nokogiri&#39;, &#39;&gt;= 1.4.5&#39;
+
+# Needed for compiling the ActionDispatch::Journey parser
+gem &#39;racc&#39;, &#39;&gt;=1.4.6&#39;, require: false
+
+# AR
+gem &#39;sqlite3&#39;, &#39;~&gt; 1.3.6&#39;
+
+group :db do
+  gem &#39;pg&#39;, &#39;&gt;= 0.15.0&#39;
+  gem &#39;mysql&#39;, &#39;&gt;= 2.9.0&#39;
+  gem &#39;mysql2&#39;, &#39;&gt;= 0.4.0&#39;
+end
+</code></pre>
+
+<p>end</p>
+
+<p>platforms :jruby do</p>
+
+<pre><code>gem &#39;json&#39;
+if ENV[&#39;AR_JDBC&#39;]
+  gem &#39;activerecord-jdbcsqlite3-adapter&#39;, github: &#39;jruby/activerecord-jdbc-adapter&#39;, branch: &#39;master&#39;
+  group :db do
+    gem &#39;activerecord-jdbcmysql-adapter&#39;, github: &#39;jruby/activerecord-jdbc-adapter&#39;, branch: &#39;master&#39;
+    gem &#39;activerecord-jdbcpostgresql-adapter&#39;, github: &#39;jruby/activerecord-jdbc-adapter&#39;, branch: &#39;master&#39;
+  end
+else
+  gem &#39;activerecord-jdbcsqlite3-adapter&#39;, &#39;&gt;= 1.3.0&#39;
+  group :db do
+    gem &#39;activerecord-jdbcmysql-adapter&#39;, &#39;&gt;= 1.3.0&#39;
+    gem &#39;activerecord-jdbcpostgresql-adapter&#39;, &#39;&gt;= 1.3.0&#39;
+  end
+end
+</code></pre>
+
+<p>end</p>
+
+<p>platforms :rbx do</p>
+
+<pre><code># The rubysl-yaml gem doesn&#39;t ship with Psych by default
+# as it needs libyaml that isn&#39;t always available.
+gem &#39;psych&#39;, &#39;~&gt; 2.0&#39;
+</code></pre>
+
+<p>end</p>
+
+<p># gems that are necessary for <a
+href="../classes/ActiveRecord.html">ActiveRecord</a> tests with Oracle
+database if <a href="'ORACLE_ENHANCED'">ENV</a></p>
+
+<pre><code>platforms :ruby do
+  gem &#39;ruby-oci8&#39;, &#39;~&gt; 2.1&#39;
+end
+gem &#39;activerecord-oracle_enhanced-adapter&#39;, github: &#39;rsim/oracle-enhanced&#39;, branch: &#39;master&#39;
+</code></pre>
+
+<p>end</p>
+
+<p># <a href="../classes/A.html">A</a> gem necessary for <a
+href="../classes/ActiveRecord.html">ActiveRecord</a> tests with IBM DB gem
+&#39;ibm_db&#39; if <a href="'IBM_DB'">ENV</a></p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+              </div>
+
+    </div>
+  </body>
+</html>

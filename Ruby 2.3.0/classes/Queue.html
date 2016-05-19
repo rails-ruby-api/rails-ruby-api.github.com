@@ -1,0 +1,766 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Queue</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/github.css" type="text/css" media="screen" />
+<script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            Queue 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../files/thread_sync_c.html">thread_sync.c</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>This class provides a way to synchronize communication between threads.</p>
+
+<p>Example:</p>
+
+<pre><code>require &#39;thread&#39;
+queue = Queue.new
+
+producer = Thread.new do
+  5.times do |i|
+     sleep rand(i) # simulate expense
+     queue &lt;&lt; i
+     puts &quot;#{i} produced&quot;
+  end
+end
+
+consumer = Thread.new do
+  5.times do |i|
+     value = queue.pop
+     sleep rand(i/2) # simulate expense
+     puts &quot;consumed #{value}&quot;
+  end
+end
+</code></pre>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>#</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-3C-3C">&lt;&lt;</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>C</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-clear">clear</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-close">close</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-closed-3F">closed?</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>D</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-deq">deq</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>E</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-empty-3F">empty?</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-enq">enq</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>L</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-length">length</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-num_waiting">num_waiting</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>P</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-pop">pop</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-push">push</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>S</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-shift">shift</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-size">size</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <b>new</b>()
+            
+            <a href="../classes/Queue.html#method-c-new" name="method-c-new" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Creates a new queue instance.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre>static VALUE
+rb_queue_initialize(VALUE self)
+{
+    RSTRUCT_SET(self, QUEUE_QUE, ary_buf_new());
+    RSTRUCT_SET(self, QUEUE_WAITERS, ary_buf_new());
+    return self;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-3C-3C">
+            
+              <b>&lt;&lt;</b>(p1)
+            
+            <a href="../classes/Queue.html#method-i-3C-3C" name="method-i-3C-3C" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Alias for <a href="Queue.html#method-i-push">push</a>.</p>
+            </div>
+          
+          
+          
+
+          
+            <div class="aka">
+              Alias for: <a href="Queue.html#method-i-push">push</a>
+            </div>
+          
+          
+          
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-clear">
+            
+              <b>clear</b>()
+            
+            <a href="../classes/Queue.html#method-i-clear" name="method-i-clear" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Removes all objects from the queue.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-clear_source')" id="l_method-i-clear_source">show</a>
+                
+              </p>
+              <div id="method-i-clear_source" class="dyn-source">
+                <pre>static VALUE
+rb_queue_clear(VALUE self)
+{
+    rb_ary_clear(GET_QUEUE_QUE(self));
+    return self;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-close">
+            
+              <b>close
+</b>
+            
+            <a href="../classes/Queue.html#method-i-close" name="method-i-close" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Closes the queue. A closed queue cannot be re-opened.</p>
+
+<p>After the call to close completes, the following are true:</p>
+<ul><li>
+<p><code>closed?</code> will return true</p>
+</li><li>
+<p><code>close</code> will be ignored.</p>
+</li><li>
+<p>calling enq/push/&lt;&lt; will return nil.</p>
+</li><li>
+<p>when <code>empty?</code> is false, calling deq/pop/shift will return an
+object from the queue as usual.</p>
+</li></ul>
+
+<p><a href="ClosedQueueError.html">ClosedQueueError</a> is inherited from <a
+href="StopIteration.html">StopIteration</a>, so that you can break loop
+block.</p>
+
+<pre><code>Example:
+
+    q = Queue.new
+    Thread.new{
+      while e = q.deq # wait for nil to break loop
+        # ...
+      end
+    }
+    q.close</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-close_source')" id="l_method-i-close_source">show</a>
+                
+              </p>
+              <div id="method-i-close_source" class="dyn-source">
+                <pre>static VALUE
+rb_queue_close(VALUE self)
+{
+    return queue_do_close(self, FALSE);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-closed-3F">
+            
+              <b>closed?
+</b>
+            
+            <a href="../classes/Queue.html#method-i-closed-3F" name="method-i-closed-3F" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns <code>true</code> if the queue is closed.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-closed-3F_source')" id="l_method-i-closed-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-closed-3F_source" class="dyn-source">
+                <pre>static VALUE
+rb_queue_closed_p(VALUE self)
+{
+    return queue_closed_p(self) ? Qtrue : Qfalse;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-deq">
+            
+              <b>deq</b>(*args)
+            
+            <a href="../classes/Queue.html#method-i-deq" name="method-i-deq" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Alias for <a href="Queue.html#method-i-push">push</a>.</p>
+            </div>
+          
+          
+          
+
+          
+            <div class="aka">
+              Alias for: <a href="Queue.html#method-i-pop">pop</a>
+            </div>
+          
+          
+          
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-empty-3F">
+            
+              <b>empty?
+</b>
+            
+            <a href="../classes/Queue.html#method-i-empty-3F" name="method-i-empty-3F" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns <code>true</code> if the queue is empty.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-empty-3F_source')" id="l_method-i-empty-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-empty-3F_source" class="dyn-source">
+                <pre>static VALUE
+rb_queue_empty_p(VALUE self)
+{
+    return queue_length(self) == 0 ? Qtrue : Qfalse;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-enq">
+            
+              <b>enq</b>(p1)
+            
+            <a href="../classes/Queue.html#method-i-enq" name="method-i-enq" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+            <div class="aka">
+              Alias for: <a href="Queue.html#method-i-push">push</a>
+            </div>
+          
+          
+          
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-length">
+            
+              <b>length
+size
+</b>
+            
+            <a href="../classes/Queue.html#method-i-length" name="method-i-length" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the length of the queue.</p>
+            </div>
+          
+          
+          
+            <div class="aka">
+              Also aliased as: <a href="Queue.html#method-i-size">size</a>
+            </div>
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-length_source')" id="l_method-i-length_source">show</a>
+                
+              </p>
+              <div id="method-i-length_source" class="dyn-source">
+                <pre>static VALUE
+rb_queue_length(VALUE self)
+{
+    unsigned long len = queue_length(self);
+    return ULONG2NUM(len);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-num_waiting">
+            
+              <b>num_waiting</b>()
+            
+            <a href="../classes/Queue.html#method-i-num_waiting" name="method-i-num_waiting" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the number of threads waiting on the queue.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-num_waiting_source')" id="l_method-i-num_waiting_source">show</a>
+                
+              </p>
+              <div id="method-i-num_waiting_source" class="dyn-source">
+                <pre>static VALUE
+rb_queue_num_waiting(VALUE self)
+{
+    unsigned long len = queue_num_waiting(self);
+    return ULONG2NUM(len);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-pop">
+            
+              <b>pop(non_block=false)
+deq(non_block=false)
+shift(non_block=false)
+</b>
+            
+            <a href="../classes/Queue.html#method-i-pop" name="method-i-pop" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Retrieves data from the queue.</p>
+
+<p>If the queue is empty, the calling thread is suspended until data is pushed
+onto the queue. If <code>non_block</code> is true, the thread isn&#39;t
+suspended, and an exception is raised.</p>
+            </div>
+          
+          
+          
+            <div class="aka">
+              Also aliased as: <a href="Queue.html#method-i-deq">deq</a>, <a href="Queue.html#method-i-shift">shift</a>
+            </div>
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-pop_source')" id="l_method-i-pop_source">show</a>
+                
+              </p>
+              <div id="method-i-pop_source" class="dyn-source">
+                <pre>static VALUE
+rb_queue_pop(int argc, VALUE *argv, VALUE self)
+{
+    int should_block = queue_pop_should_block(argc, argv);
+    return queue_do_pop(self, should_block);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-push">
+            
+              <b>push(object)
+enq(object)
+<<(object)
+</b>
+            
+            <a href="../classes/Queue.html#method-i-push" name="method-i-push" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Pushes the given <code>object</code> to the queue.</p>
+            </div>
+          
+          
+          
+            <div class="aka">
+              Also aliased as: <a href="Queue.html#method-i-enq">enq</a>, <a href="Queue.html#method-i-3C-3C">&lt;&lt;</a>
+            </div>
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-push_source')" id="l_method-i-push_source">show</a>
+                
+              </p>
+              <div id="method-i-push_source" class="dyn-source">
+                <pre>static VALUE
+rb_queue_push(VALUE self, VALUE obj)
+{
+    return queue_do_push(self, obj);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-shift">
+            
+              <b>shift</b>(*args)
+            
+            <a href="../classes/Queue.html#method-i-shift" name="method-i-shift" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Alias for <a href="Queue.html#method-i-pop">pop</a>.</p>
+            </div>
+          
+          
+          
+
+          
+            <div class="aka">
+              Alias for: <a href="Queue.html#method-i-pop">pop</a>
+            </div>
+          
+          
+          
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-size">
+            
+              <b>size</b>()
+            
+            <a href="../classes/Queue.html#method-i-size" name="method-i-size" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Alias for <a href="Queue.html#method-i-pop">pop</a>.</p>
+            </div>
+          
+          
+          
+
+          
+            <div class="aka">
+              Alias for: <a href="Queue.html#method-i-length">length</a>
+            </div>
+          
+          
+          
+          </div>
+                    </div>
+
+    </div>
+  </body>
+</html>    

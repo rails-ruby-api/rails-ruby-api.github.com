@@ -1,0 +1,510 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>ActiveRecord::Migration::RenameTableTest</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/github.css" type="text/css" media="screen" />
+<script src="../../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            ActiveRecord::Migration::RenameTableTest 
+            
+                <span class="parent">&lt; 
+                    
+                    ActiveRecord::TestCase
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../../files/activerecord/test/cases/migration/rename_table_test_rb.html">activerecord/test/cases/migration/rename_table_test.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>S</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-setup">setup</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-teardown">teardown</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_rename_table">test_rename_table</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_rename_table_does_not_rename_custom_named_index">test_rename_table_does_not_rename_custom_named_index</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_rename_table_for_postgresql_should_also_rename_default_sequence">test_rename_table_for_postgresql_should_also_rename_default_sequence</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_rename_table_for_sqlite_should_work_with_reserved_words">test_rename_table_for_sqlite_should_work_with_reserved_words</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_rename_table_with_an_index">test_rename_table_with_an_index</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_renaming_table_doesnt_attempt_to_rename_non_existent_sequences">test_renaming_table_doesnt_attempt_to_rename_non_existent_sequences</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+    <!-- Includes -->
+    <div class="sectiontitle">Included Modules</div>
+    <ul>
+      
+        <li>
+          
+            <a href="TestHelper.html">
+              ActiveRecord::Migration::TestHelper
+            </a>
+          
+        </li>
+      
+    </ul>
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+        
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-setup">
+            
+              <b>setup</b>()
+            
+            <a href="../../../classes/ActiveRecord/Migration/RenameTableTest.html#method-i-setup" name="method-i-setup" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-setup_source')" id="l_method-i-setup_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/0ab9301f2acb5e14846c4241701a9d9d57ce35ce/activerecord/test/cases/migration/rename_table_test.rb#L10" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-setup_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/migration/rename_table_test.rb, line 10</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">setup</span>
+  <span class="ruby-keyword">super</span>
+  <span class="ruby-identifier">add_column</span> <span class="ruby-string">&#39;test_models&#39;</span>, <span class="ruby-value">:url</span>, <span class="ruby-value">:string</span>
+  <span class="ruby-identifier">remove_column</span> <span class="ruby-string">&#39;test_models&#39;</span>, <span class="ruby-value">:created_at</span>
+  <span class="ruby-identifier">remove_column</span> <span class="ruby-string">&#39;test_models&#39;</span>, <span class="ruby-value">:updated_at</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-teardown">
+            
+              <b>teardown</b>()
+            
+            <a href="../../../classes/ActiveRecord/Migration/RenameTableTest.html#method-i-teardown" name="method-i-teardown" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-teardown_source')" id="l_method-i-teardown_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/0ab9301f2acb5e14846c4241701a9d9d57ce35ce/activerecord/test/cases/migration/rename_table_test.rb#L17" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-teardown_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/migration/rename_table_test.rb, line 17</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">teardown</span>
+  <span class="ruby-identifier">rename_table</span> <span class="ruby-value">:octopi</span>, <span class="ruby-value">:test_models</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">connection</span>.<span class="ruby-identifier">table_exists?</span> <span class="ruby-value">:octopi</span>
+  <span class="ruby-keyword">super</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_rename_table">
+            
+              <b>test_rename_table</b>()
+            
+            <a href="../../../classes/ActiveRecord/Migration/RenameTableTest.html#method-i-test_rename_table" name="method-i-test_rename_table" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_rename_table_source')" id="l_method-i-test_rename_table_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/0ab9301f2acb5e14846c4241701a9d9d57ce35ce/activerecord/test/cases/migration/rename_table_test.rb#L42" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_rename_table_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/migration/rename_table_test.rb, line 42</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_rename_table</span>
+  <span class="ruby-identifier">rename_table</span> <span class="ruby-value">:test_models</span>, <span class="ruby-value">:octopi</span>
+
+  <span class="ruby-identifier">connection</span>.<span class="ruby-identifier">execute</span> <span class="ruby-node">&quot;INSERT INTO octopi (#{connection.quote_column_name(&#39;id&#39;)}, #{connection.quote_column_name(&#39;url&#39;)}) VALUES (1, &#39;http://www.foreverflying.com/octopus-black7.jpg&#39;)&quot;</span>
+
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&#39;http://www.foreverflying.com/octopus-black7.jpg&#39;</span>, <span class="ruby-identifier">connection</span>.<span class="ruby-identifier">select_value</span>(<span class="ruby-string">&quot;SELECT url FROM octopi WHERE id=1&quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_rename_table_does_not_rename_custom_named_index">
+            
+              <b>test_rename_table_does_not_rename_custom_named_index</b>()
+            
+            <a href="../../../classes/ActiveRecord/Migration/RenameTableTest.html#method-i-test_rename_table_does_not_rename_custom_named_index" name="method-i-test_rename_table_does_not_rename_custom_named_index" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_rename_table_does_not_rename_custom_named_index_source')" id="l_method-i-test_rename_table_does_not_rename_custom_named_index_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/0ab9301f2acb5e14846c4241701a9d9d57ce35ce/activerecord/test/cases/migration/rename_table_test.rb#L63" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_rename_table_does_not_rename_custom_named_index_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/migration/rename_table_test.rb, line 63</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_rename_table_does_not_rename_custom_named_index</span>
+  <span class="ruby-identifier">add_index</span> <span class="ruby-value">:test_models</span>, <span class="ruby-value">:url</span>, <span class="ruby-identifier">name</span><span class="ruby-operator">:</span> <span class="ruby-string">&#39;special_url_idx&#39;</span>
+
+  <span class="ruby-identifier">rename_table</span> <span class="ruby-value">:test_models</span>, <span class="ruby-value">:octopi</span>
+
+  <span class="ruby-identifier">assert_equal</span> [<span class="ruby-string">&#39;special_url_idx&#39;</span>], <span class="ruby-identifier">connection</span>.<span class="ruby-identifier">indexes</span>(<span class="ruby-value">:octopi</span>).<span class="ruby-identifier">map</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:name</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_rename_table_for_postgresql_should_also_rename_default_sequence">
+            
+              <b>test_rename_table_for_postgresql_should_also_rename_default_sequence</b>()
+            
+            <a href="../../../classes/ActiveRecord/Migration/RenameTableTest.html#method-i-test_rename_table_for_postgresql_should_also_rename_default_sequence" name="method-i-test_rename_table_for_postgresql_should_also_rename_default_sequence" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_rename_table_for_postgresql_should_also_rename_default_sequence_source')" id="l_method-i-test_rename_table_for_postgresql_should_also_rename_default_sequence_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/0ab9301f2acb5e14846c4241701a9d9d57ce35ce/activerecord/test/cases/migration/rename_table_test.rb#L72" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_rename_table_for_postgresql_should_also_rename_default_sequence_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/migration/rename_table_test.rb, line 72</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_rename_table_for_postgresql_should_also_rename_default_sequence</span>
+  <span class="ruby-identifier">rename_table</span> <span class="ruby-value">:test_models</span>, <span class="ruby-value">:octopi</span>
+
+  <span class="ruby-identifier">pk</span>, <span class="ruby-identifier">seq</span> = <span class="ruby-identifier">connection</span>.<span class="ruby-identifier">pk_and_sequence_for</span>(<span class="ruby-string">&#39;octopi&#39;</span>)
+
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-constant">ConnectionAdapters</span><span class="ruby-operator">::</span><span class="ruby-constant">PostgreSQL</span><span class="ruby-operator">::</span><span class="ruby-constant">Name</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&quot;public&quot;</span>, <span class="ruby-node">&quot;octopi_#{pk}_seq&quot;</span>), <span class="ruby-identifier">seq</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_rename_table_for_sqlite_should_work_with_reserved_words">
+            
+              <b>test_rename_table_for_sqlite_should_work_with_reserved_words</b>()
+            
+            <a href="../../../classes/ActiveRecord/Migration/RenameTableTest.html#method-i-test_rename_table_for_sqlite_should_work_with_reserved_words" name="method-i-test_rename_table_for_sqlite_should_work_with_reserved_words" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_rename_table_for_sqlite_should_work_with_reserved_words_source')" id="l_method-i-test_rename_table_for_sqlite_should_work_with_reserved_words_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/0ab9301f2acb5e14846c4241701a9d9d57ce35ce/activerecord/test/cases/migration/rename_table_test.rb#L23" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_rename_table_for_sqlite_should_work_with_reserved_words_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/migration/rename_table_test.rb, line 23</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_rename_table_for_sqlite_should_work_with_reserved_words</span>
+  <span class="ruby-identifier">renamed</span> = <span class="ruby-keyword">false</span>
+
+  <span class="ruby-identifier">add_column</span> <span class="ruby-value">:test_models</span>, <span class="ruby-value">:url</span>, <span class="ruby-value">:string</span>
+  <span class="ruby-identifier">connection</span>.<span class="ruby-identifier">rename_table</span> <span class="ruby-value">:references</span>, <span class="ruby-value">:old_references</span>
+  <span class="ruby-identifier">connection</span>.<span class="ruby-identifier">rename_table</span> <span class="ruby-value">:test_models</span>, <span class="ruby-value">:references</span>
+
+  <span class="ruby-identifier">renamed</span> = <span class="ruby-keyword">true</span>
+
+  <span class="ruby-comment"># Using explicit id in insert for compatibility across all databases</span>
+  <span class="ruby-identifier">connection</span>.<span class="ruby-identifier">execute</span> <span class="ruby-string">&quot;INSERT INTO &#39;references&#39; (url, created_at, updated_at) VALUES (&#39;http://rubyonrails.com&#39;, 0, 0)&quot;</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&#39;http://rubyonrails.com&#39;</span>, <span class="ruby-identifier">connection</span>.<span class="ruby-identifier">select_value</span>(<span class="ruby-string">&quot;SELECT url FROM &#39;references&#39; WHERE id=1&quot;</span>)
+<span class="ruby-keyword">ensure</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">renamed</span>
+  <span class="ruby-identifier">connection</span>.<span class="ruby-identifier">rename_table</span> <span class="ruby-value">:references</span>, <span class="ruby-value">:test_models</span>
+  <span class="ruby-identifier">connection</span>.<span class="ruby-identifier">rename_table</span> <span class="ruby-value">:old_references</span>, <span class="ruby-value">:references</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_rename_table_with_an_index">
+            
+              <b>test_rename_table_with_an_index</b>()
+            
+            <a href="../../../classes/ActiveRecord/Migration/RenameTableTest.html#method-i-test_rename_table_with_an_index" name="method-i-test_rename_table_with_an_index" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_rename_table_with_an_index_source')" id="l_method-i-test_rename_table_with_an_index_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/0ab9301f2acb5e14846c4241701a9d9d57ce35ce/activerecord/test/cases/migration/rename_table_test.rb#L50" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_rename_table_with_an_index_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/migration/rename_table_test.rb, line 50</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_rename_table_with_an_index</span>
+  <span class="ruby-identifier">add_index</span> <span class="ruby-value">:test_models</span>, <span class="ruby-value">:url</span>
+
+  <span class="ruby-identifier">rename_table</span> <span class="ruby-value">:test_models</span>, <span class="ruby-value">:octopi</span>
+
+  <span class="ruby-identifier">connection</span>.<span class="ruby-identifier">execute</span> <span class="ruby-node">&quot;INSERT INTO octopi (#{connection.quote_column_name(&#39;id&#39;)}, #{connection.quote_column_name(&#39;url&#39;)}) VALUES (1, &#39;http://www.foreverflying.com/octopus-black7.jpg&#39;)&quot;</span>
+
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&#39;http://www.foreverflying.com/octopus-black7.jpg&#39;</span>, <span class="ruby-identifier">connection</span>.<span class="ruby-identifier">select_value</span>(<span class="ruby-string">&quot;SELECT url FROM octopi WHERE id=1&quot;</span>)
+  <span class="ruby-identifier">index</span> = <span class="ruby-identifier">connection</span>.<span class="ruby-identifier">indexes</span>(<span class="ruby-value">:octopi</span>).<span class="ruby-identifier">first</span>
+  <span class="ruby-identifier">assert</span> <span class="ruby-identifier">index</span>.<span class="ruby-identifier">columns</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-string">&quot;url&quot;</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&#39;index_octopi_on_url&#39;</span>, <span class="ruby-identifier">index</span>.<span class="ruby-identifier">name</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_renaming_table_doesnt_attempt_to_rename_non_existent_sequences">
+            
+              <b>test_renaming_table_doesnt_attempt_to_rename_non_existent_sequences</b>()
+            
+            <a href="../../../classes/ActiveRecord/Migration/RenameTableTest.html#method-i-test_renaming_table_doesnt_attempt_to_rename_non_existent_sequences" name="method-i-test_renaming_table_doesnt_attempt_to_rename_non_existent_sequences" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_renaming_table_doesnt_attempt_to_rename_non_existent_sequences_source')" id="l_method-i-test_renaming_table_doesnt_attempt_to_rename_non_existent_sequences_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/0ab9301f2acb5e14846c4241701a9d9d57ce35ce/activerecord/test/cases/migration/rename_table_test.rb#L80" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_renaming_table_doesnt_attempt_to_rename_non_existent_sequences_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/migration/rename_table_test.rb, line 80</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_renaming_table_doesnt_attempt_to_rename_non_existent_sequences</span>
+  <span class="ruby-identifier">enable_extension!</span>(<span class="ruby-string">&#39;uuid-ossp&#39;</span>, <span class="ruby-identifier">connection</span>)
+  <span class="ruby-identifier">connection</span>.<span class="ruby-identifier">create_table</span> <span class="ruby-value">:cats</span>, <span class="ruby-identifier">id</span><span class="ruby-operator">:</span> <span class="ruby-value">:uuid</span>
+  <span class="ruby-identifier">assert_nothing_raised</span> { <span class="ruby-identifier">rename_table</span> <span class="ruby-value">:cats</span>, <span class="ruby-value">:felines</span> }
+  <span class="ruby-identifier">assert</span> <span class="ruby-identifier">connection</span>.<span class="ruby-identifier">table_exists?</span> <span class="ruby-value">:felines</span>
+<span class="ruby-keyword">ensure</span>
+  <span class="ruby-identifier">disable_extension!</span>(<span class="ruby-string">&#39;uuid-ossp&#39;</span>, <span class="ruby-identifier">connection</span>)
+  <span class="ruby-identifier">connection</span>.<span class="ruby-identifier">drop_table</span> <span class="ruby-value">:cats</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">connection</span>.<span class="ruby-identifier">table_exists?</span> <span class="ruby-value">:cats</span>
+  <span class="ruby-identifier">connection</span>.<span class="ruby-identifier">drop_table</span> <span class="ruby-value">:felines</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">connection</span>.<span class="ruby-identifier">table_exists?</span> <span class="ruby-value">:felines</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+
+    </div>
+  </body>
+</html>    

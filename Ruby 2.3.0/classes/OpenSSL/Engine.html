@@ -1,0 +1,1102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>OpenSSL::Engine</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            OpenSSL::Engine 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/ext/openssl/ossl_c.html">ext/openssl/ossl.c</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>This class is the access to openssl&#39;s ENGINE cryptographic module
+implementation.</p>
+
+<p>See also, <a
+href="https://www.openssl.org/docs/crypto/engine.html">www.openssl.org/docs/crypto/engine.html</a></p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+    <!-- Namespace -->
+    <div class="sectiontitle">Namespace</div>
+    <ul>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="Engine/EngineError.html">OpenSSL::Engine::EngineError</a>
+        </li>
+      
+    </ul>
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>B</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-by_id">by_id</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>C</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-cipher">cipher</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-cleanup">cleanup</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-cmds">cmds</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-ctrl_cmd">ctrl_cmd</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>D</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-digest">digest</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>E</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-engines">engines</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>F</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-finish">finish</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>I</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-id">id</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-inspect">inspect</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>L</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-load">load</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-load_private_key">load_private_key</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-load_public_key">load_public_key</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-name">name</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>S</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-set_default">set_default</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-by_id">
+            
+              <b>by_id(name) &rarr; engine
+</b>
+            
+            <a href="../../classes/OpenSSL/Engine.html#method-c-by_id" name="method-c-by_id" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Fetch the engine as specified by the <code>id</code> String</p>
+
+<pre><code>OpenSSL::Engine.by_id(&quot;openssl&quot;)
+ =&gt; #&lt;OpenSSL::Engine id=&quot;openssl&quot; name=&quot;Software engine support&quot;&gt;</code></pre>
+
+<p>See <a href="Engine.html#method-c-engines">::engines</a> for the currently
+loaded engines</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-by_id_source')" id="l_method-c-by_id_source">show</a>
+                
+              </p>
+              <div id="method-c-by_id_source" class="dyn-source">
+                <pre>static VALUE
+ossl_engine_s_by_id(VALUE klass, VALUE id)
+{
+    ENGINE *e;
+    VALUE obj;
+
+    StringValue(id);
+    ossl_engine_s_load(1, &amp;id, klass);
+    obj = NewEngine(klass);
+    if(!(e = ENGINE_by_id(RSTRING_PTR(id))))
+        ossl_raise(eEngineError, NULL);
+    SetEngine(obj, e);
+    if(rb_block_given_p()) rb_yield(obj);
+    if(!ENGINE_init(e))
+        ossl_raise(eEngineError, NULL);
+    ENGINE_ctrl(e, ENGINE_CTRL_SET_PASSWORD_CALLBACK,
+                0, NULL, (void(*)(void))ossl_pem_passwd_cb);
+    ERR_clear_error();
+
+    return obj;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-cleanup">
+            
+              <b>OpenSSL::Engine.cleanup
+</b>
+            
+            <a href="../../classes/OpenSSL/Engine.html#method-c-cleanup" name="method-c-cleanup" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>It is only necessary to run cleanup when engines are loaded via <a
+href="Engine.html#method-c-load">::load</a>. However, running cleanup
+before exit is recommended.</p>
+
+<p>See also, <a
+href="https://www.openssl.org/docs/crypto/engine.html">www.openssl.org/docs/crypto/engine.html</a></p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-cleanup_source')" id="l_method-c-cleanup_source">show</a>
+                
+              </p>
+              <div id="method-c-cleanup_source" class="dyn-source">
+                <pre>static VALUE
+ossl_engine_s_cleanup(VALUE self)
+{
+#if defined(HAVE_ENGINE_CLEANUP)
+    ENGINE_cleanup();
+#endif
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-engines">
+            
+              <b>engines</b>()
+            
+            <a href="../../classes/OpenSSL/Engine.html#method-c-engines" name="method-c-engines" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns an array of currently loaded engines.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-engines_source')" id="l_method-c-engines_source">show</a>
+                
+              </p>
+              <div id="method-c-engines_source" class="dyn-source">
+                <pre>static VALUE
+ossl_engine_s_engines(VALUE klass)
+{
+    ENGINE *e;
+    VALUE ary, obj;
+
+    ary = rb_ary_new();
+    for(e = ENGINE_get_first(); e; e = ENGINE_get_next(e)){
+        obj = NewEngine(klass);
+        /* Need a ref count of two here because of ENGINE_free being
+         * called internally by OpenSSL when moving to the next ENGINE
+         * and by us when releasing the ENGINE reference */
+        ENGINE_up_ref(e);
+        SetEngine(obj, e);
+        rb_ary_push(ary, obj);
+    }
+
+    return ary;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-load">
+            
+              <b>load(enginename = nil)
+</b>
+            
+            <a href="../../classes/OpenSSL/Engine.html#method-c-load" name="method-c-load" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>This method loads engines. If <code>name</code> is nil, then all builtin
+engines are loaded. Otherwise, the given <code>name</code>, as a string, 
+is loaded if available to your runtime, and returns true. If
+<code>name</code> is not found, then nil is returned.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-load_source')" id="l_method-c-load_source">show</a>
+                
+              </p>
+              <div id="method-c-load_source" class="dyn-source">
+                <pre>static VALUE
+ossl_engine_s_load(int argc, VALUE *argv, VALUE klass)
+{
+#if !defined(HAVE_ENGINE_LOAD_BUILTIN_ENGINES)
+    return Qnil;
+#else
+    VALUE name;
+
+    rb_scan_args(argc, argv, &quot;01&quot;, &amp;name);
+    if(NIL_P(name)){
+        ENGINE_load_builtin_engines();
+        return Qtrue;
+    }
+    StringValue(name);
+#ifndef OPENSSL_NO_STATIC_ENGINE
+#if HAVE_ENGINE_LOAD_DYNAMIC
+    OSSL_ENGINE_LOAD_IF_MATCH(dynamic);
+#endif
+#if HAVE_ENGINE_LOAD_4758CCA
+    OSSL_ENGINE_LOAD_IF_MATCH(4758cca);
+#endif
+#if HAVE_ENGINE_LOAD_AEP
+    OSSL_ENGINE_LOAD_IF_MATCH(aep);
+#endif
+#if HAVE_ENGINE_LOAD_ATALLA
+    OSSL_ENGINE_LOAD_IF_MATCH(atalla);
+#endif
+#if HAVE_ENGINE_LOAD_CHIL
+    OSSL_ENGINE_LOAD_IF_MATCH(chil);
+#endif
+#if HAVE_ENGINE_LOAD_CSWIFT
+    OSSL_ENGINE_LOAD_IF_MATCH(cswift);
+#endif
+#if HAVE_ENGINE_LOAD_NURON
+    OSSL_ENGINE_LOAD_IF_MATCH(nuron);
+#endif
+#if HAVE_ENGINE_LOAD_SUREWARE
+    OSSL_ENGINE_LOAD_IF_MATCH(sureware);
+#endif
+#if HAVE_ENGINE_LOAD_UBSEC
+    OSSL_ENGINE_LOAD_IF_MATCH(ubsec);
+#endif
+#if HAVE_ENGINE_LOAD_PADLOCK
+    OSSL_ENGINE_LOAD_IF_MATCH(padlock);
+#endif
+#if HAVE_ENGINE_LOAD_CAPI
+    OSSL_ENGINE_LOAD_IF_MATCH(capi);
+#endif
+#if HAVE_ENGINE_LOAD_GMP
+    OSSL_ENGINE_LOAD_IF_MATCH(gmp);
+#endif
+#if HAVE_ENGINE_LOAD_GOST
+    OSSL_ENGINE_LOAD_IF_MATCH(gost);
+#endif
+#if HAVE_ENGINE_LOAD_CRYPTODEV
+    OSSL_ENGINE_LOAD_IF_MATCH(cryptodev);
+#endif
+#if HAVE_ENGINE_LOAD_AESNI
+    OSSL_ENGINE_LOAD_IF_MATCH(aesni);
+#endif
+#endif
+#ifdef HAVE_ENGINE_LOAD_OPENBSD_DEV_CRYPTO
+    OSSL_ENGINE_LOAD_IF_MATCH(openbsd_dev_crypto);
+#endif
+    OSSL_ENGINE_LOAD_IF_MATCH(openssl);
+    rb_warning(&quot;no such builtin loader for `%s&#39;&quot;, RSTRING_PTR(name));
+    return Qnil;
+#endif /* HAVE_ENGINE_LOAD_BUILTIN_ENGINES */
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-cipher">
+            
+              <b>engine.cipher(name) &rarr; OpenSSL::Cipher
+</b>
+            
+            <a href="../../classes/OpenSSL/Engine.html#method-i-cipher" name="method-i-cipher" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>This returns an <a href="Cipher.html">OpenSSL::Cipher</a> by
+<code>name</code>, if it is available in this engine.</p>
+
+<p>A <a href="Engine/EngineError.html">EngineError</a> will be raised if the
+cipher is unavailable.</p>
+
+<pre><code>e = OpenSSL::Engine.by_id(&quot;openssl&quot;)
+ =&gt; #&lt;OpenSSL::Engine id=&quot;openssl&quot; name=&quot;Software engine support&quot;&gt;
+e.cipher(&quot;RC4&quot;)
+ =&gt; #&lt;OpenSSL::Cipher:0x007fc5cacc3048&gt;</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-cipher_source')" id="l_method-i-cipher_source">show</a>
+                
+              </p>
+              <div id="method-i-cipher_source" class="dyn-source">
+                <pre>static VALUE
+ossl_engine_get_cipher(VALUE self, VALUE name)
+{
+    ENGINE *e;
+    const EVP_CIPHER *ciph, *tmp;
+    char *s;
+    int nid;
+
+    s = StringValuePtr(name);
+    tmp = EVP_get_cipherbyname(s);
+    if(!tmp) ossl_raise(eEngineError, &quot;no such cipher `%s&#39;&quot;, s);
+    nid = EVP_CIPHER_nid(tmp);
+    GetEngine(self, e);
+    ciph = ENGINE_get_cipher(e, nid);
+    if(!ciph) ossl_raise(eEngineError, NULL);
+
+    return ossl_cipher_new(ciph);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-cmds">
+            
+              <b>cmds</b>()
+            
+            <a href="../../classes/OpenSSL/Engine.html#method-i-cmds" name="method-i-cmds" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns an array of command definitions for the current engine</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-cmds_source')" id="l_method-i-cmds_source">show</a>
+                
+              </p>
+              <div id="method-i-cmds_source" class="dyn-source">
+                <pre>static VALUE
+ossl_engine_get_cmds(VALUE self)
+{
+    ENGINE *e;
+    const ENGINE_CMD_DEFN *defn, *p;
+    VALUE ary, tmp;
+
+    GetEngine(self, e);
+    ary = rb_ary_new();
+    if ((defn = ENGINE_get_cmd_defns(e)) != NULL){
+        for (p = defn; p-&gt;cmd_num &gt; 0; p++){
+            tmp = rb_ary_new();
+            rb_ary_push(tmp, rb_str_new2(p-&gt;cmd_name));
+            rb_ary_push(tmp, rb_str_new2(p-&gt;cmd_desc));
+            rb_ary_push(tmp, ossl_engine_cmd_flag_to_name(p-&gt;cmd_flags));
+            rb_ary_push(ary, tmp);
+        }
+    }
+
+    return ary;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-ctrl_cmd">
+            
+              <b>engine.ctrl_cmd(command, value = nil) &rarr; engine
+</b>
+            
+            <a href="../../classes/OpenSSL/Engine.html#method-i-ctrl_cmd" name="method-i-ctrl_cmd" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Send the given <code>command</code> to this engine.</p>
+
+<p>Raises an <a href="Engine/EngineError.html">EngineError</a> if the
+<code>command</code> fails.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-ctrl_cmd_source')" id="l_method-i-ctrl_cmd_source">show</a>
+                
+              </p>
+              <div id="method-i-ctrl_cmd_source" class="dyn-source">
+                <pre>static VALUE
+ossl_engine_ctrl_cmd(int argc, VALUE *argv, VALUE self)
+{
+    ENGINE *e;
+    VALUE cmd, val;
+    int ret;
+
+    GetEngine(self, e);
+    rb_scan_args(argc, argv, &quot;11&quot;, &amp;cmd, &amp;val);
+    StringValue(cmd);
+    if (!NIL_P(val)) StringValue(val);
+    ret = ENGINE_ctrl_cmd_string(e, RSTRING_PTR(cmd),
+                                 NIL_P(val) ? NULL : RSTRING_PTR(val), 0);
+    if (!ret) ossl_raise(eEngineError, NULL);
+
+    return self;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-digest">
+            
+              <b>engine.digest(name) &rarr; OpenSSL::Digest
+</b>
+            
+            <a href="../../classes/OpenSSL/Engine.html#method-i-digest" name="method-i-digest" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>This returns an <a href="Digest.html">OpenSSL::Digest</a> by
+<code>name</code>.</p>
+
+<p>Will raise an <a href="Engine/EngineError.html">EngineError</a> if the
+digest is unavailable.</p>
+
+<pre><code>e = OpenSSL::Engine.by_id(&quot;openssl&quot;)
+  #=&gt; #&lt;OpenSSL::Engine id=&quot;openssl&quot; name=&quot;Software engine support&quot;&gt;
+e.digest(&quot;SHA1&quot;)
+  #=&gt; #&lt;OpenSSL::Digest: da39a3ee5e6b4b0d3255bfef95601890afd80709&gt;
+e.digest(&quot;zomg&quot;)
+  #=&gt; OpenSSL::Engine::EngineError: no such digest `zomg&#39;
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-digest_source')" id="l_method-i-digest_source">show</a>
+                
+              </p>
+              <div id="method-i-digest_source" class="dyn-source">
+                <pre>static VALUE
+ossl_engine_get_digest(VALUE self, VALUE name)
+{
+    ENGINE *e;
+    const EVP_MD *md, *tmp;
+    char *s;
+    int nid;
+
+    s = StringValuePtr(name);
+    tmp = EVP_get_digestbyname(s);
+    if(!tmp) ossl_raise(eEngineError, &quot;no such digest `%s&#39;&quot;, s);
+    nid = EVP_MD_nid(tmp);
+    GetEngine(self, e);
+    md = ENGINE_get_digest(e, nid);
+    if(!md) ossl_raise(eEngineError, NULL);
+
+    return ossl_digest_new(md);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-finish">
+            
+              <b>finish</b>()
+            
+            <a href="../../classes/OpenSSL/Engine.html#method-i-finish" name="method-i-finish" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Releases all internal structural references for this engine.</p>
+
+<p>May raise an <a href="Engine/EngineError.html">EngineError</a> if the
+engine is unavailable</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-finish_source')" id="l_method-i-finish_source">show</a>
+                
+              </p>
+              <div id="method-i-finish_source" class="dyn-source">
+                <pre>static VALUE
+ossl_engine_finish(VALUE self)
+{
+    ENGINE *e;
+
+    GetEngine(self, e);
+    if(!ENGINE_finish(e)) ossl_raise(eEngineError, NULL);
+
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-id">
+            
+              <b>id</b>()
+            
+            <a href="../../classes/OpenSSL/Engine.html#method-i-id" name="method-i-id" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Get the id for this engine</p>
+
+<pre><code>OpenSSL::Engine.load
+OpenSSL::Engine.engines #=&gt; [#&lt;OpenSSL::Engine#&gt;, ...]
+OpenSSL::Engine.engines.first.id
+  #=&gt; &quot;rsax&quot;
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-id_source')" id="l_method-i-id_source">show</a>
+                
+              </p>
+              <div id="method-i-id_source" class="dyn-source">
+                <pre>static VALUE
+ossl_engine_get_id(VALUE self)
+{
+    ENGINE *e;
+    GetEngine(self, e);
+    return rb_str_new2(ENGINE_get_id(e));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-inspect">
+            
+              <b>inspect</b>()
+            
+            <a href="../../classes/OpenSSL/Engine.html#method-i-inspect" name="method-i-inspect" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Pretty print this engine</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-inspect_source')" id="l_method-i-inspect_source">show</a>
+                
+              </p>
+              <div id="method-i-inspect_source" class="dyn-source">
+                <pre>static VALUE
+ossl_engine_inspect(VALUE self)
+{
+    ENGINE *e;
+
+    GetEngine(self, e);
+    return rb_sprintf(&quot;#&lt;%&quot;PRIsVALUE&quot; id=\&quot;%s\&quot; name=\&quot;%s\&quot;&gt;&quot;,
+                      rb_obj_class(self), ENGINE_get_id(e), ENGINE_get_name(e));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-load_private_key">
+            
+              <b>engine.load_private_key(id = nil, data = nil) &rarr; OpenSSL::PKey
+</b>
+            
+            <a href="../../classes/OpenSSL/Engine.html#method-i-load_private_key" name="method-i-load_private_key" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Loads the given private key by <code>id</code> and <code>data</code>.</p>
+
+<p>An <a href="Engine/EngineError.html">EngineError</a> is raised of the <a
+href="PKey.html">OpenSSL::PKey</a> is unavailable.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-load_private_key_source')" id="l_method-i-load_private_key_source">show</a>
+                
+              </p>
+              <div id="method-i-load_private_key_source" class="dyn-source">
+                <pre>static VALUE
+ossl_engine_load_privkey(int argc, VALUE *argv, VALUE self)
+{
+    ENGINE *e;
+    EVP_PKEY *pkey;
+    VALUE id, data, obj;
+    char *sid, *sdata;
+
+    rb_scan_args(argc, argv, &quot;02&quot;, &amp;id, &amp;data);
+    sid = NIL_P(id) ? NULL : StringValuePtr(id);
+    sdata = NIL_P(data) ? NULL : StringValuePtr(data);
+    GetEngine(self, e);
+#if OPENSSL_VERSION_NUMBER &lt; 0x00907000L
+    pkey = ENGINE_load_private_key(e, sid, sdata);
+#else
+    pkey = ENGINE_load_private_key(e, sid, NULL, sdata);
+#endif
+    if (!pkey) ossl_raise(eEngineError, NULL);
+    obj = ossl_pkey_new(pkey);
+    OSSL_PKEY_SET_PRIVATE(obj);
+
+    return obj;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-load_public_key">
+            
+              <b>engine.load_public_key(id = nil, data = nil) &rarr; OpenSSL::PKey
+</b>
+            
+            <a href="../../classes/OpenSSL/Engine.html#method-i-load_public_key" name="method-i-load_public_key" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Loads the given private key by <code>id</code> and <code>data</code>.</p>
+
+<p>An <a href="Engine/EngineError.html">EngineError</a> is raised of the <a
+href="PKey.html">OpenSSL::PKey</a> is unavailable.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-load_public_key_source')" id="l_method-i-load_public_key_source">show</a>
+                
+              </p>
+              <div id="method-i-load_public_key_source" class="dyn-source">
+                <pre>static VALUE
+ossl_engine_load_pubkey(int argc, VALUE *argv, VALUE self)
+{
+    ENGINE *e;
+    EVP_PKEY *pkey;
+    VALUE id, data;
+    char *sid, *sdata;
+
+    rb_scan_args(argc, argv, &quot;02&quot;, &amp;id, &amp;data);
+    sid = NIL_P(id) ? NULL : StringValuePtr(id);
+    sdata = NIL_P(data) ? NULL : StringValuePtr(data);
+    GetEngine(self, e);
+#if OPENSSL_VERSION_NUMBER &lt; 0x00907000L
+    pkey = ENGINE_load_public_key(e, sid, sdata);
+#else
+    pkey = ENGINE_load_public_key(e, sid, NULL, sdata);
+#endif
+    if (!pkey) ossl_raise(eEngineError, NULL);
+
+    return ossl_pkey_new(pkey);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-name">
+            
+              <b>name</b>()
+            
+            <a href="../../classes/OpenSSL/Engine.html#method-i-name" name="method-i-name" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Get the descriptive name for this engine</p>
+
+<pre><code>OpenSSL::Engine.load
+OpenSSL::Engine.engines #=&gt; [#&lt;OpenSSL::Engine#&gt;, ...]
+OpenSSL::Engine.engines.first.name
+  #=&gt; &quot;RSAX engine support&quot;
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-name_source')" id="l_method-i-name_source">show</a>
+                
+              </p>
+              <div id="method-i-name_source" class="dyn-source">
+                <pre>static VALUE
+ossl_engine_get_name(VALUE self)
+{
+    ENGINE *e;
+    GetEngine(self, e);
+    return rb_str_new2(ENGINE_get_name(e));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-set_default">
+            
+              <b>engine.set_default(flag)
+</b>
+            
+            <a href="../../classes/OpenSSL/Engine.html#method-i-set_default" name="method-i-set_default" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p><a href="../Set.html">Set</a> the defaults for this engine with the given
+<code>flag</code>.</p>
+
+<p>These flags are used to control combinations of algorithm methods.</p>
+
+<p><code>flag</code> can be one of the following, other flags are available
+depending on your OS.</p>
+<dl class="rdoc-list label-list"><dt>All flags
+<dd>
+<p>0xFFFF</p>
+</dd><dt>No flags
+<dd>
+<p>0x0000</p>
+</dd></dl>
+
+<p>See also &lt;openssl/engine.h&gt;</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-set_default_source')" id="l_method-i-set_default_source">show</a>
+                
+              </p>
+              <div id="method-i-set_default_source" class="dyn-source">
+                <pre>static VALUE
+ossl_engine_set_default(VALUE self, VALUE flag)
+{
+    ENGINE *e;
+    int f = NUM2INT(flag);
+
+    GetEngine(self, e);
+    ENGINE_set_default(e, f);
+
+    return Qtrue;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+
+    </div>
+  </body>
+</html>    

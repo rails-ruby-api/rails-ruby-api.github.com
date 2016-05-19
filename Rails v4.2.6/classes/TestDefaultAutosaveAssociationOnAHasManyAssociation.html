@@ -1,0 +1,765 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>TestDefaultAutosaveAssociationOnAHasManyAssociation</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/github.css" type="text/css" media="screen" />
+<script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            TestDefaultAutosaveAssociationOnAHasManyAssociation 
+            
+                <span class="parent">&lt; 
+                    
+                    ActiveRecord::TestCase
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../files/activerecord/test/cases/autosave_association_test_rb.html">activerecord/test/cases/autosave_association_test.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-test_adding_before_save">test_adding_before_save</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_assign_ids">test_assign_ids</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_assign_ids_for_through_a_belongs_to">test_assign_ids_for_through_a_belongs_to</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_build_before_save">test_build_before_save</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_build_many_before_save">test_build_many_before_save</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_build_many_via_block_before_save">test_build_many_via_block_before_save</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_build_via_block_before_save">test_build_via_block_before_save</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_invalid_adding">test_invalid_adding</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_invalid_adding_before_save">test_invalid_adding_before_save</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_invalid_adding_with_validate_false">test_invalid_adding_with_validate_false</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_invalid_build">test_invalid_build</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_replace_on_new_object">test_replace_on_new_object</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_valid_adding_with_validate_false">test_valid_adding_with_validate_false</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+        
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-test_adding_before_save">
+            
+              <b>test_adding_before_save</b>()
+            
+            <a href="../classes/TestDefaultAutosaveAssociationOnAHasManyAssociation.html#method-i-test_adding_before_save" name="method-i-test_adding_before_save" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_adding_before_save_source')" id="l_method-i-test_adding_before_save_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/cd1bbf8ede61dd5ca1c60c9801a1978d322d447b/activerecord/test/cases/autosave_association_test.rb#L462" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_adding_before_save_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/autosave_association_test.rb, line 462</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_adding_before_save</span>
+  <span class="ruby-identifier">no_of_firms</span> = <span class="ruby-constant">Firm</span>.<span class="ruby-identifier">count</span>
+  <span class="ruby-identifier">no_of_clients</span> = <span class="ruby-constant">Client</span>.<span class="ruby-identifier">count</span>
+
+  <span class="ruby-identifier">new_firm</span> = <span class="ruby-constant">Firm</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&quot;name&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;A New Firm, Inc&quot;</span>)
+  <span class="ruby-identifier">c</span> = <span class="ruby-constant">Client</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&quot;name&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Apple&quot;</span>)
+
+  <span class="ruby-identifier">new_firm</span>.<span class="ruby-identifier">clients_of_firm</span>.<span class="ruby-identifier">push</span> <span class="ruby-constant">Client</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&quot;name&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Natural Company&quot;</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-number">1</span>, <span class="ruby-identifier">new_firm</span>.<span class="ruby-identifier">clients_of_firm</span>.<span class="ruby-identifier">size</span>
+  <span class="ruby-identifier">new_firm</span>.<span class="ruby-identifier">clients_of_firm</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">c</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-number">2</span>, <span class="ruby-identifier">new_firm</span>.<span class="ruby-identifier">clients_of_firm</span>.<span class="ruby-identifier">size</span>
+
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">no_of_firms</span>, <span class="ruby-constant">Firm</span>.<span class="ruby-identifier">count</span>      <span class="ruby-comment"># Firm was not saved to database.</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">no_of_clients</span>, <span class="ruby-constant">Client</span>.<span class="ruby-identifier">count</span>  <span class="ruby-comment"># Clients were not saved to database.</span>
+  <span class="ruby-identifier">assert</span> <span class="ruby-identifier">new_firm</span>.<span class="ruby-identifier">save</span>
+  <span class="ruby-identifier">assert</span> <span class="ruby-identifier">new_firm</span>.<span class="ruby-identifier">persisted?</span>
+  <span class="ruby-identifier">assert</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">persisted?</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">new_firm</span>, <span class="ruby-identifier">c</span>.<span class="ruby-identifier">firm</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">no_of_firms</span> <span class="ruby-operator">+</span> <span class="ruby-number">1</span>, <span class="ruby-constant">Firm</span>.<span class="ruby-identifier">count</span>      <span class="ruby-comment"># Firm was saved to database.</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">no_of_clients</span> <span class="ruby-operator">+</span> <span class="ruby-number">2</span>, <span class="ruby-constant">Client</span>.<span class="ruby-identifier">count</span>  <span class="ruby-comment"># Clients were saved to database.</span>
+
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-number">2</span>, <span class="ruby-identifier">new_firm</span>.<span class="ruby-identifier">clients_of_firm</span>.<span class="ruby-identifier">size</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-number">2</span>, <span class="ruby-identifier">new_firm</span>.<span class="ruby-identifier">clients_of_firm</span>(<span class="ruby-keyword">true</span>).<span class="ruby-identifier">size</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_assign_ids">
+            
+              <b>test_assign_ids</b>()
+            
+            <a href="../classes/TestDefaultAutosaveAssociationOnAHasManyAssociation.html#method-i-test_assign_ids" name="method-i-test_assign_ids" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_assign_ids_source')" id="l_method-i-test_assign_ids_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/cd1bbf8ede61dd5ca1c60c9801a1978d322d447b/activerecord/test/cases/autosave_association_test.rb#L487" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_assign_ids_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/autosave_association_test.rb, line 487</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_assign_ids</span>
+  <span class="ruby-identifier">firm</span> = <span class="ruby-constant">Firm</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&quot;name&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Apple&quot;</span>)
+  <span class="ruby-identifier">firm</span>.<span class="ruby-identifier">client_ids</span> = [<span class="ruby-identifier">companies</span>(<span class="ruby-value">:first_client</span>).<span class="ruby-identifier">id</span>, <span class="ruby-identifier">companies</span>(<span class="ruby-value">:second_client</span>).<span class="ruby-identifier">id</span>]
+  <span class="ruby-identifier">firm</span>.<span class="ruby-identifier">save</span>
+  <span class="ruby-identifier">firm</span>.<span class="ruby-identifier">reload</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-number">2</span>, <span class="ruby-identifier">firm</span>.<span class="ruby-identifier">clients</span>.<span class="ruby-identifier">length</span>
+  <span class="ruby-identifier">assert</span> <span class="ruby-identifier">firm</span>.<span class="ruby-identifier">clients</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">companies</span>(<span class="ruby-value">:second_client</span>))
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_assign_ids_for_through_a_belongs_to">
+            
+              <b>test_assign_ids_for_through_a_belongs_to</b>()
+            
+            <a href="../classes/TestDefaultAutosaveAssociationOnAHasManyAssociation.html#method-i-test_assign_ids_for_through_a_belongs_to" name="method-i-test_assign_ids_for_through_a_belongs_to" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_assign_ids_for_through_a_belongs_to_source')" id="l_method-i-test_assign_ids_for_through_a_belongs_to_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/cd1bbf8ede61dd5ca1c60c9801a1978d322d447b/activerecord/test/cases/autosave_association_test.rb#L496" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_assign_ids_for_through_a_belongs_to_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/autosave_association_test.rb, line 496</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_assign_ids_for_through_a_belongs_to</span>
+  <span class="ruby-identifier">post</span> = <span class="ruby-constant">Post</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">:title</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Assigning IDs works!&quot;</span>, <span class="ruby-value">:body</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;You heard it here first, folks!&quot;</span>)
+  <span class="ruby-identifier">post</span>.<span class="ruby-identifier">person_ids</span> = [<span class="ruby-identifier">people</span>(<span class="ruby-value">:david</span>).<span class="ruby-identifier">id</span>, <span class="ruby-identifier">people</span>(<span class="ruby-value">:michael</span>).<span class="ruby-identifier">id</span>]
+  <span class="ruby-identifier">post</span>.<span class="ruby-identifier">save</span>
+  <span class="ruby-identifier">post</span>.<span class="ruby-identifier">reload</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-number">2</span>, <span class="ruby-identifier">post</span>.<span class="ruby-identifier">people</span>.<span class="ruby-identifier">length</span>
+  <span class="ruby-identifier">assert</span> <span class="ruby-identifier">post</span>.<span class="ruby-identifier">people</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">people</span>(<span class="ruby-value">:david</span>))
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_build_before_save">
+            
+              <b>test_build_before_save</b>()
+            
+            <a href="../classes/TestDefaultAutosaveAssociationOnAHasManyAssociation.html#method-i-test_build_before_save" name="method-i-test_build_before_save" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_build_before_save_source')" id="l_method-i-test_build_before_save_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/cd1bbf8ede61dd5ca1c60c9801a1978d322d447b/activerecord/test/cases/autosave_association_test.rb#L505" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_build_before_save_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/autosave_association_test.rb, line 505</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_build_before_save</span>
+  <span class="ruby-identifier">company</span> = <span class="ruby-identifier">companies</span>(<span class="ruby-value">:first_firm</span>)
+  <span class="ruby-identifier">new_client</span> = <span class="ruby-identifier">assert_no_queries</span>(<span class="ruby-identifier">ignore_none</span><span class="ruby-operator">:</span> <span class="ruby-keyword">false</span>) { <span class="ruby-identifier">company</span>.<span class="ruby-identifier">clients_of_firm</span>.<span class="ruby-identifier">build</span>(<span class="ruby-string">&quot;name&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Another Client&quot;</span>) }
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-identifier">company</span>.<span class="ruby-identifier">clients_of_firm</span>.<span class="ruby-identifier">loaded?</span>
+
+  <span class="ruby-identifier">company</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">+=</span> <span class="ruby-string">&#39;-changed&#39;</span>
+  <span class="ruby-identifier">assert_queries</span>(<span class="ruby-number">2</span>) { <span class="ruby-identifier">assert</span> <span class="ruby-identifier">company</span>.<span class="ruby-identifier">save</span> }
+  <span class="ruby-identifier">assert</span> <span class="ruby-identifier">new_client</span>.<span class="ruby-identifier">persisted?</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-number">3</span>, <span class="ruby-identifier">company</span>.<span class="ruby-identifier">clients_of_firm</span>(<span class="ruby-keyword">true</span>).<span class="ruby-identifier">size</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_build_many_before_save">
+            
+              <b>test_build_many_before_save</b>()
+            
+            <a href="../classes/TestDefaultAutosaveAssociationOnAHasManyAssociation.html#method-i-test_build_many_before_save" name="method-i-test_build_many_before_save" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_build_many_before_save_source')" id="l_method-i-test_build_many_before_save_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/cd1bbf8ede61dd5ca1c60c9801a1978d322d447b/activerecord/test/cases/autosave_association_test.rb#L516" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_build_many_before_save_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/autosave_association_test.rb, line 516</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_build_many_before_save</span>
+  <span class="ruby-identifier">company</span> = <span class="ruby-identifier">companies</span>(<span class="ruby-value">:first_firm</span>)
+  <span class="ruby-identifier">assert_no_queries</span>(<span class="ruby-identifier">ignore_none</span><span class="ruby-operator">:</span> <span class="ruby-keyword">false</span>) { <span class="ruby-identifier">company</span>.<span class="ruby-identifier">clients_of_firm</span>.<span class="ruby-identifier">build</span>([{<span class="ruby-string">&quot;name&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Another Client&quot;</span>}, {<span class="ruby-string">&quot;name&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Another Client II&quot;</span>}]) }
+
+  <span class="ruby-identifier">company</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">+=</span> <span class="ruby-string">&#39;-changed&#39;</span>
+  <span class="ruby-identifier">assert_queries</span>(<span class="ruby-number">3</span>) { <span class="ruby-identifier">assert</span> <span class="ruby-identifier">company</span>.<span class="ruby-identifier">save</span> }
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-number">4</span>, <span class="ruby-identifier">company</span>.<span class="ruby-identifier">clients_of_firm</span>(<span class="ruby-keyword">true</span>).<span class="ruby-identifier">size</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_build_many_via_block_before_save">
+            
+              <b>test_build_many_via_block_before_save</b>()
+            
+            <a href="../classes/TestDefaultAutosaveAssociationOnAHasManyAssociation.html#method-i-test_build_many_via_block_before_save" name="method-i-test_build_many_via_block_before_save" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_build_many_via_block_before_save_source')" id="l_method-i-test_build_many_via_block_before_save_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/cd1bbf8ede61dd5ca1c60c9801a1978d322d447b/activerecord/test/cases/autosave_association_test.rb#L536" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_build_many_via_block_before_save_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/autosave_association_test.rb, line 536</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_build_many_via_block_before_save</span>
+  <span class="ruby-identifier">company</span> = <span class="ruby-identifier">companies</span>(<span class="ruby-value">:first_firm</span>)
+  <span class="ruby-identifier">assert_no_queries</span>(<span class="ruby-identifier">ignore_none</span><span class="ruby-operator">:</span> <span class="ruby-keyword">false</span>) <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">company</span>.<span class="ruby-identifier">clients_of_firm</span>.<span class="ruby-identifier">build</span>([{<span class="ruby-string">&quot;name&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Another Client&quot;</span>}, {<span class="ruby-string">&quot;name&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Another Client II&quot;</span>}]) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">client</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">client</span>.<span class="ruby-identifier">name</span> = <span class="ruby-string">&quot;changed&quot;</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">company</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">+=</span> <span class="ruby-string">&#39;-changed&#39;</span>
+  <span class="ruby-identifier">assert_queries</span>(<span class="ruby-number">3</span>) { <span class="ruby-identifier">assert</span> <span class="ruby-identifier">company</span>.<span class="ruby-identifier">save</span> }
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-number">4</span>, <span class="ruby-identifier">company</span>.<span class="ruby-identifier">clients_of_firm</span>(<span class="ruby-keyword">true</span>).<span class="ruby-identifier">size</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_build_via_block_before_save">
+            
+              <b>test_build_via_block_before_save</b>()
+            
+            <a href="../classes/TestDefaultAutosaveAssociationOnAHasManyAssociation.html#method-i-test_build_via_block_before_save" name="method-i-test_build_via_block_before_save" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_build_via_block_before_save_source')" id="l_method-i-test_build_via_block_before_save_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/cd1bbf8ede61dd5ca1c60c9801a1978d322d447b/activerecord/test/cases/autosave_association_test.rb#L525" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_build_via_block_before_save_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/autosave_association_test.rb, line 525</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_build_via_block_before_save</span>
+  <span class="ruby-identifier">company</span> = <span class="ruby-identifier">companies</span>(<span class="ruby-value">:first_firm</span>)
+  <span class="ruby-identifier">new_client</span> = <span class="ruby-identifier">assert_no_queries</span>(<span class="ruby-identifier">ignore_none</span><span class="ruby-operator">:</span> <span class="ruby-keyword">false</span>) { <span class="ruby-identifier">company</span>.<span class="ruby-identifier">clients_of_firm</span>.<span class="ruby-identifier">build</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">client</span><span class="ruby-operator">|</span> <span class="ruby-identifier">client</span>.<span class="ruby-identifier">name</span> = <span class="ruby-string">&quot;Another Client&quot;</span> } }
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-identifier">company</span>.<span class="ruby-identifier">clients_of_firm</span>.<span class="ruby-identifier">loaded?</span>
+
+  <span class="ruby-identifier">company</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">+=</span> <span class="ruby-string">&#39;-changed&#39;</span>
+  <span class="ruby-identifier">assert_queries</span>(<span class="ruby-number">2</span>) { <span class="ruby-identifier">assert</span> <span class="ruby-identifier">company</span>.<span class="ruby-identifier">save</span> }
+  <span class="ruby-identifier">assert</span> <span class="ruby-identifier">new_client</span>.<span class="ruby-identifier">persisted?</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-number">3</span>, <span class="ruby-identifier">company</span>.<span class="ruby-identifier">clients_of_firm</span>(<span class="ruby-keyword">true</span>).<span class="ruby-identifier">size</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_invalid_adding">
+            
+              <b>test_invalid_adding</b>()
+            
+            <a href="../classes/TestDefaultAutosaveAssociationOnAHasManyAssociation.html#method-i-test_invalid_adding" name="method-i-test_invalid_adding" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_invalid_adding_source')" id="l_method-i-test_invalid_adding_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/cd1bbf8ede61dd5ca1c60c9801a1978d322d447b/activerecord/test/cases/autosave_association_test.rb#L404" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_invalid_adding_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/autosave_association_test.rb, line 404</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_invalid_adding</span>
+  <span class="ruby-identifier">firm</span> = <span class="ruby-constant">Firm</span>.<span class="ruby-identifier">find</span>(<span class="ruby-number">1</span>)
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span>(<span class="ruby-identifier">firm</span>.<span class="ruby-identifier">clients_of_firm</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">c</span> = <span class="ruby-constant">Client</span>.<span class="ruby-identifier">new</span>)
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-identifier">c</span>.<span class="ruby-identifier">persisted?</span>
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-identifier">firm</span>.<span class="ruby-identifier">valid?</span>
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-identifier">firm</span>.<span class="ruby-identifier">save</span>
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-identifier">c</span>.<span class="ruby-identifier">persisted?</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_invalid_adding_before_save">
+            
+              <b>test_invalid_adding_before_save</b>()
+            
+            <a href="../classes/TestDefaultAutosaveAssociationOnAHasManyAssociation.html#method-i-test_invalid_adding_before_save" name="method-i-test_invalid_adding_before_save" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_invalid_adding_before_save_source')" id="l_method-i-test_invalid_adding_before_save_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/cd1bbf8ede61dd5ca1c60c9801a1978d322d447b/activerecord/test/cases/autosave_association_test.rb#L413" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_invalid_adding_before_save_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/autosave_association_test.rb, line 413</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_invalid_adding_before_save</span>
+  <span class="ruby-identifier">new_firm</span> = <span class="ruby-constant">Firm</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&quot;name&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;A New Firm, Inc&quot;</span>)
+  <span class="ruby-identifier">new_firm</span>.<span class="ruby-identifier">clients_of_firm</span>.<span class="ruby-identifier">concat</span>([<span class="ruby-identifier">c</span> = <span class="ruby-constant">Client</span>.<span class="ruby-identifier">new</span>, <span class="ruby-constant">Client</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&quot;name&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Apple&quot;</span>)])
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-identifier">c</span>.<span class="ruby-identifier">persisted?</span>
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-identifier">c</span>.<span class="ruby-identifier">valid?</span>
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-identifier">new_firm</span>.<span class="ruby-identifier">valid?</span>
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-identifier">new_firm</span>.<span class="ruby-identifier">save</span>
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-identifier">c</span>.<span class="ruby-identifier">persisted?</span>
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-identifier">new_firm</span>.<span class="ruby-identifier">persisted?</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_invalid_adding_with_validate_false">
+            
+              <b>test_invalid_adding_with_validate_false</b>()
+            
+            <a href="../classes/TestDefaultAutosaveAssociationOnAHasManyAssociation.html#method-i-test_invalid_adding_with_validate_false" name="method-i-test_invalid_adding_with_validate_false" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_invalid_adding_with_validate_false_source')" id="l_method-i-test_invalid_adding_with_validate_false_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/cd1bbf8ede61dd5ca1c60c9801a1978d322d447b/activerecord/test/cases/autosave_association_test.rb#L424" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_invalid_adding_with_validate_false_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/autosave_association_test.rb, line 424</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_invalid_adding_with_validate_false</span>
+  <span class="ruby-identifier">firm</span> = <span class="ruby-constant">Firm</span>.<span class="ruby-identifier">first</span>
+  <span class="ruby-identifier">client</span> = <span class="ruby-constant">Client</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-identifier">firm</span>.<span class="ruby-identifier">unvalidated_clients_of_firm</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">client</span>
+
+  <span class="ruby-identifier">assert</span> <span class="ruby-identifier">firm</span>.<span class="ruby-identifier">valid?</span>
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-identifier">client</span>.<span class="ruby-identifier">valid?</span>
+  <span class="ruby-identifier">assert</span> <span class="ruby-identifier">firm</span>.<span class="ruby-identifier">save</span>
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-identifier">client</span>.<span class="ruby-identifier">persisted?</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_invalid_build">
+            
+              <b>test_invalid_build</b>()
+            
+            <a href="../classes/TestDefaultAutosaveAssociationOnAHasManyAssociation.html#method-i-test_invalid_build" name="method-i-test_invalid_build" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_invalid_build_source')" id="l_method-i-test_invalid_build_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/cd1bbf8ede61dd5ca1c60c9801a1978d322d447b/activerecord/test/cases/autosave_association_test.rb#L452" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_invalid_build_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/autosave_association_test.rb, line 452</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_invalid_build</span>
+  <span class="ruby-identifier">new_client</span> = <span class="ruby-identifier">companies</span>(<span class="ruby-value">:first_firm</span>).<span class="ruby-identifier">clients_of_firm</span>.<span class="ruby-identifier">build</span>
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-identifier">new_client</span>.<span class="ruby-identifier">persisted?</span>
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-identifier">new_client</span>.<span class="ruby-identifier">valid?</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">new_client</span>, <span class="ruby-identifier">companies</span>(<span class="ruby-value">:first_firm</span>).<span class="ruby-identifier">clients_of_firm</span>.<span class="ruby-identifier">last</span>
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-identifier">companies</span>(<span class="ruby-value">:first_firm</span>).<span class="ruby-identifier">save</span>
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-identifier">new_client</span>.<span class="ruby-identifier">persisted?</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-number">2</span>, <span class="ruby-identifier">companies</span>(<span class="ruby-value">:first_firm</span>).<span class="ruby-identifier">clients_of_firm</span>(<span class="ruby-keyword">true</span>).<span class="ruby-identifier">size</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_replace_on_new_object">
+            
+              <b>test_replace_on_new_object</b>()
+            
+            <a href="../classes/TestDefaultAutosaveAssociationOnAHasManyAssociation.html#method-i-test_replace_on_new_object" name="method-i-test_replace_on_new_object" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_replace_on_new_object_source')" id="l_method-i-test_replace_on_new_object_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/cd1bbf8ede61dd5ca1c60c9801a1978d322d447b/activerecord/test/cases/autosave_association_test.rb#L549" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_replace_on_new_object_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/autosave_association_test.rb, line 549</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_replace_on_new_object</span>
+  <span class="ruby-identifier">firm</span> = <span class="ruby-constant">Firm</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&quot;name&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;New Firm&quot;</span>)
+  <span class="ruby-identifier">firm</span>.<span class="ruby-identifier">clients</span> = [<span class="ruby-identifier">companies</span>(<span class="ruby-value">:second_client</span>), <span class="ruby-constant">Client</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&quot;name&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;New Client&quot;</span>)]
+  <span class="ruby-identifier">assert</span> <span class="ruby-identifier">firm</span>.<span class="ruby-identifier">save</span>
+  <span class="ruby-identifier">firm</span>.<span class="ruby-identifier">reload</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-number">2</span>, <span class="ruby-identifier">firm</span>.<span class="ruby-identifier">clients</span>.<span class="ruby-identifier">length</span>
+  <span class="ruby-identifier">assert</span> <span class="ruby-identifier">firm</span>.<span class="ruby-identifier">clients</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-constant">Client</span>.<span class="ruby-identifier">find_by_name</span>(<span class="ruby-string">&quot;New Client&quot;</span>))
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_valid_adding_with_validate_false">
+            
+              <b>test_valid_adding_with_validate_false</b>()
+            
+            <a href="../classes/TestDefaultAutosaveAssociationOnAHasManyAssociation.html#method-i-test_valid_adding_with_validate_false" name="method-i-test_valid_adding_with_validate_false" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_valid_adding_with_validate_false_source')" id="l_method-i-test_valid_adding_with_validate_false_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/cd1bbf8ede61dd5ca1c60c9801a1978d322d447b/activerecord/test/cases/autosave_association_test.rb#L435" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_valid_adding_with_validate_false_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/autosave_association_test.rb, line 435</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_valid_adding_with_validate_false</span>
+  <span class="ruby-identifier">no_of_clients</span> = <span class="ruby-constant">Client</span>.<span class="ruby-identifier">count</span>
+
+  <span class="ruby-identifier">firm</span> = <span class="ruby-constant">Firm</span>.<span class="ruby-identifier">first</span>
+  <span class="ruby-identifier">client</span> = <span class="ruby-constant">Client</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&quot;name&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Apple&quot;</span>)
+
+  <span class="ruby-identifier">assert</span> <span class="ruby-identifier">firm</span>.<span class="ruby-identifier">valid?</span>
+  <span class="ruby-identifier">assert</span> <span class="ruby-identifier">client</span>.<span class="ruby-identifier">valid?</span>
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-identifier">client</span>.<span class="ruby-identifier">persisted?</span>
+
+  <span class="ruby-identifier">firm</span>.<span class="ruby-identifier">unvalidated_clients_of_firm</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">client</span>
+
+  <span class="ruby-identifier">assert</span> <span class="ruby-identifier">firm</span>.<span class="ruby-identifier">save</span>
+  <span class="ruby-identifier">assert</span> <span class="ruby-identifier">client</span>.<span class="ruby-identifier">persisted?</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">no_of_clients</span> <span class="ruby-operator">+</span> <span class="ruby-number">1</span>, <span class="ruby-constant">Client</span>.<span class="ruby-identifier">count</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+
+    </div>
+  </body>
+</html>    

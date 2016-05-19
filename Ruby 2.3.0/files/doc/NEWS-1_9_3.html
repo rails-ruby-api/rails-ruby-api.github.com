@@ -1,0 +1,689 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>NEWS-1.9.3</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            NEWS-1.9.3
+        </h1>
+        <ul class="files">
+            
+            <li>
+                doc/NEWS-1.9.3
+                
+            </li>
+            <li>Last modified: 2013-02-23 00:57:58 +0100</li>
+        </ul>
+    </div>
+
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<h1 id="label-NEWS+for+Ruby+1.9.3"><a href="../NEWS.html">NEWS</a> for Ruby 1.9.3</h1>
+
+<p>This document is a list of user visible feature changes made between
+releases except for bug fixes.</p>
+
+<p>Note that each entry is kept so brief that no reason behind or reference
+information is supplied with.  For a full list of changes with all
+sufficient information, see the <a href="../ChangeLog.html">ChangeLog</a>
+file.</p>
+
+<h2 id="label-Changes+since+the+1.9.2+release">Changes since the 1.9.2 release</h2>
+
+<h3 id="label-License">License</h3>
+<ul><li>
+<p>Ruby&#39;s License is changed from a dual license with GPLv2 to a dual
+license with 2-clause BSDL.</p>
+</li></ul>
+
+<h3 id="label-Known+platform+dependent+issues">Known platform dependent issues</h3>
+
+<h4 id="label-OS+X+Lion">OS X Lion</h4>
+<ul><li>
+<p>You have to configure ruby with &#39;–with-gcc=gcc-4.2&#39; if you&#39;re
+using Xcode 4.1, or, if you&#39;re using Xcode 4.2, you have to configure
+ruby with &#39;–with-gcc=clang&#39;.</p>
+</li></ul>
+
+<h3 id="label-C+API+updates">C API updates</h3>
+<ul><li>
+<p>rb_scan_args() is enhanced with support for option hash argument
+extraction.</p>
+</li><li>
+<p>ruby_vm_at_exit() added.  This enables extension libs to hook a VM
+termination.</p>
+</li><li>
+<p>rb_reserved_fd_p() added.  If you want to close all file descriptors, check
+using this API.  [ruby-core:37759]</p>
+</li></ul>
+
+<h3 id="label-Library+updates+-28outstanding+ones+only-29">Library updates (outstanding ones only)</h3>
+<ul><li>
+<p>builtin classes</p>
+<ul><li>
+<p>ARGF</p>
+<ul><li>
+<p>new methods:</p>
+<ul><li>
+<p>ARGF.print</p>
+</li><li>
+<p>ARGF.printf</p>
+</li><li>
+<p>ARGF.putc</p>
+</li><li>
+<p>ARGF.puts</p>
+</li><li>
+<p>ARGF.read_nonblock</p>
+</li><li>
+<p>ARGF.to_write_io</p>
+</li><li>
+<p>ARGF.write</p>
+</li></ul>
+</li></ul>
+</li><li>
+<p>Array</p>
+<ul><li>
+<p>extended method:</p>
+<ul><li>
+<p><a href="../../classes/Array.html#method-i-pack">Array#pack</a> supports
+endian modifiers</p>
+</li></ul>
+</li></ul>
+</li><li>
+<p><a href="../../classes/Bignum.html">Bignum</a></p>
+<ul><li>
+<p>Multiplication algorithm for Bignums with a large number of digits over 150
+BDIGITs is changed in order to reduce its calculation time. Now such large
+Bignums are multiplied by using Toom-3 algorithm.</p>
+</li></ul>
+</li><li>
+<p><a href="../../classes/Encoding.html">Encoding</a></p>
+<ul><li>
+<p>new encodings:</p>
+<ul><li>
+<p>CP950</p>
+</li><li>
+<p>CP951</p>
+</li><li>
+<p>UTF-16</p>
+</li><li>
+<p>UTF-32</p>
+</li></ul>
+</li><li>
+<p>change alias:</p>
+<ul><li>
+<p>SJIS is Windows-31J</p>
+</li></ul>
+</li></ul>
+</li><li>
+<p><a href="../../classes/File.html">File</a></p>
+<ul><li>
+<p>new constant:</p>
+<ul><li>
+<p>File::NULL name of NULL device.</p>
+</li><li>
+<p>File::DIRECT name of O_DIRECT.</p>
+</li></ul>
+</li></ul>
+</li><li>
+<p><a href="../../classes/IO.html">IO</a></p>
+<ul><li>
+<p>extended method:</p>
+<ul><li>
+<p><a href="../../classes/IO.html#method-i-putc">IO#putc</a> supports
+multibyte characters</p>
+</li></ul>
+</li><li>
+<p>new methods:</p>
+<ul><li>
+<p><a href="../../classes/IO.html#method-i-advise">IO#advise</a></p>
+</li><li>
+<p><a href="../../classes/IO.html#method-c-write">IO.write</a>(name, string,
+[offset] ) Write `string` to file `name`. Opposite with <a
+href="../../classes/IO.html#method-c-read">IO.read</a>.</p>
+</li><li>
+<p><a href="../../classes/IO.html#method-c-binwrite">IO.binwrite</a>(name,
+string, [offset] ) binary version of <a
+href="../../classes/IO.html#method-c-write">IO.write</a>.</p>
+</li></ul>
+</li></ul>
+</li><li>
+<p><a href="../../classes/Kernel.html">Kernel</a></p>
+<ul><li>
+<p>move #__id__ to <a href="../../classes/BasicObject.html">BasicObject</a>.</p>
+</li><li>
+<p>extended method:</p>
+<ul><li>
+<p><a href="../../classes/Kernel.html#method-i-rand">Kernel#rand</a> supports
+range argument</p>
+</li></ul>
+</li></ul>
+</li><li>
+<p><a href="../../classes/Module.html">Module</a></p>
+<ul><li>
+<p>new methods:</p>
+<ul><li>
+<p><a
+href="../../classes/Module.html#method-i-private_constant">Module#private_constant</a></p>
+</li><li>
+<p><a
+href="../../classes/Module.html#method-i-public_constant">Module#public_constant</a></p>
+</li></ul>
+</li></ul>
+</li><li>
+<p><a href="../../classes/Random.html">Random</a></p>
+<ul><li>
+<p>extended method:</p>
+<ul><li>
+<p><a href="../../classes/Random.html#method-i-rand">Random#rand</a> supports
+range argument</p>
+</li></ul>
+</li></ul>
+</li><li>
+<p>String</p>
+<ul><li>
+<p>extended method:</p>
+<ul><li>
+<p><a href="../../classes/String.html#method-i-unpack">String#unpack</a>
+supports endian modifiers</p>
+</li></ul>
+</li><li>
+<p>new method:</p>
+<ul><li>
+<p><a href="../../classes/String.html#method-i-prepend">String#prepend</a></p>
+</li><li>
+<p><a href="../../classes/String.html#method-i-byteslice">String#byteslice</a></p>
+</li></ul>
+</li></ul>
+</li><li>
+<p><a href="../../classes/Time.html">Time</a></p>
+<ul><li>
+<p>extended method:</p>
+<ul><li>
+<p><a href="../../classes/Time.html#method-i-strftime">Time#strftime</a>
+supports %:z and %::z.</p>
+</li></ul>
+</li></ul>
+</li><li>
+<p><a href="../../classes/Process.html">Process</a></p>
+<ul><li>
+<p>Process#maxgroups and Process#maxgroups= now raise <a
+href="../../classes/NotImplementedError.html">NotImplementedError</a> if
+the platform don&#39;t support supplementary groups concept.</p>
+</li></ul>
+</li></ul>
+</li><li>
+<p>bigdecimal</p>
+<ul><li>
+<p><a href="../../classes/BigDecimal.html#method-i-power">BigDecimal#power</a>
+and BigDecimal#** support non-integral exponent.</p>
+</li><li>
+<p><a href="../../classes/Kernel.html">Kernel</a>.BigDecimal and <a
+href="../../classes/BigDecimal.html#method-c-new">BigDecimal.new</a> now
+accept instances of <a href="../../classes/Integer.html">Integer</a>, <a
+href="../../classes/Rational.html">Rational</a>, <a
+href="../../classes/Float.html">Float</a>, and <a
+href="../../classes/BigDecimal.html">BigDecimal</a>.  If you pass a <a
+href="../../classes/Rational.html">Rational</a> or a <a
+href="../../classes/Float.html">Float</a> to them, you must specify the
+precision to produce the digits of a <a
+href="../../classes/BigDecimal.html">BigDecimal</a>.</p>
+</li><li>
+<p>The behavior of <a
+href="../../classes/BigDecimal.html#method-i-coerce">BigDecimal#coerce</a>
+with a <a href="../../classes/Rational.html">Rational</a> is changed.  It
+uses the precision of the receiver <a
+href="../../classes/BigDecimal.html">BigDecimal</a> to produce the digits
+of a <a href="../../classes/BigDecimal.html">BigDecimal</a> from the given
+<a href="../../classes/Rational.html">Rational</a>.</p>
+</li></ul>
+</li><li>
+<p>bigdecimal/util</p>
+<ul><li>
+<p><a href="../../classes/BigDecimal.html#method-i-to_d">BigDecimal#to_d</a>
+and <a href="../../classes/Integer.html#method-i-to_d">Integer#to_d</a> are
+added.</p>
+</li><li>
+<p><a href="../../classes/Float.html#method-i-to_d">Float#to_d</a> accepts a
+precision.</p>
+</li><li>
+<p><a href="../../classes/Rational.html#method-i-to_d">Rational#to_d</a>
+raises <a href="../../classes/ArgumentError.html">ArgumentError</a> when
+passing zero or negative precision.</p>
+</li><li>
+<p><a href="../../classes/Rational.html#method-i-to_d">Rational#to_d</a></p>
+<ul><li>
+<p>Zero and an implicit precision is deprecated. This feature is removed at
+the next release of bigdecimal.</p>
+</li><li>
+<p>A negative precision isn&#39;t supported. Be careful it is an incompatible
+change.</p>
+</li></ul>
+</li></ul>
+</li><li>
+<p>date</p>
+<ul><li>
+<p>Accepts flonum explicitly with limitations.</p>
+<ul><li>
+<p>If the given offset is flonum, <a
+href="../../classes/DateTime.html">DateTime</a> assumes its precision is at
+most second.</p>
+
+<p><a
+href="../../classes/DateTime.html#method-c-new">DateTime.new</a>(2001,2,3,0,0,0,3.0/24)
+== <a
+href="../../classes/DateTime.html#method-c-new">DateTime.new</a>(2001,2,3,0,0,0,&#39;+03:00&#39;)</p>
+
+<pre><code>#=&gt; true
+</code></pre>
+</li><li>
+<p>If the given operand for -/+ is flonum, <a
+href="../../classes/DateTime.html">DateTime</a> assumes its precision is at
+most nanosecond.</p>
+
+<p><a
+href="../../classes/DateTime.html#method-c-new">DateTime.new</a>(2001,2,3)
++ 0.5 == <a
+href="../../classes/DateTime.html#method-c-new">DateTime.new</a>(2001,2,3,12)</p>
+
+<pre><code>#=&gt; true
+</code></pre>
+</li><li>
+<p>Precision of offset is always at most second.</p>
+
+<p>Rational(&#39;0.5&#39;) == Rational(&#39;0.500001&#39;)  #=&gt; false <a
+href="../../classes/DateTime.html#method-c-new">DateTime.new</a>(2001,2,3,0,0,0,Rational(&#39;0.5&#39;))
+== <a
+href="../../classes/DateTime.html#method-c-new">DateTime.new</a>(2001,2,3,0,0,0,Rational(&#39;0.500001&#39;))</p>
+
+<pre><code>#=&gt; true
+</code></pre>
+</li></ul>
+</li><li>
+<p>Ignores long offset and far reform day (with warning).</p>
+<ul><li>
+<p>Now accepts only:</p>
+
+<p>-1&lt;=offset&lt;=1 (-24:00..+24:00) 2298874&lt;=start&lt;=2426355 or -/+oo</p>
+
+<pre><code>(proleptic Gregorian/Julian mean -/+oo)</code></pre>
+</li></ul>
+</li><li>
+<p>A method strftime cannot produce huge output (same as Time&#39;s one).</p>
+<ul><li>
+<p>Even though Date/DateTime can handle far dates, the following causes an
+exception.</p>
+
+<p><a
+href="../../classes/DateTime.html#method-c-new">DateTime.new</a>.strftime(&#39;%Y&#39;)
+# Errno::ERANGE</p>
+</li></ul>
+</li><li>
+<p>Changed the format of inspect.</p>
+</li><li>
+<p>Changed the format of marshal (but, can load old dumps).</p>
+</li></ul>
+</li><li>
+<p>io/console</p>
+<ul><li>
+<p>new methods:</p>
+<ul><li>
+<p><a href="../../classes/IO.html#method-i-noecho">IO#noecho</a> {|io| }</p>
+</li><li>
+<p><a href="../../classes/IO.html#method-i-echo-3D">IO#echo=</a></p>
+</li><li>
+<p><a href="../../classes/IO.html#method-i-echo-3F">IO#echo?</a></p>
+</li><li>
+<p><a href="../../classes/IO.html#method-i-raw">IO#raw</a> {|io| }</p>
+</li><li>
+<p><a href="../../classes/IO.html#method-i-raw-21">IO#raw!</a></p>
+</li><li>
+<p><a href="../../classes/IO.html#method-i-getch">IO#getch</a></p>
+</li><li>
+<p><a href="../../classes/IO.html#method-i-winsize">IO#winsize</a></p>
+</li><li>
+<p><a href="../../classes/IO.html#method-c-console">IO.console</a></p>
+</li></ul>
+</li></ul>
+</li><li>
+<p>json</p>
+<ul><li>
+<p>updated to v1.5.4.</p>
+</li></ul>
+</li><li>
+<p>matrix</p>
+<ul><li>
+<p>new classes:</p>
+<ul><li>
+<p><a
+href="../../classes/Matrix/EigenvalueDecomposition.html">Matrix::EigenvalueDecomposition</a></p>
+</li><li>
+<p><a
+href="../../classes/Matrix/LUPDecomposition.html">Matrix::LUPDecomposition</a></p>
+</li></ul>
+</li><li>
+<p>new methods:</p>
+<ul><li>
+<p><a
+href="../../classes/Matrix.html#method-i-diagonal-3F">Matrix#diagonal?</a></p>
+</li><li>
+<p><a href="../../classes/Matrix.html#method-i-eigen">Matrix#eigen</a></p>
+</li><li>
+<p><a
+href="../../classes/Matrix.html#method-i-eigensystem">Matrix#eigensystem</a></p>
+</li><li>
+<p><a
+href="../../classes/Matrix.html#method-i-hermitian-3F">Matrix#hermitian?</a></p>
+</li><li>
+<p><a
+href="../../classes/Matrix.html#method-i-lower_triangular-3F">Matrix#lower_triangular?</a></p>
+</li><li>
+<p><a href="../../classes/Matrix.html#method-i-lup">Matrix#lup</a></p>
+</li><li>
+<p><a
+href="../../classes/Matrix.html#method-i-lup_decomposition">Matrix#lup_decomposition</a></p>
+</li><li>
+<p><a href="../../classes/Matrix.html#method-i-normal-3F">Matrix#normal?</a></p>
+</li><li>
+<p><a
+href="../../classes/Matrix.html#method-i-orthogonal-3F">Matrix#orthogonal?</a></p>
+</li><li>
+<p><a
+href="../../classes/Matrix.html#method-i-permutation-3F">Matrix#permutation?</a></p>
+</li><li>
+<p><a href="../../classes/Matrix.html#method-i-round">Matrix#round</a></p>
+</li><li>
+<p><a
+href="../../classes/Matrix.html#method-i-symmetric-3F">Matrix#symmetric?</a></p>
+</li><li>
+<p><a href="../../classes/Matrix.html#method-i-unitary-3F">Matrix#unitary?</a></p>
+</li><li>
+<p><a
+href="../../classes/Matrix.html#method-i-upper_triangular-3F">Matrix#upper_triangular?</a></p>
+</li><li>
+<p><a href="../../classes/Matrix.html#method-i-zero-3F">Matrix#zero?</a></p>
+</li><li>
+<p><a
+href="../../classes/Vector.html#method-i-magnitude">Vector#magnitude</a>,
+norm</p>
+</li><li>
+<p><a href="../../classes/Vector.html#method-i-normalize">Vector#normalize</a></p>
+</li></ul>
+</li><li>
+<p>extended methods:</p>
+<ul><li>
+<p><a href="../../classes/Matrix.html#method-i-each">Matrix#each</a> and
+each_with_index can iterate on a subset of the elements</p>
+</li><li>
+<p><a
+href="../../classes/Matrix.html#method-i-find_index">Matrix#find_index</a>
+returns [row, column] and can iterate on a subset of the elements</p>
+</li><li>
+<p>Matrix#** implements <a href="../../classes/Numeric.html">Numeric</a>
+exponents (using the eigensystem)</p>
+</li><li>
+<p><a href="../../classes/Matrix.html#method-c-zero">Matrix.zero</a> can build
+rectangular matrices</p>
+</li></ul>
+</li></ul>
+</li><li>
+<p>minitest</p>
+<ul><li>
+<p>Minitest has been updated to version 2.2.2.</p>
+</li><li>
+<p>For full details, see <a
+href="https://github.com/seattlerb/minitest/blob/master/History.txt">github.com/seattlerb/minitest/blob/master/History.txt</a></p>
+</li></ul>
+</li><li>
+<p>net/http</p>
+<ul><li>
+<p>SNI (Server Name Indication) supported for HTTPS.</p>
+</li><li>
+<p>Allow to configure to wait server returning &#39;100 continue&#39; response
+before sending HTTP request body. <a href="../../classes/Set.html">Set</a>
+<a
+href="../../classes/Net/HTTP.html#attribute-i-continue_timeout">Net::HTTP#continue_timeout</a>
+AND pass &#39;expect&#39; =&gt; &#39;100-continue&#39; to a extra HTTP
+header.</p>
+
+<p>For example, the following code sends HTTP header and waits for getting
+&#39;100 continue&#39; response before sending HTTP request body. When 0.5
+[sec] timeout occurs or the server send &#39;100 continue&#39;, the client
+sends HTTP request body.</p>
+
+<pre><code>http.continue_timeout = 0.5
+http.request_post(&#39;/continue&#39;, &#39;body=BODY&#39;, &#39;expect&#39; =&gt; &#39;100-continue&#39;)
+</code></pre>
+</li><li>
+<p>new method:</p>
+<ul><li>
+<p><a
+href="../../classes/Net/HTTPHeader.html#method-i-set_form">Net::HTTPHeader#set_form</a>):
+Added to support both application/x-www-form-urlencoded and
+multipart/form-data.</p>
+</li></ul>
+</li></ul>
+</li><li>
+<p>objspace</p>
+<ul><li>
+<p>new method:</p>
+<ul><li>
+<p><a
+href="../../classes/ObjectSpace.html#method-c-memsize_of_all">ObjectSpace.memsize_of_all</a></p>
+</li></ul>
+</li></ul>
+</li><li>
+<p>openssl</p>
+<ul><li>
+<p>PKey::RSA and PKey::DSA now use the generic X.509 encoding scheme (e.g.
+used in a X.509 certificate&#39;s Subject Public Key Info) when exporting
+public keys to DER or PEM. Backward compatibility is ensured by (already
+existing) fallbacks during creation.</p>
+</li><li>
+<p>OpenSSL::ASN1::Constructive#new and OpenSSL::ASN1::Primitive#new (and the
+constructors of their sub-classes) will no longer force tagging to be set
+to :EXPLICIT when tag and/or tag_class are passed as parameters. tagging
+must be set explicitly.</p>
+</li><li>
+<p>Support for infinite length encodings via infinite_length attribute.</p>
+</li><li>
+<p><a
+href="../../classes/OpenSSL/PKey.html#method-c-read">OpenSSL::PKey.read</a>(
+file | string [, pwd] ) allows to read arbitrary public/private keys in
+DER-/PEM-encoded form with an optional password for encrypted PEM
+encodings.</p>
+</li><li>
+<p>Add new method <a
+href="../../classes/OpenSSL/X509/Name.html#method-i-hash_old">OpenSSL::X509::Name#hash_old</a>
+as a wrapper of X509_NAME_hash_old() defined from <a
+href="../../classes/OpenSSL.html">OpenSSL</a> 1.0.0. It returns <a
+href="../../classes/OpenSSL.html">OpenSSL</a> 0.9.8 compatible hash value.</p>
+</li></ul>
+</li><li>
+<p>optparse</p>
+<ul><li>
+<p>support for bash/zsh completion.</p>
+</li></ul>
+</li><li>
+<p>Rake</p>
+<ul><li>
+<p>Rake has been upgraded from 0.8.7 to 0.9.2.2.  For full release notes see
+<a
+href="https://github.com/jimweirich/rake/blob/master/CHANGES">github.com/jimweirich/rake/blob/master/CHANGES</a></p>
+</li></ul>
+</li><li>
+<p><a href="../../classes/RDoc.html">RDoc</a></p>
+<ul><li>
+<p><a href="../../classes/RDoc.html">RDoc</a> has been upgraded to version
+3.9.4.  For full release notes see <a
+href="http://docs.seattlerb.org/rdoc/History_txt.html">docs.seattlerb.org/rdoc/History_txt.html</a></p>
+</li></ul>
+</li><li>
+<p>rexml</p>
+<ul><li>
+<p>Support Ruby native encoding mechanism and iconv dependency is dropped.</p>
+</li></ul>
+</li><li>
+<p>RubyGems</p>
+<ul><li>
+<p>RubyGems has been upgraded to version 1.8.10. For full release notes see <a
+href="http://rubygems.rubyforge.org/rubygems-update/History_txt.html">rubygems.rubyforge.org/rubygems-update/History_txt.html</a></p>
+</li></ul>
+</li><li>
+<p>stringio</p>
+<ul><li>
+<p>extended method:</p>
+<ul><li>
+<p><a
+href="../../classes/StringIO.html#method-i-set_encoding">StringIO#set_encoding</a>
+can get 2nd argument and optional hash.</p>
+</li></ul>
+</li></ul>
+</li><li>
+<p>test/unit</p>
+<ul><li>
+<p>New arguments:</p>
+<ul><li>
+<p>-j N, –jobs=N: Allow run N testcases at once.</p>
+</li><li>
+<p>–jobs-status: Show status of jobs when parallel running.</p>
+</li><li>
+<p>–no-retry: Don&#39;t retry testcases which failed when parallel running.</p>
+</li><li>
+<p>–ruby=RUBY: path to ruby for job(worker) process. optional.</p>
+</li><li>
+<p>–hide-skip: Hide skip messages. You&#39;ll see the number of skips at end
+of test result.</p>
+</li></ul>
+</li></ul>
+</li><li>
+<p>uri</p>
+<ul><li>
+<p>new methods:</p>
+<ul><li>
+<p><a
+href="../../classes/URI/Generic.html#method-i-hostname">URI::Generic#hostname</a></p>
+</li><li>
+<p><a
+href="../../classes/URI/Generic.html#method-i-hostname-3D">URI::Generic#hostname=</a></p>
+</li></ul>
+</li></ul>
+</li><li>
+<p>webrick</p>
+<ul><li>
+<p>new method:</p>
+<ul><li>
+<p>WEBrick::HTTPRequest#continue for generating &#39;100 continue&#39;
+response.</p>
+</li></ul>
+</li><li>
+<p>new logging directive:</p>
+<ul><li>
+<p>%{remote}p for remote (client) port number.</p>
+</li></ul>
+</li></ul>
+</li><li>
+<p>yaml</p>
+<ul><li>
+<p>The default YAML engine is now <a
+href="../../classes/Psych.html">Psych</a>. You may downgrade to syck by
+setting YAML::ENGINE.yamler = &#39;syck&#39;.</p>
+</li></ul>
+</li><li>
+<p>zlib</p>
+<ul><li>
+<p>new methods:</p>
+<ul><li>
+<p><a href="../../classes/Zlib.html#method-c-deflate">Zlib.deflate</a></p>
+</li><li>
+<p><a href="../../classes/Zlib.html#method-c-inflate">Zlib.inflate</a></p>
+</li></ul>
+</li></ul>
+</li><li>
+<p><a href="../../classes/FileUtils.html">FileUtils</a></p>
+<ul><li>
+<p>extended method:</p>
+<ul><li>
+<p>FileUtils#chmod supports symbolic mode argument.</p>
+</li></ul>
+</li></ul>
+</li></ul>
+
+<h3 id="label-Language+changes">Language changes</h3>
+<ul><li>
+<p>Regexps now support Unicode 6.0. (new characters and scripts)</p>
+</li><li><dl class="rdoc-list label-list"><dt>experimental
+<dd>
+<p>Regexps now support Age property.</p>
+</dd></dl>
+
+<p>Unlike Perl, current implementation takes interpretation of the
+interpretation of UTS #18. <a
+href="http://www.unicode.org/reports/tr18">www.unicode.org/reports/tr18</a>/</p>
+</li><li>
+<p>Turning on/off indentation warnings with directives. (“# -*- warn-indent:
+true -*-” / “# -*- warn-indent: false -*-”)</p>
+</li></ul>
+
+<h3 id="label-Compatibility+issues+-28excluding+feature+bug+fixes-29">Compatibility issues (excluding feature bug fixes)</h3>
+
+<pre><code>* Rational#to_d
+
+  See above.</code></pre>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+              </div>
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>profiler.rb</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            profiler.rb
+        </h1>
+        <ul class="files">
+            
+            <li>
+                lib/profiler.rb
+                
+            </li>
+            <li>Last modified: 2015-12-16 06:07:31 +0100</li>
+        </ul>
+    </div>
+
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>frozen_string_literal: false Profile provides a way to Profile your Ruby
+application.</p>
+
+<p>Profiling your program is a way of determining which methods are called and
+how long each method takes to complete.  This way you can detect which
+methods are possible bottlenecks.</p>
+
+<p>Profiling your program will slow down your execution time considerably, so
+activate it only when you need it.  Don&#39;t confuse benchmarking with
+profiling.</p>
+
+<p>There are two ways to activate Profiling:</p>
+
+<h2 id="label-Command+line">Command line</h2>
+
+<p>Run your Ruby script with <code>-rprofile</code>:</p>
+
+<pre><code>ruby -rprofile example.rb</code></pre>
+
+<p>If you&#39;re profiling an executable in your <code>$PATH</code> you can
+use <code>ruby -S</code>:</p>
+
+<pre><code>ruby -rprofile -S some_executable</code></pre>
+
+<h2 id="label-From+code">From code</h2>
+
+<p>Just require &#39;profile&#39;:</p>
+
+<pre><code>require &#39;profile&#39;
+
+def slow_method
+  5000.times do
+    9999999999999999*999999999
+  end
+end
+
+def fast_method
+  5000.times do
+    9999999999999999+999999999
+  end
+end
+
+slow_method
+fast_method
+</code></pre>
+
+<p>The output in both cases is a report when the execution is over:</p>
+
+<pre><code>ruby -rprofile example.rb
+
+  %   cumulative   self              self     total
+ time   seconds   seconds    calls  ms/call  ms/call  name
+ 68.42     0.13      0.13        2    65.00    95.00  Integer#times
+ 15.79     0.16      0.03     5000     0.01     0.01  Fixnum#*
+ 15.79     0.19      0.03     5000     0.01     0.01  Fixnum#+
+  0.00     0.19      0.00        2     0.00     0.00  IO#set_encoding
+  0.00     0.19      0.00        1     0.00   100.00  Object#slow_method
+  0.00     0.19      0.00        2     0.00     0.00  Module#method_added
+  0.00     0.19      0.00        1     0.00    90.00  Object#fast_method
+  0.00     0.19      0.00        1     0.00   190.00  #toplevel</code></pre>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+    <!-- Namespace -->
+    <div class="sectiontitle">Namespace</div>
+    <ul>
+      
+        <li>
+          <span class="type">MODULE</span>
+          <a href="../../classes/Profiler__.html">Profiler__</a>
+        </li>
+      
+    </ul>
+  
+
+
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+              </div>
+
+    </div>
+  </body>
+</html>

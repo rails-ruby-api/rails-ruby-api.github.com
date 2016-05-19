@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>DRb::DRbIdConv</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            DRb::DRbIdConv 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/lib/drb/drb_rb.html">lib/drb/drb.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p><a href="../Class.html">Class</a> responsible for converting between an
+object and its id.</p>
+
+<p>This, the default implementation, uses an object&#39;s local <a
+href="../ObjectSpace.html">ObjectSpace</a> __id__ as its id.  This means
+that an object&#39;s identification over drb remains valid only while that
+object instance remains alive within the server runtime.</p>
+
+<p>For alternative mechanisms, see <a
+href="TimerIdConv.html">DRb::TimerIdConv</a> in rdb/timeridconv.rb and
+DRbNameIdConv in sample/name.rb in the full drb distribution.</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-to_id">to_id</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-to_obj">to_obj</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+        
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-to_id">
+            
+              <b>to_id</b>(obj)
+            
+            <a href="../../classes/DRb/DRbIdConv.html#method-i-to_id" name="method-i-to_id" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Convert an object into a reference id.</p>
+
+<p>This implementation returns the object&#39;s __id__ in the local object
+space.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-to_id_source')" id="l_method-i-to_id_source">show</a>
+                
+              </p>
+              <div id="method-i-to_id_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/drb/drb.rb, line 380</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">to_id</span>(<span class="ruby-identifier">obj</span>)
+  <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">?</span> <span class="ruby-keyword">nil</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">__id__</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-to_obj">
+            
+              <b>to_obj</b>(ref)
+            
+            <a href="../../classes/DRb/DRbIdConv.html#method-i-to_obj" name="method-i-to_obj" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Convert an object reference id to an object.</p>
+
+<p>This implementation looks up the reference id in the local object space and
+returns the object it refers to.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-to_obj_source')" id="l_method-i-to_obj_source">show</a>
+                
+              </p>
+              <div id="method-i-to_obj_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/drb/drb.rb, line 372</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">to_obj</span>(<span class="ruby-identifier">ref</span>)
+  <span class="ruby-constant">ObjectSpace</span>.<span class="ruby-identifier">_id2ref</span>(<span class="ruby-identifier">ref</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+
+    </div>
+  </body>
+</html>    

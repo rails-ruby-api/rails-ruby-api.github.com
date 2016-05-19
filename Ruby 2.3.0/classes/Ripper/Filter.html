@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Ripper::Filter</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            Ripper::Filter 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/ext/ripper/lib/ripper/filter_rb.html">ext/ripper/lib/ripper/filter.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>This class handles only scanner events, which are dispatched in the
+&#39;right&#39; order (same with input).</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>C</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-column">column</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>F</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-filename">filename</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>L</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-lineno">lineno</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>P</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-parse">parse</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <b>new</b>(src, filename = &#39;-&#39;, lineno = 1)
+            
+            <a href="../../classes/Ripper/Filter.html#method-c-new" name="method-c-new" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Creates a new <a href="Filter.html">Ripper::Filter</a> instance, passes
+parameters <code>src</code>, <code>filename</code>, and <code>lineno</code>
+to Ripper::Lexer.new</p>
+
+<p>The lexer is for internal use only.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/ripper/lib/ripper/filter.rb, line 24</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">initialize</span>(<span class="ruby-identifier">src</span>, <span class="ruby-identifier">filename</span> = <span class="ruby-string">&#39;-&#39;</span>, <span class="ruby-identifier">lineno</span> = <span class="ruby-number">1</span>)
+  <span class="ruby-ivar">@__lexer</span> = <span class="ruby-constant">Lexer</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">src</span>, <span class="ruby-identifier">filename</span>, <span class="ruby-identifier">lineno</span>)
+  <span class="ruby-ivar">@__line</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-ivar">@__col</span> = <span class="ruby-keyword">nil</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-column">
+            
+              <b>column</b>()
+            
+            <a href="../../classes/Ripper/Filter.html#method-i-column" name="method-i-column" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>The column number of the current token. This value starts from 0. This
+method is valid only in event handlers.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-column_source')" id="l_method-i-column_source">show</a>
+                
+              </p>
+              <div id="method-i-column_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/ripper/lib/ripper/filter.rb, line 45</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">column</span>
+  <span class="ruby-ivar">@__col</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-filename">
+            
+              <b>filename</b>()
+            
+            <a href="../../classes/Ripper/Filter.html#method-i-filename" name="method-i-filename" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>The file name of the input.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-filename_source')" id="l_method-i-filename_source">show</a>
+                
+              </p>
+              <div id="method-i-filename_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/ripper/lib/ripper/filter.rb, line 31</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">filename</span>
+  <span class="ruby-ivar">@__lexer</span>.<span class="ruby-identifier">filename</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-lineno">
+            
+              <b>lineno</b>()
+            
+            <a href="../../classes/Ripper/Filter.html#method-i-lineno" name="method-i-lineno" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>The line number of the current token. This value starts from 1. This method
+is valid only in event handlers.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-lineno_source')" id="l_method-i-lineno_source">show</a>
+                
+              </p>
+              <div id="method-i-lineno_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/ripper/lib/ripper/filter.rb, line 38</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">lineno</span>
+  <span class="ruby-ivar">@__line</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-parse">
+            
+              <b>parse</b>(init = nil)
+            
+            <a href="../../classes/Ripper/Filter.html#method-i-parse" name="method-i-parse" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Starts the parser. <code>init</code> is a data accumulator and is passed to
+the next event handler (as of <a
+href="../Enumerable.html#method-i-inject">Enumerable#inject</a>).</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-parse_source')" id="l_method-i-parse_source">show</a>
+                
+              </p>
+              <div id="method-i-parse_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/ripper/lib/ripper/filter.rb, line 52</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">parse</span>(<span class="ruby-identifier">init</span> = <span class="ruby-keyword">nil</span>)
+  <span class="ruby-identifier">data</span> = <span class="ruby-identifier">init</span>
+  <span class="ruby-ivar">@__lexer</span>.<span class="ruby-identifier">lex</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">pos</span>, <span class="ruby-identifier">event</span>, <span class="ruby-identifier">tok</span><span class="ruby-operator">|</span>
+    <span class="ruby-ivar">@__line</span>, <span class="ruby-ivar">@__col</span> = <span class="ruby-operator">*</span><span class="ruby-identifier">pos</span>
+    <span class="ruby-identifier">data</span> = <span class="ruby-keyword">if</span> <span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">event</span>, <span class="ruby-keyword">true</span>)
+           <span class="ruby-keyword">then</span> <span class="ruby-identifier">__send__</span>(<span class="ruby-identifier">event</span>, <span class="ruby-identifier">tok</span>, <span class="ruby-identifier">data</span>)
+           <span class="ruby-keyword">else</span> <span class="ruby-identifier">on_default</span>(<span class="ruby-identifier">event</span>, <span class="ruby-identifier">tok</span>, <span class="ruby-identifier">data</span>)
+           <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">data</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+
+    </div>
+  </body>
+</html>    

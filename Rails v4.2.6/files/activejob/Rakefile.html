@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Rakefile</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            Rakefile
+        </h1>
+        <ul class="files">
+            
+            <li>
+                activejob/Rakefile
+                
+                    <a href="https://github.com/rails/rails/blob/b56d0be14c3997dbaae07c58e9befeaa204908dd/activejob/Rakefile" target="_blank" class="github_url">on GitHub</a>
+                
+            </li>
+            <li>Last modified: 2016-05-19 14:28:33 +0200</li>
+        </ul>
+    </div>
+
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>require &#39;rake/testtask&#39; require &#39;rubygems/package_task&#39;</p>
+
+<p>ACTIVEJOB_ADAPTERS = %w(inline delayed_job qu que queue_classic resque
+sidekiq sneakers sucker_punch backburner test) ACTIVEJOB_ADAPTERS -=
+%w(queue_classic) if defined?(JRUBY_VERSION)</p>
+
+<p>task default: :test task test: &#39;test:default&#39;</p>
+
+<p>namespace :test do</p>
+
+<pre><code>desc &#39;Run all adapter tests&#39;
+task :default do
+  run_without_aborting ACTIVEJOB_ADAPTERS.map { |a| &quot;test:#{a}&quot; }
+end
+
+desc &#39;Run all adapter tests in isolation&#39;
+task :isolated do
+  run_without_aborting ACTIVEJOB_ADAPTERS.map { |a| &quot;test:isolated:#{a}&quot; }
+end
+
+desc &#39;Run integration tests for all adapters&#39;
+task :integration do
+  run_without_aborting (ACTIVEJOB_ADAPTERS - [&#39;test&#39;]).map { |a| &quot;test:integration:#{a}&quot; }
+end
+
+task &#39;env:integration&#39; do
+  ENV[&#39;AJ_INTEGRATION_TESTS&#39;] = &quot;1&quot;
+end
+
+ACTIVEJOB_ADAPTERS.each do |adapter|
+  task(&quot;env:#{adapter}&quot;) { ENV[&#39;AJ_ADAPTER&#39;] = adapter }
+
+  Rake::TestTask.new(adapter =&gt; &quot;test:env:#{adapter}&quot;) do |t|
+    t.description = &quot;Run adapter tests for #{adapter}&quot;
+    t.libs &lt;&lt; &#39;test&#39;
+    t.test_files = FileList[&#39;test/cases     _test.rb&#39;]
+    t.verbose = true
+    t.warning = true
+    t.ruby_opts = [&quot;--dev&quot;] if defined?(JRUBY_VERSION)
+  end
+
+  namespace :isolated do
+    task adapter =&gt; &quot;test:env:#{adapter}&quot; do
+      dir = File.dirname(__FILE__)
+      Dir.glob(&quot;#{dir}/test/cases/   *_test.rb&quot;).all? do |file|
+        sh(Gem.ruby, &#39;-w&#39;, &quot;-I#{dir}/lib&quot;, &quot;-I#{dir}/test&quot;, file)
+      end or raise &#39;Failures&#39;
+    end
+  end
+
+  namespace :integration do
+    Rake::TestTask.new(adapter =&gt; [&quot;test:env:#{adapter}&quot;, &#39;test:env:integration&#39;]) do |t|
+      t.description = &quot;Run integration tests for #{adapter}&quot;
+      t.libs &lt;&lt; &#39;test&#39;
+      t.test_files = FileList[&#39;test/integration/   *_test.rb&#39;]
+      t.verbose = true
+      t.warning = true
+      t.ruby_opts = [&quot;--dev&quot;] if defined?(JRUBY_VERSION)
+    end
+  end
+end
+</code></pre>
+
+<p>end</p>
+
+<p>def run_without_aborting(tasks)</p>
+
+<pre><code>errors = []
+
+tasks.each do |task|
+  begin
+    Rake::Task[task].invoke
+  rescue Exception
+    errors &lt;&lt; task
+  end
+end
+
+abort &quot;Errors running #{errors.join(&#39;, &#39;)}&quot; if errors.any?
+</code></pre>
+
+<p>end</p>
+
+<p>spec = eval(File.read(&#39;activejob.gemspec&#39;))</p>
+
+<p>Gem::PackageTask.new(spec) do |p|</p>
+
+<pre><code>p.gem_spec = spec
+</code></pre>
+
+<p>end</p>
+
+<p>desc &#39;Release to rubygems&#39; task release: :package do</p>
+
+<pre><code>require &#39;rake/gemcutter&#39;
+Rake::Gemcutter::Tasks.new(spec).define
+Rake::Task[&#39;gem:push&#39;].invoke
+</code></pre>
+
+<p>end</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+              </div>
+
+    </div>
+  </body>
+</html>

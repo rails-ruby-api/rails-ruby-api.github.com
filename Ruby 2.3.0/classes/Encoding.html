@@ -1,0 +1,1448 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Encoding</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/github.css" type="text/css" media="screen" />
+<script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            Encoding 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../files/encoding_c.html">encoding.c</a></li>
+            
+            <li><a href="../files/ext/openssl/lib/openssl/buffering_rb.html">ext/openssl/lib/openssl/buffering.rb</a></li>
+            
+            <li><a href="../files/ext/psych/lib/psych/visitors/yaml_tree_rb.html">ext/psych/lib/psych/visitors/yaml_tree.rb</a></li>
+            
+            <li><a href="../files/lib/cgi/core_rb.html">lib/cgi/core.rb</a></li>
+            
+            <li><a href="../files/lib/cgi/util_rb.html">lib/cgi/util.rb</a></li>
+            
+            <li><a href="../files/lib/csv_rb.html">lib/csv.rb</a></li>
+            
+            <li><a href="../files/lib/fileutils_rb.html">lib/fileutils.rb</a></li>
+            
+            <li><a href="../files/lib/find_rb.html">lib/find.rb</a></li>
+            
+            <li><a href="../files/lib/irb/lc/ja/encoding_aliases_rb.html">lib/irb/lc/ja/encoding_aliases.rb</a></li>
+            
+            <li><a href="../files/lib/irb/xmp_rb.html">lib/irb/xmp.rb</a></li>
+            
+            <li><a href="../files/lib/net/http/response_rb.html">lib/net/http/response.rb</a></li>
+            
+            <li><a href="../files/lib/net/imap_rb.html">lib/net/imap.rb</a></li>
+            
+            <li><a href="../files/lib/open-uri_rb.html">lib/open-uri.rb</a></li>
+            
+            <li><a href="../files/lib/rdoc/generator/json_index_rb.html">lib/rdoc/generator/json_index.rb</a></li>
+            
+            <li><a href="../files/lib/rdoc/markup/parser_rb.html">lib/rdoc/markup/parser.rb</a></li>
+            
+            <li><a href="../files/lib/rdoc/options_rb.html">lib/rdoc/options.rb</a></li>
+            
+            <li><a href="../files/lib/rubygems/commands/setup_command_rb.html">lib/rubygems/commands/setup_command.rb</a></li>
+            
+            <li><a href="../files/lib/rubygems/package_rb.html">lib/rubygems/package.rb</a></li>
+            
+            <li><a href="../files/lib/rubygems/specification_rb.html">lib/rubygems/specification.rb</a></li>
+            
+            <li><a href="../files/lib/rubygems/util_rb.html">lib/rubygems/util.rb</a></li>
+            
+            <li><a href="../files/lib/unicode_normalize/normalize_rb.html">lib/unicode_normalize/normalize.rb</a></li>
+            
+            <li><a href="../files/lib/uri/common_rb.html">lib/uri/common.rb</a></li>
+            
+            <li><a href="../files/lib/uri/generic_rb.html">lib/uri/generic.rb</a></li>
+            
+            <li><a href="../files/lib/uri/rfc2396_parser_rb.html">lib/uri/rfc2396_parser.rb</a></li>
+            
+            <li><a href="../files/lib/webrick/httpservlet/filehandler_rb.html">lib/webrick/httpservlet/filehandler.rb</a></li>
+            
+            <li><a href="../files/lib/webrick/httputils_rb.html">lib/webrick/httputils.rb</a></li>
+            
+            <li><a href="../files/transcode_c.html">transcode.c</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>An <a href="Encoding.html">Encoding</a> instance represents a character
+encoding usable in Ruby. It is defined as a constant under the <a
+href="Encoding.html">Encoding</a> namespace. It has a name and optionally,
+aliases:</p>
+
+<pre><code>Encoding::ISO_8859_1.name
+#=&gt; #&lt;Encoding:ISO-8859-1&gt;
+
+Encoding::ISO_8859_1.names
+#=&gt; [&quot;ISO-8859-1&quot;, &quot;ISO8859-1&quot;]
+</code></pre>
+
+<p>Ruby methods dealing with encodings return or accept <a
+href="Encoding.html">Encoding</a> instances as arguments (when a method
+accepts an <a href="Encoding.html">Encoding</a> instance as an argument, it
+can be passed an <a href="Encoding.html">Encoding</a> name or alias
+instead).</p>
+
+<pre><code>&quot;some string&quot;.encoding
+#=&gt; #&lt;Encoding:UTF-8&gt;
+
+string = &quot;some string&quot;.encode(Encoding::ISO_8859_1)
+#=&gt; &quot;some string&quot;
+string.encoding
+#=&gt; #&lt;Encoding:ISO-8859-1&gt;
+
+&quot;some string&quot;.encode &quot;ISO-8859-1&quot;
+#=&gt; &quot;some string&quot;
+</code></pre>
+
+<p><code>Encoding::ASCII_8BIT</code> is a special encoding that is usually
+used for a byte string, not a character string. But as the name insists,
+its characters in the range of ASCII are considered as ASCII characters.
+This is useful when you use ASCII-8BIT characters with other ASCII
+compatible characters.</p>
+
+<h2 id="class-Encoding-label-Changing+an+encoding">Changing an encoding</h2>
+
+<p>The associated <a href="Encoding.html">Encoding</a> of a String can be
+changed in two different ways.</p>
+
+<p>First, it is possible to set the <a href="Encoding.html">Encoding</a> of a
+string to a new <a href="Encoding.html">Encoding</a> without changing the
+internal byte representation of the string, with <a
+href="String.html#method-i-force_encoding">String#force_encoding</a>. This
+is how you can tell Ruby the correct encoding of a string.</p>
+
+<pre><code>string
+#=&gt; &quot;R\xC3\xA9sum\xC3\xA9&quot;
+string.encoding
+#=&gt; #&lt;Encoding:ISO-8859-1&gt;
+string.force_encoding(Encoding::UTF_8)
+#=&gt; &quot;R\u00E9sum\u00E9&quot;
+</code></pre>
+
+<p>Second, it is possible to transcode a string, i.e. translate its internal
+byte representation to another encoding. Its associated encoding is also
+set to the other encoding. See <a
+href="String.html#method-i-encode">String#encode</a> for the various forms
+of transcoding, and the <a
+href="Encoding/Converter.html">Encoding::Converter</a> class for additional
+control over the transcoding process.</p>
+
+<pre><code>string
+#=&gt; &quot;R\u00E9sum\u00E9&quot;
+string.encoding
+#=&gt; #&lt;Encoding:UTF-8&gt;
+string = string.encode!(Encoding::ISO_8859_1)
+#=&gt; &quot;R\xE9sum\xE9&quot;
+string.encoding
+#=&gt; #&lt;Encoding::ISO-8859-1&gt;
+</code></pre>
+
+<h2 id="class-Encoding-label-Script+encoding">Script encoding</h2>
+
+<p>All Ruby script code has an associated <a href="Encoding.html">Encoding</a>
+which any String literal created in the source code will be associated to.</p>
+
+<p>The default script encoding is <code>Encoding::UTF-8</code> after v2.0, but
+it can be changed by a magic comment on the first line of the source code
+file (or second line, if there is a shebang line on the first). The comment
+must contain the word <code>coding</code> or <code>encoding</code>,
+followed by a colon, space and the <a href="Encoding.html">Encoding</a>
+name or alias:</p>
+
+<pre><code># encoding: UTF-8
+
+&quot;some string&quot;.encoding
+#=&gt; #&lt;Encoding:UTF-8&gt;
+</code></pre>
+
+<p>The <code>__ENCODING__</code> keyword returns the script encoding of the
+file which the keyword is written:</p>
+
+<pre><code># encoding: ISO-8859-1
+
+__ENCODING__
+#=&gt; #&lt;Encoding:ISO-8859-1&gt;
+</code></pre>
+
+<p><code>ruby -K</code> will change the default locale encoding, but this is
+not recommended. Ruby source files should declare its script encoding by a
+magic comment even when they only depend on US-ASCII strings or regular
+expressions.</p>
+
+<h2 id="class-Encoding-label-Locale+encoding">Locale encoding</h2>
+
+<p>The default encoding of the environment. Usually derived from locale.</p>
+
+<p>see <a href="Encoding.html#method-c-locale_charmap">::locale_charmap</a>,
+<a href="Encoding.html#method-c-find">::find</a>(&#39;locale&#39;)</p>
+
+<h2 id="class-Encoding-label-Filesystem+encoding">Filesystem encoding</h2>
+
+<p>The default encoding of strings from the filesystem of the environment.
+This is used for strings of file names or paths.</p>
+
+<p>see <a href="Encoding.html#method-c-find">::find</a>(&#39;filesystem&#39;)</p>
+
+<h2 id="class-Encoding-label-External+encoding">External encoding</h2>
+
+<p>Each <a href="IO.html">IO</a> object has an external encoding which
+indicates the encoding that Ruby will use to read its data. By default Ruby
+sets the external encoding of an <a href="IO.html">IO</a> object to the
+default external encoding. The default external encoding is set by locale
+encoding or the interpreter <code>-E</code> option. <a
+href="Encoding.html#method-c-default_external">::default_external</a>
+returns the current value of the external encoding.</p>
+
+<pre><code>ENV[&quot;LANG&quot;]
+#=&gt; &quot;UTF-8&quot;
+Encoding.default_external
+#=&gt; #&lt;Encoding:UTF-8&gt;
+
+$ ruby -E ISO-8859-1 -e &quot;p Encoding.default_external&quot;
+#&lt;Encoding:ISO-8859-1&gt;
+
+$ LANG=C ruby -e &#39;p Encoding.default_external&#39;
+#&lt;Encoding:US-ASCII&gt;</code></pre>
+
+<p>The default external encoding may also be set through <a
+href="Encoding.html#method-c-default_external-3D">::default_external=</a>,
+but you should not do this as strings created before and after the change
+will have inconsistent encodings.  Instead use <code>ruby -E</code> to
+invoke ruby with the correct external encoding.</p>
+
+<p>When you know that the actual encoding of the data of an <a
+href="IO.html">IO</a> object is not the default external encoding, you can
+reset its external encoding with <a
+href="IO.html#method-i-set_encoding">IO#set_encoding</a> or set it at <a
+href="IO.html">IO</a> object creation (see <a
+href="IO.html#method-c-new">IO.new</a> options).</p>
+
+<h2 id="class-Encoding-label-Internal+encoding">Internal encoding</h2>
+
+<p>To process the data of an <a href="IO.html">IO</a> object which has an
+encoding different from its external encoding, you can set its internal
+encoding. Ruby will use this internal encoding to transcode the data when
+it is read from the <a href="IO.html">IO</a> object.</p>
+
+<p>Conversely, when data is written to the <a href="IO.html">IO</a> object it
+is transcoded from the internal encoding to the external encoding of the <a
+href="IO.html">IO</a> object.</p>
+
+<p>The internal encoding of an <a href="IO.html">IO</a> object can be set with
+<a href="IO.html#method-i-set_encoding">IO#set_encoding</a> or at <a
+href="IO.html">IO</a> object creation (see <a
+href="IO.html#method-c-new">IO.new</a> options).</p>
+
+<p>The internal encoding is optional and when not set, the Ruby default
+internal encoding is used. If not explicitly set this default internal
+encoding is <code>nil</code> meaning that by default, no transcoding
+occurs.</p>
+
+<p>The default internal encoding can be set with the interpreter option
+<code>-E</code>. <a
+href="Encoding.html#method-c-default_internal">::default_internal</a>
+returns the current internal encoding.</p>
+
+<pre><code>$ ruby -e &#39;p Encoding.default_internal&#39;
+nil
+
+$ ruby -E ISO-8859-1:UTF-8 -e &quot;p [Encoding.default_external, \
+  Encoding.default_internal]&quot;
+[#&lt;Encoding:ISO-8859-1&gt;, #&lt;Encoding:UTF-8&gt;]</code></pre>
+
+<p>The default internal encoding may also be set through <a
+href="Encoding.html#method-c-default_internal-3D">::default_internal=</a>,
+but you should not do this as strings created before and after the change
+will have inconsistent encodings.  Instead use <code>ruby -E</code> to
+invoke ruby with the correct internal encoding.</p>
+
+<h2 id="class-Encoding-label-IO+encoding+example"><a href="IO.html">IO</a> encoding example</h2>
+
+<p>In the following example a UTF-8 encoded string “Ru00E9sumu00E9” is
+transcoded for output to ISO-8859-1 encoding, then read back in and
+transcoded to UTF-8:</p>
+
+<pre><code>string = &quot;R\u00E9sum\u00E9&quot;
+
+open(&quot;transcoded.txt&quot;, &quot;w:ISO-8859-1&quot;) do |io|
+  io.write(string)
+end
+
+puts &quot;raw text:&quot;
+p File.binread(&quot;transcoded.txt&quot;)
+puts
+
+open(&quot;transcoded.txt&quot;, &quot;r:ISO-8859-1:UTF-8&quot;) do |io|
+  puts &quot;transcoded text:&quot;
+  p io.read
+end
+</code></pre>
+
+<p>While writing the file, the internal encoding is not specified as it is
+only necessary for reading.  While reading the file both the internal and
+external encoding must be specified to obtain the correct result.</p>
+
+<pre><code>$ ruby t.rb
+raw text:
+&quot;R\xE9sum\xE9&quot;
+
+transcoded text:
+&quot;R\u00E9sum\u00E9&quot;</code></pre>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+    <!-- Namespace -->
+    <div class="sectiontitle">Namespace</div>
+    <ul>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="Encoding/CompatibilityError.html">Encoding::CompatibilityError</a>
+        </li>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="Encoding/Converter.html">Encoding::Converter</a>
+        </li>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="Encoding/ConverterNotFoundError.html">Encoding::ConverterNotFoundError</a>
+        </li>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="Encoding/InvalidByteSequenceError.html">Encoding::InvalidByteSequenceError</a>
+        </li>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="Encoding/UndefinedConversionError.html">Encoding::UndefinedConversionError</a>
+        </li>
+      
+    </ul>
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>A</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-aliases">aliases</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-ascii_compatible-3F">ascii_compatible?</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>C</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-compatible-3F">compatible?</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>D</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-default_external">default_external</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-default_external-3D">default_external=</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-default_internal">default_internal</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-default_internal-3D">default_internal=</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-dummy-3F">dummy?</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>F</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-find">find</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>I</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-inspect">inspect</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>L</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-list">list</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-locale_charmap">locale_charmap</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-name">name</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-name_list">name_list</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-names">names</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>R</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-replicate">replicate</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-to_s">to_s</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-aliases">
+            
+              <b>Encoding.aliases &rarr; {"alias1" => "orig1", "alias2" => "orig2", ...}
+</b>
+            
+            <a href="../classes/Encoding.html#method-c-aliases" name="method-c-aliases" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the hash of available encoding alias and original encoding name.</p>
+
+<pre><code>Encoding.aliases
+#=&gt; {&quot;BINARY&quot;=&gt;&quot;ASCII-8BIT&quot;, &quot;ASCII&quot;=&gt;&quot;US-ASCII&quot;, &quot;ANSI_X3.4-1986&quot;=&gt;&quot;US-ASCII&quot;,
+      &quot;SJIS&quot;=&gt;&quot;Shift_JIS&quot;, &quot;eucJP&quot;=&gt;&quot;EUC-JP&quot;, &quot;CP932&quot;=&gt;&quot;Windows-31J&quot;}</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-aliases_source')" id="l_method-c-aliases_source">show</a>
+                
+              </p>
+              <div id="method-c-aliases_source" class="dyn-source">
+                <pre>static VALUE
+rb_enc_aliases(VALUE klass)
+{
+    VALUE aliases[2];
+    aliases[0] = rb_hash_new();
+    aliases[1] = rb_ary_new();
+    st_foreach(enc_table.names, rb_enc_aliases_enc_i, (st_data_t)aliases);
+    return aliases[0];
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-compatible-3F">
+            
+              <b>Encoding.compatible?(obj1, obj2) &rarr; enc or nil
+</b>
+            
+            <a href="../classes/Encoding.html#method-c-compatible-3F" name="method-c-compatible-3F" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Checks the compatibility of two objects.</p>
+
+<p>If the objects are both strings they are compatible when they are
+concatenatable.  The encoding of the concatenated string will be returned
+if they are compatible, nil if they are not.</p>
+
+<pre><code>Encoding.compatible?(&quot;\xa1&quot;.force_encoding(&quot;iso-8859-1&quot;), &quot;b&quot;)
+#=&gt; #&lt;Encoding:ISO-8859-1&gt;
+
+Encoding.compatible?(
+  &quot;\xa1&quot;.force_encoding(&quot;iso-8859-1&quot;),
+  &quot;\xa1\xa1&quot;.force_encoding(&quot;euc-jp&quot;))
+#=&gt; nil
+</code></pre>
+
+<p>If the objects are non-strings their encodings are compatible when they
+have an encoding and:</p>
+<ul><li>
+<p>Either encoding is US-ASCII compatible</p>
+</li><li>
+<p>One of the encodings is a 7-bit encoding</p>
+</li></ul>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-compatible-3F_source')" id="l_method-c-compatible-3F_source">show</a>
+                
+              </p>
+              <div id="method-c-compatible-3F_source" class="dyn-source">
+                <pre>static VALUE
+enc_compatible_p(VALUE klass, VALUE str1, VALUE str2)
+{
+    rb_encoding *enc;
+
+    if (!enc_capable(str1)) return Qnil;
+    if (!enc_capable(str2)) return Qnil;
+    enc = rb_enc_compatible(str1, str2);
+    if (!enc) return Qnil;
+    return rb_enc_from_encoding(enc);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-default_external">
+            
+              <b>Encoding.default_external &rarr; enc
+</b>
+            
+            <a href="../classes/Encoding.html#method-c-default_external" name="method-c-default_external" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns default external encoding.</p>
+
+<p>The default external encoding is used by default for strings created from
+the following locations:</p>
+<ul><li>
+<p><a href="CSV.html">CSV</a></p>
+</li><li>
+<p><a href="File.html">File</a> data read from disk</p>
+</li><li>
+<p><a href="SDBM.html">SDBM</a></p>
+</li><li>
+<p><a href="StringIO.html">StringIO</a></p>
+</li><li>
+<p><a href="Zlib/GzipReader.html">Zlib::GzipReader</a></p>
+</li><li>
+<p><a href="Zlib/GzipWriter.html">Zlib::GzipWriter</a></p>
+</li><li>
+<p><a href="String.html#method-i-inspect">String#inspect</a></p>
+</li><li>
+<p><a href="Regexp.html#method-i-inspect">Regexp#inspect</a></p>
+</li></ul>
+
+<p>While strings created from these locations will have this encoding, the
+encoding may not be valid.  Be sure to check <a
+href="String.html#method-i-valid_encoding-3F">String#valid_encoding?</a>.</p>
+
+<p><a href="File.html">File</a> data written to disk will be transcoded to the
+default external encoding when written.</p>
+
+<p>The default external encoding is initialized by the locale or -E option.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-default_external_source')" id="l_method-c-default_external_source">show</a>
+                
+              </p>
+              <div id="method-c-default_external_source" class="dyn-source">
+                <pre>static VALUE
+get_default_external(VALUE klass)
+{
+    return rb_enc_default_external();
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-default_external-3D">
+            
+              <b>Encoding.default_external = enc
+</b>
+            
+            <a href="../classes/Encoding.html#method-c-default_external-3D" name="method-c-default_external-3D" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Sets default external encoding.  You should not set <a
+href="Encoding.html#method-c-default_external">::default_external</a> in
+ruby code as strings created before changing the value may have a different
+encoding from strings created after the value was changed., instead you
+should use <code>ruby -E</code> to invoke ruby with the correct
+default_external.</p>
+
+<p>See <a
+href="Encoding.html#method-c-default_external">::default_external</a> for
+information on how the default external encoding is used.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-default_external-3D_source')" id="l_method-c-default_external-3D_source">show</a>
+                
+              </p>
+              <div id="method-c-default_external-3D_source" class="dyn-source">
+                <pre>static VALUE
+set_default_external(VALUE klass, VALUE encoding)
+{
+    rb_warning(&quot;setting Encoding.default_external&quot;);
+    rb_enc_set_default_external(encoding);
+    return encoding;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-default_internal">
+            
+              <b>Encoding.default_internal &rarr; enc
+</b>
+            
+            <a href="../classes/Encoding.html#method-c-default_internal" name="method-c-default_internal" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns default internal encoding.  Strings will be transcoded to the
+default internal encoding in the following places if the default internal
+encoding is not nil:</p>
+<ul><li>
+<p><a href="CSV.html">CSV</a></p>
+</li><li>
+<p><a href="Etc.html#method-c-sysconfdir">Etc.sysconfdir</a> and <a
+href="Etc.html#method-c-systmpdir">Etc.systmpdir</a></p>
+</li><li>
+<p><a href="File.html">File</a> data read from disk</p>
+</li><li>
+<p><a href="File.html">File</a> names from <a href="Dir.html">Dir</a></p>
+</li><li>
+<p><a href="Integer.html#method-i-chr">Integer#chr</a></p>
+</li><li>
+<p><a href="String.html#method-i-inspect">String#inspect</a> and <a
+href="Regexp.html#method-i-inspect">Regexp#inspect</a></p>
+</li><li>
+<p>Strings returned from <a href="Readline.html">Readline</a></p>
+</li><li>
+<p>Strings returned from <a href="SDBM.html">SDBM</a></p>
+</li><li>
+<p><a href="Time.html#method-i-zone">Time#zone</a></p>
+</li><li>
+<p>Values from <a href="ENV.html">ENV</a></p>
+</li><li>
+<p>Values in ARGV including $PROGRAM_NAME</p>
+</li></ul>
+
+<p>Additionally <a href="String.html#method-i-encode">String#encode</a> and <a
+href="String.html#method-i-encode-21">String#encode!</a> use the default
+internal encoding if no encoding is given.</p>
+
+<p>The locale encoding (__ENCODING__), not <a
+href="Encoding.html#method-c-default_internal">::default_internal</a>, is
+used as the encoding of created strings.</p>
+
+<p><a href="Encoding.html#method-c-default_internal">::default_internal</a> is
+initialized by the source file&#39;s internal_encoding or -E option.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-default_internal_source')" id="l_method-c-default_internal_source">show</a>
+                
+              </p>
+              <div id="method-c-default_internal_source" class="dyn-source">
+                <pre>static VALUE
+get_default_internal(VALUE klass)
+{
+    return rb_enc_default_internal();
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-default_internal-3D">
+            
+              <b>Encoding.default_internal = enc or nil
+</b>
+            
+            <a href="../classes/Encoding.html#method-c-default_internal-3D" name="method-c-default_internal-3D" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Sets default internal encoding or removes default internal encoding when
+passed nil.  You should not set <a
+href="Encoding.html#method-c-default_internal">::default_internal</a> in
+ruby code as strings created before changing the value may have a different
+encoding from strings created after the change.  Instead you should use
+<code>ruby -E</code> to invoke ruby with the correct default_internal.</p>
+
+<p>See <a
+href="Encoding.html#method-c-default_internal">::default_internal</a> for
+information on how the default internal encoding is used.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-default_internal-3D_source')" id="l_method-c-default_internal-3D_source">show</a>
+                
+              </p>
+              <div id="method-c-default_internal-3D_source" class="dyn-source">
+                <pre>static VALUE
+set_default_internal(VALUE klass, VALUE encoding)
+{
+    rb_warning(&quot;setting Encoding.default_internal&quot;);
+    rb_enc_set_default_internal(encoding);
+    return encoding;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-find">
+            
+              <b>Encoding.find(string) &rarr; enc
+</b>
+            
+            <a href="../classes/Encoding.html#method-c-find" name="method-c-find" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Search the encoding with specified <em>name</em>. <em>name</em> should be a
+string.</p>
+
+<pre><code>Encoding.find(&quot;US-ASCII&quot;)  #=&gt; #&lt;Encoding:US-ASCII&gt;
+</code></pre>
+
+<p>Names which this method accept are encoding names and aliases including
+following special aliases</p>
+<dl class="rdoc-list note-list"><dt>“external”
+<dd>
+<p>default external encoding</p>
+</dd><dt>“internal”
+<dd>
+<p>default internal encoding</p>
+</dd><dt>“locale”
+<dd>
+<p>locale encoding</p>
+</dd><dt>“filesystem”
+<dd>
+<p>filesystem encoding</p>
+</dd></dl>
+
+<p>An <a href="ArgumentError.html">ArgumentError</a> is raised when no
+encoding with <em>name</em>. Only
+<code>Encoding.find(&quot;internal&quot;)</code> however returns nil when
+no encoding named “internal”, in other words, when Ruby has no default
+internal encoding.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-find_source')" id="l_method-c-find_source">show</a>
+                
+              </p>
+              <div id="method-c-find_source" class="dyn-source">
+                <pre>static VALUE
+enc_find(VALUE klass, VALUE enc)
+{
+    int idx;
+    if (is_obj_encoding(enc))
+        return enc;
+    idx = str_to_encindex(enc);
+    if (idx == UNSPECIFIED_ENCODING) return Qnil;
+    return rb_enc_from_encoding_index(idx);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-list">
+            
+              <b>Encoding.list &rarr; [enc1, enc2, ...]
+</b>
+            
+            <a href="../classes/Encoding.html#method-c-list" name="method-c-list" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the list of loaded encodings.</p>
+
+<pre><code>Encoding.list
+#=&gt; [#&lt;Encoding:ASCII-8BIT&gt;, #&lt;Encoding:UTF-8&gt;,
+      #&lt;Encoding:ISO-2022-JP (dummy)&gt;]
+
+Encoding.find(&quot;US-ASCII&quot;)
+#=&gt; #&lt;Encoding:US-ASCII&gt;
+
+Encoding.list
+#=&gt; [#&lt;Encoding:ASCII-8BIT&gt;, #&lt;Encoding:UTF-8&gt;,
+      #&lt;Encoding:US-ASCII&gt;, #&lt;Encoding:ISO-2022-JP (dummy)&gt;]
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-list_source')" id="l_method-c-list_source">show</a>
+                
+              </p>
+              <div id="method-c-list_source" class="dyn-source">
+                <pre>static VALUE
+enc_list(VALUE klass)
+{
+    VALUE ary = rb_ary_new2(0);
+    rb_ary_replace(ary, rb_encoding_list);
+    return ary;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-locale_charmap">
+            
+              <b>Encoding.locale_charmap &rarr; string
+</b>
+            
+            <a href="../classes/Encoding.html#method-c-locale_charmap" name="method-c-locale_charmap" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the locale charmap name. It returns nil if no appropriate
+information.</p>
+
+<pre><code>Debian GNU/Linux
+  LANG=C
+    Encoding.locale_charmap  #=&gt; &quot;ANSI_X3.4-1968&quot;
+  LANG=ja_JP.EUC-JP
+    Encoding.locale_charmap  #=&gt; &quot;EUC-JP&quot;
+
+SunOS 5
+  LANG=C
+    Encoding.locale_charmap  #=&gt; &quot;646&quot;
+  LANG=ja
+    Encoding.locale_charmap  #=&gt; &quot;eucJP&quot;
+</code></pre>
+
+<p>The result is highly platform dependent. So <a
+href="Encoding.html#method-c-find">::find</a> may cause an error. If you
+need some encoding object even for unknown locale, <a
+href="Encoding.html#method-c-find">::find</a>(“locale”) can be used.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-locale_charmap_source')" id="l_method-c-locale_charmap_source">show</a>
+                
+              </p>
+              <div id="method-c-locale_charmap_source" class="dyn-source">
+                <pre>VALUE
+rb_locale_charmap(VALUE klass)
+{
+    return locale_charmap(rb_usascii_str_new_cstr);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-name_list">
+            
+              <b>Encoding.name_list &rarr; ["enc1", "enc2", ...]
+</b>
+            
+            <a href="../classes/Encoding.html#method-c-name_list" name="method-c-name_list" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the list of available encoding names.</p>
+
+<pre><code>Encoding.name_list
+#=&gt; [&quot;US-ASCII&quot;, &quot;ASCII-8BIT&quot;, &quot;UTF-8&quot;,
+      &quot;ISO-8859-1&quot;, &quot;Shift_JIS&quot;, &quot;EUC-JP&quot;,
+      &quot;Windows-31J&quot;,
+      &quot;BINARY&quot;, &quot;CP932&quot;, &quot;eucJP&quot;]</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-name_list_source')" id="l_method-c-name_list_source">show</a>
+                
+              </p>
+              <div id="method-c-name_list_source" class="dyn-source">
+                <pre>static VALUE
+rb_enc_name_list(VALUE klass)
+{
+    VALUE ary = rb_ary_new2(enc_table.names-&gt;num_entries);
+    st_foreach(enc_table.names, rb_enc_name_list_i, (st_data_t)ary);
+    return ary;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-ascii_compatible-3F">
+            
+              <b>enc.ascii_compatible? &rarr; true or false
+</b>
+            
+            <a href="../classes/Encoding.html#method-i-ascii_compatible-3F" name="method-i-ascii_compatible-3F" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns whether ASCII-compatible or not.</p>
+
+<pre><code>Encoding::UTF_8.ascii_compatible?     #=&gt; true
+Encoding::UTF_16BE.ascii_compatible?  #=&gt; false
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-ascii_compatible-3F_source')" id="l_method-i-ascii_compatible-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-ascii_compatible-3F_source" class="dyn-source">
+                <pre>static VALUE
+enc_ascii_compatible_p(VALUE enc)
+{
+    return rb_enc_asciicompat(must_encoding(enc)) ? Qtrue : Qfalse;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-dummy-3F">
+            
+              <b>enc.dummy? &rarr; true or false
+</b>
+            
+            <a href="../classes/Encoding.html#method-i-dummy-3F" name="method-i-dummy-3F" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns true for dummy encodings. A dummy encoding is an encoding for which
+character handling is not properly implemented. It is used for stateful
+encodings.</p>
+
+<pre><code>Encoding::ISO_2022_JP.dummy?       #=&gt; true
+Encoding::UTF_8.dummy?             #=&gt; false
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-dummy-3F_source')" id="l_method-i-dummy-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-dummy-3F_source" class="dyn-source">
+                <pre>static VALUE
+enc_dummy_p(VALUE enc)
+{
+    return ENC_DUMMY_P(must_encoding(enc)) ? Qtrue : Qfalse;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-inspect">
+            
+              <b>enc.inspect &rarr; string
+</b>
+            
+            <a href="../classes/Encoding.html#method-i-inspect" name="method-i-inspect" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns a string which represents the encoding for programmers.</p>
+
+<pre><code>Encoding::UTF_8.inspect       #=&gt; &quot;#&lt;Encoding:UTF-8&gt;&quot;
+Encoding::ISO_2022_JP.inspect #=&gt; &quot;#&lt;Encoding:ISO-2022-JP (dummy)&gt;&quot;
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-inspect_source')" id="l_method-i-inspect_source">show</a>
+                
+              </p>
+              <div id="method-i-inspect_source" class="dyn-source">
+                <pre>static VALUE
+enc_inspect(VALUE self)
+{
+    rb_encoding *enc;
+
+    if (!is_data_encoding(self)) {
+        not_encoding(self);
+    }
+    if (!(enc = DATA_PTR(self)) || rb_enc_from_index(rb_enc_to_index(enc)) != enc) {
+        rb_raise(rb_eTypeError, &quot;broken Encoding&quot;);
+    }
+    return rb_enc_sprintf(rb_usascii_encoding(),
+                          &quot;#&lt;%&quot;PRIsVALUE&quot;:%s%s%s&gt;&quot;, rb_obj_class(self),
+                          rb_enc_name(enc),
+                          (ENC_DUMMY_P(enc) ? &quot; (dummy)&quot; : &quot;&quot;),
+                          enc_autoload_p(enc) ? &quot; (autoload)&quot; : &quot;&quot;);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-name">
+            
+              <b>enc.name &rarr; string</b>
+            
+            <a href="../classes/Encoding.html#method-i-name" name="method-i-name" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the name of the encoding.</p>
+
+<pre><code>Encoding::UTF_8.name      #=&gt; &quot;UTF-8&quot;
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-name_source')" id="l_method-i-name_source">show</a>
+                
+              </p>
+              <div id="method-i-name_source" class="dyn-source">
+                <pre>static VALUE
+enc_name(VALUE self)
+{
+    return rb_fstring_cstr(rb_enc_name((rb_encoding*)DATA_PTR(self)));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-names">
+            
+              <b>enc.names &rarr; array
+</b>
+            
+            <a href="../classes/Encoding.html#method-i-names" name="method-i-names" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the list of name and aliases of the encoding.</p>
+
+<pre><code>Encoding::WINDOWS_31J.names  #=&gt; [&quot;Windows-31J&quot;, &quot;CP932&quot;, &quot;csWindows31J&quot;]
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-names_source')" id="l_method-i-names_source">show</a>
+                
+              </p>
+              <div id="method-i-names_source" class="dyn-source">
+                <pre>static VALUE
+enc_names(VALUE self)
+{
+    VALUE args[2];
+
+    args[0] = (VALUE)rb_to_encoding_index(self);
+    args[1] = rb_ary_new2(0);
+    st_foreach(enc_table.names, enc_names_i, (st_data_t)args);
+    return args[1];
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-replicate">
+            
+              <b>enc.replicate(name) &rarr; encoding
+</b>
+            
+            <a href="../classes/Encoding.html#method-i-replicate" name="method-i-replicate" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns a replicated encoding of <em>enc</em> whose name is <em>name</em>.
+The new encoding should have the same byte structure of <em>enc</em>. If
+<em>name</em> is used by another encoding, raise <a
+href="ArgumentError.html">ArgumentError</a>.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-replicate_source')" id="l_method-i-replicate_source">show</a>
+                
+              </p>
+              <div id="method-i-replicate_source" class="dyn-source">
+                <pre>static VALUE
+enc_replicate(VALUE encoding, VALUE name)
+{
+    return rb_enc_from_encoding_index(
+        rb_enc_replicate(StringValueCStr(name),
+                         rb_to_encoding(encoding)));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-to_s">
+            
+              <b>enc.to_s &rarr; string</b>
+            
+            <a href="../classes/Encoding.html#method-i-to_s" name="method-i-to_s" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the name of the encoding.</p>
+
+<pre><code>Encoding::UTF_8.name      #=&gt; &quot;UTF-8&quot;
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-to_s_source')" id="l_method-i-to_s_source">show</a>
+                
+              </p>
+              <div id="method-i-to_s_source" class="dyn-source">
+                <pre>static VALUE
+enc_name(VALUE self)
+{
+    return rb_fstring_cstr(rb_enc_name((rb_encoding*)DATA_PTR(self)));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+
+    </div>
+  </body>
+</html>    

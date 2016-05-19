@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>HasManyAssociationsTestPrimaryKeys</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/github.css" type="text/css" media="screen" />
+<script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            HasManyAssociationsTestPrimaryKeys 
+            
+                <span class="parent">&lt; 
+                    
+                    ActiveRecord::TestCase
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../files/activerecord/test/cases/associations/has_many_associations_test_rb.html">activerecord/test/cases/associations/has_many_associations_test.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-test_association_primary_key_on_new_record_should_fetch_with_query">test_association_primary_key_on_new_record_should_fetch_with_query</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_blank_custom_primary_key_on_new_record_should_not_run_queries">test_blank_custom_primary_key_on_new_record_should_not_run_queries</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_custom_primary_key_on_new_record_should_fetch_with_query">test_custom_primary_key_on_new_record_should_fetch_with_query</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_has_many_assignment_with_custom_primary_key">test_has_many_assignment_with_custom_primary_key</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_has_many_custom_primary_key">test_has_many_custom_primary_key</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+        
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-test_association_primary_key_on_new_record_should_fetch_with_query">
+            
+              <b>test_association_primary_key_on_new_record_should_fetch_with_query</b>()
+            
+            <a href="../classes/HasManyAssociationsTestPrimaryKeys.html#method-i-test_association_primary_key_on_new_record_should_fetch_with_query" name="method-i-test_association_primary_key_on_new_record_should_fetch_with_query" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_association_primary_key_on_new_record_should_fetch_with_query_source')" id="l_method-i-test_association_primary_key_on_new_record_should_fetch_with_query_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/1cfcf414a5919ec3fd9e6fb01bfaef62e5ff46e5/activerecord/test/cases/associations/has_many_associations_test.rb#L66" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_association_primary_key_on_new_record_should_fetch_with_query_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/associations/has_many_associations_test.rb, line 66</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_association_primary_key_on_new_record_should_fetch_with_query</span>
+  <span class="ruby-identifier">author</span> = <span class="ruby-constant">Author</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">:name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;David&quot;</span>)
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-identifier">author</span>.<span class="ruby-identifier">essays</span>.<span class="ruby-identifier">loaded?</span>
+
+  <span class="ruby-identifier">assert_queries</span> <span class="ruby-number">1</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-number">1</span>, <span class="ruby-identifier">author</span>.<span class="ruby-identifier">essays</span>.<span class="ruby-identifier">size</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">author</span>.<span class="ruby-identifier">essays</span>, <span class="ruby-constant">Essay</span>.<span class="ruby-identifier">where</span>(<span class="ruby-identifier">writer_id</span><span class="ruby-operator">:</span> <span class="ruby-string">&quot;David&quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_blank_custom_primary_key_on_new_record_should_not_run_queries">
+            
+              <b>test_blank_custom_primary_key_on_new_record_should_not_run_queries</b>()
+            
+            <a href="../classes/HasManyAssociationsTestPrimaryKeys.html#method-i-test_blank_custom_primary_key_on_new_record_should_not_run_queries" name="method-i-test_blank_custom_primary_key_on_new_record_should_not_run_queries" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_blank_custom_primary_key_on_new_record_should_not_run_queries_source')" id="l_method-i-test_blank_custom_primary_key_on_new_record_should_not_run_queries_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/1cfcf414a5919ec3fd9e6fb01bfaef62e5ff46e5/activerecord/test/cases/associations/has_many_associations_test.rb#L90" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_blank_custom_primary_key_on_new_record_should_not_run_queries_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/associations/has_many_associations_test.rb, line 90</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_blank_custom_primary_key_on_new_record_should_not_run_queries</span>
+  <span class="ruby-identifier">author</span> = <span class="ruby-constant">Author</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-identifier">author</span>.<span class="ruby-identifier">essays</span>.<span class="ruby-identifier">loaded?</span>
+
+  <span class="ruby-identifier">assert_queries</span> <span class="ruby-number">0</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-number">0</span>, <span class="ruby-identifier">author</span>.<span class="ruby-identifier">essays</span>.<span class="ruby-identifier">size</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_custom_primary_key_on_new_record_should_fetch_with_query">
+            
+              <b>test_custom_primary_key_on_new_record_should_fetch_with_query</b>()
+            
+            <a href="../classes/HasManyAssociationsTestPrimaryKeys.html#method-i-test_custom_primary_key_on_new_record_should_fetch_with_query" name="method-i-test_custom_primary_key_on_new_record_should_fetch_with_query" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_custom_primary_key_on_new_record_should_fetch_with_query_source')" id="l_method-i-test_custom_primary_key_on_new_record_should_fetch_with_query_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/1cfcf414a5919ec3fd9e6fb01bfaef62e5ff46e5/activerecord/test/cases/associations/has_many_associations_test.rb#L55" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_custom_primary_key_on_new_record_should_fetch_with_query_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/associations/has_many_associations_test.rb, line 55</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_custom_primary_key_on_new_record_should_fetch_with_query</span>
+  <span class="ruby-identifier">subscriber</span> = <span class="ruby-constant">Subscriber</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">nick</span><span class="ruby-operator">:</span> <span class="ruby-string">&#39;webster132&#39;</span>)
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-identifier">subscriber</span>.<span class="ruby-identifier">subscriptions</span>.<span class="ruby-identifier">loaded?</span>
+
+  <span class="ruby-identifier">assert_queries</span> <span class="ruby-number">1</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-number">2</span>, <span class="ruby-identifier">subscriber</span>.<span class="ruby-identifier">subscriptions</span>.<span class="ruby-identifier">size</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">subscriber</span>.<span class="ruby-identifier">subscriptions</span>, <span class="ruby-constant">Subscription</span>.<span class="ruby-identifier">where</span>(<span class="ruby-identifier">subscriber_id</span><span class="ruby-operator">:</span> <span class="ruby-string">&#39;webster132&#39;</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_has_many_assignment_with_custom_primary_key">
+            
+              <b>test_has_many_assignment_with_custom_primary_key</b>()
+            
+            <a href="../classes/HasManyAssociationsTestPrimaryKeys.html#method-i-test_has_many_assignment_with_custom_primary_key" name="method-i-test_has_many_assignment_with_custom_primary_key" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_has_many_assignment_with_custom_primary_key_source')" id="l_method-i-test_has_many_assignment_with_custom_primary_key_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/1cfcf414a5919ec3fd9e6fb01bfaef62e5ff46e5/activerecord/test/cases/associations/has_many_associations_test.rb#L82" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_has_many_assignment_with_custom_primary_key_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/associations/has_many_associations_test.rb, line 82</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_has_many_assignment_with_custom_primary_key</span>
+  <span class="ruby-identifier">david</span> = <span class="ruby-identifier">people</span>(<span class="ruby-value">:david</span>)
+
+  <span class="ruby-identifier">assert_equal</span> [<span class="ruby-string">&quot;A Modest Proposal&quot;</span>], <span class="ruby-identifier">david</span>.<span class="ruby-identifier">essays</span>.<span class="ruby-identifier">map</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:name</span>)
+  <span class="ruby-identifier">david</span>.<span class="ruby-identifier">essays</span> = [<span class="ruby-constant">Essay</span>.<span class="ruby-identifier">create!</span>(<span class="ruby-identifier">name</span><span class="ruby-operator">:</span> <span class="ruby-string">&quot;Remote Work&quot;</span> )]
+  <span class="ruby-identifier">assert_equal</span> [<span class="ruby-string">&quot;Remote Work&quot;</span>], <span class="ruby-identifier">david</span>.<span class="ruby-identifier">essays</span>.<span class="ruby-identifier">map</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:name</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_has_many_custom_primary_key">
+            
+              <b>test_has_many_custom_primary_key</b>()
+            
+            <a href="../classes/HasManyAssociationsTestPrimaryKeys.html#method-i-test_has_many_custom_primary_key" name="method-i-test_has_many_custom_primary_key" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_has_many_custom_primary_key_source')" id="l_method-i-test_has_many_custom_primary_key_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/1cfcf414a5919ec3fd9e6fb01bfaef62e5ff46e5/activerecord/test/cases/associations/has_many_associations_test.rb#L77" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_has_many_custom_primary_key_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/associations/has_many_associations_test.rb, line 77</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_has_many_custom_primary_key</span>
+  <span class="ruby-identifier">david</span> = <span class="ruby-identifier">authors</span>(<span class="ruby-value">:david</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">david</span>.<span class="ruby-identifier">essays</span>, <span class="ruby-constant">Essay</span>.<span class="ruby-identifier">where</span>(<span class="ruby-identifier">writer_id</span><span class="ruby-operator">:</span> <span class="ruby-string">&quot;David&quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+
+    </div>
+  </body>
+</html>    

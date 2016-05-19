@@ -1,0 +1,1056 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>NEWS-2.0.0</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            NEWS-2.0.0
+        </h1>
+        <ul class="files">
+            
+            <li>
+                doc/NEWS-2.0.0
+                
+            </li>
+            <li>Last modified: 2014-09-13 06:44:08 +0200</li>
+        </ul>
+    </div>
+
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<h1 id="label-NEWS+for+Ruby+2.0.0"><a href="../NEWS.html">NEWS</a> for Ruby 2.0.0</h1>
+
+<p>This document is a list of user visible feature changes made between
+releases except for bug fixes.</p>
+
+<p>Note that each entry is kept so brief that no reason behind or reference
+information is supplied with.  For a full list of changes with all
+sufficient information, see the <a href="../ChangeLog.html">ChangeLog</a>
+file.</p>
+
+<h2 id="label-Changes+since+the+1.9.3+release">Changes since the 1.9.3 release</h2>
+
+<h3 id="label-Language+changes">Language changes</h3>
+<ul><li>
+<p>Added keyword arguments.</p>
+</li><li>
+<p>Added %i and %I for symbol list creation (similar to %w and %W).</p>
+</li><li>
+<p>Default source encoding is changed to UTF-8. (was US-ASCII)</p>
+</li><li>
+<p>No warning for unused variables starting with &#39;_&#39;</p>
+</li></ul>
+
+<h3 id="label-Core+classes+updates+-28outstanding+ones+only-29">Core classes updates (outstanding ones only)</h3>
+<ul><li>
+<p>ARGF</p>
+<ul><li>
+<p>added method:</p>
+<ul><li>
+<p>added ARGF#codepoints and ARGF#each_codepoint, like the corresponding
+methods for <a href="../../classes/IO.html">IO</a>.</p>
+</li></ul>
+</li></ul>
+</li><li>
+<p>Array</p>
+<ul><li>
+<p>added method:</p>
+<ul><li>
+<p>added <a href="../../classes/Array.html#method-i-bsearch">Array#bsearch</a>
+for binary search.</p>
+</li></ul>
+</li><li>
+<p>incompatible changes:</p>
+<ul><li>
+<p>random parameter of <a
+href="../../classes/Array.html#method-i-shuffle-21">Array#shuffle!</a> and
+<a href="../../classes/Array.html#method-i-sample">Array#sample</a> now
+will be called with one argument, maximum value.</p>
+</li><li>
+<p>when given <a href="../../classes/Range.html">Range</a> arguments, <a
+href="../../classes/Array.html#method-i-values_at">Array#values_at</a> now
+returns nil for each value that is out-of-range.</p>
+</li></ul>
+</li></ul>
+</li><li>
+<p><a href="../../classes/Enumerable.html">Enumerable</a></p>
+<ul><li>
+<p>added method:</p>
+<ul><li>
+<p>added <a
+href="../../classes/Enumerable.html#method-i-lazy">Enumerable#lazy</a>
+method for lazy enumeration.</p>
+</li></ul>
+</li></ul>
+</li><li>
+<p><a href="../../classes/Enumerator.html">Enumerator</a></p>
+<ul><li>
+<p>added method:</p>
+<ul><li>
+<p>added <a
+href="../../classes/Enumerator.html#method-i-size">Enumerator#size</a> for
+lazy size evaluation.</p>
+</li></ul>
+</li><li>
+<p>extended method:</p>
+<ul><li>
+<p><a href="../../classes/Enumerator.html#method-c-new">Enumerator.new</a>
+accept an argument for lazy size evaluation.</p>
+</li></ul>
+</li><li>
+<p>new class <a href="../../classes/Enumerator/Lazy.html">Enumerator::Lazy</a>
+for lazy enumeration</p>
+</li></ul>
+</li><li>
+<p><a href="../../classes/ENV.html">ENV</a></p>
+<ul><li>
+<p>aliased method:</p>
+<ul><li>
+<p><a href="../../classes/ENV.html#method-c-to_h">ENV.to_h</a> is a new alias
+for <a href="../../classes/ENV.html#method-c-to_hash">ENV.to_hash</a></p>
+</li></ul>
+</li></ul>
+</li><li>
+<p><a href="../../classes/Fiber.html">Fiber</a></p>
+<ul><li>
+<p>incompatible changes:</p>
+<ul><li>
+<p><a href="../../classes/Fiber.html#method-i-resume">Fiber#resume</a> cannot
+resume a fiber which invokes “Fiber#transfer”.</p>
+</li></ul>
+</li></ul>
+</li><li>
+<p><a href="../../classes/File.html">File</a></p>
+<ul><li>
+<p>extended method:</p>
+<ul><li>
+<p><a href="../../classes/File.html#method-c-fnmatch-3F">File.fnmatch?</a> now
+expands braces in the pattern if File::FNM_EXTGLOB option is given.</p>
+</li></ul>
+</li></ul>
+</li><li>
+<p><a href="../../classes/GC.html">GC</a></p>
+<ul><li>
+<p>improvements:</p>
+<ul><li>
+<p>introduced the bitmap marking which suppresses to copy a memory page with
+Copy-on-Write.</p>
+</li><li>
+<p>introduced the non-recursive marking which avoids unexpected stack
+overflow.</p>
+</li></ul>
+</li></ul>
+</li><li>
+<p><a href="../../classes/GC/Profiler.html">GC::Profiler</a></p>
+<ul><li>
+<p>added method:</p>
+<ul><li>
+<p>added <a
+href="../../classes/GC/Profiler.html#method-c-raw_data">GC::Profiler.raw_data</a>
+which returns raw profile data for <a href="../../classes/GC.html">GC</a>.</p>
+</li></ul>
+</li></ul>
+</li><li>
+<p><a href="../../classes/Hash.html">Hash</a></p>
+<ul><li>
+<p>added method:</p>
+<ul><li>
+<p>added <a href="../../classes/Hash.html#method-i-to_h">Hash#to_h</a> as
+explicit conversion method, like <a
+href="../../classes/Array.html#method-i-to_a">Array#to_a</a>.</p>
+</li></ul>
+</li><li>
+<p>extended method:</p>
+<ul><li>
+<p><a
+href="../../classes/Hash.html#method-i-default_proc-3D">Hash#default_proc=</a>
+can be passed nil to clear the default proc.</p>
+</li></ul>
+</li></ul>
+</li><li>
+<p><a href="../../classes/IO.html">IO</a></p>
+<ul><li>
+<p>deprecated methods:</p>
+<ul><li>
+<p><a href="../../classes/IO.html#method-i-lines">IO#lines</a>, bytes, chars
+and codepoints are deprecated.</p>
+</li></ul>
+</li></ul>
+</li><li>
+<p><a href="../../classes/Kernel.html">Kernel</a></p>
+<ul><li>
+<p>added method:</p>
+<ul><li>
+<p>added Kernel#Hash conversion method like Array() or Float().</p>
+</li><li>
+<p>added Kernel#__dir__ which returns the absolute path of the directory of
+the file from which this method is called.</p>
+</li><li>
+<p>added <a
+href="../../classes/Kernel.html#method-i-caller_locations">Kernel#caller_locations</a>
+which returns an array of frame information objects.</p>
+</li></ul>
+</li><li>
+<p>extended method:</p>
+<ul><li>
+<p><a href="../../classes/Kernel.html#method-i-warn">Kernel#warn</a> accepts
+multiple args in like puts.</p>
+</li><li>
+<p><a href="../../classes/Kernel.html#method-i-caller">Kernel#caller</a>
+accepts second optional argument `n&#39; which specify required caller
+size.</p>
+</li><li>
+<p>Kernel#to_enum and enum_for accept a block for lazy size evaluation.</p>
+</li></ul>
+</li><li>
+<p>incompatible changes:</p>
+<ul><li>
+<p>system() and exec() closes non-standard file descriptors (The default of
+:close_others option is changed to true by default.)</p>
+</li><li>
+<p>respond_to? against a protected method now returns false unless the second
+argument is true.</p>
+</li><li>
+<p>__callee__ has returned to the original behavior, and now returns the
+called name but not the original name in an aliased method.</p>
+</li><li>
+<p>Kernel#inspect does not call to_s anymore (it used to call redefined to_s).</p>
+</li></ul>
+</li></ul>
+</li><li>
+<p><a href="../../classes/LoadError.html">LoadError</a></p>
+<ul><li>
+<p>added method:</p>
+<ul><li>
+<p>added LoadError#path method to return the file name that could not be
+loaded.</p>
+</li></ul>
+</li></ul>
+</li><li>
+<p><a href="../../classes/Module.html">Module</a></p>
+<ul><li>
+<p>added method:</p>
+<ul><li>
+<p>added <a
+href="../../classes/Module.html#method-i-prepend">Module#prepend</a> which
+is similar to <a
+href="../../classes/Module.html#method-i-include">Module#include</a>,
+however a method in the prepended module overrides the corresponding method
+in the prepending module.</p>
+</li><li>
+<p>added Module.prepended and Module.prepend_features, similar to included and
+append_features.</p>
+</li><li>
+<p>added Module#refine, which extends a class or module locally.</p>
+<dl class="rdoc-list label-list"><dt>experimental
+<dd></dd></dl>
+</li></ul>
+</li><li>
+<p>extended method:</p>
+<ul><li>
+<p>Module#define_method accepts a <a
+href="../../classes/UnboundMethod.html">UnboundMethod</a> from a <a
+href="../../classes/Module.html">Module</a>.</p>
+</li><li>
+<p><a href="../../classes/Module.html#method-i-const_get">Module#const_get</a>
+accepts a qualified constant string, e.g. Object.const_get(“Foo::Bar::Baz”)</p>
+</li></ul>
+</li></ul>
+</li><li>
+<p>Mutex</p>
+<ul><li>
+<p>added method:</p>
+<ul><li>
+<p>added Mutex#owned? which returns the mutex is held by current thread or
+not. [experimental]</p>
+</li></ul>
+</li><li>
+<p>incompatible changes:</p>
+<ul><li>
+<p>Mutex#lock, Mutex#unlock, Mutex#try_lock, Mutex#synchronize and Mutex#sleep
+are no longer allowed to be used from trap handler and raise a <a
+href="../../classes/ThreadError.html">ThreadError</a> in such case.</p>
+</li><li>
+<p>Mutex#sleep may spurious wakeup. Check after wakeup.</p>
+</li></ul>
+</li></ul>
+</li><li>
+<p><a href="../../classes/NilClass.html">NilClass</a></p>
+<ul><li>
+<p>added method:</p>
+<ul><li>
+<p>added nil.to_h which returns {}</p>
+</li></ul>
+</li></ul>
+</li><li>
+<p><a href="../../classes/ObjectSpace/WeakMap.html">ObjectSpace::WeakMap</a></p>
+<ul><li>
+<p>new low level class to hold weak references to objects.</p>
+</li></ul>
+</li><li>
+<p><a href="../../classes/Proc.html">Proc</a></p>
+<ul><li>
+<p>incompatible change:</p>
+<ul><li>
+<p>removed Proc#== and eql? so two procs are == only when they are the same
+object.</p>
+</li></ul>
+</li></ul>
+</li><li>
+<p><a href="../../classes/Process.html">Process</a></p>
+<ul><li>
+<p>added method:</p>
+<ul><li>
+<p>added getsid for getting session id (unix only).</p>
+</li></ul>
+</li></ul>
+</li><li>
+<p><a href="../../classes/Range.html">Range</a></p>
+<ul><li>
+<p>added method:</p>
+<ul><li>
+<p>added <a href="../../classes/Range.html#method-i-size">Range#size</a> for
+lazy size evaluation.</p>
+</li><li>
+<p>added <a href="../../classes/Range.html#method-i-bsearch">Range#bsearch</a>
+for binary search.</p>
+</li></ul>
+</li></ul>
+</li><li>
+<p><a href="../../classes/RubyVM.html">RubyVM</a> (MRI specific)</p>
+<ul><li>
+<p>added <a
+href="../../classes/RubyVM/InstructionSequence.html#method-c-of">RubyVM::InstructionSequence.of</a>
+to get the instruction sequence from a method or a block.</p>
+</li><li>
+<p>added <a
+href="../../classes/RubyVM/InstructionSequence.html#method-i-path">RubyVM::InstructionSequence#path</a>,
+absolute_path, label, base_label and first_lineno to retrieve information
+from where the instruction sequence was defined.</p>
+</li><li>
+<p>added Environment variables to specify stack usage:</p>
+<ul><li>
+<p>RUBY_THREAD_VM_STACK_SIZE: vm stack size used at thread creation. default:
+128KB (32bit CPU) or 256KB (64bit CPU).</p>
+</li><li>
+<p>RUBY_THREAD_MACHINE_STACK_SIZE: machine stack size used at thread creation.
+default: 512KB or 1024KB.</p>
+</li><li>
+<p>RUBY_FIBER_VM_STACK_SIZE: vm stack size used at fiber creation. default:
+64KB or 128KB.</p>
+</li><li>
+<p>RUBY_FIBER_MACHINE_STACK_SIZE: machine stack size used at fiber creation.
+default: 256KB or 512KB.</p>
+</li></ul>
+
+<p>These variables are checked only at launched time.</p>
+</li><li>
+<p>added constant DEFAULT_PARAMS to get above default parameters.</p>
+</li></ul>
+</li><li>
+<p><a href="../../classes/Signal.html">Signal</a></p>
+<ul><li>
+<p>added method:</p>
+<ul><li>
+<p>added <a
+href="../../classes/Signal.html#method-c-signame">Signal.signame</a> which
+returns signal name</p>
+</li></ul>
+</li><li>
+<p>incompatible changes:</p>
+<ul><li>
+<p><a href="../../classes/Signal.html#method-c-trap">Signal.trap</a> raises <a
+href="../../classes/ArgumentError.html">ArgumentError</a> when :SEGV, :BUS,
+:ILL, :FPE, :VTALRM are specified.</p>
+</li></ul>
+</li></ul>
+</li><li>
+<p>String</p>
+<ul><li>
+<p>added method:</p>
+<ul><li>
+<p>added <a href="../../classes/String.html#method-i-b">String#b</a> returning
+a copied string whose encoding is ASCII-8BIT.</p>
+</li></ul>
+</li><li>
+<p>change return value:</p>
+<ul><li>
+<p><a href="../../classes/String.html#method-i-lines">String#lines</a> now
+returns an array instead of an enumerator.</p>
+</li><li>
+<p><a href="../../classes/String.html#method-i-chars">String#chars</a> now
+returns an array instead of an enumerator.</p>
+</li><li>
+<p><a
+href="../../classes/String.html#method-i-codepoints">String#codepoints</a>
+now returns an array instead of an enumerator.</p>
+</li><li>
+<p><a href="../../classes/String.html#method-i-bytes">String#bytes</a> now
+returns an array instead of an enumerator.</p>
+</li></ul>
+</li></ul>
+</li><li>
+<p><a href="../../classes/Struct.html">Struct</a></p>
+<ul><li>
+<p>added method:</p>
+<ul><li>
+<p>added <a href="../../classes/Struct.html#method-i-to_h">Struct#to_h</a>
+returning values with keys corresponding to the instance variable names.</p>
+</li></ul>
+</li></ul>
+</li><li>
+<p><a href="../../classes/Thread.html">Thread</a></p>
+<ul><li>
+<p>added method:</p>
+<ul><li>
+<p>added <a
+href="../../classes/Thread.html#method-i-thread_variable_get">Thread#thread_variable_get</a>
+for getting thread local variables (these are different than <a
+href="../../classes/Fiber.html">Fiber</a> local variables).</p>
+</li><li>
+<p>added <a
+href="../../classes/Thread.html#method-i-thread_variable_set">Thread#thread_variable_set</a>
+for setting thread local variables.</p>
+</li><li>
+<p>added <a
+href="../../classes/Thread.html#method-i-thread_variables">Thread#thread_variables</a>
+for getting a list of the thread local variable keys.</p>
+</li><li>
+<p>added <a
+href="../../classes/Thread.html#method-i-thread_variable-3F">Thread#thread_variable?</a>
+for testing to see if a particular thread variable has been set.</p>
+</li><li>
+<p>added <a
+href="../../classes/Thread.html#method-c-handle_interrupt">Thread.handle_interrupt</a>
+as well as instance and singleton methods pending_interrupt? for
+asynchronous handling of exceptions</p>
+</li><li>
+<p>added <a
+href="../../classes/Thread.html#method-i-backtrace_locations">Thread#backtrace_locations</a>
+which returns similar information of <a
+href="../../classes/Kernel.html#method-i-caller_locations">Kernel#caller_locations</a>.</p>
+</li></ul>
+</li><li>
+<p>new class <a
+href="../../classes/Thread/Backtrace/Location.html">Thread::Backtrace::Location</a>
+to hold backtrace location information. These are returned by <a
+href="../../classes/Thread.html#method-i-backtrace_locations">Thread#backtrace_locations</a>
+and <a
+href="../../classes/Kernel.html#method-i-caller_locations">Kernel#caller_locations</a>.</p>
+</li><li>
+<p>incompatible changes:</p>
+<ul><li>
+<p><a href="../../classes/Thread.html#method-i-join">Thread#join</a> and <a
+href="../../classes/Thread.html#method-i-value">Thread#value</a> now raises
+a <a href="../../classes/ThreadError.html">ThreadError</a> if target thread
+is the current or main thread.</p>
+</li></ul>
+</li></ul>
+</li><li>
+<p><a href="../../classes/Time.html">Time</a></p>
+<ul><li>
+<p>change return value:</p>
+<ul><li>
+<p><a href="../../classes/Time.html#method-i-to_s">Time#to_s</a> now returns
+US-ASCII encoding instead of BINARY.</p>
+</li></ul>
+</li></ul>
+</li><li>
+<p><a href="../../classes/TracePoint.html">TracePoint</a></p>
+<ul><li>
+<p>new class. This class is replacement of set_trace_func. Easy to use and
+efficient implementation.</p>
+</li></ul>
+</li><li>
+<p>toplevel</p>
+<ul><li>
+<p>added method:</p>
+<ul><li>
+<p>added main.define_method which defines a global function.</p>
+</li><li>
+<p>added main.using, which imports refinements into the current file or eval
+string. [experimental]</p>
+</li></ul>
+</li></ul>
+</li></ul>
+
+<h3 id="label-Core+classes+compatibility+issues+-28excluding+feature+bug+fixes-29">Core classes compatibility issues (excluding feature bug fixes)</h3>
+<ul><li>
+<p><a href="../../classes/Array.html#method-i-values_at">Array#values_at</a></p>
+
+<p>See above.</p>
+</li><li>
+<p><a href="../../classes/String.html#method-i-lines">String#lines</a></p>
+</li><li>
+<p><a href="../../classes/String.html#method-i-chars">String#chars</a></p>
+</li><li>
+<p><a
+href="../../classes/String.html#method-i-codepoints">String#codepoints</a></p>
+</li><li>
+<p><a href="../../classes/String.html#method-i-bytes">String#bytes</a></p>
+
+<p>These methods no longer return an <a
+href="../../classes/Enumerator.html">Enumerator</a>, although passing a
+block is still supported for backwards compatibility.</p>
+
+<p>Code like str.lines.with_index(1) { |line, lineno| … } no longer works
+because str.lines returns an array.  Replace lines with each_line in such
+cases.</p>
+</li><li>
+<p><a href="../../classes/IO.html#method-i-lines">IO#lines</a></p>
+</li><li>
+<p><a href="../../classes/IO.html#method-i-chars">IO#chars</a></p>
+</li><li>
+<p><a href="../../classes/IO.html#method-i-codepoints">IO#codepoints</a></p>
+</li><li>
+<p><a href="../../classes/IO.html#method-i-bytes">IO#bytes</a></p>
+</li><li>
+<p>ARGF#lines</p>
+</li><li>
+<p>ARGF#chars</p>
+</li><li>
+<p>ARGF#bytes</p>
+</li><li>
+<p><a href="../../classes/StringIO.html#method-i-lines">StringIO#lines</a></p>
+</li><li>
+<p><a href="../../classes/StringIO.html#method-i-chars">StringIO#chars</a></p>
+</li><li>
+<p><a
+href="../../classes/StringIO.html#method-i-codepoints">StringIO#codepoints</a></p>
+</li><li>
+<p><a href="../../classes/StringIO.html#method-i-bytes">StringIO#bytes</a></p>
+</li><li>
+<p><a
+href="../../classes/Zlib/GzipReader.html#method-i-lines">Zlib::GzipReader#lines</a></p>
+</li><li>
+<p><a
+href="../../classes/Zlib/GzipReader.html#method-i-bytes">Zlib::GzipReader#bytes</a></p>
+
+<p>These methods are deprecated in favor of each_line, each_byte, each_char
+and each_codepoint.</p>
+</li><li>
+<p>Proc#==</p>
+</li><li>
+<p><a href="../../classes/Object.html#method-i-eql-3F">Object#eql?</a></p>
+
+<p>These methods were removed. Two procs are == only when they are the same
+object.</p>
+</li><li>
+<p><a href="../../classes/Fixnum.html">Fixnum</a></p>
+</li><li>
+<p><a href="../../classes/Bignum.html">Bignum</a></p>
+</li><li>
+<p><a href="../../classes/Float.html">Float</a></p>
+
+<p>Fixnums, Bignums and Floats are frozen.</p>
+</li><li>
+<p><a href="../../classes/Signal.html#method-c-trap">Signal.trap</a></p>
+
+<p>See above.</p>
+</li><li>
+<p>Merge Onigmo. <a
+href="https://github.com/k-takata/Onigmo">github.com/k-takata/Onigmo</a></p>
+</li><li>
+<p>The :close_others option is true by default for system() and exec(). Also,
+the close-on-exec flag is set by default for all new file descriptors. This
+means file descriptors doesn&#39;t inherit to spawned process unless
+explicitly requested such as system(…, fd=&gt;fd).</p>
+</li><li>
+<p>Kernel#respond_to? against a protected method now returns false unless the
+second argument is true.</p>
+</li><li>
+<p>Kernel#respond_to_missing?</p>
+</li><li>
+<p>Kernel#initialize_clone</p>
+</li><li>
+<p>Kernel#initialize_dup</p>
+
+<p>These methods are now private.</p>
+</li><li>
+<p><a href="../../classes/Thread.html#method-i-join">Thread#join</a>, <a
+href="../../classes/Thread.html#method-i-value">Thread#value</a></p>
+
+<p>See above.</p>
+</li><li>
+<p>Mutex#lock, Mutex#unlock, Mutex#try_lock, Mutex#synchronize and Mutex#sleep</p>
+
+<p>See above.</p>
+</li></ul>
+
+<h3 id="label-Stdlib+updates+-28outstanding+ones+only-29">Stdlib updates (outstanding ones only)</h3>
+<ul><li>
+<p>cgi</p>
+<ul><li>
+<p>Add HTML5 tag maker.</p>
+</li><li>
+<p><a href="../../classes/CGI.html#method-i-header">CGI#header</a> has been
+renamed to <a
+href="../../classes/CGI.html#method-i-http_header">CGI#http_header</a> and
+aliased to <a href="../../classes/CGI.html#method-i-header">CGI#header</a>.</p>
+</li><li>
+<p>When HTML5 tagmaker called, overwrite <a
+href="../../classes/CGI.html#method-i-header">CGI#header</a>, <a
+href="../../classes/CGI.html#method-i-header">CGI#header</a> function is to
+create a &lt;header&gt; element.</p>
+</li></ul>
+</li><li>
+<p><a href="../../classes/CSV.html">CSV</a></p>
+<ul><li>
+<p>Removed CSV::dump and CSV::load to protect users from dangerous
+serialization vulnerability</p>
+</li></ul>
+</li><li>
+<p>iconv</p>
+<ul><li>
+<p>Iconv has been removed. Use <a
+href="../../classes/String.html#method-i-encode">String#encode</a> instead.</p>
+</li></ul>
+</li><li>
+<p>io/console</p>
+<ul><li>
+<p>new methods:</p>
+<ul><li>
+<p>added <a href="../../classes/IO.html#method-i-cooked">IO#cooked</a> which
+sets the terminal to cooked mode within the given block.</p>
+</li><li>
+<p>added <a href="../../classes/IO.html#method-i-cooked-21">IO#cooked!</a>
+which sets the terminal to cooked.</p>
+</li></ul>
+</li><li>
+<p>extended method:</p>
+<ul><li>
+<p><a href="../../classes/IO.html#method-i-raw">IO#raw</a>, <a
+href="../../classes/IO.html#method-i-raw-21">IO#raw!</a>, and <a
+href="../../classes/IO.html#method-i-getch">IO#getch</a> accept keyword
+arguments, :min and :time.</p>
+</li></ul>
+</li></ul>
+</li><li>
+<p>io/wait</p>
+<ul><li>
+<p>new features:</p>
+<ul><li>
+<p>added <a
+href="../../classes/IO.html#method-i-wait_writable">IO#wait_writable</a>
+method.</p>
+</li><li>
+<p>added <a
+href="../../classes/IO.html#method-i-wait_readable">IO#wait_readable</a>
+method as alias of <a
+href="../../classes/IO.html#method-i-wait">IO#wait</a>.</p>
+</li></ul>
+</li></ul>
+</li><li>
+<p>json</p>
+<ul><li>
+<p>updated to 1.7.7.</p>
+</li></ul>
+</li><li>
+<p>net/http</p>
+<ul><li>
+<p>new features:</p>
+<ul><li>
+<p>Proxies are now automatically detected from the http_proxy environment
+variable.  See <a
+href="../../classes/Net/HTTP.html#method-c-new">Net::HTTP.new</a> for
+details.</p>
+</li><li>
+<p>gzip and deflate compression are now requested for all requests by default.
+See <a href="../../classes/Net/HTTP.html">Net::HTTP</a> for details.</p>
+</li><li>
+<p>SSL sessions are now reused across connections for a single instance. This
+speeds up connection by using a previously negotiated session.</p>
+</li><li>
+<p>Requests may be created from a <a href="../../classes/URI.html">URI</a>
+which sets the request_uri and host header of the request (but does not
+change the host connected to).</p>
+</li><li>
+<p>Responses contain the <a href="../../classes/URI.html">URI</a> requested
+which allows easier implementation of redirect following.</p>
+</li></ul>
+</li><li>
+<p>new methods:</p>
+<ul><li>
+<p><a
+href="../../classes/Net/HTTP.html#attribute-i-local_host">Net::HTTP#local_host</a></p>
+</li><li>
+<p><a
+href="../../classes/Net/HTTP.html#attribute-i-local_host">Net::HTTP#local_host</a></p>
+</li><li>
+<p><a
+href="../../classes/Net/HTTP.html#attribute-i-local_port">Net::HTTP#local_port</a></p>
+</li><li>
+<p><a
+href="../../classes/Net/HTTP.html#attribute-i-local_port">Net::HTTP#local_port</a></p>
+</li></ul>
+</li><li>
+<p>extended method:</p>
+<ul><li>
+<p>Net::HTTP#connect uses local_host and local_port if specified.</p>
+</li></ul>
+</li></ul>
+</li><li>
+<p>net/imap</p>
+<ul><li>
+<p>new methods:</p>
+<ul><li>
+<p><a
+href="../../classes/Net/IMAP.html#method-c-default_port">Net::IMAP.default_port</a></p>
+</li><li>
+<p><a
+href="../../classes/Net/IMAP.html#method-c-default_imap_port">Net::IMAP.default_imap_port</a></p>
+</li><li>
+<p><a
+href="../../classes/Net/IMAP.html#method-c-default_tls_port">Net::IMAP.default_tls_port</a></p>
+</li><li>
+<p><a
+href="../../classes/Net/IMAP.html#method-c-default_ssl_port">Net::IMAP.default_ssl_port</a></p>
+</li><li>
+<p><a
+href="../../classes/Net/IMAP.html#method-c-default_imaps_port">Net::IMAP.default_imaps_port</a></p>
+</li></ul>
+</li></ul>
+</li><li>
+<p>objspace</p>
+<ul><li>
+<p>new method:</p>
+<ul><li>
+<p><a
+href="../../classes/ObjectSpace.html#method-c-reachable_objects_from">ObjectSpace.reachable_objects_from</a></p>
+</li></ul>
+</li></ul>
+</li><li>
+<p>openssl</p>
+<ul><li>
+<p>Consistently raise an error when trying to encode nil values. All instances
+of <a
+href="../../classes/OpenSSL/ASN1/Primitive.html">OpenSSL::ASN1::Primitive</a>
+now raise <a href="../../classes/TypeError.html">TypeError</a> when calling
+to_der on an instance whose value is nil. All instances of <a
+href="../../classes/OpenSSL/ASN1/Constructive.html">OpenSSL::ASN1::Constructive</a>
+raise <a href="../../classes/NoMethodError.html">NoMethodError</a> in the
+same case. Constructing such values is still permitted.</p>
+</li><li>
+<p>TLS 1.1 &amp; 1.2 support by setting OpenSSL::SSL::SSLContext#ssl_version
+to :TLSv1_2, :TLSv1_2_server, :TLSv1_2_client or :TLSv1_1, :TLSv1_1_server
+:TLSv1_1_client. The version being effectively used can be queried with
+OpenSSL::SSL#ssl_version. Furthermore, it is also possible to blacklist the
+new TLS versions with OpenSSL::SSL:OP_NO_TLSv1_1 and
+OpenSSL::SSL::OP_NO_TLSv1_2.</p>
+</li><li>
+<p>Added <a
+href="../../classes/OpenSSL/SSL/SSLContext.html#attribute-i-renegotiation_cb">OpenSSL::SSL::SSLContext#renegotiation_cb</a>.
+A user-defined callback may be set which gets called whenever a new
+handshake is negotiated. This also allows to programmatically decline
+(client) renegotiation attempts.</p>
+</li><li>
+<p>Support for “0/n” splitting of records as BEAST mitigation via
+OpenSSL::SSL::OP_DONT_INSERT_EMPTY_FRAGMENTS.</p>
+</li><li>
+<p>The default options for <a
+href="../../classes/OpenSSL/SSL/SSLContext.html">OpenSSL::SSL::SSLContext</a>
+have changed to OpenSSL::SSL::OP_ALL &amp;
+~OpenSSL::SSL::OP_DONT_INSERT_EMPTY_FRAGMENTS instead of
+OpenSSL::SSL::OP_ALL only. This enables the countermeasure for the BEAST
+attack by default.</p>
+</li><li>
+<p><a href="../../classes/OpenSSL.html">OpenSSL</a> requires passwords for
+decrypting PEM-encoded files to be at least four characters long. This led
+to awkward situations where an export with a password with fewer than four
+characters was possible, but accessing the file afterwards failed. <a
+href="../../classes/OpenSSL/PKey/RSA.html">OpenSSL::PKey::RSA</a>, <a
+href="../../classes/OpenSSL/PKey/DSA.html">OpenSSL::PKey::DSA</a> and <a
+href="../../classes/OpenSSL/PKey/EC.html">OpenSSL::PKey::EC</a> therefore
+now enforce the same check when exporting a private key to PEM with a
+password - it has to be at least four characters long.</p>
+</li><li>
+<p>SSL/TLS support for the Next Protocol Negotiation extension. Supported with
+<a href="../../classes/OpenSSL.html">OpenSSL</a> 1.0.1 and higher.</p>
+</li><li>
+<p>OpenSSL::OPENSSL_FIPS allows client applications to detect whether <a
+href="../../classes/OpenSSL.html">OpenSSL</a> is FIPS-enabled. <a
+href="../../classes/OpenSSL.html#method-c-fips_mode-3D">OpenSSL.fips_mode=</a>
+allows turning on and off FIPS mode manually in order to adapt to
+situations where FIPS mode would be an explicit requirement.</p>
+</li><li>
+<p>Authenticated Encryption with Associated <a
+href="../../classes/Data.html">Data</a> (AEAD) is supported via
+Cipher#auth_data= and Cipher#auth_tag/Cipher#auth_tag=. Currently (OpenSSL
+1.0.1c), only GCM mode is supported.</p>
+</li></ul>
+</li><li>
+<p>ostruct</p>
+<ul><li>
+<p>new methods:</p>
+<ul><li>
+<p><a href="../../classes/OpenStruct.html#method-i-5B-5D">OpenStruct#[]</a>,
+[]=</p>
+</li><li>
+<p><a
+href="../../classes/OpenStruct.html#method-i-each_pair">OpenStruct#each_pair</a></p>
+</li><li>
+<p><a href="../../classes/OpenStruct.html#method-i-eql-3F">OpenStruct#eql?</a></p>
+</li><li>
+<p><a href="../../classes/OpenStruct.html#method-i-hash">OpenStruct#hash</a></p>
+</li><li>
+<p><a href="../../classes/OpenStruct.html#method-i-to_h">OpenStruct#to_h</a>
+converts the struct to a hash.</p>
+</li></ul>
+</li><li>
+<p>extended method:</p>
+<ul><li>
+<p><a href="../../classes/OpenStruct.html#method-c-new">OpenStruct.new</a>
+also accepts an <a href="../../classes/OpenStruct.html">OpenStruct</a> / <a
+href="../../classes/Struct.html">Struct</a>.</p>
+</li></ul>
+</li></ul>
+</li><li>
+<p>pathname</p>
+<ul><li>
+<p>extended method:</p>
+<ul><li>
+<p><a href="../../classes/Pathname.html#method-i-find">Pathname#find</a>
+returns an enumerator if no block is given.</p>
+</li></ul>
+</li></ul>
+</li><li>
+<p>rake</p>
+<ul><li>
+<p>rake has been updated to version 0.9.5.</p>
+
+<p>This version is backwards-compatible with previous rake versions and
+contains many bug fixes.</p>
+
+<p>See <a
+href="http://rake.rubyforge.org/doc/release_notes/rake-0_9_5_rdoc.html">rake.rubyforge.org/doc/release_notes/rake-0_9_5_rdoc.html</a>
+for a list of changes in rake 0.9.3, 0.9.4 and 0.9.5.</p>
+</li></ul>
+</li><li>
+<p><a href="../../classes/RDoc.html">RDoc</a></p>
+<ul><li>
+<p><a href="../../classes/RDoc.html">RDoc</a> has been updated to version 4.0</p>
+
+<p>This version is largely backwards-compatible with previous rdoc versions.
+The most notable change is an update to the ri data format (ri data must be
+regenerated for gems shared across rdoc versions).  Further API changes are
+internal and won&#39;t affect most users.</p>
+
+<p>Notable changes include:</p>
+<ul><li>
+<p>Page support for ri.  Try `ri ruby:` for a list of pages in ruby or `ri
+ruby:syntax/literals` for the syntax documentation for literals.</p>
+
+<p>This also works for gems such as `ri rspec:README` for the rspec gem&#39;s
+<a href="../README_md.html">README</a> file.</p>
+</li><li>
+<p>Markdown support.  See ri <a
+href="../../classes/RDoc/Markdown.html">RDoc::Markdown</a> for details.</p>
+</li></ul>
+
+<p>See <a
+href="https://github.com/rdoc/rdoc/blob/master/History.rdoc">github.com/rdoc/rdoc/blob/master/History.rdoc</a>
+for a full list of changes in rdoc 4.0.</p>
+</li></ul>
+</li><li>
+<p>resolv</p>
+<ul><li>
+<p>new methods:</p>
+<ul><li>
+<p><a
+href="../../classes/Resolv/DNS.html#method-i-timeouts-3D">Resolv::DNS#timeouts=</a></p>
+</li><li>
+<p>Resolv::DNS::Config#timeouts=</p>
+</li></ul>
+</li></ul>
+</li><li>
+<p>rexml</p>
+<ul><li>
+<p><a
+href="../../classes/REXML/Document.html#method-i-write">REXML::Document#write</a>
+supports <a href="../../classes/Hash.html">Hash</a> arguments.</p>
+</li><li>
+<p><a
+href="../../classes/REXML/Document.html#method-i-write">REXML::Document#write</a>
+supports new :encoding option. It changes <a
+href="../../classes/XML.html">XML</a> document encoding. Without :encoding
+option, encoding in <a href="../../classes/XML.html">XML</a> declaration is
+used for <a href="../../classes/XML.html">XML</a> document encoding.</p>
+</li></ul>
+</li><li>
+<p>RubyGems</p>
+<ul><li>
+<p>Updated to 2.0.0</p>
+
+<p>RubyGems 2.0.0 features the following improvements:</p>
+<ul><li>
+<p>Improved support for default gems shipping with ruby 2.0.0+</p>
+</li><li>
+<p>A gem can have arbitrary metadata through <a
+href="../../classes/Gem/Specification.html#attribute-i-metadata">Gem::Specification#metadata</a></p>
+</li><li>
+<p>`gem search` now defaults to –remote and is anchored like gem list.</p>
+</li><li>
+<p>Added –document to replace –rdoc and –ri.  Use –no-document to disable
+documentation, –document=rdoc to only generate rdoc.</p>
+</li><li>
+<p>Only ri-format documentation is generated by default.</p>
+</li><li>
+<p>`gem server` uses <a
+href="../../classes/RDoc/Servlet.html">RDoc::Servlet</a> from <a
+href="../../classes/RDoc.html">RDoc</a> 4.0 to generate HTML documentation.</p>
+</li></ul>
+
+<p>For an expanded list of updates and bug fixes see: <a
+href="https://github.com/rubygems/rubygems/blob/master/History.txt">github.com/rubygems/rubygems/blob/master/History.txt</a></p>
+</li></ul>
+</li><li>
+<p>shellwords</p>
+<ul><li>
+<p>Shellwords#shellescape now stringifies the given object using to_s.</p>
+</li><li>
+<p>Shellwords#shelljoin accepts non-string objects in the given array, each of
+which is stringified using to_s.</p>
+</li></ul>
+</li><li>
+<p>stringio</p>
+<ul><li>
+<p>deprecated methods:</p>
+<ul><li>
+<p><a href="../../classes/StringIO.html#method-i-lines">StringIO#lines</a>,
+bytes, chars and codepoints are deprecated.</p>
+</li></ul>
+</li></ul>
+</li><li>
+<p>syslog</p>
+<ul><li>
+<p>Added <a href="../../classes/Syslog/Logger.html">Syslog::Logger</a> which
+provides a <a href="../../classes/Logger.html">Logger</a> API atop <a
+href="../../classes/Syslog.html">Syslog</a>.</p>
+</li><li>
+<p>Syslog::Priority, <a
+href="../../classes/Syslog/Level.html">Syslog::Level</a>, <a
+href="../../classes/Syslog/Option.html">Syslog::Option</a> and <a
+href="../../classes/Syslog/Macros.html">Syslog::Macros</a> are introduced
+for easy detection of available constants on a running system.</p>
+</li></ul>
+</li><li>
+<p>tmpdir</p>
+<ul><li>
+<p>incompatible changes:</p>
+<ul><li>
+<p><a href="../../classes/Dir.html#method-c-mktmpdir">Dir.mktmpdir</a> uses <a
+href="../../classes/FileUtils.html#method-c-remove_entry">FileUtils.remove_entry</a>
+instead of <a
+href="../../classes/FileUtils.html#method-c-remove_entry_secure">FileUtils.remove_entry_secure</a>.
+This means that applications should not change the permission of the
+created temporary directory to make accessible from other users.</p>
+</li></ul>
+</li></ul>
+</li><li>
+<p>yaml</p>
+<ul><li>
+<p><a href="../../classes/YAML/Syck.html">Syck</a> has been removed.  YAML now
+completely depends on libyaml being installed.</p>
+</li><li>
+<p>libyaml is now bundled with ruby, for cases where the library is not
+installed locally.</p>
+</li></ul>
+</li><li>
+<p>zlib</p>
+<ul><li>
+<p>Added streaming support for <a
+href="../../classes/Zlib/Inflate.html">Zlib::Inflate</a> and <a
+href="../../classes/Zlib/Deflate.html">Zlib::Deflate</a>.  This allows
+processing of a stream without the use of large amounts of memory.</p>
+</li><li>
+<p>Added support for the new deflate strategies Zlib::RLE and Zlib::FIXED.</p>
+</li><li>
+<p><a href="../../classes/Zlib.html">Zlib</a> streams are now processed
+without the GVL.  This allows gzip, zlib and deflate streams to be
+processed in parallel.</p>
+</li><li>
+<p>deprecated methods:</p>
+<ul><li>
+<p><a
+href="../../classes/Zlib/GzipReader.html#method-i-lines">Zlib::GzipReader#lines</a>
+and bytes are deprecated.</p>
+</li></ul>
+</li></ul>
+</li></ul>
+
+<h3 id="label-Stdlib+compatibility+issues+-28excluding+feature+bug+fixes-29">Stdlib compatibility issues (excluding feature bug fixes)</h3>
+<ul><li>
+<p><a href="../../classes/OpenStruct.html">OpenStruct</a> new methods can
+conflict with custom attributes named “each_pair”, “eql?”, “hash” or
+“to_h”.</p>
+</li><li>
+<p><a href="../../classes/Dir.html#method-c-mktmpdir">Dir.mktmpdir</a> in
+lib/tmpdir.rb</p>
+
+<p>See above.</p>
+</li></ul>
+
+<h3 id="label-C+API+updates">C API updates</h3>
+<ul><li>
+<p>NUM2SHORT() and NUM2USHORT() added. They are similar to NUM2INT, but short.</p>
+</li><li>
+<p>rb_newobj_of() and NEWOBJ_OF() added. They create a new object of a given
+class.</p>
+</li></ul>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+              </div>
+
+    </div>
+  </body>
+</html>

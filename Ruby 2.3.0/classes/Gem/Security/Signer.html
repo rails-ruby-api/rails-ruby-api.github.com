@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Gem::Security::Signer</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/github.css" type="text/css" media="screen" />
+<script src="../../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            Gem::Security::Signer 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../../Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../../files/lib/rubygems/security/signer_rb.html">lib/rubygems/security/signer.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>frozen_string_literal: false</p>
+
+<p>Basic OpenSSL-based package signing class.</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>S</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-sign">sign</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+      <!-- Section attributes -->
+      <div class="sectiontitle">Attributes</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [RW]
+            </td>
+            <td class='attr-name'>cert_chain</td>
+            <td class='attr-desc'><p>The chain of certificates for signing including the signing certificate</p></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [R]
+            </td>
+            <td class='attr-name'>digest_algorithm</td>
+            <td class='attr-desc'><p>The digest algorithm used to create the signature</p></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [RW]
+            </td>
+            <td class='attr-name'>key</td>
+            <td class='attr-desc'><p>The private key for the signing certificate</p></td>
+          </tr>
+        
+      </table>
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <b>new</b>(key, cert_chain, passphrase = nil)
+            
+            <a href="../../../classes/Gem/Security/Signer.html#method-c-new" name="method-c-new" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Creates a new signer with an RSA <code>key</code> or path to a key, and a
+certificate <code>chain</code> containing X509 certificates, encoding
+certificates or paths to certificates.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/security/signer.rb, line 33</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">initialize</span> <span class="ruby-identifier">key</span>, <span class="ruby-identifier">cert_chain</span>, <span class="ruby-identifier">passphrase</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-ivar">@cert_chain</span> = <span class="ruby-identifier">cert_chain</span>
+  <span class="ruby-ivar">@key</span>        = <span class="ruby-identifier">key</span>
+
+  <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@key</span> <span class="ruby-keyword">then</span>
+    <span class="ruby-identifier">default_key</span>  = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span> <span class="ruby-constant">Gem</span>.<span class="ruby-identifier">default_key_path</span>
+    <span class="ruby-ivar">@key</span> = <span class="ruby-identifier">default_key</span> <span class="ruby-keyword">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span> <span class="ruby-identifier">default_key</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@cert_chain</span> <span class="ruby-keyword">then</span>
+    <span class="ruby-identifier">default_cert</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span> <span class="ruby-constant">Gem</span>.<span class="ruby-identifier">default_cert_path</span>
+    <span class="ruby-ivar">@cert_chain</span> = [<span class="ruby-identifier">default_cert</span>] <span class="ruby-keyword">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span> <span class="ruby-identifier">default_cert</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-ivar">@digest_algorithm</span> = <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Security</span><span class="ruby-operator">::</span><span class="ruby-constant">DIGEST_ALGORITHM</span>
+  <span class="ruby-ivar">@digest_name</span>      = <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Security</span><span class="ruby-operator">::</span><span class="ruby-constant">DIGEST_NAME</span>
+
+  <span class="ruby-ivar">@key</span> = <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">PKey</span><span class="ruby-operator">::</span><span class="ruby-constant">RSA</span>.<span class="ruby-identifier">new</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-ivar">@key</span>), <span class="ruby-identifier">passphrase</span> <span class="ruby-keyword">if</span>
+    <span class="ruby-ivar">@key</span> <span class="ruby-keyword">and</span> <span class="ruby-keyword">not</span> <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">PKey</span><span class="ruby-operator">::</span><span class="ruby-constant">RSA</span> <span class="ruby-operator">===</span> <span class="ruby-ivar">@key</span>
+
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@cert_chain</span> <span class="ruby-keyword">then</span>
+    <span class="ruby-ivar">@cert_chain</span> = <span class="ruby-ivar">@cert_chain</span>.<span class="ruby-identifier">compact</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">cert</span><span class="ruby-operator">|</span>
+      <span class="ruby-keyword">next</span> <span class="ruby-identifier">cert</span> <span class="ruby-keyword">if</span> <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">X509</span><span class="ruby-operator">::</span><span class="ruby-constant">Certificate</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">cert</span>
+
+      <span class="ruby-identifier">cert</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span> <span class="ruby-identifier">cert</span> <span class="ruby-keyword">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span> <span class="ruby-identifier">cert</span>
+
+      <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">X509</span><span class="ruby-operator">::</span><span class="ruby-constant">Certificate</span>.<span class="ruby-identifier">new</span> <span class="ruby-identifier">cert</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-identifier">load_cert_chain</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-sign">
+            
+              <b>sign</b>(data)
+            
+            <a href="../../../classes/Gem/Security/Signer.html#method-i-sign" name="method-i-sign" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Sign data with given digest algorithm</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-sign_source')" id="l_method-i-sign_source">show</a>
+                
+              </p>
+              <div id="method-i-sign_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/security/signer.rb, line 102</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">sign</span> <span class="ruby-identifier">data</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@key</span>
+
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@cert_chain</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-number">1</span> <span class="ruby-keyword">and</span> <span class="ruby-ivar">@cert_chain</span>.<span class="ruby-identifier">last</span>.<span class="ruby-identifier">not_after</span> <span class="ruby-operator">&lt;</span> <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span> <span class="ruby-keyword">then</span>
+    <span class="ruby-identifier">re_sign_key</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">full_name</span> = <span class="ruby-identifier">extract_name</span> <span class="ruby-ivar">@cert_chain</span>.<span class="ruby-identifier">last</span>
+
+  <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Security</span><span class="ruby-operator">::</span><span class="ruby-constant">SigningPolicy</span>.<span class="ruby-identifier">verify</span> <span class="ruby-ivar">@cert_chain</span>, <span class="ruby-ivar">@key</span>, {}, {}, <span class="ruby-identifier">full_name</span>
+
+  <span class="ruby-ivar">@key</span>.<span class="ruby-identifier">sign</span> <span class="ruby-ivar">@digest_algorithm</span>.<span class="ruby-identifier">new</span>, <span class="ruby-identifier">data</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+
+    </div>
+  </body>
+</html>    

@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>OpenURI::OpenRead</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Module</span> 
+            OpenURI::OpenRead 
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/lib/open-uri_rb.html">lib/open-uri.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>Mixin for HTTP and FTP URIs.</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>O</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-open">open</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>R</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-read">read</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+        
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-open">
+            
+              <b>open</b>(*rest, &amp;block)
+            
+            <a href="../../classes/OpenURI/OpenRead.html#method-i-open" name="method-i-open" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p><a href="OpenRead.html#method-i-open">#open</a> provides `open&#39; for <a
+href="../URI/HTTP.html">URI::HTTP</a> and <a
+href="../URI/FTP.html">URI::FTP</a>.</p>
+
+<p><a href="OpenRead.html#method-i-open">#open</a> takes optional 3 arguments
+as:</p>
+
+<pre><code>OpenURI::OpenRead#open([mode [, perm]] [, options]) [{|io| ... }]
+</code></pre>
+
+<p><a href="OpenRead.html#method-i-open">#open</a> returns an IO-like object
+if block is not given. Otherwise it yields the <a href="../IO.html">IO</a>
+object and return the value of the block. The <a href="../IO.html">IO</a>
+object is extended with <a href="Meta.html">OpenURI::Meta</a>.</p>
+
+<p><code>mode</code> and <code>perm</code> are the same as Kernel#open.</p>
+
+<p>However, <code>mode</code> must be read mode because <a
+href="OpenRead.html#method-i-open">#open</a> doesn&#39;t support write mode
+(yet). Also <code>perm</code> is ignored because it is meaningful only for
+file creation.</p>
+
+<p><code>options</code> must be a hash.</p>
+
+<p>Each option with a string key specifies an extra header field for HTTP.
+I.e., it is ignored for FTP without HTTP proxy.</p>
+
+<p>The hash may include other options, where keys are symbols:</p>
+<dl class="rdoc-list label-list"><dt>:proxy
+<dd>
+<p>Synopsis:</p>
+
+<pre><code>:proxy =&gt; &quot;http://proxy.foo.com:8000/&quot;
+:proxy =&gt; URI.parse(&quot;http://proxy.foo.com:8000/&quot;)
+:proxy =&gt; true
+:proxy =&gt; false
+:proxy =&gt; nil</code></pre>
+
+<p>If :proxy option is specified, the value should be String, <a
+href="../URI.html">URI</a>, boolean or nil.</p>
+
+<p>When String or <a href="../URI.html">URI</a> is given, it is treated as
+proxy <a href="../URI.html">URI</a>.</p>
+
+<p>When true is given or the option itself is not specified, environment
+variable `scheme_proxy&#39; is examined. `scheme&#39; is replaced by
+`http&#39;, `https&#39; or `ftp&#39;.</p>
+
+<p>When false or nil is given, the environment variables are ignored and
+connection will be made to a server directly.</p>
+</dd><dt>:proxy_http_basic_authentication
+<dd>
+<p>Synopsis:</p>
+
+<pre><code>:proxy_http_basic_authentication =&gt;
+  [&quot;http://proxy.foo.com:8000/&quot;, &quot;proxy-user&quot;, &quot;proxy-password&quot;]
+:proxy_http_basic_authentication =&gt;
+  [URI.parse(&quot;http://proxy.foo.com:8000/&quot;),
+   &quot;proxy-user&quot;, &quot;proxy-password&quot;]</code></pre>
+
+<p>If :proxy option is specified, the value should be an Array with 3
+elements.  It should contain a proxy <a href="../URI.html">URI</a>, a proxy
+user name and a proxy password.  The proxy <a href="../URI.html">URI</a>
+should be a String, an <a href="../URI.html">URI</a> or nil.  The proxy
+user name and password should be a String.</p>
+
+<p>If nil is given for the proxy <a href="../URI.html">URI</a>, this option is
+just ignored.</p>
+
+<p>If :proxy and :proxy_http_basic_authentication is specified, <a
+href="../ArgumentError.html">ArgumentError</a> is raised.</p>
+</dd><dt>:http_basic_authentication
+<dd>
+<p>Synopsis:</p>
+
+<pre><code>:http_basic_authentication=&gt;[user, password]</code></pre>
+
+<p>If :http_basic_authentication is specified, the value should be an array
+which contains 2 strings: username and password. It is used for HTTP Basic
+authentication defined by RFC 2617.</p>
+</dd><dt>:content_length_proc
+<dd>
+<p>Synopsis:</p>
+
+<pre><code>:content_length_proc =&gt; lambda {|content_length| ... }</code></pre>
+
+<p>If :content_length_proc option is specified, the option value procedure is
+called before actual transfer is started. It takes one argument, which is
+expected content length in bytes.</p>
+
+<p>If two or more transfer is done by HTTP redirection, the procedure is
+called only one for a last transfer.</p>
+
+<p>When expected content length is unknown, the procedure is called with nil. 
+This happens when the HTTP response has no Content-Length header.</p>
+</dd><dt>:progress_proc
+<dd>
+<p>Synopsis:</p>
+
+<pre><code>:progress_proc =&gt; lambda {|size| ...}</code></pre>
+
+<p>If :progress_proc option is specified, the proc is called with one argument
+each time when `open&#39; gets content fragment from network. The argument
+<code>size</code> is the accumulated transferred size in bytes.</p>
+
+<p>If two or more transfer is done by HTTP redirection, the procedure is
+called only one for a last transfer.</p>
+
+<p>:progress_proc and :content_length_proc are intended to be used for
+progress bar. For example, it can be implemented as follows using
+Ruby/ProgressBar.</p>
+
+<pre><code>pbar = nil
+open(&quot;http://...&quot;,
+  :content_length_proc =&gt; lambda {|t|
+    if t &amp;&amp; 0 &lt; t
+      pbar = ProgressBar.new(&quot;...&quot;, t)
+      pbar.file_transfer_mode
+    end
+  },
+  :progress_proc =&gt; lambda {|s|
+    pbar.set s if pbar
+  }) {|f| ... }</code></pre>
+</dd><dt>:read_timeout
+<dd>
+<p>Synopsis:</p>
+
+<pre><code>:read_timeout=&gt;nil     (no timeout)
+:read_timeout=&gt;10      (10 second)</code></pre>
+
+<p>:read_timeout option specifies a timeout of read for http connections.</p>
+</dd><dt>:open_timeout
+<dd>
+<p>Synopsis:</p>
+
+<pre><code>:open_timeout=&gt;nil     (no timeout)
+:open_timeout=&gt;10      (10 second)</code></pre>
+
+<p>:open_timeout option specifies a timeout of open for http connections.</p>
+</dd><dt>:ssl_ca_cert
+<dd>
+<p>Synopsis:</p>
+
+<pre><code>:ssl_ca_cert=&gt;filename or an Array of filenames</code></pre>
+
+<p>:ssl_ca_cert is used to specify CA certificate for SSL. If it is given,
+default certificates are not used.</p>
+</dd><dt>:ssl_verify_mode
+<dd>
+<p>Synopsis:</p>
+
+<pre><code>:ssl_verify_mode=&gt;mode</code></pre>
+
+<p>:ssl_verify_mode is used to specify openssl verify mode.</p>
+</dd><dt>:ftp_active_mode
+<dd>
+<p>Synopsis:</p>
+
+<pre><code>:ftp_active_mode=&gt;bool</code></pre>
+
+<p><code>:ftp_active_mode =&gt; true</code> is used to make ftp active mode.
+Ruby 1.9 uses passive mode by default. Note that the active mode is default
+in Ruby 1.8 or prior.</p>
+</dd><dt>:redirect
+<dd>
+<p>Synopsis:</p>
+
+<pre><code>:redirect=&gt;bool</code></pre>
+
+<p><code>:redirect</code> is true by default.  <code>:redirect =&gt;
+false</code> is used to disable all HTTP redirects.</p>
+
+<p><a href="HTTPRedirect.html">OpenURI::HTTPRedirect</a> exception raised on
+redirection. Using <code>true</code> also means that redirections between
+http and ftp are permitted.</p>
+</dd></dl>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-open_source')" id="l_method-i-open_source">show</a>
+                
+              </p>
+              <div id="method-i-open_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/open-uri.rb, line 716</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">open</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">rest</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+  <span class="ruby-constant">OpenURI</span>.<span class="ruby-identifier">open_uri</span>(<span class="ruby-keyword">self</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">rest</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-read">
+            
+              <b>read</b>(options={})
+            
+            <a href="../../classes/OpenURI/OpenRead.html#method-i-read" name="method-i-read" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p><a href="OpenRead.html#method-i-read">#read</a>) reads a content referenced
+by self and returns the content as string. The string is extended with <a
+href="Meta.html">OpenURI::Meta</a>. The argument <code>options</code> is
+same as <a href="OpenRead.html#method-i-open">#open</a>.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-read_source')" id="l_method-i-read_source">show</a>
+                
+              </p>
+              <div id="method-i-read_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/open-uri.rb, line 724</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">read</span>(<span class="ruby-identifier">options</span>={})
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">options</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">str</span> = <span class="ruby-identifier">f</span>.<span class="ruby-identifier">read</span>
+    <span class="ruby-constant">Meta</span>.<span class="ruby-identifier">init</span> <span class="ruby-identifier">str</span>, <span class="ruby-identifier">f</span>
+    <span class="ruby-identifier">str</span>
+  }
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+
+    </div>
+  </body>
+</html>    

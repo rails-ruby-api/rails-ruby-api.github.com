@@ -1,0 +1,680 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>FragmentCachingTest</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/github.css" type="text/css" media="screen" />
+<script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            FragmentCachingTest 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="ActionController/TestCase.html">ActionController::TestCase</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../files/actionpack/test/controller/caching_test_rb.html">actionpack/test/controller/caching_test.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>S</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-setup">setup</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-test_expire_fragment_with_regexp">test_expire_fragment_with_regexp</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_expire_fragment_with_simple_key">test_expire_fragment_with_simple_key</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_fragment_cache_key">test_fragment_cache_key</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_fragment_exist_with_caching_disabled">test_fragment_exist_with_caching_disabled</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_fragment_exist_with_caching_enabled">test_fragment_exist_with_caching_enabled</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_fragment_for">test_fragment_for</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_html_safety">test_html_safety</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_read_fragment_with_caching_disabled">test_read_fragment_with_caching_disabled</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_read_fragment_with_caching_enabled">test_read_fragment_with_caching_enabled</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_write_fragment_with_caching_disabled">test_write_fragment_with_caching_disabled</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_write_fragment_with_caching_enabled">test_write_fragment_with_caching_enabled</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+        
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-setup">
+            
+              <b>setup</b>()
+            
+            <a href="../classes/FragmentCachingTest.html#method-i-setup" name="method-i-setup" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-setup_source')" id="l_method-i-setup_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/92fbbf67e339f24f9203d9927c028ee052685377/actionpack/test/controller/caching_test.rb#L47" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-setup_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionpack/test/controller/caching_test.rb, line 47</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">setup</span>
+  <span class="ruby-keyword">super</span>
+  <span class="ruby-ivar">@store</span> = <span class="ruby-constant">ActiveSupport</span><span class="ruby-operator">::</span><span class="ruby-constant">Cache</span><span class="ruby-operator">::</span><span class="ruby-constant">MemoryStore</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-ivar">@controller</span> = <span class="ruby-constant">FragmentCachingTestController</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-ivar">@controller</span>.<span class="ruby-identifier">perform_caching</span> = <span class="ruby-keyword">true</span>
+  <span class="ruby-ivar">@controller</span>.<span class="ruby-identifier">cache_store</span> = <span class="ruby-ivar">@store</span>
+  <span class="ruby-ivar">@params</span> = {<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;posts&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;index&#39;</span>}
+  <span class="ruby-ivar">@request</span> = <span class="ruby-constant">ActionController</span><span class="ruby-operator">::</span><span class="ruby-constant">TestRequest</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-ivar">@response</span> = <span class="ruby-constant">ActionController</span><span class="ruby-operator">::</span><span class="ruby-constant">TestResponse</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-ivar">@controller</span>.<span class="ruby-identifier">params</span> = <span class="ruby-ivar">@params</span>
+  <span class="ruby-ivar">@controller</span>.<span class="ruby-identifier">request</span> = <span class="ruby-ivar">@request</span>
+  <span class="ruby-ivar">@controller</span>.<span class="ruby-identifier">response</span> = <span class="ruby-ivar">@response</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_expire_fragment_with_regexp">
+            
+              <b>test_expire_fragment_with_regexp</b>()
+            
+            <a href="../classes/FragmentCachingTest.html#method-i-test_expire_fragment_with_regexp" name="method-i-test_expire_fragment_with_regexp" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_expire_fragment_with_regexp_source')" id="l_method-i-test_expire_fragment_with_regexp_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/92fbbf67e339f24f9203d9927c028ee052685377/actionpack/test/controller/caching_test.rb#L110" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_expire_fragment_with_regexp_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionpack/test/controller/caching_test.rb, line 110</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_expire_fragment_with_regexp</span>
+  <span class="ruby-ivar">@store</span>.<span class="ruby-identifier">write</span>(<span class="ruby-string">&#39;views/name&#39;</span>, <span class="ruby-string">&#39;value&#39;</span>)
+  <span class="ruby-ivar">@store</span>.<span class="ruby-identifier">write</span>(<span class="ruby-string">&#39;views/another_name&#39;</span>, <span class="ruby-string">&#39;another_value&#39;</span>)
+  <span class="ruby-ivar">@store</span>.<span class="ruby-identifier">write</span>(<span class="ruby-string">&#39;views/primalgrasp&#39;</span>, <span class="ruby-string">&#39;will not expire ;-)&#39;</span>)
+
+  <span class="ruby-ivar">@controller</span>.<span class="ruby-identifier">expire_fragment</span>(<span class="ruby-regexp">/name/</span>)
+
+  <span class="ruby-identifier">assert_nil</span> <span class="ruby-ivar">@store</span>.<span class="ruby-identifier">read</span>(<span class="ruby-string">&#39;views/name&#39;</span>)
+  <span class="ruby-identifier">assert_nil</span> <span class="ruby-ivar">@store</span>.<span class="ruby-identifier">read</span>(<span class="ruby-string">&#39;views/another_name&#39;</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&#39;will not expire ;-)&#39;</span>, <span class="ruby-ivar">@store</span>.<span class="ruby-identifier">read</span>(<span class="ruby-string">&#39;views/primalgrasp&#39;</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_expire_fragment_with_simple_key">
+            
+              <b>test_expire_fragment_with_simple_key</b>()
+            
+            <a href="../classes/FragmentCachingTest.html#method-i-test_expire_fragment_with_simple_key" name="method-i-test_expire_fragment_with_simple_key" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_expire_fragment_with_simple_key_source')" id="l_method-i-test_expire_fragment_with_simple_key_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/92fbbf67e339f24f9203d9927c028ee052685377/actionpack/test/controller/caching_test.rb#L104" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_expire_fragment_with_simple_key_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionpack/test/controller/caching_test.rb, line 104</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_expire_fragment_with_simple_key</span>
+  <span class="ruby-ivar">@store</span>.<span class="ruby-identifier">write</span>(<span class="ruby-string">&#39;views/name&#39;</span>, <span class="ruby-string">&#39;value&#39;</span>)
+  <span class="ruby-ivar">@controller</span>.<span class="ruby-identifier">expire_fragment</span> <span class="ruby-string">&#39;name&#39;</span>
+  <span class="ruby-identifier">assert_nil</span> <span class="ruby-ivar">@store</span>.<span class="ruby-identifier">read</span>(<span class="ruby-string">&#39;views/name&#39;</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_fragment_cache_key">
+            
+              <b>test_fragment_cache_key</b>()
+            
+            <a href="../classes/FragmentCachingTest.html#method-i-test_fragment_cache_key" name="method-i-test_fragment_cache_key" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_fragment_cache_key_source')" id="l_method-i-test_fragment_cache_key_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/92fbbf67e339f24f9203d9927c028ee052685377/actionpack/test/controller/caching_test.rb#L61" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_fragment_cache_key_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionpack/test/controller/caching_test.rb, line 61</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_fragment_cache_key</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&#39;views/what a key&#39;</span>, <span class="ruby-ivar">@controller</span>.<span class="ruby-identifier">fragment_cache_key</span>(<span class="ruby-string">&#39;what a key&#39;</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&quot;views/test.host/fragment_caching_test/some_action&quot;</span>,
+                <span class="ruby-ivar">@controller</span>.<span class="ruby-identifier">fragment_cache_key</span>(<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;fragment_caching_test&#39;</span>,<span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;some_action&#39;</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_fragment_exist_with_caching_disabled">
+            
+              <b>test_fragment_exist_with_caching_disabled</b>()
+            
+            <a href="../classes/FragmentCachingTest.html#method-i-test_fragment_exist_with_caching_disabled" name="method-i-test_fragment_exist_with_caching_disabled" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_fragment_exist_with_caching_disabled_source')" id="l_method-i-test_fragment_exist_with_caching_disabled_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/92fbbf67e339f24f9203d9927c028ee052685377/actionpack/test/controller/caching_test.rb#L84" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_fragment_exist_with_caching_disabled_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionpack/test/controller/caching_test.rb, line 84</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_fragment_exist_with_caching_disabled</span>
+  <span class="ruby-ivar">@controller</span>.<span class="ruby-identifier">perform_caching</span> = <span class="ruby-keyword">false</span>
+  <span class="ruby-ivar">@store</span>.<span class="ruby-identifier">write</span>(<span class="ruby-string">&#39;views/name&#39;</span>, <span class="ruby-string">&#39;value&#39;</span>)
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@controller</span>.<span class="ruby-identifier">fragment_exist?</span>(<span class="ruby-string">&#39;name&#39;</span>)
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@controller</span>.<span class="ruby-identifier">fragment_exist?</span>(<span class="ruby-string">&#39;other_name&#39;</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_fragment_exist_with_caching_enabled">
+            
+              <b>test_fragment_exist_with_caching_enabled</b>()
+            
+            <a href="../classes/FragmentCachingTest.html#method-i-test_fragment_exist_with_caching_enabled" name="method-i-test_fragment_exist_with_caching_enabled" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_fragment_exist_with_caching_enabled_source')" id="l_method-i-test_fragment_exist_with_caching_enabled_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/92fbbf67e339f24f9203d9927c028ee052685377/actionpack/test/controller/caching_test.rb#L78" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_fragment_exist_with_caching_enabled_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionpack/test/controller/caching_test.rb, line 78</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_fragment_exist_with_caching_enabled</span>
+  <span class="ruby-ivar">@store</span>.<span class="ruby-identifier">write</span>(<span class="ruby-string">&#39;views/name&#39;</span>, <span class="ruby-string">&#39;value&#39;</span>)
+  <span class="ruby-identifier">assert</span> <span class="ruby-ivar">@controller</span>.<span class="ruby-identifier">fragment_exist?</span>(<span class="ruby-string">&#39;name&#39;</span>)
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@controller</span>.<span class="ruby-identifier">fragment_exist?</span>(<span class="ruby-string">&#39;other_name&#39;</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_fragment_for">
+            
+              <b>test_fragment_for</b>()
+            
+            <a href="../classes/FragmentCachingTest.html#method-i-test_fragment_for" name="method-i-test_fragment_for" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_fragment_for_source')" id="l_method-i-test_fragment_for_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/92fbbf67e339f24f9203d9927c028ee052685377/actionpack/test/controller/caching_test.rb#L122" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_fragment_for_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionpack/test/controller/caching_test.rb, line 122</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_fragment_for</span>
+  <span class="ruby-ivar">@store</span>.<span class="ruby-identifier">write</span>(<span class="ruby-string">&#39;views/expensive&#39;</span>, <span class="ruby-string">&#39;fragment content&#39;</span>)
+  <span class="ruby-identifier">fragment_computed</span> = <span class="ruby-keyword">false</span>
+
+  <span class="ruby-identifier">view_context</span> = <span class="ruby-ivar">@controller</span>.<span class="ruby-identifier">view_context</span>
+
+  <span class="ruby-identifier">buffer</span> = <span class="ruby-string">&#39;generated till now -&gt; &#39;</span>.<span class="ruby-identifier">html_safe</span>
+  <span class="ruby-identifier">buffer</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">view_context</span>.<span class="ruby-identifier">send</span>(<span class="ruby-value">:fragment_for</span>, <span class="ruby-string">&#39;expensive&#39;</span>) { <span class="ruby-identifier">fragment_computed</span> = <span class="ruby-keyword">true</span> }
+
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-identifier">fragment_computed</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&#39;generated till now -&gt; fragment content&#39;</span>, <span class="ruby-identifier">buffer</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_html_safety">
+            
+              <b>test_html_safety</b>()
+            
+            <a href="../classes/FragmentCachingTest.html#method-i-test_html_safety" name="method-i-test_html_safety" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_html_safety_source')" id="l_method-i-test_html_safety_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/92fbbf67e339f24f9203d9927c028ee052685377/actionpack/test/controller/caching_test.rb#L135" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_html_safety_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionpack/test/controller/caching_test.rb, line 135</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_html_safety</span>
+  <span class="ruby-identifier">assert_nil</span> <span class="ruby-ivar">@store</span>.<span class="ruby-identifier">read</span>(<span class="ruby-string">&#39;views/name&#39;</span>)
+  <span class="ruby-identifier">content</span> = <span class="ruby-string">&#39;value&#39;</span>.<span class="ruby-identifier">html_safe</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">content</span>, <span class="ruby-ivar">@controller</span>.<span class="ruby-identifier">write_fragment</span>(<span class="ruby-string">&#39;name&#39;</span>, <span class="ruby-identifier">content</span>)
+
+  <span class="ruby-identifier">cached</span> = <span class="ruby-ivar">@store</span>.<span class="ruby-identifier">read</span>(<span class="ruby-string">&#39;views/name&#39;</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">content</span>, <span class="ruby-identifier">cached</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-constant">String</span>, <span class="ruby-identifier">cached</span>.<span class="ruby-identifier">class</span>
+
+  <span class="ruby-identifier">html_safe</span> = <span class="ruby-ivar">@controller</span>.<span class="ruby-identifier">read_fragment</span>(<span class="ruby-string">&#39;name&#39;</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">content</span>, <span class="ruby-identifier">html_safe</span>
+  <span class="ruby-identifier">assert</span> <span class="ruby-identifier">html_safe</span>.<span class="ruby-identifier">html_safe?</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_read_fragment_with_caching_disabled">
+            
+              <b>test_read_fragment_with_caching_disabled</b>()
+            
+            <a href="../classes/FragmentCachingTest.html#method-i-test_read_fragment_with_caching_disabled" name="method-i-test_read_fragment_with_caching_disabled" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_read_fragment_with_caching_disabled_source')" id="l_method-i-test_read_fragment_with_caching_disabled_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/92fbbf67e339f24f9203d9927c028ee052685377/actionpack/test/controller/caching_test.rb#L72" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_read_fragment_with_caching_disabled_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionpack/test/controller/caching_test.rb, line 72</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_read_fragment_with_caching_disabled</span>
+  <span class="ruby-ivar">@controller</span>.<span class="ruby-identifier">perform_caching</span> = <span class="ruby-keyword">false</span>
+  <span class="ruby-ivar">@store</span>.<span class="ruby-identifier">write</span>(<span class="ruby-string">&#39;views/name&#39;</span>, <span class="ruby-string">&#39;value&#39;</span>)
+  <span class="ruby-identifier">assert_nil</span> <span class="ruby-ivar">@controller</span>.<span class="ruby-identifier">read_fragment</span>(<span class="ruby-string">&#39;name&#39;</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_read_fragment_with_caching_enabled">
+            
+              <b>test_read_fragment_with_caching_enabled</b>()
+            
+            <a href="../classes/FragmentCachingTest.html#method-i-test_read_fragment_with_caching_enabled" name="method-i-test_read_fragment_with_caching_enabled" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_read_fragment_with_caching_enabled_source')" id="l_method-i-test_read_fragment_with_caching_enabled_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/92fbbf67e339f24f9203d9927c028ee052685377/actionpack/test/controller/caching_test.rb#L67" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_read_fragment_with_caching_enabled_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionpack/test/controller/caching_test.rb, line 67</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_read_fragment_with_caching_enabled</span>
+  <span class="ruby-ivar">@store</span>.<span class="ruby-identifier">write</span>(<span class="ruby-string">&#39;views/name&#39;</span>, <span class="ruby-string">&#39;value&#39;</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&#39;value&#39;</span>, <span class="ruby-ivar">@controller</span>.<span class="ruby-identifier">read_fragment</span>(<span class="ruby-string">&#39;name&#39;</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_write_fragment_with_caching_disabled">
+            
+              <b>test_write_fragment_with_caching_disabled</b>()
+            
+            <a href="../classes/FragmentCachingTest.html#method-i-test_write_fragment_with_caching_disabled" name="method-i-test_write_fragment_with_caching_disabled" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_write_fragment_with_caching_disabled_source')" id="l_method-i-test_write_fragment_with_caching_disabled_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/92fbbf67e339f24f9203d9927c028ee052685377/actionpack/test/controller/caching_test.rb#L97" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_write_fragment_with_caching_disabled_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionpack/test/controller/caching_test.rb, line 97</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_write_fragment_with_caching_disabled</span>
+  <span class="ruby-identifier">assert_nil</span> <span class="ruby-ivar">@store</span>.<span class="ruby-identifier">read</span>(<span class="ruby-string">&#39;views/name&#39;</span>)
+  <span class="ruby-ivar">@controller</span>.<span class="ruby-identifier">perform_caching</span> = <span class="ruby-keyword">false</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&#39;value&#39;</span>, <span class="ruby-ivar">@controller</span>.<span class="ruby-identifier">write_fragment</span>(<span class="ruby-string">&#39;name&#39;</span>, <span class="ruby-string">&#39;value&#39;</span>)
+  <span class="ruby-identifier">assert_nil</span> <span class="ruby-ivar">@store</span>.<span class="ruby-identifier">read</span>(<span class="ruby-string">&#39;views/name&#39;</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_write_fragment_with_caching_enabled">
+            
+              <b>test_write_fragment_with_caching_enabled</b>()
+            
+            <a href="../classes/FragmentCachingTest.html#method-i-test_write_fragment_with_caching_enabled" name="method-i-test_write_fragment_with_caching_enabled" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_write_fragment_with_caching_enabled_source')" id="l_method-i-test_write_fragment_with_caching_enabled_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/92fbbf67e339f24f9203d9927c028ee052685377/actionpack/test/controller/caching_test.rb#L91" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_write_fragment_with_caching_enabled_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionpack/test/controller/caching_test.rb, line 91</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_write_fragment_with_caching_enabled</span>
+  <span class="ruby-identifier">assert_nil</span> <span class="ruby-ivar">@store</span>.<span class="ruby-identifier">read</span>(<span class="ruby-string">&#39;views/name&#39;</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&#39;value&#39;</span>, <span class="ruby-ivar">@controller</span>.<span class="ruby-identifier">write_fragment</span>(<span class="ruby-string">&#39;name&#39;</span>, <span class="ruby-string">&#39;value&#39;</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&#39;value&#39;</span>, <span class="ruby-ivar">@store</span>.<span class="ruby-identifier">read</span>(<span class="ruby-string">&#39;views/name&#39;</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+
+    </div>
+  </body>
+</html>    

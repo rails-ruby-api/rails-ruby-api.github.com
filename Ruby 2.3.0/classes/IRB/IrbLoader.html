@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>IRB::IrbLoader</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Module</span> 
+            IRB::IrbLoader 
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/lib/irb/ext/loader_rb.html">lib/irb/ext/loader.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>Provides a few commands for loading files within an irb session.</p>
+
+<p>See <a href="ExtendCommandBundle.html">ExtendCommandBundle</a> for more
+information.</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>I</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-irb_load">irb_load</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>L</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-load_file">load_file</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>S</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-source_file">source_file</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+        
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-irb_load">
+            
+              <b>irb_load</b>(fn, priv = nil)
+            
+            <a href="../../classes/IRB/IrbLoader.html#method-i-irb_load" name="method-i-irb_load" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Loads the given file similarly to <a
+href="../Kernel.html#method-i-load">Kernel#load</a></p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-irb_load_source')" id="l_method-i-irb_load_source">show</a>
+                
+              </p>
+              <div id="method-i-irb_load_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/irb/ext/loader.rb, line 27</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">irb_load</span>(<span class="ruby-identifier">fn</span>, <span class="ruby-identifier">priv</span> = <span class="ruby-keyword">nil</span>)
+  <span class="ruby-identifier">path</span> = <span class="ruby-identifier">search_file_from_ruby_path</span>(<span class="ruby-identifier">fn</span>)
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">LoadError</span>, <span class="ruby-node">&quot;No such file to load -- #{fn}&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">path</span>
+
+  <span class="ruby-identifier">load_file</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">priv</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-load_file">
+            
+              <b>load_file</b>(path, priv = nil)
+            
+            <a href="../../classes/IRB/IrbLoader.html#method-i-load_file" name="method-i-load_file" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Loads the given file in the current session&#39;s context and evaluates it.</p>
+
+<p>See <a
+href="Irb.html#method-i-suspend_input_method">IRB::Irb#suspend_input_method</a>
+for more information.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-load_file_source')" id="l_method-i-load_file_source">show</a>
+                
+              </p>
+              <div id="method-i-load_file_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/irb/ext/loader.rb, line 73</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">load_file</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">priv</span> = <span class="ruby-keyword">nil</span>)
+  <span class="ruby-identifier">irb</span>.<span class="ruby-identifier">suspend_name</span>(<span class="ruby-identifier">path</span>, <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">path</span>)) <span class="ruby-keyword">do</span>
+
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">priv</span>
+      <span class="ruby-identifier">ws</span> = <span class="ruby-constant">WorkSpace</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">Module</span>.<span class="ruby-identifier">new</span>)
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">ws</span> = <span class="ruby-constant">WorkSpace</span>.<span class="ruby-identifier">new</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">irb</span>.<span class="ruby-identifier">suspend_workspace</span>(<span class="ruby-identifier">ws</span>) <span class="ruby-keyword">do</span>
+      <span class="ruby-identifier">irb</span>.<span class="ruby-identifier">suspend_input_method</span>(<span class="ruby-constant">FileInputMethod</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">path</span>)) <span class="ruby-keyword">do</span>
+        <span class="ruby-operator">|</span><span class="ruby-identifier">back_io</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">irb</span>.<span class="ruby-identifier">signal_status</span>(<span class="ruby-value">:IN_LOAD</span>) <span class="ruby-keyword">do</span>
+          <span class="ruby-keyword">if</span> <span class="ruby-identifier">back_io</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">FileInputMethod</span>)
+            <span class="ruby-identifier">irb</span>.<span class="ruby-identifier">eval_input</span>
+          <span class="ruby-keyword">else</span>
+            <span class="ruby-keyword">begin</span>
+              <span class="ruby-identifier">irb</span>.<span class="ruby-identifier">eval_input</span>
+            <span class="ruby-keyword">rescue</span> <span class="ruby-constant">LoadAbort</span>
+              <span class="ruby-identifier">print</span> <span class="ruby-string">&quot;load abort!!\n&quot;</span>
+            <span class="ruby-keyword">end</span>
+          <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-source_file">
+            
+              <b>source_file</b>(path)
+            
+            <a href="../../classes/IRB/IrbLoader.html#method-i-source_file" name="method-i-source_file" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Loads a given file in the current session and displays the source lines</p>
+
+<p>See <a
+href="Irb.html#method-i-suspend_input_method">IRB::Irb#suspend_input_method</a>
+for more information.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-source_file_source')" id="l_method-i-source_file_source">show</a>
+                
+              </p>
+              <div id="method-i-source_file_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/irb/ext/loader.rb, line 51</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">source_file</span>(<span class="ruby-identifier">path</span>)
+  <span class="ruby-identifier">irb</span>.<span class="ruby-identifier">suspend_name</span>(<span class="ruby-identifier">path</span>, <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">path</span>)) <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">irb</span>.<span class="ruby-identifier">suspend_input_method</span>(<span class="ruby-constant">FileInputMethod</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">path</span>)) <span class="ruby-keyword">do</span>
+      <span class="ruby-operator">|</span><span class="ruby-identifier">back_io</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">irb</span>.<span class="ruby-identifier">signal_status</span>(<span class="ruby-value">:IN_LOAD</span>) <span class="ruby-keyword">do</span>
+        <span class="ruby-keyword">if</span> <span class="ruby-identifier">back_io</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">FileInputMethod</span>)
+          <span class="ruby-identifier">irb</span>.<span class="ruby-identifier">eval_input</span>
+        <span class="ruby-keyword">else</span>
+          <span class="ruby-keyword">begin</span>
+            <span class="ruby-identifier">irb</span>.<span class="ruby-identifier">eval_input</span>
+          <span class="ruby-keyword">rescue</span> <span class="ruby-constant">LoadAbort</span>
+            <span class="ruby-identifier">print</span> <span class="ruby-string">&quot;load abort!!\n&quot;</span>
+          <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+
+    </div>
+  </body>
+</html>    

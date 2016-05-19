@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>fsm.js</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../../../../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../../../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../../../../css/github.css" type="text/css" media="screen" />
+<script src="../../../../../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../../../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../../../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../../../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            fsm.js
+        </h1>
+        <ul class="files">
+            
+            <li>
+                actionpack/lib/action_dispatch/journey/visualizer/fsm.js
+                
+                    <a href="https://github.com/rails/rails/blob/56fee39c392788314c44a575b3fd66e16a50c8b5/actionpack/lib/action_dispatch/journey/visualizer/fsm.js" target="_blank" class="github_url">on GitHub</a>
+                
+            </li>
+            <li>Last modified: 2016-05-19 14:28:32 +0200</li>
+        </ul>
+    </div>
+
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>function tokenize(input, callback) {</p>
+
+<pre><code>while(input.length &gt; 0) {
+  callback(input.match(/^[\/\.\?]|[^\/\.\?]+/)[0]);
+  input = input.replace(/^[\/\.\?]|[^\/\.\?]+/, &#39;&#39;);
+}</code></pre>
+
+<p>}</p>
+
+<p>var graph = d3.select(“#chart-2 svg”); var svg_edges = {}; var svg_nodes =
+{};</p>
+
+<p>graph.selectAll(“g.edge”).each(function() {</p>
+
+<pre><code>var node  = d3.select(this);
+var index = node.select(&quot;title&quot;).text().split(&quot;-&gt;&quot;);
+var left  = parseInt(index[0]);
+var right = parseInt(index[1]);
+
+if(!svg_edges[left]) { svg_edges[left] = {} }
+svg_edges[left][right] = node;</code></pre>
+
+<p>});</p>
+
+<p>graph.selectAll(“g.node”).each(function() {</p>
+
+<pre><code>var node  = d3.select(this);
+var index = parseInt(node.select(&quot;title&quot;).text());
+svg_nodes[index] = node;
+</code></pre>
+
+<p>});</p>
+
+<p>function reset_graph() {</p>
+
+<pre><code>for(var key in svg_edges) {
+  for(var mkey in svg_edges[key]) {
+    var node = svg_edges[key][mkey];
+    var path = node.select(&quot;path&quot;);
+    var arrow = node.select(&quot;polygon&quot;);
+    path.style(&quot;stroke&quot;, &quot;black&quot;);
+    arrow.style(&quot;stroke&quot;, &quot;black&quot;).style(&quot;fill&quot;, &quot;black&quot;);
+  }
+}
+
+for(var key in svg_nodes) {
+  var node = svg_nodes[key];
+  node.select(&#39;ellipse&#39;).style(&quot;fill&quot;, &quot;white&quot;);
+  node.select(&#39;polygon&#39;).style(&quot;fill&quot;, &quot;white&quot;);
+}
+return false;</code></pre>
+
+<p>}</p>
+
+<p>function highlight_edge(from, to) {</p>
+
+<pre><code>var node = svg_edges[from][to];
+var path = node.select(&quot;path&quot;);
+var arrow = node.select(&quot;polygon&quot;);
+
+path
+  .transition().duration(500)
+  .style(&quot;stroke&quot;, &quot;green&quot;);
+
+arrow
+  .transition().duration(500)
+  .style(&quot;stroke&quot;, &quot;green&quot;).style(&quot;fill&quot;, &quot;green&quot;);
+</code></pre>
+
+<p>}</p>
+
+<p>function highlight_state(index, color) {</p>
+
+<pre><code>if(!color) { color = &quot;green&quot;; }
+
+svg_nodes[index].select(&#39;ellipse&#39;)
+  .style(&quot;fill&quot;, &quot;white&quot;)
+  .transition().duration(500)
+  .style(&quot;fill&quot;, color);</code></pre>
+
+<p>}</p>
+
+<p>function highlight_finish(index) {</p>
+
+<pre><code>svg_nodes[index].select(&#39;polygon&#39;)
+  .style(&quot;fill&quot;, &quot;while&quot;)
+  .transition().duration(500)
+  .style(&quot;fill&quot;, &quot;blue&quot;);
+</code></pre>
+
+<p>}</p>
+
+<p>function match(input) {</p>
+
+<pre><code>reset_graph();
+var table         = tt();
+var states        = [0];
+var regexp_states = table[&#39;regexp_states&#39;];
+var string_states = table[&#39;string_states&#39;];
+var accepting     = table[&#39;accepting&#39;];
+
+highlight_state(0);
+
+tokenize(input, function(token) {
+  var new_states = [];
+  for(var key in states) {
+    var state = states[key];
+
+    if(string_states[state] &amp;&amp; string_states[state][token]) {
+      var new_state = string_states[state][token];
+      highlight_edge(state, new_state);
+      highlight_state(new_state);
+      new_states.push(new_state);
+    }
+
+    if(regexp_states[state]) {
+      for(var key in regexp_states[state]) {
+        var re = new RegExp(&quot;^&quot; + key + &quot;$&quot;);
+        if(re.test(token)) {
+          var new_state = regexp_states[state][key];
+          highlight_edge(state, new_state);
+          highlight_state(new_state);
+          new_states.push(new_state);
+        }
+      }
+    }
+  }
+
+  if(new_states.length == 0) {
+    return;
+  }
+  states = new_states;
+});
+
+for(var key in states) {
+  var state = states[key];
+  if(accepting[state]) {
+    for(var mkey in svg_edges[state]) {
+      if(!regexp_states[mkey] &amp;&amp; !string_states[mkey]) {
+        highlight_edge(state, mkey);
+        highlight_finish(mkey);
+      }
+    }
+  } else {
+    highlight_state(state, &quot;red&quot;);
+  }
+}
+
+return false;</code></pre>
+
+<p>}</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+              </div>
+
+    </div>
+  </body>
+</html>

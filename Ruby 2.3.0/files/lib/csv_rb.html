@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>csv.rb</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            csv.rb
+        </h1>
+        <ul class="files">
+            
+            <li>
+                lib/csv.rb
+                
+            </li>
+            <li>Last modified: 2015-12-19 06:23:50 +0100</li>
+        </ul>
+    </div>
+
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>frozen_string_literal: true</p>
+
+<h1 id="label-csv.rb+--+CSV+Reading+and+Writing">csv.rb – <a href="../../classes/CSV.html">CSV</a> Reading and Writing</h1>
+
+<pre><code>Created by James Edward Gray II on 2005-10-31.
+Copyright 2005 James Edward Gray II. You can redistribute or modify this code
+under the terms of Ruby&#39;s license.</code></pre>
+
+<p>See <a href="../../classes/CSV.html">CSV</a> for documentation.</p>
+
+<h2 id="label-Description">Description</h2>
+
+<p>Welcome to the new and improved <a href="../../classes/CSV.html">CSV</a>.</p>
+
+<p>This version of the <a href="../../classes/CSV.html">CSV</a> library began
+its life as FasterCSV.  FasterCSV was intended as a replacement to
+Ruby&#39;s then standard <a href="../../classes/CSV.html">CSV</a> library. 
+It was designed to address concerns users of that library had and it had
+three primary goals:</p>
+<ol><li>
+<p>Be significantly faster than <a href="../../classes/CSV.html">CSV</a> while
+remaining a pure Ruby library.</p>
+</li><li>
+<p>Use a smaller and easier to maintain code base.  (FasterCSV eventually grew
+larger, was also but considerably richer in features.  The parsing core
+remains quite small.)</p>
+</li><li>
+<p>Improve on the <a href="../../classes/CSV.html">CSV</a> interface.</p>
+</li></ol>
+
+<p>Obviously, the last one is subjective.  I did try to defer to the original
+interface whenever I didn&#39;t have a compelling reason to change it
+though, so hopefully this won&#39;t be too radically different.</p>
+
+<p>We must have met our goals because FasterCSV was renamed to <a
+href="../../classes/CSV.html">CSV</a> and replaced the original library as
+of Ruby 1.9. If you are migrating code from 1.8 or earlier, you may have to
+change your code to comply with the new interface.</p>
+
+<h2 id="label-What-27s+Different+From+the+Old+CSV-3F">What&#39;s Different From the Old <a href="../../classes/CSV.html">CSV</a>?</h2>
+
+<p>I&#39;m sure I&#39;ll miss something, but I&#39;ll try to mention most of
+the major differences I am aware of, to help others quickly get up to
+speed:</p>
+
+<h3 id="label-CSV+Parsing"><a href="../../classes/CSV.html">CSV</a> Parsing</h3>
+<ul><li>
+<p>This parser is m17n aware.  See <a href="../../classes/CSV.html">CSV</a>
+for full details.</p>
+</li><li>
+<p>This library has a stricter parser and will throw MalformedCSVErrors on
+problematic data.</p>
+</li><li>
+<p>This library has a less liberal idea of a line ending than <a
+href="../../classes/CSV.html">CSV</a>.  What you set as the
+<code>:row_sep</code> is law.  It can auto-detect your line endings though.</p>
+</li><li>
+<p>The old library returned empty lines as <code>[nil]</code>.  This library
+calls them <code>[]</code>.</p>
+</li><li>
+<p>This library has a much faster parser.</p>
+</li></ul>
+
+<h3 id="label-Interface">Interface</h3>
+<ul><li>
+<p><a href="../../classes/CSV.html">CSV</a> now uses Hash-style parameters to
+set options.</p>
+</li><li>
+<p><a href="../../classes/CSV.html">CSV</a> no longer has generate_row() or
+parse_row().</p>
+</li><li>
+<p>The old CSV&#39;s Reader and Writer classes have been dropped.</p>
+</li><li>
+<p><a href="../../classes/CSV.html#method-c-open">CSV.open</a> is now more
+like Ruby&#39;s open().</p>
+</li><li>
+<p><a href="../../classes/CSV.html">CSV</a> objects now support most standard
+<a href="../../classes/IO.html">IO</a> methods.</p>
+</li><li>
+<p><a href="../../classes/CSV.html">CSV</a> now has a new() method used to
+wrap objects like String and <a href="../../classes/IO.html">IO</a> for
+reading and writing.</p>
+</li><li>
+<p><a href="../../classes/CSV.html#method-c-generate">CSV.generate</a> is
+different from the old method.</p>
+</li><li>
+<p><a href="../../classes/CSV.html">CSV</a> no longer supports partial reads. 
+It works line-by-line.</p>
+</li><li>
+<p><a href="../../classes/CSV.html">CSV</a> no longer allows the instance
+methods to override the separators for performance reasons.  They must be
+set in the constructor.</p>
+</li></ul>
+
+<p>If you use this library and find yourself missing any functionality I have
+trimmed, please <a href="mailto:james@grayproductions.net">let me know</a>.</p>
+
+<h2 id="label-Documentation">Documentation</h2>
+
+<p>See <a href="../../classes/CSV.html">CSV</a> for documentation.</p>
+
+<h2 id="label-What+is+CSV-2C+really-3F">What is <a href="../../classes/CSV.html">CSV</a>, really?</h2>
+
+<p><a href="../../classes/CSV.html">CSV</a> maintains a pretty strict
+definition of <a href="../../classes/CSV.html">CSV</a> taken directly from
+<a href="http://www.ietf.org/rfc/rfc4180.txt">the RFC</a>.  I relax the
+rules in only one place and that is to make using this library easier.  <a
+href="../../classes/CSV.html">CSV</a> will parse all valid <a
+href="../../classes/CSV.html">CSV</a>.</p>
+
+<p>What you don&#39;t want to do is feed <a
+href="../../classes/CSV.html">CSV</a> invalid data.  Because of the way the
+<a href="../../classes/CSV.html">CSV</a> format works, it&#39;s common for
+a parser to need to read until the end of the file to be sure a field is
+invalid.  This eats a lot of time and memory.</p>
+
+<p>Luckily, when working with invalid <a
+href="../../classes/CSV.html">CSV</a>, Ruby&#39;s built-in methods will
+almost always be superior in every way.  For example, parsing non-quoted
+fields is as easy as:</p>
+
+<pre><code>data.split(&quot;,&quot;)
+</code></pre>
+
+<h2 id="label-Questions+and-2For+Comments">Questions and/or Comments</h2>
+
+<p>Feel free to email <a href="mailto:james@grayproductions.net">James Edward
+Gray II</a> with any questions.</p>
+
+    </div>
+  
+
+
+  
+    <!-- File only: requires -->
+    <div class="sectiontitle">Required Files</div>
+    <ul>
+      
+        <li>forwardable</li>
+      
+        <li>English</li>
+      
+        <li>date</li>
+      
+        <li>stringio</li>
+      
+    </ul>
+  
+
+
+  
+  
+
+
+  
+    <!-- Namespace -->
+    <div class="sectiontitle">Namespace</div>
+    <ul>
+      
+        <li>
+          <span class="type">MODULE</span>
+          <a href="../../classes/Zlib.html">Zlib</a>
+        </li>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="../../classes/Array.html">Array</a>
+        </li>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="../../classes/CSV.html">CSV</a>
+        </li>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="../../classes/CSV/MalformedCSVError.html">CSV::MalformedCSVError</a>
+        </li>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="../../classes/CSV/Row.html">CSV::Row</a>
+        </li>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="../../classes/CSV/Table.html">CSV::Table</a>
+        </li>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="../../classes/Encoding.html">Encoding</a>
+        </li>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="../../classes/IO.html">IO</a>
+        </li>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="../../classes/String.html">String</a>
+        </li>
+      
+    </ul>
+  
+
+
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+              </div>
+
+    </div>
+  </body>
+</html>

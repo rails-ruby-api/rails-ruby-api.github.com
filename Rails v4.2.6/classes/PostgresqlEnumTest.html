@@ -1,0 +1,517 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>PostgresqlEnumTest</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/github.css" type="text/css" media="screen" />
+<script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            PostgresqlEnumTest 
+            
+                <span class="parent">&lt; 
+                    
+                    ActiveRecord::TestCase
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../files/activerecord/test/cases/adapters/postgresql/enum_test_rb.html">activerecord/test/cases/adapters/postgresql/enum_test.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+
+
+  
+
+
+  
+  
+
+
+  
+    <!-- Namespace -->
+    <div class="sectiontitle">Namespace</div>
+    <ul>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="PostgresqlEnumTest/PostgresqlEnum.html">PostgresqlEnumTest::PostgresqlEnum</a>
+        </li>
+      
+    </ul>
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>S</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-setup">setup</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-test_assigning_enum_to_nil">test_assigning_enum_to_nil</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_column">test_column</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_enum_defaults">test_enum_defaults</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_enum_mapping">test_enum_mapping</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_enum_type_cast">test_enum_type_cast</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_invalid_enum_update">test_invalid_enum_update</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_no_oid_warning">test_no_oid_warning</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+    <!-- Includes -->
+    <div class="sectiontitle">Included Modules</div>
+    <ul>
+      
+        <li>
+          
+            <a href="ConnectionHelper.html">
+              ConnectionHelper
+            </a>
+          
+        </li>
+      
+    </ul>
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+        
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-setup">
+            
+              <b>setup</b>()
+            
+            <a href="../classes/PostgresqlEnumTest.html#method-i-setup" name="method-i-setup" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-setup_source')" id="l_method-i-setup_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/67470f93e24c36340bb25ba545f76b45568ac569/activerecord/test/cases/adapters/postgresql/enum_test.rb#L11" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-setup_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/adapters/postgresql/enum_test.rb, line 11</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">setup</span>
+  <span class="ruby-ivar">@connection</span> = <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">connection</span>
+  <span class="ruby-ivar">@connection</span>.<span class="ruby-identifier">transaction</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-ivar">@connection</span>.<span class="ruby-identifier">execute</span> <span class="ruby-value">&lt;&lt;-SQL
+      CREATE TYPE mood AS ENUM (&#39;sad&#39;, &#39;ok&#39;, &#39;happy&#39;);
+    SQL</span>
+    <span class="ruby-ivar">@connection</span>.<span class="ruby-identifier">create_table</span>(<span class="ruby-string">&#39;postgresql_enums&#39;</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">t</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">t</span>.<span class="ruby-identifier">column</span> <span class="ruby-value">:current_mood</span>, <span class="ruby-value">:mood</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_assigning_enum_to_nil">
+            
+              <b>test_assigning_enum_to_nil</b>()
+            
+            <a href="../classes/PostgresqlEnumTest.html#method-i-test_assigning_enum_to_nil" name="method-i-test_assigning_enum_to_nil" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_assigning_enum_to_nil_source')" id="l_method-i-test_assigning_enum_to_nil_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/67470f93e24c36340bb25ba545f76b45568ac569/activerecord/test/cases/adapters/postgresql/enum_test.rb#L83" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_assigning_enum_to_nil_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/adapters/postgresql/enum_test.rb, line 83</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_assigning_enum_to_nil</span>
+  <span class="ruby-identifier">model</span> = <span class="ruby-constant">PostgresqlEnum</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">current_mood</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>)
+
+  <span class="ruby-identifier">assert_nil</span> <span class="ruby-identifier">model</span>.<span class="ruby-identifier">current_mood</span>
+  <span class="ruby-identifier">assert</span> <span class="ruby-identifier">model</span>.<span class="ruby-identifier">save</span>
+  <span class="ruby-identifier">assert_nil</span> <span class="ruby-identifier">model</span>.<span class="ruby-identifier">reload</span>.<span class="ruby-identifier">current_mood</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_column">
+            
+              <b>test_column</b>()
+            
+            <a href="../classes/PostgresqlEnumTest.html#method-i-test_column" name="method-i-test_column" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_column_source')" id="l_method-i-test_column_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/67470f93e24c36340bb25ba545f76b45568ac569/activerecord/test/cases/adapters/postgresql/enum_test.rb#L29" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_column_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/adapters/postgresql/enum_test.rb, line 29</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_column</span>
+  <span class="ruby-identifier">column</span> = <span class="ruby-constant">PostgresqlEnum</span>.<span class="ruby-identifier">columns_hash</span>[<span class="ruby-string">&quot;current_mood&quot;</span>]
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-value">:enum</span>, <span class="ruby-identifier">column</span>.<span class="ruby-identifier">type</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&quot;mood&quot;</span>, <span class="ruby-identifier">column</span>.<span class="ruby-identifier">sql_type</span>
+  <span class="ruby-identifier">assert_not</span> <span class="ruby-identifier">column</span>.<span class="ruby-identifier">number?</span>
+  <span class="ruby-identifier">assert_not</span> <span class="ruby-identifier">column</span>.<span class="ruby-identifier">binary?</span>
+  <span class="ruby-identifier">assert_not</span> <span class="ruby-identifier">column</span>.<span class="ruby-identifier">array</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_enum_defaults">
+            
+              <b>test_enum_defaults</b>()
+            
+            <a href="../classes/PostgresqlEnumTest.html#method-i-test_enum_defaults" name="method-i-test_enum_defaults" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_enum_defaults_source')" id="l_method-i-test_enum_defaults_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/67470f93e24c36340bb25ba545f76b45568ac569/activerecord/test/cases/adapters/postgresql/enum_test.rb#L38" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_enum_defaults_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/adapters/postgresql/enum_test.rb, line 38</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_enum_defaults</span>
+  <span class="ruby-ivar">@connection</span>.<span class="ruby-identifier">add_column</span> <span class="ruby-string">&#39;postgresql_enums&#39;</span>, <span class="ruby-string">&#39;good_mood&#39;</span>, <span class="ruby-value">:mood</span>, <span class="ruby-identifier">default</span><span class="ruby-operator">:</span> <span class="ruby-string">&#39;happy&#39;</span>
+  <span class="ruby-constant">PostgresqlEnum</span>.<span class="ruby-identifier">reset_column_information</span>
+
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&quot;happy&quot;</span>, <span class="ruby-constant">PostgresqlEnum</span>.<span class="ruby-identifier">column_defaults</span>[<span class="ruby-string">&#39;good_mood&#39;</span>]
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&quot;happy&quot;</span>, <span class="ruby-constant">PostgresqlEnum</span>.<span class="ruby-identifier">new</span>.<span class="ruby-identifier">good_mood</span>
+<span class="ruby-keyword">ensure</span>
+  <span class="ruby-constant">PostgresqlEnum</span>.<span class="ruby-identifier">reset_column_information</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_enum_mapping">
+            
+              <b>test_enum_mapping</b>()
+            
+            <a href="../classes/PostgresqlEnumTest.html#method-i-test_enum_mapping" name="method-i-test_enum_mapping" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_enum_mapping_source')" id="l_method-i-test_enum_mapping_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/67470f93e24c36340bb25ba545f76b45568ac569/activerecord/test/cases/adapters/postgresql/enum_test.rb#L48" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_enum_mapping_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/adapters/postgresql/enum_test.rb, line 48</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_enum_mapping</span>
+  <span class="ruby-ivar">@connection</span>.<span class="ruby-identifier">execute</span> <span class="ruby-string">&quot;INSERT INTO postgresql_enums VALUES (1, &#39;sad&#39;);&quot;</span>
+  <span class="ruby-identifier">enum</span> = <span class="ruby-constant">PostgresqlEnum</span>.<span class="ruby-identifier">first</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&quot;sad&quot;</span>, <span class="ruby-identifier">enum</span>.<span class="ruby-identifier">current_mood</span>
+
+  <span class="ruby-identifier">enum</span>.<span class="ruby-identifier">current_mood</span> = <span class="ruby-string">&quot;happy&quot;</span>
+  <span class="ruby-identifier">enum</span>.<span class="ruby-identifier">save!</span>
+
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&quot;happy&quot;</span>, <span class="ruby-identifier">enum</span>.<span class="ruby-identifier">reload</span>.<span class="ruby-identifier">current_mood</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_enum_type_cast">
+            
+              <b>test_enum_type_cast</b>()
+            
+            <a href="../classes/PostgresqlEnumTest.html#method-i-test_enum_type_cast" name="method-i-test_enum_type_cast" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_enum_type_cast_source')" id="l_method-i-test_enum_type_cast_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/67470f93e24c36340bb25ba545f76b45568ac569/activerecord/test/cases/adapters/postgresql/enum_test.rb#L76" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_enum_type_cast_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/adapters/postgresql/enum_test.rb, line 76</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_enum_type_cast</span>
+  <span class="ruby-identifier">enum</span> = <span class="ruby-constant">PostgresqlEnum</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-identifier">enum</span>.<span class="ruby-identifier">current_mood</span> = <span class="ruby-value">:happy</span>
+
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&quot;happy&quot;</span>, <span class="ruby-identifier">enum</span>.<span class="ruby-identifier">current_mood</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_invalid_enum_update">
+            
+              <b>test_invalid_enum_update</b>()
+            
+            <a href="../classes/PostgresqlEnumTest.html#method-i-test_invalid_enum_update" name="method-i-test_invalid_enum_update" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_invalid_enum_update_source')" id="l_method-i-test_invalid_enum_update_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/67470f93e24c36340bb25ba545f76b45568ac569/activerecord/test/cases/adapters/postgresql/enum_test.rb#L59" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_invalid_enum_update_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/adapters/postgresql/enum_test.rb, line 59</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_invalid_enum_update</span>
+  <span class="ruby-ivar">@connection</span>.<span class="ruby-identifier">execute</span> <span class="ruby-string">&quot;INSERT INTO postgresql_enums VALUES (1, &#39;sad&#39;);&quot;</span>
+  <span class="ruby-identifier">enum</span> = <span class="ruby-constant">PostgresqlEnum</span>.<span class="ruby-identifier">first</span>
+  <span class="ruby-identifier">enum</span>.<span class="ruby-identifier">current_mood</span> = <span class="ruby-string">&quot;angry&quot;</span>
+
+  <span class="ruby-identifier">assert_raise</span> <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">StatementInvalid</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">enum</span>.<span class="ruby-identifier">save</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_no_oid_warning">
+            
+              <b>test_no_oid_warning</b>()
+            
+            <a href="../classes/PostgresqlEnumTest.html#method-i-test_no_oid_warning" name="method-i-test_no_oid_warning" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_no_oid_warning_source')" id="l_method-i-test_no_oid_warning_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/67470f93e24c36340bb25ba545f76b45568ac569/activerecord/test/cases/adapters/postgresql/enum_test.rb#L69" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_no_oid_warning_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/adapters/postgresql/enum_test.rb, line 69</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_no_oid_warning</span>
+  <span class="ruby-ivar">@connection</span>.<span class="ruby-identifier">execute</span> <span class="ruby-string">&quot;INSERT INTO postgresql_enums VALUES (1, &#39;sad&#39;);&quot;</span>
+  <span class="ruby-identifier">stderr_output</span> = <span class="ruby-identifier">capture</span>(<span class="ruby-value">:stderr</span>) { <span class="ruby-constant">PostgresqlEnum</span>.<span class="ruby-identifier">first</span> }
+
+  <span class="ruby-identifier">assert</span> <span class="ruby-identifier">stderr_output</span>.<span class="ruby-identifier">blank?</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+
+    </div>
+  </body>
+</html>    

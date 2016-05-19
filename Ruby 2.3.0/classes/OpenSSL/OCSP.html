@@ -1,0 +1,619 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>OpenSSL::OCSP</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Module</span> 
+            OpenSSL::OCSP 
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/ext/openssl/ossl_c.html">ext/openssl/ossl.c</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p><a href="OCSP.html">OpenSSL::OCSP</a> implements Online Certificate Status
+Protocol requests and responses.</p>
+
+<p>Creating and sending an <a href="OCSP.html">OCSP</a> request requires a
+subject certificate that contains an <a href="OCSP.html">OCSP</a> URL in an
+authorityInfoAccess extension and the issuer certificate for the subject
+certificate.  First, load the issuer and subject certificates:</p>
+
+<pre><code>subject = OpenSSL::X509::Certificate.new subject_pem
+issuer  = OpenSSL::X509::Certificate.new issuer_pem
+</code></pre>
+
+<p>To create the request we need to create a certificate ID for the subject
+certificate so the CA knows which certificate we are asking about:</p>
+
+<pre><code>digest = OpenSSL::Digest::SHA1.new
+certificate_id =
+  OpenSSL::OCSP::CertificateId.new subject, issuer, digest
+</code></pre>
+
+<p>Then create a request and add the certificate ID to it:</p>
+
+<pre><code>request = OpenSSL::OCSP::Request.new
+request.add_certid certificate_id
+</code></pre>
+
+<p>Adding a nonce to the request protects against replay attacks but not all
+CA process the nonce.</p>
+
+<pre><code>request.add_nonce
+</code></pre>
+
+<p>To submit the request to the CA for verification we need to extract the <a
+href="OCSP.html">OCSP</a> <a href="../URI.html">URI</a> from the subject
+certificate:</p>
+
+<pre><code>authority_info_access = subject.extensions.find do |extension|
+  extension.oid == &#39;authorityInfoAccess&#39;
+end
+
+descriptions = authority_info_access.value.split &quot;\n&quot;
+ocsp = descriptions.find do |description|
+  description.start_with? &#39;OCSP&#39;
+end
+
+require &#39;uri&#39;
+
+ocsp_uri = URI ocsp[/URI:(.*)/, 1]
+</code></pre>
+
+<p>To submit the request we&#39;ll POST the request to the <a
+href="OCSP.html">OCSP</a> <a href="../URI.html">URI</a> (per RFC 2560). 
+Note that we only handle HTTP requests and don&#39;t handle any redirects
+in this example, so this is insufficient for serious use.</p>
+
+<pre><code>require &#39;net/http&#39;
+
+http_response =
+  Net::HTTP.start ocsp_uri.hostname, ocsp.port do |http|
+    http.post ocsp_uri.path, request.to_der,
+              &#39;content-type&#39; =&gt; &#39;application/ocsp-request&#39;
+end
+
+response = OpenSSL::OCSP::Response.new http_response.body
+response_basic = response.basic
+</code></pre>
+
+<p>First we check if the response has a valid signature.  Without a valid
+signature we cannot trust it.  If you get a failure here you may be missing
+a system certificate store or may be missing the intermediate certificates.</p>
+
+<pre><code>store = OpenSSL::X509::Store.new
+store.set_default_paths
+
+unless response.verify [], store then
+  raise &#39;response is not signed by a trusted certificate&#39;
+end
+</code></pre>
+
+<p>The response contains the status information (success/fail).  We can
+display the status as a string:</p>
+
+<pre><code>puts response.status_string #=&gt; successful
+</code></pre>
+
+<p>Next we need to know the response details to determine if the response
+matches our request.  First we check the nonce.  Again, not all CAs support
+a nonce.  See <a
+href="OCSP/Request.html#method-i-check_nonce">OpenSSL::OCSP::Request#check_nonce</a>
+for the meanings of the return values.</p>
+
+<pre><code>p request.check_nonce basic_response #=&gt; value from -1 to 3
+</code></pre>
+
+<p>Then extract the status information from the basic response.  (You can
+check multiple certificates in a request, but for this example we only
+submitted one.)</p>
+
+<pre><code>response_certificate_id, status, reason, revocation_time,
+  this_update, next_update, extensions = basic_response.status
+</code></pre>
+
+<p>Then check the various fields.</p>
+
+<pre><code>unless response_certificate_id == certificate_id then
+  raise &#39;certificate id mismatch&#39;
+end
+
+now = Time.now
+
+if this_update &gt; now then
+  raise &#39;update date is in the future&#39;
+end
+
+if now &gt; next_update then
+  raise &#39;next update time has passed&#39;
+end
+</code></pre>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+    <!-- Namespace -->
+    <div class="sectiontitle">Namespace</div>
+    <ul>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="OCSP/BasicResponse.html">OpenSSL::OCSP::BasicResponse</a>
+        </li>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="OCSP/CertificateId.html">OpenSSL::OCSP::CertificateId</a>
+        </li>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="OCSP/OCSPError.html">OpenSSL::OCSP::OCSPError</a>
+        </li>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="OCSP/Request.html">OpenSSL::OCSP::Request</a>
+        </li>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="OCSP/Response.html">OpenSSL::OCSP::Response</a>
+        </li>
+      
+    </ul>
+  
+
+
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+      <!-- Section constants -->
+      <div class="sectiontitle">Constants</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class="attr-name">RESPONSE_STATUS_INTERNALERROR</td>
+            <td>=</td>
+            <td class="attr-value">INT2NUM(OCSP_RESPONSE_STATUS_INTERNALERROR)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Internal error in issuer</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">RESPONSE_STATUS_MALFORMEDREQUEST</td>
+            <td>=</td>
+            <td class="attr-value">INT2NUM(OCSP_RESPONSE_STATUS_MALFORMEDREQUEST)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Illegal confirmation request</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">REVOKED_STATUS_NOSTATUS</td>
+            <td>=</td>
+            <td class="attr-value">INT2NUM(OCSP_REVOKED_STATUS_NOSTATUS)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>The certificate was revoked for an unknown reason</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">RESPONSE_STATUS_SIGREQUIRED</td>
+            <td>=</td>
+            <td class="attr-value">INT2NUM(OCSP_RESPONSE_STATUS_SIGREQUIRED)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>You must sign the request and resubmit</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">RESPONSE_STATUS_SUCCESSFUL</td>
+            <td>=</td>
+            <td class="attr-value">INT2NUM(OCSP_RESPONSE_STATUS_SUCCESSFUL)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p><a href="OCSP/Response.html">Response</a> has valid confirmations</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">RESPONSE_STATUS_TRYLATER</td>
+            <td>=</td>
+            <td class="attr-value">INT2NUM(OCSP_RESPONSE_STATUS_TRYLATER)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Try again later</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">REVOKED_STATUS_AFFILIATIONCHANGED</td>
+            <td>=</td>
+            <td class="attr-value">INT2NUM(OCSP_REVOKED_STATUS_AFFILIATIONCHANGED)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>The certificate subject&#39;s name or other information changed</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">REVOKED_STATUS_CACOMPROMISE</td>
+            <td>=</td>
+            <td class="attr-value">INT2NUM(OCSP_REVOKED_STATUS_CACOMPROMISE)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>This CA certificate was revoked due to a key compromise</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">REVOKED_STATUS_CERTIFICATEHOLD</td>
+            <td>=</td>
+            <td class="attr-value">INT2NUM(OCSP_REVOKED_STATUS_CERTIFICATEHOLD)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>The certificate is on hold</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">REVOKED_STATUS_CESSATIONOFOPERATION</td>
+            <td>=</td>
+            <td class="attr-value">INT2NUM(OCSP_REVOKED_STATUS_CESSATIONOFOPERATION)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>The certificate is no longer needed</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">REVOKED_STATUS_KEYCOMPROMISE</td>
+            <td>=</td>
+            <td class="attr-value">INT2NUM(OCSP_REVOKED_STATUS_KEYCOMPROMISE)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>The certificate was revoked due to a key compromise</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">REVOKED_STATUS_REMOVEFROMCRL</td>
+            <td>=</td>
+            <td class="attr-value">INT2NUM(OCSP_REVOKED_STATUS_REMOVEFROMCRL)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>The certificate was previously on hold and should now be removed from the
+CRL</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">REVOKED_STATUS_SUPERSEDED</td>
+            <td>=</td>
+            <td class="attr-value">INT2NUM(OCSP_REVOKED_STATUS_SUPERSEDED)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>The certificate was superseded by a new certificate</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">RESPONSE_STATUS_UNAUTHORIZED</td>
+            <td>=</td>
+            <td class="attr-value">INT2NUM(OCSP_RESPONSE_STATUS_UNAUTHORIZED)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Your request is unauthorized.</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">REVOKED_STATUS_UNSPECIFIED</td>
+            <td>=</td>
+            <td class="attr-value">INT2NUM(OCSP_REVOKED_STATUS_UNSPECIFIED)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>The certificate was revoked for an unspecified reason</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">NOCERTS</td>
+            <td>=</td>
+            <td class="attr-value">INT2NUM(OCSP_NOCERTS)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Do not include certificates in the response</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">NOINTERN</td>
+            <td>=</td>
+            <td class="attr-value">INT2NUM(OCSP_NOINTERN)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Do not search certificates contained in the response for a signer</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">NOSIGS</td>
+            <td>=</td>
+            <td class="attr-value">INT2NUM(OCSP_NOSIGS)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Do not check the signature on the response</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">NOCHAIN</td>
+            <td>=</td>
+            <td class="attr-value">INT2NUM(OCSP_NOCHAIN)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Do not verify the certificate chain on the response</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">NOVERIFY</td>
+            <td>=</td>
+            <td class="attr-value">INT2NUM(OCSP_NOVERIFY)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Do not verify the response at all</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">NOEXPLICIT</td>
+            <td>=</td>
+            <td class="attr-value">INT2NUM(OCSP_NOEXPLICIT)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Do not check trust</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">NOCASIGN</td>
+            <td>=</td>
+            <td class="attr-value">INT2NUM(OCSP_NOCASIGN)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>(This flag is not used by <a href="../OpenSSL.html">OpenSSL</a> 1.0.1g)</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">NODELEGATED</td>
+            <td>=</td>
+            <td class="attr-value">INT2NUM(OCSP_NODELEGATED)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>(This flag is not used by <a href="../OpenSSL.html">OpenSSL</a> 1.0.1g)</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">NOCHECKS</td>
+            <td>=</td>
+            <td class="attr-value">INT2NUM(OCSP_NOCHECKS)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Do not make additional signing certificate checks</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">TRUSTOTHER</td>
+            <td>=</td>
+            <td class="attr-value">INT2NUM(OCSP_TRUSTOTHER)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Do not verify additional certificates</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">RESPID_KEY</td>
+            <td>=</td>
+            <td class="attr-value">INT2NUM(OCSP_RESPID_KEY)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Identify the response by signing the certificate key ID</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">NOTIME</td>
+            <td>=</td>
+            <td class="attr-value">INT2NUM(OCSP_NOTIME)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Do not include producedAt time in response</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">V_CERTSTATUS_GOOD</td>
+            <td>=</td>
+            <td class="attr-value">INT2NUM(V_OCSP_CERTSTATUS_GOOD)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Indicates the certificate is not revoked but does not necessarily mean the
+certificate was issued or that this response is within the
+certificate&#39;s validity interval</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">V_CERTSTATUS_REVOKED</td>
+            <td>=</td>
+            <td class="attr-value">INT2NUM(V_OCSP_CERTSTATUS_REVOKED)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Indicates the certificate has been revoked either permanently or
+temporarily (on hold).</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">V_CERTSTATUS_UNKNOWN</td>
+            <td>=</td>
+            <td class="attr-value">INT2NUM(V_OCSP_CERTSTATUS_UNKNOWN)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Indicates the responder does not know about the certificate being
+requested.</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">V_RESPID_NAME</td>
+            <td>=</td>
+            <td class="attr-value">INT2NUM(V_OCSP_RESPID_NAME)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>The responder ID is based on the key name.</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">V_RESPID_KEY</td>
+            <td>=</td>
+            <td class="attr-value">INT2NUM(V_OCSP_RESPID_KEY)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>The responder ID is based on the public key.</p></td>
+            </tr>
+          
+        
+      </table>
+    
+
+
+    
+
+
+    <!-- Methods -->
+              </div>
+
+    </div>
+  </body>
+</html>    

@@ -1,0 +1,994 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Gem::RequestSet</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            Gem::RequestSet 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/lib/rubygems/request_set_rb.html">lib/rubygems/request_set.rb</a></li>
+            
+            <li><a href="../../files/lib/rubygems/request_set/gem_dependency_api_rb.html">lib/rubygems/request_set/gem_dependency_api.rb</a></li>
+            
+            <li><a href="../../files/lib/rubygems/request_set/lockfile_rb.html">lib/rubygems/request_set/lockfile.rb</a></li>
+            
+            <li><a href="../../files/lib/rubygems/request_set/lockfile/parser_rb.html">lib/rubygems/request_set/lockfile/parser.rb</a></li>
+            
+            <li><a href="../../files/lib/rubygems/request_set/lockfile/tokenizer_rb.html">lib/rubygems/request_set/lockfile/tokenizer.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>A <a href="RequestSet.html">RequestSet</a> groups a request to activate a
+set of dependencies.</p>
+
+<pre><code>nokogiri = Gem::Dependency.new &#39;nokogiri&#39;, &#39;~&gt; 1.6&#39;
+pg = Gem::Dependency.new &#39;pg&#39;, &#39;~&gt; 0.14&#39;
+
+set = Gem::RequestSet.new nokogiri, pg
+
+requests = set.resolve
+
+p requests.map { |r| r.full_name }
+#=&gt; [&quot;nokogiri-1.6.0&quot;, &quot;mini_portile-0.5.1&quot;, &quot;pg-0.17.0&quot;]
+</code></pre>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+    <!-- Namespace -->
+    <div class="sectiontitle">Namespace</div>
+    <ul>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="RequestSet/GemDependencyAPI.html">Gem::RequestSet::GemDependencyAPI</a>
+        </li>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="RequestSet/Lockfile.html">Gem::RequestSet::Lockfile</a>
+        </li>
+      
+    </ul>
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>G</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-gem">gem</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>I</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-import">import</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-install">install</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-install_from_gemdeps">install_from_gemdeps</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-install_into">install_into</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>L</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-load_gemdeps">load_gemdeps</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>R</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-resolve">resolve</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-resolve_current">resolve_current</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>S</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-sorted_requests">sorted_requests</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-specs">specs</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-specs_in">specs_in</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+    <!-- Includes -->
+    <div class="sectiontitle">Included Modules</div>
+    <ul>
+      
+        <li>
+          
+            <a href="../TSort.html">
+              TSort
+            </a>
+          
+        </li>
+      
+    </ul>
+  
+
+
+
+  
+
+    
+
+    
+
+    
+      <!-- Section constants -->
+      <div class="sectiontitle">Constants</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class="attr-name">GemDepedencyAPI</td>
+            <td>=</td>
+            <td class="attr-value">self</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>TODO: remove this typo name at RubyGems 3.0</p></td>
+            </tr>
+          
+        
+      </table>
+    
+
+
+    
+      <!-- Section attributes -->
+      <div class="sectiontitle">Attributes</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [RW]
+            </td>
+            <td class='attr-name'>always_install</td>
+            <td class='attr-desc'><p>Array of gems to install even if already installed</p></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [R]
+            </td>
+            <td class='attr-name'>dependencies</td>
+            <td class='attr-desc'></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [RW]
+            </td>
+            <td class='attr-name'>development</td>
+            <td class='attr-desc'></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [RW]
+            </td>
+            <td class='attr-name'>development_shallow</td>
+            <td class='attr-desc'><p><a href="../Set.html">Set</a> to true if you want to install only direct
+development dependencies.</p></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [R]
+            </td>
+            <td class='attr-name'>errors</td>
+            <td class='attr-desc'><p>Errors fetching gems during resolution.</p></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [RW]
+            </td>
+            <td class='attr-name'>ignore_dependencies</td>
+            <td class='attr-desc'><p>When true, dependency resolution is not performed, only the requested gems
+are installed.</p></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [RW]
+            </td>
+            <td class='attr-name'>prerelease</td>
+            <td class='attr-desc'><p>If true, allow dependencies to match prerelease gems.</p></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [RW]
+            </td>
+            <td class='attr-name'>remote</td>
+            <td class='attr-desc'><p>When false no remote sets are used for resolving gems.</p></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [RW]
+            </td>
+            <td class='attr-name'>soft_missing</td>
+            <td class='attr-desc'><p>Treat missing dependencies as silent errors</p></td>
+          </tr>
+        
+      </table>
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <b>new</b>(*deps)
+            
+            <a href="../../classes/Gem/RequestSet.html#method-c-new" name="method-c-new" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Creates a <a href="RequestSet.html">RequestSet</a> for a list of <a
+href="Dependency.html">Gem::Dependency</a> objects, <code>deps</code>.  You
+can then <a href="RequestSet.html#method-i-resolve">resolve</a> and <a
+href="RequestSet.html#method-i-install">install</a> the resolved list of
+dependencies.</p>
+
+<pre><code>nokogiri = Gem::Dependency.new &#39;nokogiri&#39;, &#39;~&gt; 1.6&#39;
+pg = Gem::Dependency.new &#39;pg&#39;, &#39;~&gt; 0.14&#39;
+
+set = Gem::RequestSet.new nokogiri, pg
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/request_set.rb, line 89</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">initialize</span> <span class="ruby-operator">*</span><span class="ruby-identifier">deps</span>
+  <span class="ruby-ivar">@dependencies</span> = <span class="ruby-identifier">deps</span>
+
+  <span class="ruby-ivar">@always_install</span>      = []
+  <span class="ruby-ivar">@conservative</span>        = <span class="ruby-keyword">false</span>
+  <span class="ruby-ivar">@dependency_names</span>    = {}
+  <span class="ruby-ivar">@development</span>         = <span class="ruby-keyword">false</span>
+  <span class="ruby-ivar">@development_shallow</span> = <span class="ruby-keyword">false</span>
+  <span class="ruby-ivar">@errors</span>              = []
+  <span class="ruby-ivar">@git_set</span>             = <span class="ruby-keyword">nil</span>
+  <span class="ruby-ivar">@ignore_dependencies</span> = <span class="ruby-keyword">false</span>
+  <span class="ruby-ivar">@install_dir</span>         = <span class="ruby-constant">Gem</span>.<span class="ruby-identifier">dir</span>
+  <span class="ruby-ivar">@prerelease</span>          = <span class="ruby-keyword">false</span>
+  <span class="ruby-ivar">@remote</span>              = <span class="ruby-keyword">true</span>
+  <span class="ruby-ivar">@requests</span>            = []
+  <span class="ruby-ivar">@sets</span>                = []
+  <span class="ruby-ivar">@soft_missing</span>        = <span class="ruby-keyword">false</span>
+  <span class="ruby-ivar">@sorted</span>              = <span class="ruby-keyword">nil</span>
+  <span class="ruby-ivar">@specs</span>               = <span class="ruby-keyword">nil</span>
+  <span class="ruby-ivar">@vendor_set</span>          = <span class="ruby-keyword">nil</span>
+
+  <span class="ruby-keyword">yield</span> <span class="ruby-keyword">self</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">block_given?</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-gem">
+            
+              <b>gem</b>(name, *reqs)
+            
+            <a href="../../classes/Gem/RequestSet.html#method-i-gem" name="method-i-gem" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Declare that a gem of name <code>name</code> with <code>reqs</code>
+requirements is needed.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-gem_source')" id="l_method-i-gem_source">show</a>
+                
+              </p>
+              <div id="method-i-gem_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/request_set.rb, line 116</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">gem</span> <span class="ruby-identifier">name</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">reqs</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">dep</span> = <span class="ruby-ivar">@dependency_names</span>[<span class="ruby-identifier">name</span>] <span class="ruby-keyword">then</span>
+    <span class="ruby-identifier">dep</span>.<span class="ruby-identifier">requirement</span>.<span class="ruby-identifier">concat</span> <span class="ruby-identifier">reqs</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">dep</span> = <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Dependency</span>.<span class="ruby-identifier">new</span> <span class="ruby-identifier">name</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">reqs</span>
+    <span class="ruby-ivar">@dependency_names</span>[<span class="ruby-identifier">name</span>] = <span class="ruby-identifier">dep</span>
+    <span class="ruby-ivar">@dependencies</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">dep</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-import">
+            
+              <b>import</b>(deps)
+            
+            <a href="../../classes/Gem/RequestSet.html#method-i-import" name="method-i-import" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Add <code>deps</code> <a href="Dependency.html">Gem::Dependency</a> objects
+to the set.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-import_source')" id="l_method-i-import_source">show</a>
+                
+              </p>
+              <div id="method-i-import_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/request_set.rb, line 129</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">import</span> <span class="ruby-identifier">deps</span>
+  <span class="ruby-ivar">@dependencies</span>.<span class="ruby-identifier">concat</span> <span class="ruby-identifier">deps</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-install">
+            
+              <b>install</b>(options, &amp;block)
+            
+            <a href="../../classes/Gem/RequestSet.html#method-i-install" name="method-i-install" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Installs gems for this <a href="RequestSet.html">RequestSet</a> using the
+<a href="Installer.html">Gem::Installer</a> <code>options</code>.</p>
+
+<p>If a <code>block</code> is given an activation <code>request</code> and
+<code>installer</code> are yielded. The <code>installer</code> will be
+<code>nil</code> if a gem matching the request was already installed.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-install_source')" id="l_method-i-install_source">show</a>
+                
+              </p>
+              <div id="method-i-install_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/request_set.rb, line 140</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">install</span> <span class="ruby-identifier">options</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span> <span class="ruby-comment"># :yields: request, installer</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">dir</span> = <span class="ruby-identifier">options</span>[<span class="ruby-value">:install_dir</span>]
+    <span class="ruby-identifier">requests</span> = <span class="ruby-identifier">install_into</span> <span class="ruby-identifier">dir</span>, <span class="ruby-keyword">false</span>, <span class="ruby-identifier">options</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-identifier">requests</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">cache_dir</span> = <span class="ruby-identifier">options</span>[<span class="ruby-value">:cache_dir</span>] <span class="ruby-operator">||</span> <span class="ruby-constant">Gem</span>.<span class="ruby-identifier">dir</span>
+  <span class="ruby-ivar">@prerelease</span> = <span class="ruby-identifier">options</span>[<span class="ruby-value">:prerelease</span>]
+
+  <span class="ruby-identifier">requests</span> = []
+
+  <span class="ruby-identifier">sorted_requests</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">req</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">req</span>.<span class="ruby-identifier">installed?</span> <span class="ruby-keyword">then</span>
+      <span class="ruby-identifier">req</span>.<span class="ruby-identifier">spec</span>.<span class="ruby-identifier">spec</span>.<span class="ruby-identifier">build_extensions</span>
+
+      <span class="ruby-keyword">if</span> <span class="ruby-ivar">@always_install</span>.<span class="ruby-identifier">none?</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">spec</span><span class="ruby-operator">|</span> <span class="ruby-identifier">spec</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">req</span>.<span class="ruby-identifier">spec</span>.<span class="ruby-identifier">spec</span> } <span class="ruby-keyword">then</span>
+        <span class="ruby-keyword">yield</span> <span class="ruby-identifier">req</span>, <span class="ruby-keyword">nil</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">block_given?</span>
+        <span class="ruby-keyword">next</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-identifier">path</span> = <span class="ruby-identifier">req</span>.<span class="ruby-identifier">download</span> <span class="ruby-identifier">cache_dir</span>
+
+    <span class="ruby-identifier">inst</span> = <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Installer</span>.<span class="ruby-identifier">at</span> <span class="ruby-identifier">path</span>, <span class="ruby-identifier">options</span>
+
+    <span class="ruby-keyword">yield</span> <span class="ruby-identifier">req</span>, <span class="ruby-identifier">inst</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">block_given?</span>
+
+    <span class="ruby-identifier">requests</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">inst</span>.<span class="ruby-identifier">install</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">requests</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:gemdeps</span>]
+
+  <span class="ruby-identifier">specs</span> = <span class="ruby-identifier">requests</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">request</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">case</span> <span class="ruby-identifier">request</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Resolver</span><span class="ruby-operator">::</span><span class="ruby-constant">ActivationRequest</span> <span class="ruby-keyword">then</span>
+      <span class="ruby-identifier">request</span>.<span class="ruby-identifier">spec</span>.<span class="ruby-identifier">spec</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">request</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">require</span> <span class="ruby-string">&#39;rubygems/dependency_installer&#39;</span>
+  <span class="ruby-identifier">inst</span> = <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">DependencyInstaller</span>.<span class="ruby-identifier">new</span> <span class="ruby-identifier">options</span>
+  <span class="ruby-identifier">inst</span>.<span class="ruby-identifier">installed_gems</span>.<span class="ruby-identifier">replace</span> <span class="ruby-identifier">specs</span>
+
+  <span class="ruby-constant">Gem</span>.<span class="ruby-identifier">done_installing_hooks</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">hook</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">hook</span>.<span class="ruby-identifier">call</span> <span class="ruby-identifier">inst</span>, <span class="ruby-identifier">specs</span>
+  <span class="ruby-keyword">end</span> <span class="ruby-keyword">unless</span> <span class="ruby-constant">Gem</span>.<span class="ruby-identifier">done_installing_hooks</span>.<span class="ruby-identifier">empty?</span>
+
+  <span class="ruby-identifier">requests</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-install_from_gemdeps">
+            
+              <b>install_from_gemdeps</b>(options, &amp;block)
+            
+            <a href="../../classes/Gem/RequestSet.html#method-i-install_from_gemdeps" name="method-i-install_from_gemdeps" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Installs from the gem dependencies files in the <code>:gemdeps</code>
+option in <code>options</code>, yielding to the <code>block</code> as in <a
+href="RequestSet.html#method-i-install">install</a>.</p>
+
+<p>If <code>:without_groups</code> is given in the <code>options</code>, those
+groups in the gem dependencies file are not used.  See <a
+href="Installer.html">Gem::Installer</a> for other <code>options</code>.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-install_from_gemdeps_source')" id="l_method-i-install_from_gemdeps_source">show</a>
+                
+              </p>
+              <div id="method-i-install_from_gemdeps_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/request_set.rb, line 199</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">install_from_gemdeps</span> <span class="ruby-identifier">options</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>
+  <span class="ruby-identifier">gemdeps</span> = <span class="ruby-identifier">options</span>[<span class="ruby-value">:gemdeps</span>]
+
+  <span class="ruby-ivar">@install_dir</span> = <span class="ruby-identifier">options</span>[<span class="ruby-value">:install_dir</span>] <span class="ruby-operator">||</span> <span class="ruby-constant">Gem</span>.<span class="ruby-identifier">dir</span>
+  <span class="ruby-ivar">@prerelease</span>  = <span class="ruby-identifier">options</span>[<span class="ruby-value">:prerelease</span>]
+  <span class="ruby-ivar">@remote</span>      = <span class="ruby-identifier">options</span>[<span class="ruby-value">:domain</span>] <span class="ruby-operator">!=</span> <span class="ruby-value">:local</span>
+  <span class="ruby-ivar">@conservative</span> = <span class="ruby-keyword">true</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:conservative</span>]
+
+  <span class="ruby-identifier">gem_deps_api</span> = <span class="ruby-identifier">load_gemdeps</span> <span class="ruby-identifier">gemdeps</span>, <span class="ruby-identifier">options</span>[<span class="ruby-value">:without_groups</span>], <span class="ruby-keyword">true</span>
+
+  <span class="ruby-identifier">resolve</span>
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:explain</span>]
+    <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Gems to install:&quot;</span>
+
+    <span class="ruby-identifier">sorted_requests</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">spec</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;  #{spec.full_name}&quot;</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-keyword">if</span> <span class="ruby-constant">Gem</span>.<span class="ruby-identifier">configuration</span>.<span class="ruby-identifier">really_verbose</span>
+      <span class="ruby-ivar">@resolver</span>.<span class="ruby-identifier">stats</span>.<span class="ruby-identifier">display</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">installed</span> = <span class="ruby-identifier">install</span> <span class="ruby-identifier">options</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>
+
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">options</span>.<span class="ruby-identifier">fetch</span> <span class="ruby-value">:lock</span>, <span class="ruby-keyword">true</span> <span class="ruby-keyword">then</span>
+      <span class="ruby-identifier">lockfile</span> =
+        <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">RequestSet</span><span class="ruby-operator">::</span><span class="ruby-constant">Lockfile</span>.<span class="ruby-identifier">build</span> <span class="ruby-keyword">self</span>, <span class="ruby-identifier">gemdeps</span>, <span class="ruby-identifier">gem_deps_api</span>.<span class="ruby-identifier">dependencies</span>
+      <span class="ruby-identifier">lockfile</span>.<span class="ruby-identifier">write</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-identifier">installed</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-install_into">
+            
+              <b>install_into</b>(dir, force = true, options = {})
+            
+            <a href="../../classes/Gem/RequestSet.html#method-i-install_into" name="method-i-install_into" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-install_into_source')" id="l_method-i-install_into_source">show</a>
+                
+              </p>
+              <div id="method-i-install_into_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/request_set.rb, line 234</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">install_into</span> <span class="ruby-identifier">dir</span>, <span class="ruby-identifier">force</span> = <span class="ruby-keyword">true</span>, <span class="ruby-identifier">options</span> = {}
+  <span class="ruby-identifier">gem_home</span>, <span class="ruby-constant">ENV</span>[<span class="ruby-string">&#39;GEM_HOME&#39;</span>] = <span class="ruby-constant">ENV</span>[<span class="ruby-string">&#39;GEM_HOME&#39;</span>], <span class="ruby-identifier">dir</span>
+
+  <span class="ruby-identifier">existing</span> = <span class="ruby-identifier">force</span> <span class="ruby-operator">?</span> [] <span class="ruby-operator">:</span> <span class="ruby-identifier">specs_in</span>(<span class="ruby-identifier">dir</span>)
+  <span class="ruby-identifier">existing</span>.<span class="ruby-identifier">delete_if</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span> <span class="ruby-ivar">@always_install</span>.<span class="ruby-identifier">include?</span> <span class="ruby-identifier">s</span> }
+
+  <span class="ruby-identifier">dir</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span> <span class="ruby-identifier">dir</span>
+
+  <span class="ruby-identifier">installed</span> = []
+
+  <span class="ruby-identifier">options</span>[<span class="ruby-value">:development</span>] = <span class="ruby-keyword">false</span>
+  <span class="ruby-identifier">options</span>[<span class="ruby-value">:install_dir</span>] = <span class="ruby-identifier">dir</span>
+  <span class="ruby-identifier">options</span>[<span class="ruby-value">:only_install_dir</span>] = <span class="ruby-keyword">true</span>
+  <span class="ruby-ivar">@prerelease</span> = <span class="ruby-identifier">options</span>[<span class="ruby-value">:prerelease</span>]
+
+  <span class="ruby-identifier">sorted_requests</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">request</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">spec</span> = <span class="ruby-identifier">request</span>.<span class="ruby-identifier">spec</span>
+
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">existing</span>.<span class="ruby-identifier">find</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span> <span class="ruby-identifier">s</span>.<span class="ruby-identifier">full_name</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">full_name</span> } <span class="ruby-keyword">then</span>
+      <span class="ruby-keyword">yield</span> <span class="ruby-identifier">request</span>, <span class="ruby-keyword">nil</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">block_given?</span>
+      <span class="ruby-keyword">next</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">install</span> <span class="ruby-identifier">options</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">installer</span><span class="ruby-operator">|</span>
+      <span class="ruby-keyword">yield</span> <span class="ruby-identifier">request</span>, <span class="ruby-identifier">installer</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">block_given?</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-identifier">installed</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">request</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">installed</span>
+<span class="ruby-keyword">ensure</span>
+  <span class="ruby-constant">ENV</span>[<span class="ruby-string">&#39;GEM_HOME&#39;</span>] = <span class="ruby-identifier">gem_home</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-load_gemdeps">
+            
+              <b>load_gemdeps</b>(path, without_groups = [], installing = false)
+            
+            <a href="../../classes/Gem/RequestSet.html#method-i-load_gemdeps" name="method-i-load_gemdeps" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Load a dependency management file.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-load_gemdeps_source')" id="l_method-i-load_gemdeps_source">show</a>
+                
+              </p>
+              <div id="method-i-load_gemdeps_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/request_set.rb, line 272</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">load_gemdeps</span> <span class="ruby-identifier">path</span>, <span class="ruby-identifier">without_groups</span> = [], <span class="ruby-identifier">installing</span> = <span class="ruby-keyword">false</span>
+  <span class="ruby-ivar">@git_set</span>    = <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Resolver</span><span class="ruby-operator">::</span><span class="ruby-constant">GitSet</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-ivar">@vendor_set</span> = <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Resolver</span><span class="ruby-operator">::</span><span class="ruby-constant">VendorSet</span>.<span class="ruby-identifier">new</span>
+
+  <span class="ruby-ivar">@git_set</span>.<span class="ruby-identifier">root_dir</span> = <span class="ruby-ivar">@install_dir</span>
+
+  <span class="ruby-identifier">lock_file</span> = <span class="ruby-node">&quot;#{File.expand_path(path)}.lock&quot;</span>.<span class="ruby-identifier">untaint</span>
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-identifier">tokenizer</span> = <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">RequestSet</span><span class="ruby-operator">::</span><span class="ruby-constant">Lockfile</span><span class="ruby-operator">::</span><span class="ruby-constant">Tokenizer</span>.<span class="ruby-identifier">from_file</span> <span class="ruby-identifier">lock_file</span>
+    <span class="ruby-identifier">parser</span> = <span class="ruby-identifier">tokenizer</span>.<span class="ruby-identifier">make_parser</span> <span class="ruby-keyword">self</span>, []
+    <span class="ruby-identifier">parser</span>.<span class="ruby-identifier">parse</span>
+  <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">ENOENT</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">gf</span> = <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">RequestSet</span><span class="ruby-operator">::</span><span class="ruby-constant">GemDependencyAPI</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword">self</span>, <span class="ruby-identifier">path</span>
+  <span class="ruby-identifier">gf</span>.<span class="ruby-identifier">installing</span> = <span class="ruby-identifier">installing</span>
+  <span class="ruby-identifier">gf</span>.<span class="ruby-identifier">without_groups</span> = <span class="ruby-identifier">without_groups</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">without_groups</span>
+  <span class="ruby-identifier">gf</span>.<span class="ruby-identifier">load</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-resolve">
+            
+              <b>resolve</b>(set = Gem::Resolver::BestSet.new)
+            
+            <a href="../../classes/Gem/RequestSet.html#method-i-resolve" name="method-i-resolve" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Resolve the requested dependencies and return an Array of Specification
+objects to be activated.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-resolve_source')" id="l_method-i-resolve_source">show</a>
+                
+              </p>
+              <div id="method-i-resolve_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/request_set.rb, line 338</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">resolve</span> <span class="ruby-identifier">set</span> = <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Resolver</span><span class="ruby-operator">::</span><span class="ruby-constant">BestSet</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-ivar">@sets</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">set</span>
+  <span class="ruby-ivar">@sets</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-ivar">@git_set</span>
+  <span class="ruby-ivar">@sets</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-ivar">@vendor_set</span>
+
+  <span class="ruby-identifier">set</span> = <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Resolver</span>.<span class="ruby-identifier">compose_sets</span>(<span class="ruby-operator">*</span><span class="ruby-ivar">@sets</span>)
+  <span class="ruby-identifier">set</span>.<span class="ruby-identifier">remote</span> = <span class="ruby-ivar">@remote</span>
+  <span class="ruby-identifier">set</span>.<span class="ruby-identifier">prerelease</span> = <span class="ruby-ivar">@prerelease</span>
+
+  <span class="ruby-identifier">resolver</span> = <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Resolver</span>.<span class="ruby-identifier">new</span> <span class="ruby-ivar">@dependencies</span>, <span class="ruby-identifier">set</span>
+  <span class="ruby-identifier">resolver</span>.<span class="ruby-identifier">development</span>         = <span class="ruby-ivar">@development</span>
+  <span class="ruby-identifier">resolver</span>.<span class="ruby-identifier">development_shallow</span> = <span class="ruby-ivar">@development_shallow</span>
+  <span class="ruby-identifier">resolver</span>.<span class="ruby-identifier">ignore_dependencies</span> = <span class="ruby-ivar">@ignore_dependencies</span>
+  <span class="ruby-identifier">resolver</span>.<span class="ruby-identifier">soft_missing</span>        = <span class="ruby-ivar">@soft_missing</span>
+
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@conservative</span>
+    <span class="ruby-identifier">installed_gems</span> = {}
+    <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Specification</span>.<span class="ruby-identifier">find_all</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">spec</span><span class="ruby-operator">|</span>
+      (<span class="ruby-identifier">installed_gems</span>[<span class="ruby-identifier">spec</span>.<span class="ruby-identifier">name</span>] <span class="ruby-operator">||=</span> []) <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">spec</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">resolver</span>.<span class="ruby-identifier">skip_gems</span> = <span class="ruby-identifier">installed_gems</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-ivar">@resolver</span> = <span class="ruby-identifier">resolver</span>
+
+  <span class="ruby-ivar">@requests</span> = <span class="ruby-identifier">resolver</span>.<span class="ruby-identifier">resolve</span>
+
+  <span class="ruby-ivar">@errors</span> = <span class="ruby-identifier">set</span>.<span class="ruby-identifier">errors</span>
+
+  <span class="ruby-ivar">@requests</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-resolve_current">
+            
+              <b>resolve_current</b>()
+            
+            <a href="../../classes/Gem/RequestSet.html#method-i-resolve_current" name="method-i-resolve_current" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Resolve the requested dependencies against the gems available via <a
+href="../Gem.html#method-c-path">Gem.path</a> and return an Array of
+Specification objects to be activated.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-resolve_current_source')" id="l_method-i-resolve_current_source">show</a>
+                
+              </p>
+              <div id="method-i-resolve_current_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/request_set.rb, line 374</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">resolve_current</span>
+  <span class="ruby-identifier">resolve</span> <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Resolver</span><span class="ruby-operator">::</span><span class="ruby-constant">CurrentSet</span>.<span class="ruby-identifier">new</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-sorted_requests">
+            
+              <b>sorted_requests</b>()
+            
+            <a href="../../classes/Gem/RequestSet.html#method-i-sorted_requests" name="method-i-sorted_requests" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-sorted_requests_source')" id="l_method-i-sorted_requests_source">show</a>
+                
+              </p>
+              <div id="method-i-sorted_requests_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/request_set.rb, line 378</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">sorted_requests</span>
+  <span class="ruby-ivar">@sorted</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">strongly_connected_components</span>.<span class="ruby-identifier">flatten</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-specs">
+            
+              <b>specs</b>()
+            
+            <a href="../../classes/Gem/RequestSet.html#method-i-specs" name="method-i-specs" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-specs_source')" id="l_method-i-specs_source">show</a>
+                
+              </p>
+              <div id="method-i-specs_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/request_set.rb, line 382</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">specs</span>
+  <span class="ruby-ivar">@specs</span> <span class="ruby-operator">||=</span> <span class="ruby-ivar">@requests</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span> <span class="ruby-identifier">r</span>.<span class="ruby-identifier">full_spec</span> }
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-specs_in">
+            
+              <b>specs_in</b>(dir)
+            
+            <a href="../../classes/Gem/RequestSet.html#method-i-specs_in" name="method-i-specs_in" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-specs_in_source')" id="l_method-i-specs_in_source">show</a>
+                
+              </p>
+              <div id="method-i-specs_in_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/request_set.rb, line 386</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">specs_in</span> <span class="ruby-identifier">dir</span>
+  <span class="ruby-constant">Dir</span>[<span class="ruby-node">&quot;#{dir}/specifications/*.gemspec&quot;</span>].<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">g</span><span class="ruby-operator">|</span>
+    <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Specification</span>.<span class="ruby-identifier">load</span> <span class="ruby-identifier">g</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+
+    </div>
+  </body>
+</html>    

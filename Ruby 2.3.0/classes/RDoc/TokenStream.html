@@ -1,0 +1,508 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>RDoc::TokenStream</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Module</span> 
+            RDoc::TokenStream 
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/lib/rdoc/token_stream_rb.html">lib/rdoc/token_stream.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>frozen_string_literal: false</p>
+
+<p>A <a href="TokenStream.html">TokenStream</a> is a list of tokens, gathered
+during the parse of some entity (say a method). Entities populate these
+streams by being registered with the lexer. Any class can collect tokens by
+including <a href="TokenStream.html">TokenStream</a>. From the outside, you
+use such an object by calling the <a
+href="TokenStream.html#method-i-start_collecting_tokens">#start_collecting_tokens</a>
+method, followed by calls to <a
+href="TokenStream.html#method-i-add_token">#add_token</a> and pop_token.</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>A</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-add_token">add_token</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-add_tokens">add_tokens</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>C</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-collect_tokens">collect_tokens</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>P</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-pop_token">pop_token</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>S</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-start_collecting_tokens">start_collecting_tokens</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-to_html">to_html</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-token_stream">token_stream</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-tokens_to_s">tokens_to_s</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-to_html">
+            
+              <b>to_html</b>(token_stream)
+            
+            <a href="../../classes/RDoc/TokenStream.html#method-c-to_html" name="method-c-to_html" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Converts <code>token_stream</code> to HTML wrapping various tokens with
+<code>&lt;span&gt;</code> elements.  The following tokens types are wrapped
+in spans with the given class names:</p>
+<dl class="rdoc-list note-list"><dt>TkCONSTANT 
+<dd>
+<p>&#39;ruby-constant&#39;</p>
+</dd><dt>TkKW       
+<dd>
+<p>&#39;ruby-keyword&#39;</p>
+</dd><dt>TkIVAR     
+<dd>
+<p>&#39;ruby-ivar&#39;</p>
+</dd><dt>TkOp       
+<dd>
+<p>&#39;ruby-operator&#39;</p>
+</dd><dt>TkId       
+<dd>
+<p>&#39;ruby-identifier&#39;</p>
+</dd><dt>TkNode     
+<dd>
+<p>&#39;ruby-node&#39;</p>
+</dd><dt>TkCOMMENT  
+<dd>
+<p>&#39;ruby-comment&#39;</p>
+</dd><dt>TkREGEXP   
+<dd>
+<p>&#39;ruby-regexp&#39;</p>
+</dd><dt>TkSTRING   
+<dd>
+<p>&#39;ruby-string&#39;</p>
+</dd><dt>TkVal      
+<dd>
+<p>&#39;ruby-value&#39;</p>
+</dd></dl>
+
+<p>Other token types are not wrapped in spans.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-to_html_source')" id="l_method-c-to_html_source">show</a>
+                
+              </p>
+              <div id="method-c-to_html_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rdoc/token_stream.rb, line 29</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">self</span>.<span class="ruby-identifier">to_html</span> <span class="ruby-identifier">token_stream</span>
+  <span class="ruby-identifier">token_stream</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">t</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">next</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">t</span>
+
+    <span class="ruby-identifier">style</span> = <span class="ruby-keyword">case</span> <span class="ruby-identifier">t</span>
+            <span class="ruby-keyword">when</span> <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">RubyToken</span><span class="ruby-operator">::</span><span class="ruby-constant">TkCONSTANT</span> <span class="ruby-keyword">then</span> <span class="ruby-string">&#39;ruby-constant&#39;</span>
+            <span class="ruby-keyword">when</span> <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">RubyToken</span><span class="ruby-operator">::</span><span class="ruby-constant">TkKW</span>       <span class="ruby-keyword">then</span> <span class="ruby-string">&#39;ruby-keyword&#39;</span>
+            <span class="ruby-keyword">when</span> <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">RubyToken</span><span class="ruby-operator">::</span><span class="ruby-constant">TkIVAR</span>     <span class="ruby-keyword">then</span> <span class="ruby-string">&#39;ruby-ivar&#39;</span>
+            <span class="ruby-keyword">when</span> <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">RubyToken</span><span class="ruby-operator">::</span><span class="ruby-constant">TkOp</span>       <span class="ruby-keyword">then</span> <span class="ruby-string">&#39;ruby-operator&#39;</span>
+            <span class="ruby-keyword">when</span> <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">RubyToken</span><span class="ruby-operator">::</span><span class="ruby-constant">TkId</span>       <span class="ruby-keyword">then</span> <span class="ruby-string">&#39;ruby-identifier&#39;</span>
+            <span class="ruby-keyword">when</span> <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">RubyToken</span><span class="ruby-operator">::</span><span class="ruby-constant">TkNode</span>     <span class="ruby-keyword">then</span> <span class="ruby-string">&#39;ruby-node&#39;</span>
+            <span class="ruby-keyword">when</span> <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">RubyToken</span><span class="ruby-operator">::</span><span class="ruby-constant">TkCOMMENT</span>  <span class="ruby-keyword">then</span> <span class="ruby-string">&#39;ruby-comment&#39;</span>
+            <span class="ruby-keyword">when</span> <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">RubyToken</span><span class="ruby-operator">::</span><span class="ruby-constant">TkREGEXP</span>   <span class="ruby-keyword">then</span> <span class="ruby-string">&#39;ruby-regexp&#39;</span>
+            <span class="ruby-keyword">when</span> <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">RubyToken</span><span class="ruby-operator">::</span><span class="ruby-constant">TkSTRING</span>   <span class="ruby-keyword">then</span> <span class="ruby-string">&#39;ruby-string&#39;</span>
+            <span class="ruby-keyword">when</span> <span class="ruby-constant">RDoc</span><span class="ruby-operator">::</span><span class="ruby-constant">RubyToken</span><span class="ruby-operator">::</span><span class="ruby-constant">TkVal</span>      <span class="ruby-keyword">then</span> <span class="ruby-string">&#39;ruby-value&#39;</span>
+            <span class="ruby-keyword">end</span>
+
+    <span class="ruby-identifier">text</span> = <span class="ruby-constant">CGI</span>.<span class="ruby-identifier">escapeHTML</span> <span class="ruby-identifier">t</span>.<span class="ruby-identifier">text</span>
+
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">style</span> <span class="ruby-keyword">then</span>
+      <span class="ruby-node">&quot;&lt;span class=\&quot;#{style}\&quot;&gt;#{text}&lt;/span&gt;&quot;</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">text</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>.<span class="ruby-identifier">join</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-add_token">
+            
+              <b>add_token</b>(*tokens)
+            
+            <a href="../../classes/RDoc/TokenStream.html#method-i-add_token" name="method-i-add_token" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+            <div class="aka">
+              Alias for: <a href="TokenStream.html#method-i-add_tokens">add_tokens</a>
+            </div>
+          
+          
+          
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-add_tokens">
+            
+              <b>add_tokens</b>(*tokens)
+            
+            <a href="../../classes/RDoc/TokenStream.html#method-i-add_tokens" name="method-i-add_tokens" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Adds <code>tokens</code> to the collected tokens</p>
+            </div>
+          
+          
+          
+            <div class="aka">
+              Also aliased as: <a href="TokenStream.html#method-i-add_token">add_token</a>
+            </div>
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-add_tokens_source')" id="l_method-i-add_tokens_source">show</a>
+                
+              </p>
+              <div id="method-i-add_tokens_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rdoc/token_stream.rb, line 59</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">add_tokens</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">tokens</span>)
+  <span class="ruby-identifier">tokens</span>.<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">token</span><span class="ruby-operator">|</span> <span class="ruby-ivar">@token_stream</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">token</span> }
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-collect_tokens">
+            
+              <b>collect_tokens</b>()
+            
+            <a href="../../classes/RDoc/TokenStream.html#method-i-collect_tokens" name="method-i-collect_tokens" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Starts collecting tokens</p>
+            </div>
+          
+          
+          
+            <div class="aka">
+              Also aliased as: <a href="TokenStream.html#method-i-start_collecting_tokens">start_collecting_tokens</a>
+            </div>
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-collect_tokens_source')" id="l_method-i-collect_tokens_source">show</a>
+                
+              </p>
+              <div id="method-i-collect_tokens_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rdoc/token_stream.rb, line 68</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">collect_tokens</span>
+  <span class="ruby-ivar">@token_stream</span> = []
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-pop_token">
+            
+              <b>pop_token</b>()
+            
+            <a href="../../classes/RDoc/TokenStream.html#method-i-pop_token" name="method-i-pop_token" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Remove the last token from the collected tokens</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-pop_token_source')" id="l_method-i-pop_token_source">show</a>
+                
+              </p>
+              <div id="method-i-pop_token_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rdoc/token_stream.rb, line 77</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">pop_token</span>
+  <span class="ruby-ivar">@token_stream</span>.<span class="ruby-identifier">pop</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-start_collecting_tokens">
+            
+              <b>start_collecting_tokens</b>()
+            
+            <a href="../../classes/RDoc/TokenStream.html#method-i-start_collecting_tokens" name="method-i-start_collecting_tokens" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+            <div class="aka">
+              Alias for: <a href="TokenStream.html#method-i-collect_tokens">collect_tokens</a>
+            </div>
+          
+          
+          
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-token_stream">
+            
+              <b>token_stream</b>()
+            
+            <a href="../../classes/RDoc/TokenStream.html#method-i-token_stream" name="method-i-token_stream" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Current token stream</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-token_stream_source')" id="l_method-i-token_stream_source">show</a>
+                
+              </p>
+              <div id="method-i-token_stream_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rdoc/token_stream.rb, line 84</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">token_stream</span>
+  <span class="ruby-ivar">@token_stream</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-tokens_to_s">
+            
+              <b>tokens_to_s</b>()
+            
+            <a href="../../classes/RDoc/TokenStream.html#method-i-tokens_to_s" name="method-i-tokens_to_s" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns a string representation of the token stream</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-tokens_to_s_source')" id="l_method-i-tokens_to_s_source">show</a>
+                
+              </p>
+              <div id="method-i-tokens_to_s_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rdoc/token_stream.rb, line 91</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">tokens_to_s</span>
+  <span class="ruby-identifier">token_stream</span>.<span class="ruby-identifier">compact</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">token</span><span class="ruby-operator">|</span> <span class="ruby-identifier">token</span>.<span class="ruby-identifier">text</span> }.<span class="ruby-identifier">join</span> <span class="ruby-string">&#39;&#39;</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+
+    </div>
+  </body>
+</html>    

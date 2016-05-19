@@ -1,0 +1,978 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>MemCacheStoreTest</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/github.css" type="text/css" media="screen" />
+<script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            MemCacheStoreTest 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="ActionDispatch/IntegrationTest.html">ActionDispatch::IntegrationTest</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../files/actionpack/test/dispatch/session/mem_cache_store_test_rb.html">actionpack/test/dispatch/session/mem_cache_store_test.rb</a></li>
+            
+            <li><a href="../files/activesupport/test/caching_test_rb.html">activesupport/test/caching_test.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>You need to start a memcached server inorder to run these tests</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+    <!-- Namespace -->
+    <div class="sectiontitle">Namespace</div>
+    <ul>
+      
+        <li>
+          <span class="type">MODULE</span>
+          <a href="MemCacheStoreTest/Dalli.html">MemCacheStoreTest::Dalli</a>
+        </li>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="MemCacheStoreTest/TestController.html">MemCacheStoreTest::TestController</a>
+        </li>
+      
+    </ul>
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>S</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-setup">setup</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-test_deserializes_unloaded_class">test_deserializes_unloaded_class</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_doesnt_write_session_cookie_if_session_id_is_already_exists">test_doesnt_write_session_cookie_if_session_id_is_already_exists</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_getting_from_nonexistent_session">test_getting_from_nonexistent_session</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_getting_nil_session_value">test_getting_nil_session_value</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_getting_session_id">test_getting_session_id</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_getting_session_value_after_session_reset">test_getting_session_value_after_session_reset</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_local_cache_raw_values">test_local_cache_raw_values</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_local_cache_raw_values_with_marshal">test_local_cache_raw_values_with_marshal</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_prevents_session_fixation">test_prevents_session_fixation</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_raw_values">test_raw_values</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_raw_values_with_marshal">test_raw_values_with_marshal</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_read_should_return_a_different_object_id_each_time_it_is_called">test_read_should_return_a_different_object_id_each_time_it_is_called</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_setting_and_getting_session_value">test_setting_and_getting_session_value</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_setting_session_value_after_session_reset">test_setting_session_value_after_session_reset</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+    <!-- Includes -->
+    <div class="sectiontitle">Included Modules</div>
+    <ul>
+      
+        <li>
+          
+            <a href="CacheStoreBehavior.html">
+              CacheStoreBehavior
+            </a>
+          
+        </li>
+      
+        <li>
+          
+            <a href="LocalCacheBehavior.html">
+              LocalCacheBehavior
+            </a>
+          
+        </li>
+      
+        <li>
+          
+            <a href="CacheIncrementDecrementBehavior.html">
+              CacheIncrementDecrementBehavior
+            </a>
+          
+        </li>
+      
+        <li>
+          
+            <a href="EncodedKeyCacheBehavior.html">
+              EncodedKeyCacheBehavior
+            </a>
+          
+        </li>
+      
+        <li>
+          
+            <a href="AutoloadingCacheBehavior.html">
+              AutoloadingCacheBehavior
+            </a>
+          
+        </li>
+      
+    </ul>
+  
+
+
+
+  
+
+    
+
+    
+
+    
+      <!-- Section constants -->
+      <div class="sectiontitle">Constants</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class="attr-name">MEMCACHE_UP</td>
+            <td>=</td>
+            <td class="attr-value">true</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+      </table>
+    
+
+
+    
+
+
+    <!-- Methods -->
+        
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-setup">
+            
+              <b>setup</b>()
+            
+            <a href="../classes/MemCacheStoreTest.html#method-i-setup" name="method-i-setup" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-setup_source')" id="l_method-i-setup_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/eb3902e2d2921ef2b3b5d84b593ed407fd6dadbc/activesupport/test/caching_test.rb#L903" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-setup_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activesupport/test/caching_test.rb, line 903</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">setup</span>
+  <span class="ruby-identifier">skip</span> <span class="ruby-string">&quot;memcache server is not up&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-constant">MEMCACHE_UP</span>
+
+  <span class="ruby-ivar">@cache</span> = <span class="ruby-constant">ActiveSupport</span><span class="ruby-operator">::</span><span class="ruby-constant">Cache</span>.<span class="ruby-identifier">lookup_store</span>(<span class="ruby-value">:mem_cache_store</span>, <span class="ruby-value">:expires_in</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-number">60</span>)
+  <span class="ruby-ivar">@peek</span> = <span class="ruby-constant">ActiveSupport</span><span class="ruby-operator">::</span><span class="ruby-constant">Cache</span>.<span class="ruby-identifier">lookup_store</span>(<span class="ruby-value">:mem_cache_store</span>)
+  <span class="ruby-ivar">@data</span> = <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">instance_variable_get</span>(<span class="ruby-value">:@data</span>)
+  <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">clear</span>
+  <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">silence!</span>
+  <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">logger</span> = <span class="ruby-constant">ActiveSupport</span><span class="ruby-operator">::</span><span class="ruby-constant">Logger</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&quot;/dev/null&quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_deserializes_unloaded_class">
+            
+              <b>test_deserializes_unloaded_class</b>()
+            
+            <a href="../classes/MemCacheStoreTest.html#method-i-test_deserializes_unloaded_class" name="method-i-test_deserializes_unloaded_class" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_deserializes_unloaded_class_source')" id="l_method-i-test_deserializes_unloaded_class_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/72045b2a9ff20f1567b85c1e67e8fab5d76171a6/actionpack/test/dispatch/session/mem_cache_store_test.rb#L136" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_deserializes_unloaded_class_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionpack/test/dispatch/session/mem_cache_store_test.rb, line 136</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_deserializes_unloaded_class</span>
+  <span class="ruby-identifier">with_test_route_set</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">with_autoload_path</span> <span class="ruby-string">&quot;session_autoload_test&quot;</span> <span class="ruby-keyword">do</span>
+      <span class="ruby-identifier">get</span> <span class="ruby-string">&#39;/set_serialized_session_value&#39;</span>
+      <span class="ruby-identifier">assert_response</span> <span class="ruby-value">:success</span>
+      <span class="ruby-identifier">assert</span> <span class="ruby-identifier">cookies</span>[<span class="ruby-string">&#39;_session_id&#39;</span>]
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">with_autoload_path</span> <span class="ruby-string">&quot;session_autoload_test&quot;</span> <span class="ruby-keyword">do</span>
+      <span class="ruby-identifier">get</span> <span class="ruby-string">&#39;/get_session_id&#39;</span>
+      <span class="ruby-identifier">assert_response</span> <span class="ruby-value">:success</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">rescue</span> <span class="ruby-constant">Dalli</span><span class="ruby-operator">::</span><span class="ruby-constant">RingError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ex</span>
+  <span class="ruby-identifier">skip</span> <span class="ruby-identifier">ex</span>.<span class="ruby-identifier">message</span>, <span class="ruby-identifier">ex</span>.<span class="ruby-identifier">backtrace</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_doesnt_write_session_cookie_if_session_id_is_already_exists">
+            
+              <b>test_doesnt_write_session_cookie_if_session_id_is_already_exists</b>()
+            
+            <a href="../classes/MemCacheStoreTest.html#method-i-test_doesnt_write_session_cookie_if_session_id_is_already_exists" name="method-i-test_doesnt_write_session_cookie_if_session_id_is_already_exists" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_doesnt_write_session_cookie_if_session_id_is_already_exists_source')" id="l_method-i-test_doesnt_write_session_cookie_if_session_id_is_already_exists_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/72045b2a9ff20f1567b85c1e67e8fab5d76171a6/actionpack/test/dispatch/session/mem_cache_store_test.rb#L152" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_doesnt_write_session_cookie_if_session_id_is_already_exists_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionpack/test/dispatch/session/mem_cache_store_test.rb, line 152</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_doesnt_write_session_cookie_if_session_id_is_already_exists</span>
+  <span class="ruby-identifier">with_test_route_set</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">get</span> <span class="ruby-string">&#39;/set_session_value&#39;</span>
+    <span class="ruby-identifier">assert_response</span> <span class="ruby-value">:success</span>
+    <span class="ruby-identifier">assert</span> <span class="ruby-identifier">cookies</span>[<span class="ruby-string">&#39;_session_id&#39;</span>]
+
+    <span class="ruby-identifier">get</span> <span class="ruby-string">&#39;/get_session_value&#39;</span>
+    <span class="ruby-identifier">assert_response</span> <span class="ruby-value">:success</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">headers</span>[<span class="ruby-string">&#39;Set-Cookie&#39;</span>], <span class="ruby-string">&quot;should not resend the cookie again if session_id cookie is already exists&quot;</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">rescue</span> <span class="ruby-constant">Dalli</span><span class="ruby-operator">::</span><span class="ruby-constant">RingError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ex</span>
+  <span class="ruby-identifier">skip</span> <span class="ruby-identifier">ex</span>.<span class="ruby-identifier">message</span>, <span class="ruby-identifier">ex</span>.<span class="ruby-identifier">backtrace</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_getting_from_nonexistent_session">
+            
+              <b>test_getting_from_nonexistent_session</b>()
+            
+            <a href="../classes/MemCacheStoreTest.html#method-i-test_getting_from_nonexistent_session" name="method-i-test_getting_from_nonexistent_session" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_getting_from_nonexistent_session_source')" id="l_method-i-test_getting_from_nonexistent_session_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/72045b2a9ff20f1567b85c1e67e8fab5d76171a6/actionpack/test/dispatch/session/mem_cache_store_test.rb#L87" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_getting_from_nonexistent_session_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionpack/test/dispatch/session/mem_cache_store_test.rb, line 87</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_getting_from_nonexistent_session</span>
+  <span class="ruby-identifier">with_test_route_set</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">get</span> <span class="ruby-string">&#39;/get_session_value&#39;</span>
+    <span class="ruby-identifier">assert_response</span> <span class="ruby-value">:success</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&#39;foo: nil&#39;</span>, <span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>
+    <span class="ruby-identifier">assert_nil</span> <span class="ruby-identifier">cookies</span>[<span class="ruby-string">&#39;_session_id&#39;</span>], <span class="ruby-string">&quot;should only create session on write, not read&quot;</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">rescue</span> <span class="ruby-constant">Dalli</span><span class="ruby-operator">::</span><span class="ruby-constant">RingError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ex</span>
+  <span class="ruby-identifier">skip</span> <span class="ruby-identifier">ex</span>.<span class="ruby-identifier">message</span>, <span class="ruby-identifier">ex</span>.<span class="ruby-identifier">backtrace</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_getting_nil_session_value">
+            
+              <b>test_getting_nil_session_value</b>()
+            
+            <a href="../classes/MemCacheStoreTest.html#method-i-test_getting_nil_session_value" name="method-i-test_getting_nil_session_value" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_getting_nil_session_value_source')" id="l_method-i-test_getting_nil_session_value_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/72045b2a9ff20f1567b85c1e67e8fab5d76171a6/actionpack/test/dispatch/session/mem_cache_store_test.rb#L56" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_getting_nil_session_value_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionpack/test/dispatch/session/mem_cache_store_test.rb, line 56</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_getting_nil_session_value</span>
+  <span class="ruby-identifier">with_test_route_set</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">get</span> <span class="ruby-string">&#39;/get_session_value&#39;</span>
+    <span class="ruby-identifier">assert_response</span> <span class="ruby-value">:success</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&#39;foo: nil&#39;</span>, <span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">rescue</span> <span class="ruby-constant">Dalli</span><span class="ruby-operator">::</span><span class="ruby-constant">RingError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ex</span>
+  <span class="ruby-identifier">skip</span> <span class="ruby-identifier">ex</span>.<span class="ruby-identifier">message</span>, <span class="ruby-identifier">ex</span>.<span class="ruby-identifier">backtrace</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_getting_session_id">
+            
+              <b>test_getting_session_id</b>()
+            
+            <a href="../classes/MemCacheStoreTest.html#method-i-test_getting_session_id" name="method-i-test_getting_session_id" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_getting_session_id_source')" id="l_method-i-test_getting_session_id_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/72045b2a9ff20f1567b85c1e67e8fab5d76171a6/actionpack/test/dispatch/session/mem_cache_store_test.rb#L121" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_getting_session_id_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionpack/test/dispatch/session/mem_cache_store_test.rb, line 121</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_getting_session_id</span>
+  <span class="ruby-identifier">with_test_route_set</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">get</span> <span class="ruby-string">&#39;/set_session_value&#39;</span>
+    <span class="ruby-identifier">assert_response</span> <span class="ruby-value">:success</span>
+    <span class="ruby-identifier">assert</span> <span class="ruby-identifier">cookies</span>[<span class="ruby-string">&#39;_session_id&#39;</span>]
+    <span class="ruby-identifier">session_id</span> = <span class="ruby-identifier">cookies</span>[<span class="ruby-string">&#39;_session_id&#39;</span>]
+
+    <span class="ruby-identifier">get</span> <span class="ruby-string">&#39;/get_session_id&#39;</span>
+    <span class="ruby-identifier">assert_response</span> <span class="ruby-value">:success</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">session_id</span>, <span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>, <span class="ruby-string">&quot;should be able to read session id without accessing the session hash&quot;</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">rescue</span> <span class="ruby-constant">Dalli</span><span class="ruby-operator">::</span><span class="ruby-constant">RingError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ex</span>
+  <span class="ruby-identifier">skip</span> <span class="ruby-identifier">ex</span>.<span class="ruby-identifier">message</span>, <span class="ruby-identifier">ex</span>.<span class="ruby-identifier">backtrace</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_getting_session_value_after_session_reset">
+            
+              <b>test_getting_session_value_after_session_reset</b>()
+            
+            <a href="../classes/MemCacheStoreTest.html#method-i-test_getting_session_value_after_session_reset" name="method-i-test_getting_session_value_after_session_reset" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_getting_session_value_after_session_reset_source')" id="l_method-i-test_getting_session_value_after_session_reset_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/72045b2a9ff20f1567b85c1e67e8fab5d76171a6/actionpack/test/dispatch/session/mem_cache_store_test.rb#L66" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_getting_session_value_after_session_reset_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionpack/test/dispatch/session/mem_cache_store_test.rb, line 66</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_getting_session_value_after_session_reset</span>
+  <span class="ruby-identifier">with_test_route_set</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">get</span> <span class="ruby-string">&#39;/set_session_value&#39;</span>
+    <span class="ruby-identifier">assert_response</span> <span class="ruby-value">:success</span>
+    <span class="ruby-identifier">assert</span> <span class="ruby-identifier">cookies</span>[<span class="ruby-string">&#39;_session_id&#39;</span>]
+    <span class="ruby-identifier">session_cookie</span> = <span class="ruby-identifier">cookies</span>.<span class="ruby-identifier">send</span>(<span class="ruby-value">:hash_for</span>)[<span class="ruby-string">&#39;_session_id&#39;</span>]
+
+    <span class="ruby-identifier">get</span> <span class="ruby-string">&#39;/call_reset_session&#39;</span>
+    <span class="ruby-identifier">assert_response</span> <span class="ruby-value">:success</span>
+    <span class="ruby-identifier">assert_not_equal</span> [], <span class="ruby-identifier">headers</span>[<span class="ruby-string">&#39;Set-Cookie&#39;</span>]
+
+    <span class="ruby-identifier">cookies</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">session_cookie</span> <span class="ruby-comment"># replace our new session_id with our old, pre-reset session_id</span>
+
+    <span class="ruby-identifier">get</span> <span class="ruby-string">&#39;/get_session_value&#39;</span>
+    <span class="ruby-identifier">assert_response</span> <span class="ruby-value">:success</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&#39;foo: nil&#39;</span>, <span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>, <span class="ruby-string">&quot;data for this session should have been obliterated from memcached&quot;</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">rescue</span> <span class="ruby-constant">Dalli</span><span class="ruby-operator">::</span><span class="ruby-constant">RingError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ex</span>
+  <span class="ruby-identifier">skip</span> <span class="ruby-identifier">ex</span>.<span class="ruby-identifier">message</span>, <span class="ruby-identifier">ex</span>.<span class="ruby-identifier">backtrace</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_local_cache_raw_values">
+            
+              <b>test_local_cache_raw_values</b>()
+            
+            <a href="../classes/MemCacheStoreTest.html#method-i-test_local_cache_raw_values" name="method-i-test_local_cache_raw_values" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_local_cache_raw_values_source')" id="l_method-i-test_local_cache_raw_values_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/eb3902e2d2921ef2b3b5d84b593ed407fd6dadbc/activesupport/test/caching_test.rb#L934" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_local_cache_raw_values_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activesupport/test/caching_test.rb, line 934</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_local_cache_raw_values</span>
+  <span class="ruby-identifier">cache</span> = <span class="ruby-constant">ActiveSupport</span><span class="ruby-operator">::</span><span class="ruby-constant">Cache</span>.<span class="ruby-identifier">lookup_store</span>(<span class="ruby-value">:mem_cache_store</span>, <span class="ruby-value">:raw</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>)
+  <span class="ruby-identifier">cache</span>.<span class="ruby-identifier">clear</span>
+  <span class="ruby-identifier">cache</span>.<span class="ruby-identifier">with_local_cache</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">cache</span>.<span class="ruby-identifier">write</span>(<span class="ruby-string">&quot;foo&quot;</span>, <span class="ruby-number">2</span>)
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&quot;2&quot;</span>, <span class="ruby-identifier">cache</span>.<span class="ruby-identifier">read</span>(<span class="ruby-string">&quot;foo&quot;</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_local_cache_raw_values_with_marshal">
+            
+              <b>test_local_cache_raw_values_with_marshal</b>()
+            
+            <a href="../classes/MemCacheStoreTest.html#method-i-test_local_cache_raw_values_with_marshal" name="method-i-test_local_cache_raw_values_with_marshal" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_local_cache_raw_values_with_marshal_source')" id="l_method-i-test_local_cache_raw_values_with_marshal_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/eb3902e2d2921ef2b3b5d84b593ed407fd6dadbc/activesupport/test/caching_test.rb#L943" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_local_cache_raw_values_with_marshal_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activesupport/test/caching_test.rb, line 943</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_local_cache_raw_values_with_marshal</span>
+  <span class="ruby-identifier">cache</span> = <span class="ruby-constant">ActiveSupport</span><span class="ruby-operator">::</span><span class="ruby-constant">Cache</span>.<span class="ruby-identifier">lookup_store</span>(<span class="ruby-value">:mem_cache_store</span>, <span class="ruby-value">:raw</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>)
+  <span class="ruby-identifier">cache</span>.<span class="ruby-identifier">clear</span>
+  <span class="ruby-identifier">cache</span>.<span class="ruby-identifier">with_local_cache</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">cache</span>.<span class="ruby-identifier">write</span>(<span class="ruby-string">&quot;foo&quot;</span>, <span class="ruby-constant">Marshal</span>.<span class="ruby-identifier">dump</span>([]))
+    <span class="ruby-identifier">assert_equal</span> [], <span class="ruby-identifier">cache</span>.<span class="ruby-identifier">read</span>(<span class="ruby-string">&quot;foo&quot;</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_prevents_session_fixation">
+            
+              <b>test_prevents_session_fixation</b>()
+            
+            <a href="../classes/MemCacheStoreTest.html#method-i-test_prevents_session_fixation" name="method-i-test_prevents_session_fixation" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_prevents_session_fixation_source')" id="l_method-i-test_prevents_session_fixation_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/72045b2a9ff20f1567b85c1e67e8fab5d76171a6/actionpack/test/dispatch/session/mem_cache_store_test.rb#L166" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_prevents_session_fixation_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionpack/test/dispatch/session/mem_cache_store_test.rb, line 166</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_prevents_session_fixation</span>
+  <span class="ruby-identifier">with_test_route_set</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">get</span> <span class="ruby-string">&#39;/get_session_value&#39;</span>
+    <span class="ruby-identifier">assert_response</span> <span class="ruby-value">:success</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&#39;foo: nil&#39;</span>, <span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>
+    <span class="ruby-identifier">session_id</span> = <span class="ruby-identifier">cookies</span>[<span class="ruby-string">&#39;_session_id&#39;</span>]
+
+    <span class="ruby-identifier">reset!</span>
+
+    <span class="ruby-identifier">get</span> <span class="ruby-string">&#39;/set_session_value&#39;</span>, <span class="ruby-value">:_session_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">session_id</span>
+    <span class="ruby-identifier">assert_response</span> <span class="ruby-value">:success</span>
+    <span class="ruby-identifier">assert_not_equal</span> <span class="ruby-identifier">session_id</span>, <span class="ruby-identifier">cookies</span>[<span class="ruby-string">&#39;_session_id&#39;</span>]
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">rescue</span> <span class="ruby-constant">Dalli</span><span class="ruby-operator">::</span><span class="ruby-constant">RingError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ex</span>
+  <span class="ruby-identifier">skip</span> <span class="ruby-identifier">ex</span>.<span class="ruby-identifier">message</span>, <span class="ruby-identifier">ex</span>.<span class="ruby-identifier">backtrace</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_raw_values">
+            
+              <b>test_raw_values</b>()
+            
+            <a href="../classes/MemCacheStoreTest.html#method-i-test_raw_values" name="method-i-test_raw_values" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_raw_values_source')" id="l_method-i-test_raw_values_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/eb3902e2d2921ef2b3b5d84b593ed407fd6dadbc/activesupport/test/caching_test.rb#L920" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_raw_values_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activesupport/test/caching_test.rb, line 920</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_raw_values</span>
+  <span class="ruby-identifier">cache</span> = <span class="ruby-constant">ActiveSupport</span><span class="ruby-operator">::</span><span class="ruby-constant">Cache</span>.<span class="ruby-identifier">lookup_store</span>(<span class="ruby-value">:mem_cache_store</span>, <span class="ruby-value">:raw</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>)
+  <span class="ruby-identifier">cache</span>.<span class="ruby-identifier">clear</span>
+  <span class="ruby-identifier">cache</span>.<span class="ruby-identifier">write</span>(<span class="ruby-string">&quot;foo&quot;</span>, <span class="ruby-number">2</span>)
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&quot;2&quot;</span>, <span class="ruby-identifier">cache</span>.<span class="ruby-identifier">read</span>(<span class="ruby-string">&quot;foo&quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_raw_values_with_marshal">
+            
+              <b>test_raw_values_with_marshal</b>()
+            
+            <a href="../classes/MemCacheStoreTest.html#method-i-test_raw_values_with_marshal" name="method-i-test_raw_values_with_marshal" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_raw_values_with_marshal_source')" id="l_method-i-test_raw_values_with_marshal_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/eb3902e2d2921ef2b3b5d84b593ed407fd6dadbc/activesupport/test/caching_test.rb#L927" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_raw_values_with_marshal_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activesupport/test/caching_test.rb, line 927</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_raw_values_with_marshal</span>
+  <span class="ruby-identifier">cache</span> = <span class="ruby-constant">ActiveSupport</span><span class="ruby-operator">::</span><span class="ruby-constant">Cache</span>.<span class="ruby-identifier">lookup_store</span>(<span class="ruby-value">:mem_cache_store</span>, <span class="ruby-value">:raw</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>)
+  <span class="ruby-identifier">cache</span>.<span class="ruby-identifier">clear</span>
+  <span class="ruby-identifier">cache</span>.<span class="ruby-identifier">write</span>(<span class="ruby-string">&quot;foo&quot;</span>, <span class="ruby-constant">Marshal</span>.<span class="ruby-identifier">dump</span>([]))
+  <span class="ruby-identifier">assert_equal</span> [], <span class="ruby-identifier">cache</span>.<span class="ruby-identifier">read</span>(<span class="ruby-string">&quot;foo&quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_read_should_return_a_different_object_id_each_time_it_is_called">
+            
+              <b>test_read_should_return_a_different_object_id_each_time_it_is_called</b>()
+            
+            <a href="../classes/MemCacheStoreTest.html#method-i-test_read_should_return_a_different_object_id_each_time_it_is_called" name="method-i-test_read_should_return_a_different_object_id_each_time_it_is_called" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_read_should_return_a_different_object_id_each_time_it_is_called_source')" id="l_method-i-test_read_should_return_a_different_object_id_each_time_it_is_called_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/eb3902e2d2921ef2b3b5d84b593ed407fd6dadbc/activesupport/test/caching_test.rb#L952" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_read_should_return_a_different_object_id_each_time_it_is_called_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activesupport/test/caching_test.rb, line 952</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_read_should_return_a_different_object_id_each_time_it_is_called</span>
+  <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">write</span>(<span class="ruby-string">&#39;foo&#39;</span>, <span class="ruby-string">&#39;bar&#39;</span>)
+  <span class="ruby-identifier">value</span> = <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">read</span>(<span class="ruby-string">&#39;foo&#39;</span>)
+  <span class="ruby-identifier">assert_not_equal</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">object_id</span>, <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">read</span>(<span class="ruby-string">&#39;foo&#39;</span>).<span class="ruby-identifier">object_id</span>
+  <span class="ruby-identifier">value</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&#39;bingo&#39;</span>
+  <span class="ruby-identifier">assert_not_equal</span> <span class="ruby-identifier">value</span>, <span class="ruby-ivar">@cache</span>.<span class="ruby-identifier">read</span>(<span class="ruby-string">&#39;foo&#39;</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_setting_and_getting_session_value">
+            
+              <b>test_setting_and_getting_session_value</b>()
+            
+            <a href="../classes/MemCacheStoreTest.html#method-i-test_setting_and_getting_session_value" name="method-i-test_setting_and_getting_session_value" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_setting_and_getting_session_value_source')" id="l_method-i-test_setting_and_getting_session_value_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/72045b2a9ff20f1567b85c1e67e8fab5d76171a6/actionpack/test/dispatch/session/mem_cache_store_test.rb#L42" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_setting_and_getting_session_value_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionpack/test/dispatch/session/mem_cache_store_test.rb, line 42</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_setting_and_getting_session_value</span>
+  <span class="ruby-identifier">with_test_route_set</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">get</span> <span class="ruby-string">&#39;/set_session_value&#39;</span>
+    <span class="ruby-identifier">assert_response</span> <span class="ruby-value">:success</span>
+    <span class="ruby-identifier">assert</span> <span class="ruby-identifier">cookies</span>[<span class="ruby-string">&#39;_session_id&#39;</span>]
+
+    <span class="ruby-identifier">get</span> <span class="ruby-string">&#39;/get_session_value&#39;</span>
+    <span class="ruby-identifier">assert_response</span> <span class="ruby-value">:success</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&#39;foo: &quot;bar&quot;&#39;</span>, <span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">rescue</span> <span class="ruby-constant">Dalli</span><span class="ruby-operator">::</span><span class="ruby-constant">RingError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ex</span>
+  <span class="ruby-identifier">skip</span> <span class="ruby-identifier">ex</span>.<span class="ruby-identifier">message</span>, <span class="ruby-identifier">ex</span>.<span class="ruby-identifier">backtrace</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_setting_session_value_after_session_reset">
+            
+              <b>test_setting_session_value_after_session_reset</b>()
+            
+            <a href="../classes/MemCacheStoreTest.html#method-i-test_setting_session_value_after_session_reset" name="method-i-test_setting_session_value_after_session_reset" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_setting_session_value_after_session_reset_source')" id="l_method-i-test_setting_session_value_after_session_reset_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/72045b2a9ff20f1567b85c1e67e8fab5d76171a6/actionpack/test/dispatch/session/mem_cache_store_test.rb#L98" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_setting_session_value_after_session_reset_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionpack/test/dispatch/session/mem_cache_store_test.rb, line 98</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_setting_session_value_after_session_reset</span>
+  <span class="ruby-identifier">with_test_route_set</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">get</span> <span class="ruby-string">&#39;/set_session_value&#39;</span>
+    <span class="ruby-identifier">assert_response</span> <span class="ruby-value">:success</span>
+    <span class="ruby-identifier">assert</span> <span class="ruby-identifier">cookies</span>[<span class="ruby-string">&#39;_session_id&#39;</span>]
+    <span class="ruby-identifier">session_id</span> = <span class="ruby-identifier">cookies</span>[<span class="ruby-string">&#39;_session_id&#39;</span>]
+
+    <span class="ruby-identifier">get</span> <span class="ruby-string">&#39;/call_reset_session&#39;</span>
+    <span class="ruby-identifier">assert_response</span> <span class="ruby-value">:success</span>
+    <span class="ruby-identifier">assert_not_equal</span> [], <span class="ruby-identifier">headers</span>[<span class="ruby-string">&#39;Set-Cookie&#39;</span>]
+
+    <span class="ruby-identifier">get</span> <span class="ruby-string">&#39;/get_session_value&#39;</span>
+    <span class="ruby-identifier">assert_response</span> <span class="ruby-value">:success</span>
+    <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&#39;foo: nil&#39;</span>, <span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>
+
+    <span class="ruby-identifier">get</span> <span class="ruby-string">&#39;/get_session_id&#39;</span>
+    <span class="ruby-identifier">assert_response</span> <span class="ruby-value">:success</span>
+    <span class="ruby-identifier">assert_not_equal</span> <span class="ruby-identifier">session_id</span>, <span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">rescue</span> <span class="ruby-constant">Dalli</span><span class="ruby-operator">::</span><span class="ruby-constant">RingError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ex</span>
+  <span class="ruby-identifier">skip</span> <span class="ruby-identifier">ex</span>.<span class="ruby-identifier">message</span>, <span class="ruby-identifier">ex</span>.<span class="ruby-identifier">backtrace</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+
+    </div>
+  </body>
+</html>    

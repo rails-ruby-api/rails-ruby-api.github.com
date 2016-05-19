@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>TestDefaultAutosaveAssociationOnNewRecord</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/github.css" type="text/css" media="screen" />
+<script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            TestDefaultAutosaveAssociationOnNewRecord 
+            
+                <span class="parent">&lt; 
+                    
+                    ActiveRecord::TestCase
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../files/activerecord/test/cases/autosave_association_test_rb.html">activerecord/test/cases/autosave_association_test.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-test_autosave_new_record_on_belongs_to_can_be_disabled_per_relationship">test_autosave_new_record_on_belongs_to_can_be_disabled_per_relationship</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_autosave_new_record_on_has_many_can_be_disabled_per_relationship">test_autosave_new_record_on_has_many_can_be_disabled_per_relationship</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_autosave_new_record_on_has_one_can_be_disabled_per_relationship">test_autosave_new_record_on_has_one_can_be_disabled_per_relationship</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_autosave_new_record_with_after_create_callback">test_autosave_new_record_with_after_create_callback</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+        
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-test_autosave_new_record_on_belongs_to_can_be_disabled_per_relationship">
+            
+              <b>test_autosave_new_record_on_belongs_to_can_be_disabled_per_relationship</b>()
+            
+            <a href="../classes/TestDefaultAutosaveAssociationOnNewRecord.html#method-i-test_autosave_new_record_on_belongs_to_can_be_disabled_per_relationship" name="method-i-test_autosave_new_record_on_belongs_to_can_be_disabled_per_relationship" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_autosave_new_record_on_belongs_to_can_be_disabled_per_relationship_source')" id="l_method-i-test_autosave_new_record_on_belongs_to_can_be_disabled_per_relationship_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/cd1bbf8ede61dd5ca1c60c9801a1978d322d447b/activerecord/test/cases/autosave_association_test.rb#L560" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_autosave_new_record_on_belongs_to_can_be_disabled_per_relationship_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/autosave_association_test.rb, line 560</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_autosave_new_record_on_belongs_to_can_be_disabled_per_relationship</span>
+  <span class="ruby-identifier">new_account</span> = <span class="ruby-constant">Account</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&quot;credit_limit&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-number">1000</span>)
+  <span class="ruby-identifier">new_firm</span> = <span class="ruby-constant">Firm</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&quot;name&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;some firm&quot;</span>)
+
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-identifier">new_firm</span>.<span class="ruby-identifier">persisted?</span>
+  <span class="ruby-identifier">new_account</span>.<span class="ruby-identifier">firm</span> = <span class="ruby-identifier">new_firm</span>
+  <span class="ruby-identifier">new_account</span>.<span class="ruby-identifier">save!</span>
+
+  <span class="ruby-identifier">assert</span> <span class="ruby-identifier">new_firm</span>.<span class="ruby-identifier">persisted?</span>
+
+  <span class="ruby-identifier">new_account</span> = <span class="ruby-constant">Account</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&quot;credit_limit&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-number">1000</span>)
+  <span class="ruby-identifier">new_autosaved_firm</span> = <span class="ruby-constant">Firm</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&quot;name&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;some firm&quot;</span>)
+
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-identifier">new_autosaved_firm</span>.<span class="ruby-identifier">persisted?</span>
+  <span class="ruby-identifier">new_account</span>.<span class="ruby-identifier">unautosaved_firm</span> = <span class="ruby-identifier">new_autosaved_firm</span>
+  <span class="ruby-identifier">new_account</span>.<span class="ruby-identifier">save!</span>
+
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-identifier">new_autosaved_firm</span>.<span class="ruby-identifier">persisted?</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_autosave_new_record_on_has_many_can_be_disabled_per_relationship">
+            
+              <b>test_autosave_new_record_on_has_many_can_be_disabled_per_relationship</b>()
+            
+            <a href="../classes/TestDefaultAutosaveAssociationOnNewRecord.html#method-i-test_autosave_new_record_on_has_many_can_be_disabled_per_relationship" name="method-i-test_autosave_new_record_on_has_many_can_be_disabled_per_relationship" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_autosave_new_record_on_has_many_can_be_disabled_per_relationship_source')" id="l_method-i-test_autosave_new_record_on_has_many_can_be_disabled_per_relationship_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/cd1bbf8ede61dd5ca1c60c9801a1978d322d447b/activerecord/test/cases/autosave_association_test.rb#L602" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_autosave_new_record_on_has_many_can_be_disabled_per_relationship_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/autosave_association_test.rb, line 602</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_autosave_new_record_on_has_many_can_be_disabled_per_relationship</span>
+  <span class="ruby-identifier">firm</span> = <span class="ruby-constant">Firm</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&quot;name&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;some firm&quot;</span>)
+  <span class="ruby-identifier">account</span> = <span class="ruby-constant">Account</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&quot;credit_limit&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-number">1000</span>)
+
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-identifier">account</span>.<span class="ruby-identifier">persisted?</span>
+  <span class="ruby-identifier">firm</span>.<span class="ruby-identifier">accounts</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">account</span>
+
+  <span class="ruby-identifier">firm</span>.<span class="ruby-identifier">save!</span>
+  <span class="ruby-identifier">assert</span> <span class="ruby-identifier">account</span>.<span class="ruby-identifier">persisted?</span>
+
+  <span class="ruby-identifier">firm</span> = <span class="ruby-constant">Firm</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&quot;name&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;some firm&quot;</span>)
+  <span class="ruby-identifier">account</span> = <span class="ruby-constant">Account</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&quot;credit_limit&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-number">1000</span>)
+
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-identifier">account</span>.<span class="ruby-identifier">persisted?</span>
+  <span class="ruby-identifier">firm</span>.<span class="ruby-identifier">unautosaved_accounts</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">account</span>
+
+  <span class="ruby-identifier">firm</span>.<span class="ruby-identifier">save!</span>
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-identifier">account</span>.<span class="ruby-identifier">persisted?</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_autosave_new_record_on_has_one_can_be_disabled_per_relationship">
+            
+              <b>test_autosave_new_record_on_has_one_can_be_disabled_per_relationship</b>()
+            
+            <a href="../classes/TestDefaultAutosaveAssociationOnNewRecord.html#method-i-test_autosave_new_record_on_has_one_can_be_disabled_per_relationship" name="method-i-test_autosave_new_record_on_has_one_can_be_disabled_per_relationship" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_autosave_new_record_on_has_one_can_be_disabled_per_relationship_source')" id="l_method-i-test_autosave_new_record_on_has_one_can_be_disabled_per_relationship_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/cd1bbf8ede61dd5ca1c60c9801a1978d322d447b/activerecord/test/cases/autosave_association_test.rb#L580" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_autosave_new_record_on_has_one_can_be_disabled_per_relationship_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/autosave_association_test.rb, line 580</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_autosave_new_record_on_has_one_can_be_disabled_per_relationship</span>
+  <span class="ruby-identifier">firm</span> = <span class="ruby-constant">Firm</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&quot;name&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;some firm&quot;</span>)
+  <span class="ruby-identifier">account</span> = <span class="ruby-constant">Account</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&quot;credit_limit&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-number">1000</span>)
+
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-identifier">account</span>.<span class="ruby-identifier">persisted?</span>
+  <span class="ruby-identifier">firm</span>.<span class="ruby-identifier">account</span> = <span class="ruby-identifier">account</span>
+  <span class="ruby-identifier">firm</span>.<span class="ruby-identifier">save!</span>
+
+  <span class="ruby-identifier">assert</span> <span class="ruby-identifier">account</span>.<span class="ruby-identifier">persisted?</span>
+
+  <span class="ruby-identifier">firm</span> = <span class="ruby-constant">Firm</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&quot;name&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;some firm&quot;</span>)
+  <span class="ruby-identifier">account</span> = <span class="ruby-constant">Account</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&quot;credit_limit&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-number">1000</span>)
+
+  <span class="ruby-identifier">firm</span>.<span class="ruby-identifier">unautosaved_account</span> = <span class="ruby-identifier">account</span>
+
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-identifier">account</span>.<span class="ruby-identifier">persisted?</span>
+  <span class="ruby-identifier">firm</span>.<span class="ruby-identifier">unautosaved_account</span> = <span class="ruby-identifier">account</span>
+  <span class="ruby-identifier">firm</span>.<span class="ruby-identifier">save!</span>
+
+  <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-identifier">account</span>.<span class="ruby-identifier">persisted?</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_autosave_new_record_with_after_create_callback">
+            
+              <b>test_autosave_new_record_with_after_create_callback</b>()
+            
+            <a href="../classes/TestDefaultAutosaveAssociationOnNewRecord.html#method-i-test_autosave_new_record_with_after_create_callback" name="method-i-test_autosave_new_record_with_after_create_callback" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_autosave_new_record_with_after_create_callback_source')" id="l_method-i-test_autosave_new_record_with_after_create_callback_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/cd1bbf8ede61dd5ca1c60c9801a1978d322d447b/activerecord/test/cases/autosave_association_test.rb#L622" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_autosave_new_record_with_after_create_callback_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/autosave_association_test.rb, line 622</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_autosave_new_record_with_after_create_callback</span>
+  <span class="ruby-identifier">post</span> = <span class="ruby-constant">PostWithAfterCreateCallback</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">title</span><span class="ruby-operator">:</span> <span class="ruby-string">&#39;Captain Murphy&#39;</span>, <span class="ruby-identifier">body</span><span class="ruby-operator">:</span> <span class="ruby-string">&#39;is back&#39;</span>)
+  <span class="ruby-identifier">post</span>.<span class="ruby-identifier">comments</span>.<span class="ruby-identifier">build</span>(<span class="ruby-identifier">body</span><span class="ruby-operator">:</span> <span class="ruby-string">&#39;foo&#39;</span>)
+  <span class="ruby-identifier">post</span>.<span class="ruby-identifier">save!</span>
+
+  <span class="ruby-identifier">assert_not_nil</span> <span class="ruby-identifier">post</span>.<span class="ruby-identifier">author_id</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+
+    </div>
+  </body>
+</html>    

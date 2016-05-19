@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>documentation.rake</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../../../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../../../css/github.css" type="text/css" media="screen" />
+<script src="../../../../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            documentation.rake
+        </h1>
+        <ul class="files">
+            
+            <li>
+                railties/lib/rails/tasks/documentation.rake
+                
+                    <a href="https://github.com/rails/rails/blob/524f09a5e7fe8f8a8ee1bdbaa32a944e1981f10c/railties/lib/rails/tasks/documentation.rake" target="_blank" class="github_url">on GitHub</a>
+                
+            </li>
+            <li>Last modified: 2016-05-19 14:28:33 +0200</li>
+        </ul>
+    </div>
+
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>begin</p>
+
+<pre><code>require &#39;rdoc/task&#39;
+</code></pre>
+
+<p>rescue <a href="../../../../../classes/LoadError.html">LoadError</a></p>
+
+<pre><code># Rubinius installs RDoc as a gem, and for this interpreter &quot;rdoc/task&quot; is
+# available only if the application bundle includes &quot;rdoc&quot; (normally as a
+# dependency of the &quot;sdoc&quot; gem.)
+#
+# If RDoc is not available it is fine that we do not generate the tasks that
+# depend on it. Just be robust to this gotcha and go on.
+</code></pre>
+
+<p>else</p>
+
+<pre><code>require &#39;rails/api/task&#39;
+
+# Monkey-patch to remove redoc&#39;ing and clobber descriptions to cut down on rake -T noise
+class RDocTaskWithoutDescriptions &lt; RDoc::Task
+  include ::Rake::DSL
+
+  def define
+    task rdoc_task_name
+
+    task rerdoc_task_name =&gt; [clobber_task_name, rdoc_task_name]
+
+    task clobber_task_name do
+      rm_r rdoc_dir rescue nil
+    end
+
+    task :clobber =&gt; [clobber_task_name]
+
+    directory @rdoc_dir
+    task rdoc_task_name =&gt; [rdoc_target]
+    file rdoc_target =&gt; @rdoc_files + [Rake.application.rakefile] do
+      rm_r @rdoc_dir rescue nil
+      @before_running_rdoc.call if @before_running_rdoc
+      args = option_list + @rdoc_files
+      if @external
+        argstring = args.join(&#39; &#39;)
+        sh %{ruby -Ivendor vendor/rd #{argstring}}
+      else
+        require &#39;rdoc/rdoc&#39;
+        RDoc::RDoc.new.document(args)
+      end
+    end
+    self
+  end
+end
+
+namespace :doc do
+  RDocTaskWithoutDescriptions.new(&quot;app&quot;) { |rdoc|
+    rdoc.rdoc_dir = &#39;doc/app&#39;
+    rdoc.template = ENV[&#39;template&#39;] if ENV[&#39;template&#39;]
+    rdoc.title    = ENV[&#39;title&#39;] || &quot;Rails Application Documentation&quot;
+    rdoc.options &lt;&lt; &#39;--line-numbers&#39;
+    rdoc.options &lt;&lt; &#39;--charset&#39; &lt;&lt; &#39;utf-8&#39;
+    rdoc.rdoc_files.include(&#39;README.rdoc&#39;)
+    rdoc.rdoc_files.include(&#39;app   /*.rb&#39;)
+    rdoc.rdoc_files.include(&#39;lib/   *.rb&#39;)
+  }
+  Rake::Task[&#39;doc:app&#39;].comment = &quot;Generate docs for the app -- also available doc:rails, doc:guides (options: TEMPLATE=/rdoc-template.rb, TITLE=\&quot;Custom Title\&quot;)&quot;
+
+  # desc &#39;Generate documentation for the Rails framework.&#39;
+  Rails::API::AppTask.new(&#39;rails&#39;)
+end
+</code></pre>
+
+<p>end</p>
+
+<p>namespace :doc do</p>
+
+<pre><code>task :guides do
+  rails_gem_dir = Gem::Specification.find_by_name(&quot;rails&quot;).gem_dir
+  require File.expand_path(File.join(rails_gem_dir, &quot;/guides/rails_guides&quot;))
+  RailsGuides::Generator.new(Rails.root.join(&quot;doc/guides&quot;)).generate
+end
+</code></pre>
+
+<p>end</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+              </div>
+
+    </div>
+  </body>
+</html>

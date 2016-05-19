@@ -1,0 +1,953 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>WEBrick::HTTPResponse</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            WEBrick::HTTPResponse 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/lib/webrick/httpresponse_rb.html">lib/webrick/httpresponse.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>An HTTP response.  This is filled in by the service or do_* methods of a <a
+href="../WEBrick.html">WEBrick</a> HTTP Servlet.</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>#</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-5B-5D">[]</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-5B-5D-3D">[]=</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>C</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-chunked-3D">chunked=</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-chunked-3F">chunked?</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-content_length">content_length</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-content_length-3D">content_length=</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-content_type">content_type</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-content_type-3D">content_type=</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>E</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-each">each</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>K</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-keep_alive-3F">keep_alive?</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>S</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-set_error">set_error</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-set_redirect">set_redirect</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-status-3D">status=</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-status_line">status_line</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+      <!-- Section attributes -->
+      <div class="sectiontitle">Attributes</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [RW]
+            </td>
+            <td class='attr-name'>body</td>
+            <td class='attr-desc'><p>Body may be a String or IO-like object that responds to read and
+readpartial.</p></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [R]
+            </td>
+            <td class='attr-name'>config</td>
+            <td class='attr-desc'><p>Configuration for this response</p></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [R]
+            </td>
+            <td class='attr-name'>cookies</td>
+            <td class='attr-desc'><p>Response cookies</p></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [RW]
+            </td>
+            <td class='attr-name'>filename</td>
+            <td class='attr-desc'><p>Filename of the static file in this response.  Only used by the FileHandler
+servlet.</p></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [R]
+            </td>
+            <td class='attr-name'>header</td>
+            <td class='attr-desc'><p>Response header</p></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [R]
+            </td>
+            <td class='attr-name'>http_version</td>
+            <td class='attr-desc'><p>HTTP Response version</p></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [RW]
+            </td>
+            <td class='attr-name'>keep_alive</td>
+            <td class='attr-desc'><p>Is this a keep-alive response?</p></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [RW]
+            </td>
+            <td class='attr-name'>reason_phrase</td>
+            <td class='attr-desc'><p>Response reason phrase (“OK”)</p></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [RW]
+            </td>
+            <td class='attr-name'>request_http_version</td>
+            <td class='attr-desc'><p>Request HTTP version for this response</p></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [RW]
+            </td>
+            <td class='attr-name'>request_method</td>
+            <td class='attr-desc'><p>Request method for this response</p></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [RW]
+            </td>
+            <td class='attr-name'>request_uri</td>
+            <td class='attr-desc'><p>Request <a href="../URI.html">URI</a> for this response</p></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [R]
+            </td>
+            <td class='attr-name'>sent_size</td>
+            <td class='attr-desc'><p>Bytes sent in this response</p></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [R]
+            </td>
+            <td class='attr-name'>status</td>
+            <td class='attr-desc'><p>Response status code (200)</p></td>
+          </tr>
+        
+      </table>
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <b>new</b>(config)
+            
+            <a href="../../classes/WEBrick/HTTPResponse.html#method-c-new" name="method-c-new" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Creates a new HTTP response object.  WEBrick::Config::HTTP is the default
+configuration.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/webrick/httpresponse.rb, line 96</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">initialize</span>(<span class="ruby-identifier">config</span>)
+  <span class="ruby-ivar">@config</span> = <span class="ruby-identifier">config</span>
+  <span class="ruby-ivar">@buffer_size</span> = <span class="ruby-identifier">config</span>[<span class="ruby-value">:OutputBufferSize</span>]
+  <span class="ruby-ivar">@logger</span> = <span class="ruby-identifier">config</span>[<span class="ruby-value">:Logger</span>]
+  <span class="ruby-ivar">@header</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-ivar">@status</span> = <span class="ruby-constant">HTTPStatus</span><span class="ruby-operator">::</span><span class="ruby-constant">RC_OK</span>
+  <span class="ruby-ivar">@reason_phrase</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-ivar">@http_version</span> = <span class="ruby-constant">HTTPVersion</span><span class="ruby-operator">::</span><span class="ruby-identifier">convert</span>(<span class="ruby-ivar">@config</span>[<span class="ruby-value">:HTTPVersion</span>])
+  <span class="ruby-ivar">@body</span> = <span class="ruby-string">&#39;&#39;</span>
+  <span class="ruby-ivar">@keep_alive</span> = <span class="ruby-keyword">true</span>
+  <span class="ruby-ivar">@cookies</span> = []
+  <span class="ruby-ivar">@request_method</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-ivar">@request_uri</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-ivar">@request_http_version</span> = <span class="ruby-ivar">@http_version</span>  <span class="ruby-comment"># temporary</span>
+  <span class="ruby-ivar">@chunked</span> = <span class="ruby-keyword">false</span>
+  <span class="ruby-ivar">@filename</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-ivar">@sent_size</span> = <span class="ruby-number">0</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-5B-5D">
+            
+              <b>[]</b>(field)
+            
+            <a href="../../classes/WEBrick/HTTPResponse.html#method-i-5B-5D" name="method-i-5B-5D" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Retrieves the response header <code>field</code></p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-5B-5D_source')" id="l_method-i-5B-5D_source">show</a>
+                
+              </p>
+              <div id="method-i-5B-5D_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/webrick/httpresponse.rb, line 133</span>
+<span class="ruby-keyword">def</span> <span class="ruby-operator">[]</span>(<span class="ruby-keyword ruby-title">field</span>)
+  <span class="ruby-ivar">@header</span>[<span class="ruby-identifier">field</span>.<span class="ruby-identifier">downcase</span>]
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-5B-5D-3D">
+            
+              <b>[]=</b>(field, value)
+            
+            <a href="../../classes/WEBrick/HTTPResponse.html#method-i-5B-5D-3D" name="method-i-5B-5D-3D" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Sets the response header <code>field</code> to <code>value</code></p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-5B-5D-3D_source')" id="l_method-i-5B-5D-3D_source">show</a>
+                
+              </p>
+              <div id="method-i-5B-5D-3D_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/webrick/httpresponse.rb, line 140</span>
+<span class="ruby-keyword">def</span> <span class="ruby-operator">[]=</span>(<span class="ruby-keyword ruby-title">field</span>, <span class="ruby-identifier">value</span>)
+  <span class="ruby-ivar">@header</span>[<span class="ruby-identifier">field</span>.<span class="ruby-identifier">downcase</span>] = <span class="ruby-identifier">value</span>.<span class="ruby-identifier">to_s</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-chunked-3D">
+            
+              <b>chunked=</b>(val)
+            
+            <a href="../../classes/WEBrick/HTTPResponse.html#method-i-chunked-3D" name="method-i-chunked-3D" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Enables chunked transfer encoding.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-chunked-3D_source')" id="l_method-i-chunked-3D_source">show</a>
+                
+              </p>
+              <div id="method-i-chunked-3D_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/webrick/httpresponse.rb, line 191</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">chunked=</span>(<span class="ruby-identifier">val</span>)
+  <span class="ruby-ivar">@chunked</span> = <span class="ruby-identifier">val</span> <span class="ruby-operator">?</span> <span class="ruby-keyword">true</span> <span class="ruby-operator">:</span> <span class="ruby-keyword">false</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-chunked-3F">
+            
+              <b>chunked?</b>()
+            
+            <a href="../../classes/WEBrick/HTTPResponse.html#method-i-chunked-3F" name="method-i-chunked-3F" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Will this response body be returned using chunked transfer-encoding?</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-chunked-3F_source')" id="l_method-i-chunked-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-chunked-3F_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/webrick/httpresponse.rb, line 184</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">chunked?</span>
+  <span class="ruby-ivar">@chunked</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-content_length">
+            
+              <b>content_length</b>()
+            
+            <a href="../../classes/WEBrick/HTTPResponse.html#method-i-content_length" name="method-i-content_length" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>The content-length header</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-content_length_source')" id="l_method-i-content_length_source">show</a>
+                
+              </p>
+              <div id="method-i-content_length_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/webrick/httpresponse.rb, line 147</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">content_length</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">len</span> = <span class="ruby-keyword">self</span>[<span class="ruby-string">&#39;content-length&#39;</span>]
+    <span class="ruby-keyword">return</span> <span class="ruby-constant">Integer</span>(<span class="ruby-identifier">len</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-content_length-3D">
+            
+              <b>content_length=</b>(len)
+            
+            <a href="../../classes/WEBrick/HTTPResponse.html#method-i-content_length-3D" name="method-i-content_length-3D" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Sets the content-length header to <code>len</code></p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-content_length-3D_source')" id="l_method-i-content_length-3D_source">show</a>
+                
+              </p>
+              <div id="method-i-content_length-3D_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/webrick/httpresponse.rb, line 156</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">content_length=</span>(<span class="ruby-identifier">len</span>)
+  <span class="ruby-keyword">self</span>[<span class="ruby-string">&#39;content-length&#39;</span>] = <span class="ruby-identifier">len</span>.<span class="ruby-identifier">to_s</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-content_type">
+            
+              <b>content_type</b>()
+            
+            <a href="../../classes/WEBrick/HTTPResponse.html#method-i-content_type" name="method-i-content_type" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>The content-type header</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-content_type_source')" id="l_method-i-content_type_source">show</a>
+                
+              </p>
+              <div id="method-i-content_type_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/webrick/httpresponse.rb, line 163</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">content_type</span>
+  <span class="ruby-keyword">self</span>[<span class="ruby-string">&#39;content-type&#39;</span>]
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-content_type-3D">
+            
+              <b>content_type=</b>(type)
+            
+            <a href="../../classes/WEBrick/HTTPResponse.html#method-i-content_type-3D" name="method-i-content_type-3D" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Sets the content-type header to <code>type</code></p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-content_type-3D_source')" id="l_method-i-content_type-3D_source">show</a>
+                
+              </p>
+              <div id="method-i-content_type-3D_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/webrick/httpresponse.rb, line 170</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">content_type=</span>(<span class="ruby-identifier">type</span>)
+  <span class="ruby-keyword">self</span>[<span class="ruby-string">&#39;content-type&#39;</span>] = <span class="ruby-identifier">type</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-each">
+            
+              <b>each</b>()
+            
+            <a href="../../classes/WEBrick/HTTPResponse.html#method-i-each" name="method-i-each" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Iterates over each header in the response</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-each_source')" id="l_method-i-each_source">show</a>
+                
+              </p>
+              <div id="method-i-each_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/webrick/httpresponse.rb, line 177</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">each</span>
+  <span class="ruby-ivar">@header</span>.<span class="ruby-identifier">each</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">field</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span>  <span class="ruby-keyword">yield</span>(<span class="ruby-identifier">field</span>, <span class="ruby-identifier">value</span>) }
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-keep_alive-3F">
+            
+              <b>keep_alive?</b>()
+            
+            <a href="../../classes/WEBrick/HTTPResponse.html#method-i-keep_alive-3F" name="method-i-keep_alive-3F" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Will this response&#39;s connection be kept alive?</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-keep_alive-3F_source')" id="l_method-i-keep_alive-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-keep_alive-3F_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/webrick/httpresponse.rb, line 198</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">keep_alive?</span>
+  <span class="ruby-ivar">@keep_alive</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-set_error">
+            
+              <b>set_error</b>(ex, backtrace=false)
+            
+            <a href="../../classes/WEBrick/HTTPResponse.html#method-i-set_error" name="method-i-set_error" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Creates an error page for exception <code>ex</code> with an optional
+<code>backtrace</code></p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-set_error_source')" id="l_method-i-set_error_source">show</a>
+                
+              </p>
+              <div id="method-i-set_error_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/webrick/httpresponse.rb, line 333</span>
+    <span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">set_error</span>(<span class="ruby-identifier">ex</span>, <span class="ruby-identifier">backtrace</span>=<span class="ruby-keyword">false</span>)
+      <span class="ruby-keyword">case</span> <span class="ruby-identifier">ex</span>
+      <span class="ruby-keyword">when</span> <span class="ruby-constant">HTTPStatus</span><span class="ruby-operator">::</span><span class="ruby-constant">Status</span>
+        <span class="ruby-ivar">@keep_alive</span> = <span class="ruby-keyword">false</span> <span class="ruby-keyword">if</span> <span class="ruby-constant">HTTPStatus</span><span class="ruby-operator">::</span><span class="ruby-identifier">error?</span>(<span class="ruby-identifier">ex</span>.<span class="ruby-identifier">code</span>)
+        <span class="ruby-keyword">self</span>.<span class="ruby-identifier">status</span> = <span class="ruby-identifier">ex</span>.<span class="ruby-identifier">code</span>
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-ivar">@keep_alive</span> = <span class="ruby-keyword">false</span>
+        <span class="ruby-keyword">self</span>.<span class="ruby-identifier">status</span> = <span class="ruby-constant">HTTPStatus</span><span class="ruby-operator">::</span><span class="ruby-constant">RC_INTERNAL_SERVER_ERROR</span>
+      <span class="ruby-keyword">end</span>
+      <span class="ruby-ivar">@header</span>[<span class="ruby-string">&#39;content-type&#39;</span>] = <span class="ruby-string">&quot;text/html; charset=ISO-8859-1&quot;</span>
+
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">respond_to?</span>(<span class="ruby-value">:create_error_page</span>)
+        <span class="ruby-identifier">create_error_page</span>()
+        <span class="ruby-keyword">return</span>
+      <span class="ruby-keyword">end</span>
+
+      <span class="ruby-keyword">if</span> <span class="ruby-ivar">@request_uri</span>
+        <span class="ruby-identifier">host</span>, <span class="ruby-identifier">port</span> = <span class="ruby-ivar">@request_uri</span>.<span class="ruby-identifier">host</span>, <span class="ruby-ivar">@request_uri</span>.<span class="ruby-identifier">port</span>
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-identifier">host</span>, <span class="ruby-identifier">port</span> = <span class="ruby-ivar">@config</span>[<span class="ruby-value">:ServerName</span>], <span class="ruby-ivar">@config</span>[<span class="ruby-value">:Port</span>]
+      <span class="ruby-keyword">end</span>
+
+      <span class="ruby-ivar">@body</span> = <span class="ruby-string">&#39;&#39;</span>
+      <span class="ruby-ivar">@body</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value">&lt;&lt;-_end_of_html_
+&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot;&gt;
+&lt;HTML&gt;
+  &lt;HEAD&gt;&lt;TITLE&gt;#{HTMLUtils::escape(@reason_phrase)}&lt;/TITLE&gt;&lt;/HEAD&gt;
+  &lt;BODY&gt;
+    &lt;H1&gt;#{HTMLUtils::escape(@reason_phrase)}&lt;/H1&gt;
+    #{HTMLUtils::escape(ex.message)}
+    &lt;HR&gt;
+      _end_of_html_</span>
+
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">backtrace</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">$DEBUG</span>
+        <span class="ruby-ivar">@body</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;backtrace of `#{HTMLUtils::escape(ex.class.to_s)}&#39; &quot;</span>
+        <span class="ruby-ivar">@body</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;#{HTMLUtils::escape(ex.message)}&quot;</span>
+        <span class="ruby-ivar">@body</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&quot;&lt;PRE&gt;&quot;</span>
+        <span class="ruby-identifier">ex</span>.<span class="ruby-identifier">backtrace</span>.<span class="ruby-identifier">each</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span> <span class="ruby-ivar">@body</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;\t#{line}\n&quot;</span>}
+        <span class="ruby-ivar">@body</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&quot;&lt;/PRE&gt;&lt;HR&gt;&quot;</span>
+      <span class="ruby-keyword">end</span>
+
+      <span class="ruby-ivar">@body</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value">&lt;&lt;-_end_of_html_
+    &lt;ADDRESS&gt;
+     #{HTMLUtils::escape(@config[:ServerSoftware])} at
+     #{host}:#{port}
+    &lt;/ADDRESS&gt;
+  &lt;/BODY&gt;
+&lt;/HTML&gt;
+      _end_of_html_</span>
+    <span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-set_redirect">
+            
+              <b>set_redirect</b>(status, url)
+            
+            <a href="../../classes/WEBrick/HTTPResponse.html#method-i-set_redirect" name="method-i-set_redirect" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Redirects to <code>url</code> with a <a
+href="HTTPStatus/Redirect.html">WEBrick::HTTPStatus::Redirect</a>
+<code>status</code>.</p>
+
+<p>Example:</p>
+
+<pre><code>res.set_redirect WEBrick::HTTPStatus::TemporaryRedirect
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-set_redirect_source')" id="l_method-i-set_redirect_source">show</a>
+                
+              </p>
+              <div id="method-i-set_redirect_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/webrick/httpresponse.rb, line 324</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">set_redirect</span>(<span class="ruby-identifier">status</span>, <span class="ruby-identifier">url</span>)
+  <span class="ruby-ivar">@body</span> = <span class="ruby-node">&quot;&lt;HTML&gt;&lt;A HREF=\&quot;#{url}\&quot;&gt;#{url}&lt;/A&gt;.&lt;/HTML&gt;\n&quot;</span>
+  <span class="ruby-ivar">@header</span>[<span class="ruby-string">&#39;location&#39;</span>] = <span class="ruby-identifier">url</span>.<span class="ruby-identifier">to_s</span>
+  <span class="ruby-identifier">raise</span> <span class="ruby-identifier">status</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-status-3D">
+            
+              <b>status=</b>(status)
+            
+            <a href="../../classes/WEBrick/HTTPResponse.html#method-i-status-3D" name="method-i-status-3D" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Sets the response&#39;s status to the <code>status</code> code</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-status-3D_source')" id="l_method-i-status-3D_source">show</a>
+                
+              </p>
+              <div id="method-i-status-3D_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/webrick/httpresponse.rb, line 125</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">status=</span>(<span class="ruby-identifier">status</span>)
+  <span class="ruby-ivar">@status</span> = <span class="ruby-identifier">status</span>
+  <span class="ruby-ivar">@reason_phrase</span> = <span class="ruby-constant">HTTPStatus</span><span class="ruby-operator">::</span><span class="ruby-identifier">reason_phrase</span>(<span class="ruby-identifier">status</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-status_line">
+            
+              <b>status_line</b>()
+            
+            <a href="../../classes/WEBrick/HTTPResponse.html#method-i-status_line" name="method-i-status_line" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>The response&#39;s HTTP status line</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-status_line_source')" id="l_method-i-status_line_source">show</a>
+                
+              </p>
+              <div id="method-i-status_line_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/webrick/httpresponse.rb, line 118</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">status_line</span>
+  <span class="ruby-node">&quot;HTTP/#@http_version #@status #@reason_phrase #{CRLF}&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+
+    </div>
+  </body>
+</html>    

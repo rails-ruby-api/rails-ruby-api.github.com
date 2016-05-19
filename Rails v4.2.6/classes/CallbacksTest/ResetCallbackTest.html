@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>CallbacksTest::ResetCallbackTest</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            CallbacksTest::ResetCallbackTest 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../ActiveSupport/TestCase.html">ActiveSupport::TestCase</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/activesupport/test/callbacks_test_rb.html">activesupport/test/callbacks_test.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>B</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-build_class">build_class</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>R</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-run">run</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-test_reset_callbacks">test_reset_callbacks</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_reset_impacts_subclasses">test_reset_impacts_subclasses</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_save_conditional_person">test_save_conditional_person</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+    <!-- Includes -->
+    <div class="sectiontitle">Included Modules</div>
+    <ul>
+      
+        <li>
+          
+            <a href="../ActiveSupport/Callbacks.html">
+              ActiveSupport::Callbacks
+            </a>
+          
+        </li>
+      
+    </ul>
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+        
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-build_class">
+            
+              <b>build_class</b>(memo)
+            
+            <a href="../../classes/CallbacksTest/ResetCallbackTest.html#method-i-build_class" name="method-i-build_class" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-build_class_source')" id="l_method-i-build_class_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/4e68765cf65a435ef706d875c51bfcfcbd6fef3a/activesupport/test/callbacks_test.rb#L881" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-build_class_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activesupport/test/callbacks_test.rb, line 881</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">build_class</span>(<span class="ruby-identifier">memo</span>)
+  <span class="ruby-identifier">klass</span> = <span class="ruby-constant">Class</span>.<span class="ruby-identifier">new</span> {
+    <span class="ruby-identifier">include</span> <span class="ruby-constant">ActiveSupport</span><span class="ruby-operator">::</span><span class="ruby-constant">Callbacks</span>
+    <span class="ruby-identifier">define_callbacks</span> <span class="ruby-value">:foo</span>
+    <span class="ruby-identifier">set_callback</span> <span class="ruby-value">:foo</span>, <span class="ruby-value">:before</span>, <span class="ruby-value">:hello</span>
+    <span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">run</span>; <span class="ruby-identifier">run_callbacks</span> <span class="ruby-value">:foo</span>; <span class="ruby-keyword">end</span>
+  }
+  <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">class_eval</span> {
+    <span class="ruby-identifier">define_method</span>(<span class="ruby-value">:hello</span>) { <span class="ruby-identifier">memo</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value">:hi</span> }
+  }
+  <span class="ruby-identifier">klass</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-run">
+            
+              <b>run</b>()
+            
+            <a href="../../classes/CallbacksTest/ResetCallbackTest.html#method-i-run" name="method-i-run" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-run_source')" id="l_method-i-run_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/4e68765cf65a435ef706d875c51bfcfcbd6fef3a/activesupport/test/callbacks_test.rb#L886" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-run_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activesupport/test/callbacks_test.rb, line 886</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">run</span>; <span class="ruby-identifier">run_callbacks</span> <span class="ruby-value">:foo</span>; <span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_reset_callbacks">
+            
+              <b>test_reset_callbacks</b>()
+            
+            <a href="../../classes/CallbacksTest/ResetCallbackTest.html#method-i-test_reset_callbacks" name="method-i-test_reset_callbacks" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_reset_callbacks_source')" id="l_method-i-test_reset_callbacks_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/4e68765cf65a435ef706d875c51bfcfcbd6fef3a/activesupport/test/callbacks_test.rb#L894" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_reset_callbacks_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activesupport/test/callbacks_test.rb, line 894</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_reset_callbacks</span>
+  <span class="ruby-identifier">events</span> = []
+  <span class="ruby-identifier">klass</span> = <span class="ruby-identifier">build_class</span> <span class="ruby-identifier">events</span>
+  <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">new</span>.<span class="ruby-identifier">run</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-number">1</span>, <span class="ruby-identifier">events</span>.<span class="ruby-identifier">length</span>
+
+  <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">reset_callbacks</span> <span class="ruby-value">:foo</span>
+  <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">new</span>.<span class="ruby-identifier">run</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-number">1</span>, <span class="ruby-identifier">events</span>.<span class="ruby-identifier">length</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_reset_impacts_subclasses">
+            
+              <b>test_reset_impacts_subclasses</b>()
+            
+            <a href="../../classes/CallbacksTest/ResetCallbackTest.html#method-i-test_reset_impacts_subclasses" name="method-i-test_reset_impacts_subclasses" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_reset_impacts_subclasses_source')" id="l_method-i-test_reset_impacts_subclasses_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/4e68765cf65a435ef706d875c51bfcfcbd6fef3a/activesupport/test/callbacks_test.rb#L905" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_reset_impacts_subclasses_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activesupport/test/callbacks_test.rb, line 905</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_reset_impacts_subclasses</span>
+  <span class="ruby-identifier">events</span> = []
+  <span class="ruby-identifier">klass</span> = <span class="ruby-identifier">build_class</span> <span class="ruby-identifier">events</span>
+  <span class="ruby-identifier">subclass</span> = <span class="ruby-constant">Class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">klass</span>) { <span class="ruby-identifier">set_callback</span> <span class="ruby-value">:foo</span>, <span class="ruby-value">:before</span>, <span class="ruby-value">:world</span> }
+  <span class="ruby-identifier">subclass</span>.<span class="ruby-identifier">class_eval</span> { <span class="ruby-identifier">define_method</span>(<span class="ruby-value">:world</span>) { <span class="ruby-identifier">events</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value">:world</span> } }
+
+  <span class="ruby-identifier">subclass</span>.<span class="ruby-identifier">new</span>.<span class="ruby-identifier">run</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-number">2</span>, <span class="ruby-identifier">events</span>.<span class="ruby-identifier">length</span>
+
+  <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">reset_callbacks</span> <span class="ruby-value">:foo</span>
+  <span class="ruby-identifier">subclass</span>.<span class="ruby-identifier">new</span>.<span class="ruby-identifier">run</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-number">3</span>, <span class="ruby-identifier">events</span>.<span class="ruby-identifier">length</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_save_conditional_person">
+            
+              <b>test_save_conditional_person</b>()
+            
+            <a href="../../classes/CallbacksTest/ResetCallbackTest.html#method-i-test_save_conditional_person" name="method-i-test_save_conditional_person" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_save_conditional_person_source')" id="l_method-i-test_save_conditional_person_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/4e68765cf65a435ef706d875c51bfcfcbd6fef3a/activesupport/test/callbacks_test.rb#L497" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_save_conditional_person_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activesupport/test/callbacks_test.rb, line 497</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_save_conditional_person</span>
+  <span class="ruby-identifier">person</span> = <span class="ruby-constant">CleanPerson</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-identifier">person</span>.<span class="ruby-identifier">save</span>
+  <span class="ruby-identifier">assert_equal</span> [], <span class="ruby-identifier">person</span>.<span class="ruby-identifier">history</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+
+    </div>
+  </body>
+</html>    

@@ -1,0 +1,558 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Gem::Commands::CertCommand</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/github.css" type="text/css" media="screen" />
+<script src="../../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            Gem::Commands::CertCommand 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../Command.html">Gem::Command</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../../files/lib/rubygems/commands/cert_command_rb.html">lib/rubygems/commands/cert_command.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>B</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-build">build</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>C</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-certificates_matching">certificates_matching</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>E</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-execute">execute</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>L</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-load_default_cert">load_default_cert</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-load_default_key">load_default_key</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>S</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-sign">sign</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <b>new</b>()
+            
+            <a href="../../../classes/Gem/Commands/CertCommand.html#method-c-new" name="method-c-new" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/commands/cert_command.rb, line 13</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">initialize</span>
+  <span class="ruby-keyword">super</span> <span class="ruby-string">&#39;cert&#39;</span>, <span class="ruby-string">&#39;Manage RubyGems certificates and signing settings&#39;</span>,
+        <span class="ruby-value">:add</span> =<span class="ruby-operator">&gt;</span> [], <span class="ruby-value">:remove</span> =<span class="ruby-operator">&gt;</span> [], <span class="ruby-value">:list</span> =<span class="ruby-operator">&gt;</span> [], <span class="ruby-value">:build</span> =<span class="ruby-operator">&gt;</span> [], <span class="ruby-value">:sign</span> =<span class="ruby-operator">&gt;</span> []
+
+  <span class="ruby-constant">OptionParser</span>.<span class="ruby-identifier">accept</span> <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">X509</span><span class="ruby-operator">::</span><span class="ruby-constant">Certificate</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">certificate</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">begin</span>
+      <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">X509</span><span class="ruby-operator">::</span><span class="ruby-constant">Certificate</span>.<span class="ruby-identifier">new</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span> <span class="ruby-identifier">certificate</span>
+    <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">ENOENT</span>
+      <span class="ruby-identifier">raise</span> <span class="ruby-constant">OptionParser</span><span class="ruby-operator">::</span><span class="ruby-constant">InvalidArgument</span>, <span class="ruby-node">&quot;#{certificate}: does not exist&quot;</span>
+    <span class="ruby-keyword">rescue</span> <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">X509</span><span class="ruby-operator">::</span><span class="ruby-constant">CertificateError</span>
+      <span class="ruby-identifier">raise</span> <span class="ruby-constant">OptionParser</span><span class="ruby-operator">::</span><span class="ruby-constant">InvalidArgument</span>,
+        <span class="ruby-node">&quot;#{certificate}: invalid X509 certificate&quot;</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-constant">OptionParser</span>.<span class="ruby-identifier">accept</span> <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">PKey</span><span class="ruby-operator">::</span><span class="ruby-constant">RSA</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key_file</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">begin</span>
+      <span class="ruby-identifier">passphrase</span> = <span class="ruby-constant">ENV</span>[<span class="ruby-string">&#39;GEM_PRIVATE_KEY_PASSPHRASE&#39;</span>]
+      <span class="ruby-identifier">key</span> = <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">PKey</span><span class="ruby-operator">::</span><span class="ruby-constant">RSA</span>.<span class="ruby-identifier">new</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">key_file</span>), <span class="ruby-identifier">passphrase</span>
+    <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">ENOENT</span>
+      <span class="ruby-identifier">raise</span> <span class="ruby-constant">OptionParser</span><span class="ruby-operator">::</span><span class="ruby-constant">InvalidArgument</span>, <span class="ruby-node">&quot;#{key_file}: does not exist&quot;</span>
+    <span class="ruby-keyword">rescue</span> <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">PKey</span><span class="ruby-operator">::</span><span class="ruby-constant">RSAError</span>
+      <span class="ruby-identifier">raise</span> <span class="ruby-constant">OptionParser</span><span class="ruby-operator">::</span><span class="ruby-constant">InvalidArgument</span>, <span class="ruby-node">&quot;#{key_file}: invalid RSA key&quot;</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">OptionParser</span><span class="ruby-operator">::</span><span class="ruby-constant">InvalidArgument</span>,
+          <span class="ruby-node">&quot;#{key_file}: private key not found&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">key</span>.<span class="ruby-identifier">private?</span>
+
+    <span class="ruby-identifier">key</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">add_option</span>(<span class="ruby-string">&#39;-a&#39;</span>, <span class="ruby-string">&#39;--add CERT&#39;</span>, <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">X509</span><span class="ruby-operator">::</span><span class="ruby-constant">Certificate</span>,
+             <span class="ruby-string">&#39;Add a trusted certificate.&#39;</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">cert</span>, <span class="ruby-identifier">options</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">options</span>[<span class="ruby-value">:add</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">cert</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">add_option</span>(<span class="ruby-string">&#39;-l&#39;</span>, <span class="ruby-string">&#39;--list [FILTER]&#39;</span>,
+             <span class="ruby-string">&#39;List trusted certificates where the&#39;</span>,
+             <span class="ruby-string">&#39;subject contains FILTER&#39;</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">filter</span>, <span class="ruby-identifier">options</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">filter</span> <span class="ruby-operator">||=</span> <span class="ruby-string">&#39;&#39;</span>
+
+    <span class="ruby-identifier">options</span>[<span class="ruby-value">:list</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">filter</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">add_option</span>(<span class="ruby-string">&#39;-r&#39;</span>, <span class="ruby-string">&#39;--remove FILTER&#39;</span>,
+             <span class="ruby-string">&#39;Remove trusted certificates where the&#39;</span>,
+             <span class="ruby-string">&#39;subject contains FILTER&#39;</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">filter</span>, <span class="ruby-identifier">options</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">options</span>[<span class="ruby-value">:remove</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">filter</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">add_option</span>(<span class="ruby-string">&#39;-b&#39;</span>, <span class="ruby-string">&#39;--build EMAIL_ADDR&#39;</span>,
+             <span class="ruby-string">&#39;Build private key and self-signed&#39;</span>,
+             <span class="ruby-string">&#39;certificate for EMAIL_ADDR&#39;</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">email_address</span>, <span class="ruby-identifier">options</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">options</span>[<span class="ruby-value">:build</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">email_address</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">add_option</span>(<span class="ruby-string">&#39;-C&#39;</span>, <span class="ruby-string">&#39;--certificate CERT&#39;</span>, <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">X509</span><span class="ruby-operator">::</span><span class="ruby-constant">Certificate</span>,
+             <span class="ruby-string">&#39;Signing certificate for --sign&#39;</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">cert</span>, <span class="ruby-identifier">options</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">options</span>[<span class="ruby-value">:issuer_cert</span>] = <span class="ruby-identifier">cert</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">add_option</span>(<span class="ruby-string">&#39;-K&#39;</span>, <span class="ruby-string">&#39;--private-key KEY&#39;</span>, <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">PKey</span><span class="ruby-operator">::</span><span class="ruby-constant">RSA</span>,
+             <span class="ruby-string">&#39;Key for --sign or --build&#39;</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">options</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">options</span>[<span class="ruby-value">:key</span>] = <span class="ruby-identifier">key</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">add_option</span>(<span class="ruby-string">&#39;-s&#39;</span>, <span class="ruby-string">&#39;--sign CERT&#39;</span>,
+             <span class="ruby-string">&#39;Signs CERT with the key from -K&#39;</span>,
+             <span class="ruby-string">&#39;and the certificate from -C&#39;</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">cert_file</span>, <span class="ruby-identifier">options</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">OptionParser</span><span class="ruby-operator">::</span><span class="ruby-constant">InvalidArgument</span>, <span class="ruby-node">&quot;#{cert_file}: does not exist&quot;</span> <span class="ruby-keyword">unless</span>
+      <span class="ruby-constant">File</span>.<span class="ruby-identifier">file?</span> <span class="ruby-identifier">cert_file</span>
+
+    <span class="ruby-identifier">options</span>[<span class="ruby-value">:sign</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">cert_file</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-build">
+            
+              <b>build</b>(name)
+            
+            <a href="../../../classes/Gem/Commands/CertCommand.html#method-i-build" name="method-i-build" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-build_source')" id="l_method-i-build_source">show</a>
+                
+              </p>
+              <div id="method-i-build_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/commands/cert_command.rb, line 115</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">build</span> <span class="ruby-identifier">name</span>
+  <span class="ruby-identifier">key</span>, <span class="ruby-identifier">key_path</span> = <span class="ruby-identifier">build_key</span>
+  <span class="ruby-identifier">cert_path</span> = <span class="ruby-identifier">build_cert</span> <span class="ruby-identifier">name</span>, <span class="ruby-identifier">key</span>
+
+  <span class="ruby-identifier">say</span> <span class="ruby-node">&quot;Certificate: #{cert_path}&quot;</span>
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">key_path</span>
+    <span class="ruby-identifier">say</span> <span class="ruby-node">&quot;Private Key: #{key_path}&quot;</span>
+    <span class="ruby-identifier">say</span> <span class="ruby-string">&quot;Don&#39;t forget to move the key file to somewhere private!&quot;</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-certificates_matching">
+            
+              <b>certificates_matching</b>(filter)
+            
+            <a href="../../../classes/Gem/Commands/CertCommand.html#method-i-certificates_matching" name="method-i-certificates_matching" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-certificates_matching_source')" id="l_method-i-certificates_matching_source">show</a>
+                
+              </p>
+              <div id="method-i-certificates_matching_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/commands/cert_command.rb, line 150</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">certificates_matching</span> <span class="ruby-identifier">filter</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">enum_for</span> <span class="ruby-identifier">__method__</span>, <span class="ruby-identifier">filter</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">block_given?</span>
+
+  <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Security</span>.<span class="ruby-identifier">trusted_certificates</span>.<span class="ruby-identifier">select</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">certificate</span>, <span class="ruby-identifier">_</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">subject</span> = <span class="ruby-identifier">certificate</span>.<span class="ruby-identifier">subject</span>.<span class="ruby-identifier">to_s</span>
+    <span class="ruby-identifier">subject</span>.<span class="ruby-identifier">downcase</span>.<span class="ruby-identifier">index</span> <span class="ruby-identifier">filter</span>
+  <span class="ruby-keyword">end</span>.<span class="ruby-identifier">sort_by</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">certificate</span>, <span class="ruby-identifier">_</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">certificate</span>.<span class="ruby-identifier">subject</span>.<span class="ruby-identifier">to_a</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">name</span>, <span class="ruby-identifier">data</span>,<span class="ruby-operator">|</span> [<span class="ruby-identifier">name</span>, <span class="ruby-identifier">data</span>] }
+  <span class="ruby-keyword">end</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">certificate</span>, <span class="ruby-identifier">path</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">yield</span> <span class="ruby-identifier">certificate</span>, <span class="ruby-identifier">path</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-execute">
+            
+              <b>execute</b>()
+            
+            <a href="../../../classes/Gem/Commands/CertCommand.html#method-i-execute" name="method-i-execute" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-execute_source')" id="l_method-i-execute_source">show</a>
+                
+              </p>
+              <div id="method-i-execute_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/commands/cert_command.rb, line 95</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">execute</span>
+  <span class="ruby-identifier">options</span>[<span class="ruby-value">:add</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">certificate</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">add_certificate</span> <span class="ruby-identifier">certificate</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">options</span>[<span class="ruby-value">:remove</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">filter</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">remove_certificates_matching</span> <span class="ruby-identifier">filter</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">options</span>[<span class="ruby-value">:list</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">filter</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">list_certificates_matching</span> <span class="ruby-identifier">filter</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">options</span>[<span class="ruby-value">:build</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">name</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">build</span> <span class="ruby-identifier">name</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">sign_certificates</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">options</span>[<span class="ruby-value">:sign</span>].<span class="ruby-identifier">empty?</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-load_default_cert">
+            
+              <b>load_default_cert</b>()
+            
+            <a href="../../../classes/Gem/Commands/CertCommand.html#method-i-load_default_cert" name="method-i-load_default_cert" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-load_default_cert_source')" id="l_method-i-load_default_cert_source">show</a>
+                
+              </p>
+              <div id="method-i-load_default_cert_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/commands/cert_command.rb, line 209</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">load_default_cert</span>
+  <span class="ruby-identifier">cert_file</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span> <span class="ruby-constant">Gem</span>.<span class="ruby-identifier">default_cert_path</span>
+  <span class="ruby-identifier">cert</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span> <span class="ruby-identifier">cert_file</span>
+  <span class="ruby-identifier">options</span>[<span class="ruby-value">:issuer_cert</span>] = <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">X509</span><span class="ruby-operator">::</span><span class="ruby-constant">Certificate</span>.<span class="ruby-identifier">new</span> <span class="ruby-identifier">cert</span>
+<span class="ruby-keyword">rescue</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">ENOENT</span>
+  <span class="ruby-identifier">alert_error</span>        <span class="ruby-string">&quot;--certificate not specified and ~/.gem/gem-public_cert.pem does not exist&quot;</span>
+
+  <span class="ruby-identifier">terminate_interaction</span> <span class="ruby-number">1</span>
+<span class="ruby-keyword">rescue</span> <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">X509</span><span class="ruby-operator">::</span><span class="ruby-constant">CertificateError</span>
+  <span class="ruby-identifier">alert_error</span>        <span class="ruby-string">&quot;--certificate not specified and ~/.gem/gem-public_cert.pem is not valid&quot;</span>
+
+  <span class="ruby-identifier">terminate_interaction</span> <span class="ruby-number">1</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-load_default_key">
+            
+              <b>load_default_key</b>()
+            
+            <a href="../../../classes/Gem/Commands/CertCommand.html#method-i-load_default_key" name="method-i-load_default_key" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-load_default_key_source')" id="l_method-i-load_default_key_source">show</a>
+                
+              </p>
+              <div id="method-i-load_default_key_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/commands/cert_command.rb, line 225</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">load_default_key</span>
+  <span class="ruby-identifier">key_file</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span> <span class="ruby-constant">Gem</span>.<span class="ruby-identifier">default_key_path</span>
+  <span class="ruby-identifier">key</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span> <span class="ruby-identifier">key_file</span>
+  <span class="ruby-identifier">passphrase</span> = <span class="ruby-constant">ENV</span>[<span class="ruby-string">&#39;GEM_PRIVATE_KEY_PASSPHRASE&#39;</span>]
+  <span class="ruby-identifier">options</span>[<span class="ruby-value">:key</span>] = <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">PKey</span><span class="ruby-operator">::</span><span class="ruby-constant">RSA</span>.<span class="ruby-identifier">new</span> <span class="ruby-identifier">key</span>, <span class="ruby-identifier">passphrase</span>
+<span class="ruby-keyword">rescue</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">ENOENT</span>
+  <span class="ruby-identifier">alert_error</span>        <span class="ruby-string">&quot;--private-key not specified and ~/.gem/gem-private_key.pem does not exist&quot;</span>
+
+  <span class="ruby-identifier">terminate_interaction</span> <span class="ruby-number">1</span>
+<span class="ruby-keyword">rescue</span> <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">PKey</span><span class="ruby-operator">::</span><span class="ruby-constant">RSAError</span>
+  <span class="ruby-identifier">alert_error</span>        <span class="ruby-string">&quot;--private-key not specified and ~/.gem/gem-private_key.pem is not valid&quot;</span>
+
+  <span class="ruby-identifier">terminate_interaction</span> <span class="ruby-number">1</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-sign">
+            
+              <b>sign</b>(cert_file)
+            
+            <a href="../../../classes/Gem/Commands/CertCommand.html#method-i-sign" name="method-i-sign" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-sign_source')" id="l_method-i-sign_source">show</a>
+                
+              </p>
+              <div id="method-i-sign_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/commands/cert_command.rb, line 254</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">sign</span> <span class="ruby-identifier">cert_file</span>
+  <span class="ruby-identifier">cert</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span> <span class="ruby-identifier">cert_file</span>
+  <span class="ruby-identifier">cert</span> = <span class="ruby-constant">OpenSSL</span><span class="ruby-operator">::</span><span class="ruby-constant">X509</span><span class="ruby-operator">::</span><span class="ruby-constant">Certificate</span>.<span class="ruby-identifier">new</span> <span class="ruby-identifier">cert</span>
+
+  <span class="ruby-identifier">permissions</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">stat</span>(<span class="ruby-identifier">cert_file</span>).<span class="ruby-identifier">mode</span> <span class="ruby-operator">&amp;</span> <span class="ruby-number">0777</span>
+
+  <span class="ruby-identifier">issuer_cert</span> = <span class="ruby-identifier">options</span>[<span class="ruby-value">:issuer_cert</span>]
+  <span class="ruby-identifier">issuer_key</span> = <span class="ruby-identifier">options</span>[<span class="ruby-value">:key</span>]
+
+  <span class="ruby-identifier">cert</span> = <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Security</span>.<span class="ruby-identifier">sign</span> <span class="ruby-identifier">cert</span>, <span class="ruby-identifier">issuer_key</span>, <span class="ruby-identifier">issuer_cert</span>
+
+  <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Security</span>.<span class="ruby-identifier">write</span> <span class="ruby-identifier">cert</span>, <span class="ruby-identifier">cert_file</span>, <span class="ruby-identifier">permissions</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+
+    </div>
+  </body>
+</html>    

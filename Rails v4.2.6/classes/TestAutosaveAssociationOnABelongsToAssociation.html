@@ -1,0 +1,630 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>TestAutosaveAssociationOnABelongsToAssociation</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/github.css" type="text/css" media="screen" />
+<script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            TestAutosaveAssociationOnABelongsToAssociation 
+            
+                <span class="parent">&lt; 
+                    
+                    ActiveRecord::TestCase
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../files/activerecord/test/cases/autosave_association_test_rb.html">activerecord/test/cases/autosave_association_test.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>S</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-setup">setup</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-test_should_automatically_save_bang_the_associated_model">test_should_automatically_save_bang_the_associated_model</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_should_automatically_save_the_associated_model">test_should_automatically_save_the_associated_model</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_should_automatically_validate_the_associated_model">test_should_automatically_validate_the_associated_model</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_should_merge_errors_on_the_associated_model_onto_the_parent_even_if_it_is_not_valid">test_should_merge_errors_on_the_associated_model_onto_the_parent_even_if_it_is_not_valid</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_should_not_load_the_associated_model">test_should_not_load_the_associated_model</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_should_not_save_and_return_false_if_a_callback_cancelled_saving">test_should_not_save_and_return_false_if_a_callback_cancelled_saving</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_should_rollback_any_changes_if_an_exception_occurred_while_saving">test_should_rollback_any_changes_if_an_exception_occurred_while_saving</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_should_still_allow_to_bypass_validations_on_the_associated_model">test_should_still_allow_to_bypass_validations_on_the_associated_model</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_should_still_raise_an_ActiveRecordRecord_Invalid_exception_if_we_want_that">test_should_still_raise_an_ActiveRecordRecord_Invalid_exception_if_we_want_that</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_should_still_work_without_an_associated_model">test_should_still_work_without_an_associated_model</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+        
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-setup">
+            
+              <b>setup</b>()
+            
+            <a href="../classes/TestAutosaveAssociationOnABelongsToAssociation.html#method-i-setup" name="method-i-setup" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-setup_source')" id="l_method-i-setup_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/cd1bbf8ede61dd5ca1c60c9801a1978d322d447b/activerecord/test/cases/autosave_association_test.rb#L1178" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-setup_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/autosave_association_test.rb, line 1178</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">setup</span>
+  <span class="ruby-keyword">super</span>
+  <span class="ruby-ivar">@ship</span> = <span class="ruby-constant">Ship</span>.<span class="ruby-identifier">create</span>(<span class="ruby-value">:name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;Nights Dirty Lightning&#39;</span>)
+  <span class="ruby-ivar">@pirate</span> = <span class="ruby-ivar">@ship</span>.<span class="ruby-identifier">create_pirate</span>(<span class="ruby-value">:catchphrase</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Don&#39; botharrr talkin&#39; like one, savvy?&quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_should_automatically_save_bang_the_associated_model">
+            
+              <b>test_should_automatically_save_bang_the_associated_model</b>()
+            
+            <a href="../classes/TestAutosaveAssociationOnABelongsToAssociation.html#method-i-test_should_automatically_save_bang_the_associated_model" name="method-i-test_should_automatically_save_bang_the_associated_model" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_should_automatically_save_bang_the_associated_model_source')" id="l_method-i-test_should_automatically_save_bang_the_associated_model_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/cd1bbf8ede61dd5ca1c60c9801a1978d322d447b/activerecord/test/cases/autosave_association_test.rb#L1197" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_should_automatically_save_bang_the_associated_model_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/autosave_association_test.rb, line 1197</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_should_automatically_save_bang_the_associated_model</span>
+  <span class="ruby-ivar">@ship</span>.<span class="ruby-identifier">pirate</span>.<span class="ruby-identifier">catchphrase</span> = <span class="ruby-string">&#39;Arr&#39;</span>
+  <span class="ruby-ivar">@ship</span>.<span class="ruby-identifier">save!</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&#39;Arr&#39;</span>, <span class="ruby-ivar">@ship</span>.<span class="ruby-identifier">reload</span>.<span class="ruby-identifier">pirate</span>.<span class="ruby-identifier">catchphrase</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_should_automatically_save_the_associated_model">
+            
+              <b>test_should_automatically_save_the_associated_model</b>()
+            
+            <a href="../classes/TestAutosaveAssociationOnABelongsToAssociation.html#method-i-test_should_automatically_save_the_associated_model" name="method-i-test_should_automatically_save_the_associated_model" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_should_automatically_save_the_associated_model_source')" id="l_method-i-test_should_automatically_save_the_associated_model_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/cd1bbf8ede61dd5ca1c60c9801a1978d322d447b/activerecord/test/cases/autosave_association_test.rb#L1191" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_should_automatically_save_the_associated_model_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/autosave_association_test.rb, line 1191</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_should_automatically_save_the_associated_model</span>
+  <span class="ruby-ivar">@ship</span>.<span class="ruby-identifier">pirate</span>.<span class="ruby-identifier">catchphrase</span> = <span class="ruby-string">&#39;Arr&#39;</span>
+  <span class="ruby-ivar">@ship</span>.<span class="ruby-identifier">save</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&#39;Arr&#39;</span>, <span class="ruby-ivar">@ship</span>.<span class="ruby-identifier">reload</span>.<span class="ruby-identifier">pirate</span>.<span class="ruby-identifier">catchphrase</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_should_automatically_validate_the_associated_model">
+            
+              <b>test_should_automatically_validate_the_associated_model</b>()
+            
+            <a href="../classes/TestAutosaveAssociationOnABelongsToAssociation.html#method-i-test_should_automatically_validate_the_associated_model" name="method-i-test_should_automatically_validate_the_associated_model" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_should_automatically_validate_the_associated_model_source')" id="l_method-i-test_should_automatically_validate_the_associated_model_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/cd1bbf8ede61dd5ca1c60c9801a1978d322d447b/activerecord/test/cases/autosave_association_test.rb#L1203" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_should_automatically_validate_the_associated_model_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/autosave_association_test.rb, line 1203</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_should_automatically_validate_the_associated_model</span>
+  <span class="ruby-ivar">@ship</span>.<span class="ruby-identifier">pirate</span>.<span class="ruby-identifier">catchphrase</span> = <span class="ruby-string">&#39;&#39;</span>
+  <span class="ruby-identifier">assert</span> <span class="ruby-ivar">@ship</span>.<span class="ruby-identifier">invalid?</span>
+  <span class="ruby-identifier">assert</span> <span class="ruby-ivar">@ship</span>.<span class="ruby-identifier">errors</span>[<span class="ruby-value">:&quot;pirate.catchphrase&quot;</span>].<span class="ruby-identifier">any?</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_should_merge_errors_on_the_associated_model_onto_the_parent_even_if_it_is_not_valid">
+            
+              <b>test_should_merge_errors_on_the_associated_model_onto_the_parent_even_if_it_is_not_valid</b>()
+            
+            <a href="../classes/TestAutosaveAssociationOnABelongsToAssociation.html#method-i-test_should_merge_errors_on_the_associated_model_onto_the_parent_even_if_it_is_not_valid" name="method-i-test_should_merge_errors_on_the_associated_model_onto_the_parent_even_if_it_is_not_valid" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_should_merge_errors_on_the_associated_model_onto_the_parent_even_if_it_is_not_valid_source')" id="l_method-i-test_should_merge_errors_on_the_associated_model_onto_the_parent_even_if_it_is_not_valid_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/cd1bbf8ede61dd5ca1c60c9801a1978d322d447b/activerecord/test/cases/autosave_association_test.rb#L1209" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_should_merge_errors_on_the_associated_model_onto_the_parent_even_if_it_is_not_valid_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/autosave_association_test.rb, line 1209</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_should_merge_errors_on_the_associated_model_onto_the_parent_even_if_it_is_not_valid</span>
+  <span class="ruby-ivar">@ship</span>.<span class="ruby-identifier">name</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-ivar">@ship</span>.<span class="ruby-identifier">pirate</span>.<span class="ruby-identifier">catchphrase</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-identifier">assert</span> <span class="ruby-ivar">@ship</span>.<span class="ruby-identifier">invalid?</span>
+  <span class="ruby-identifier">assert</span> <span class="ruby-ivar">@ship</span>.<span class="ruby-identifier">errors</span>[<span class="ruby-value">:name</span>].<span class="ruby-identifier">any?</span>
+  <span class="ruby-identifier">assert</span> <span class="ruby-ivar">@ship</span>.<span class="ruby-identifier">errors</span>[<span class="ruby-value">:&quot;pirate.catchphrase&quot;</span>].<span class="ruby-identifier">any?</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_should_not_load_the_associated_model">
+            
+              <b>test_should_not_load_the_associated_model</b>()
+            
+            <a href="../classes/TestAutosaveAssociationOnABelongsToAssociation.html#method-i-test_should_not_load_the_associated_model" name="method-i-test_should_not_load_the_associated_model" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_should_not_load_the_associated_model_source')" id="l_method-i-test_should_not_load_the_associated_model_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/cd1bbf8ede61dd5ca1c60c9801a1978d322d447b/activerecord/test/cases/autosave_association_test.rb#L1266" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_should_not_load_the_associated_model_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/autosave_association_test.rb, line 1266</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_should_not_load_the_associated_model</span>
+  <span class="ruby-identifier">assert_queries</span>(<span class="ruby-number">1</span>) { <span class="ruby-ivar">@ship</span>.<span class="ruby-identifier">name</span> = <span class="ruby-string">&#39;The Vile Insanity&#39;</span>; <span class="ruby-ivar">@ship</span>.<span class="ruby-identifier">save!</span> }
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_should_not_save_and_return_false_if_a_callback_cancelled_saving">
+            
+              <b>test_should_not_save_and_return_false_if_a_callback_cancelled_saving</b>()
+            
+            <a href="../classes/TestAutosaveAssociationOnABelongsToAssociation.html#method-i-test_should_not_save_and_return_false_if_a_callback_cancelled_saving" name="method-i-test_should_not_save_and_return_false_if_a_callback_cancelled_saving" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_should_not_save_and_return_false_if_a_callback_cancelled_saving_source')" id="l_method-i-test_should_not_save_and_return_false_if_a_callback_cancelled_saving_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/cd1bbf8ede61dd5ca1c60c9801a1978d322d447b/activerecord/test/cases/autosave_association_test.rb#L1236" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_should_not_save_and_return_false_if_a_callback_cancelled_saving_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/autosave_association_test.rb, line 1236</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_should_not_save_and_return_false_if_a_callback_cancelled_saving</span>
+  <span class="ruby-identifier">ship</span> = <span class="ruby-constant">Ship</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">:name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;The Vile Insanity&#39;</span>)
+  <span class="ruby-identifier">pirate</span> = <span class="ruby-identifier">ship</span>.<span class="ruby-identifier">build_pirate</span>(<span class="ruby-value">:catchphrase</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;Arr&#39;</span>)
+  <span class="ruby-identifier">pirate</span>.<span class="ruby-identifier">cancel_save_from_callback</span> = <span class="ruby-keyword">true</span>
+
+  <span class="ruby-identifier">assert_no_difference</span> <span class="ruby-string">&#39;Ship.count&#39;</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">assert_no_difference</span> <span class="ruby-string">&#39;Pirate.count&#39;</span> <span class="ruby-keyword">do</span>
+      <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-identifier">ship</span>.<span class="ruby-identifier">save</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_should_rollback_any_changes_if_an_exception_occurred_while_saving">
+            
+              <b>test_should_rollback_any_changes_if_an_exception_occurred_while_saving</b>()
+            
+            <a href="../classes/TestAutosaveAssociationOnABelongsToAssociation.html#method-i-test_should_rollback_any_changes_if_an_exception_occurred_while_saving" name="method-i-test_should_rollback_any_changes_if_an_exception_occurred_while_saving" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_should_rollback_any_changes_if_an_exception_occurred_while_saving_source')" id="l_method-i-test_should_rollback_any_changes_if_an_exception_occurred_while_saving_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/cd1bbf8ede61dd5ca1c60c9801a1978d322d447b/activerecord/test/cases/autosave_association_test.rb#L1248" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_should_rollback_any_changes_if_an_exception_occurred_while_saving_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/autosave_association_test.rb, line 1248</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_should_rollback_any_changes_if_an_exception_occurred_while_saving</span>
+  <span class="ruby-identifier">before</span> = [<span class="ruby-ivar">@ship</span>.<span class="ruby-identifier">pirate</span>.<span class="ruby-identifier">catchphrase</span>, <span class="ruby-ivar">@ship</span>.<span class="ruby-identifier">name</span>]
+
+  <span class="ruby-ivar">@ship</span>.<span class="ruby-identifier">pirate</span>.<span class="ruby-identifier">catchphrase</span> = <span class="ruby-string">&#39;Arr&#39;</span>
+  <span class="ruby-ivar">@ship</span>.<span class="ruby-identifier">name</span> = <span class="ruby-string">&#39;The Vile Insanity&#39;</span>
+
+  <span class="ruby-comment"># Stub the save method of the @ship.pirate instance to raise an exception</span>
+  <span class="ruby-keyword">class</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-keyword ruby-title">@ship</span>.<span class="ruby-identifier">pirate</span>
+    <span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">save</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+      <span class="ruby-keyword">super</span>
+      <span class="ruby-identifier">raise</span> <span class="ruby-string">&#39;Oh noes!&#39;</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">assert_raise</span>(<span class="ruby-constant">RuntimeError</span>) { <span class="ruby-identifier">assert</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@ship</span>.<span class="ruby-identifier">save</span> }
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-identifier">before</span>, [<span class="ruby-ivar">@ship</span>.<span class="ruby-identifier">pirate</span>.<span class="ruby-identifier">reload</span>.<span class="ruby-identifier">catchphrase</span>, <span class="ruby-ivar">@ship</span>.<span class="ruby-identifier">reload</span>.<span class="ruby-identifier">name</span>]
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_should_still_allow_to_bypass_validations_on_the_associated_model">
+            
+              <b>test_should_still_allow_to_bypass_validations_on_the_associated_model</b>()
+            
+            <a href="../classes/TestAutosaveAssociationOnABelongsToAssociation.html#method-i-test_should_still_allow_to_bypass_validations_on_the_associated_model" name="method-i-test_should_still_allow_to_bypass_validations_on_the_associated_model" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_should_still_allow_to_bypass_validations_on_the_associated_model_source')" id="l_method-i-test_should_still_allow_to_bypass_validations_on_the_associated_model_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/cd1bbf8ede61dd5ca1c60c9801a1978d322d447b/activerecord/test/cases/autosave_association_test.rb#L1217" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_should_still_allow_to_bypass_validations_on_the_associated_model_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/autosave_association_test.rb, line 1217</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_should_still_allow_to_bypass_validations_on_the_associated_model</span>
+  <span class="ruby-ivar">@ship</span>.<span class="ruby-identifier">pirate</span>.<span class="ruby-identifier">catchphrase</span> = <span class="ruby-string">&#39;&#39;</span>
+  <span class="ruby-ivar">@ship</span>.<span class="ruby-identifier">name</span> = <span class="ruby-string">&#39;&#39;</span>
+  <span class="ruby-ivar">@ship</span>.<span class="ruby-identifier">save</span>(<span class="ruby-value">:validate</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">false</span>)
+  <span class="ruby-comment"># Oracle saves empty string as NULL</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">current_adapter?</span>(<span class="ruby-value">:OracleAdapter</span>)
+    <span class="ruby-identifier">assert_equal</span> [<span class="ruby-keyword">nil</span>, <span class="ruby-keyword">nil</span>], [<span class="ruby-ivar">@ship</span>.<span class="ruby-identifier">reload</span>.<span class="ruby-identifier">name</span>, <span class="ruby-ivar">@ship</span>.<span class="ruby-identifier">pirate</span>.<span class="ruby-identifier">catchphrase</span>]
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">assert_equal</span> [<span class="ruby-string">&#39;&#39;</span>, <span class="ruby-string">&#39;&#39;</span>], [<span class="ruby-ivar">@ship</span>.<span class="ruby-identifier">reload</span>.<span class="ruby-identifier">name</span>, <span class="ruby-ivar">@ship</span>.<span class="ruby-identifier">pirate</span>.<span class="ruby-identifier">catchphrase</span>]
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_should_still_raise_an_ActiveRecordRecord_Invalid_exception_if_we_want_that">
+            
+              <b>test_should_still_raise_an_ActiveRecordRecord_Invalid_exception_if_we_want_that</b>()
+            
+            <a href="../classes/TestAutosaveAssociationOnABelongsToAssociation.html#method-i-test_should_still_raise_an_ActiveRecordRecord_Invalid_exception_if_we_want_that" name="method-i-test_should_still_raise_an_ActiveRecordRecord_Invalid_exception_if_we_want_that" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_should_still_raise_an_ActiveRecordRecord_Invalid_exception_if_we_want_that_source')" id="l_method-i-test_should_still_raise_an_ActiveRecordRecord_Invalid_exception_if_we_want_that_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/cd1bbf8ede61dd5ca1c60c9801a1978d322d447b/activerecord/test/cases/autosave_association_test.rb#L1229" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_should_still_raise_an_ActiveRecordRecord_Invalid_exception_if_we_want_that_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/autosave_association_test.rb, line 1229</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_should_still_raise_an_ActiveRecordRecord_Invalid_exception_if_we_want_that</span>
+  <span class="ruby-ivar">@ship</span>.<span class="ruby-identifier">pirate</span>.<span class="ruby-identifier">catchphrase</span> = <span class="ruby-string">&#39;&#39;</span>
+  <span class="ruby-identifier">assert_raise</span>(<span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">RecordInvalid</span>) <span class="ruby-keyword">do</span>
+    <span class="ruby-ivar">@ship</span>.<span class="ruby-identifier">save!</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_should_still_work_without_an_associated_model">
+            
+              <b>test_should_still_work_without_an_associated_model</b>()
+            
+            <a href="../classes/TestAutosaveAssociationOnABelongsToAssociation.html#method-i-test_should_still_work_without_an_associated_model" name="method-i-test_should_still_work_without_an_associated_model" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_should_still_work_without_an_associated_model_source')" id="l_method-i-test_should_still_work_without_an_associated_model_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/cd1bbf8ede61dd5ca1c60c9801a1978d322d447b/activerecord/test/cases/autosave_association_test.rb#L1184" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_should_still_work_without_an_associated_model_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/autosave_association_test.rb, line 1184</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_should_still_work_without_an_associated_model</span>
+  <span class="ruby-ivar">@pirate</span>.<span class="ruby-identifier">destroy</span>
+  <span class="ruby-ivar">@ship</span>.<span class="ruby-identifier">reload</span>.<span class="ruby-identifier">name</span> = <span class="ruby-string">&quot;The Vile Insanity&quot;</span>
+  <span class="ruby-ivar">@ship</span>.<span class="ruby-identifier">save</span>
+  <span class="ruby-identifier">assert_equal</span> <span class="ruby-string">&#39;The Vile Insanity&#39;</span>, <span class="ruby-ivar">@ship</span>.<span class="ruby-identifier">reload</span>.<span class="ruby-identifier">name</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+
+    </div>
+  </body>
+</html>    

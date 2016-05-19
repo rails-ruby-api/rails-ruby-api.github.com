@@ -1,0 +1,752 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>REXML::Entity</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            REXML::Entity 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="Child.html">REXML::Child</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/lib/rexml/entity_rb.html">lib/rexml/entity.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>God, I hate DTDs.  I really do.  Why this idiot standard still plagues us
+is beyond me.</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>M</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-matches-3F">matches?</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-normalized">normalized</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-to_s">to_s</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>U</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-unnormalized">unnormalized</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>V</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-value">value</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>W</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-write">write</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+    <!-- Includes -->
+    <div class="sectiontitle">Included Modules</div>
+    <ul>
+      
+        <li>
+          
+            <a href="XMLTokens.html">
+              REXML::XMLTokens
+            </a>
+          
+        </li>
+      
+    </ul>
+  
+
+
+
+  
+
+    
+
+    
+
+    
+      <!-- Section constants -->
+      <div class="sectiontitle">Constants</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class="attr-name">PUBIDCHAR</td>
+            <td>=</td>
+            <td class="attr-value">&quot;\x20\x0D\x0Aa-zA-Z0-9\\-()+,./:=?;!*@$_%#&quot;</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">SYSTEMLITERAL</td>
+            <td>=</td>
+            <td class="attr-value">%Q{((?:&quot;[^&quot;]*&quot;)|(?:&#39;[^&#39;]*&#39;))}</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">PUBIDLITERAL</td>
+            <td>=</td>
+            <td class="attr-value">%Q{(&quot;[#{PUBIDCHAR}&#39;]*&quot;|&#39;[#{PUBIDCHAR}]*&#39;)}</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">EXTERNALID</td>
+            <td>=</td>
+            <td class="attr-value">&quot;(?:(?:(SYSTEM)\\s+#{SYSTEMLITERAL})|(?:(PUBLIC)\\s+#{PUBIDLITERAL}\\s+#{SYSTEMLITERAL}))&quot;</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">NDATADECL</td>
+            <td>=</td>
+            <td class="attr-value">&quot;\\s+NDATA\\s+#{NAME}&quot;</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">PEREFERENCE</td>
+            <td>=</td>
+            <td class="attr-value">&quot;%#{NAME};&quot;</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">ENTITYVALUE</td>
+            <td>=</td>
+            <td class="attr-value">%Q{((?:&quot;(?:[^%&amp;&quot;]|#{PEREFERENCE}|#{REFERENCE})*&quot;)|(?:&#39;([^%&amp;&#39;]|#{PEREFERENCE}|#{REFERENCE})*&#39;))}</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">PEDEF</td>
+            <td>=</td>
+            <td class="attr-value">&quot;(?:#{ENTITYVALUE}|#{EXTERNALID})&quot;</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">ENTITYDEF</td>
+            <td>=</td>
+            <td class="attr-value">&quot;(?:#{ENTITYVALUE}|(?:#{EXTERNALID}(#{NDATADECL})?))&quot;</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">PEDECL</td>
+            <td>=</td>
+            <td class="attr-value">&quot;&lt;!ENTITY\\s+(%)\\s+#{NAME}\\s+#{PEDEF}\\s*&gt;&quot;</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">GEDECL</td>
+            <td>=</td>
+            <td class="attr-value">&quot;&lt;!ENTITY\\s+#{NAME}\\s+#{ENTITYDEF}\\s*&gt;&quot;</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">ENTITYDECL</td>
+            <td>=</td>
+            <td class="attr-value">/\s*(?:#{GEDECL})|(?:#{PEDECL})/um</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">PEREFERENCE_RE</td>
+            <td>=</td>
+            <td class="attr-value">/#{PEREFERENCE}/um</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+      </table>
+    
+
+
+    
+      <!-- Section attributes -->
+      <div class="sectiontitle">Attributes</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [R]
+            </td>
+            <td class='attr-name'>external</td>
+            <td class='attr-desc'></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [R]
+            </td>
+            <td class='attr-name'>name</td>
+            <td class='attr-desc'></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [R]
+            </td>
+            <td class='attr-name'>ndata</td>
+            <td class='attr-desc'></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [R]
+            </td>
+            <td class='attr-name'>pubid</td>
+            <td class='attr-desc'></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [R]
+            </td>
+            <td class='attr-name'>ref</td>
+            <td class='attr-desc'></td>
+          </tr>
+        
+      </table>
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-matches-3F">
+            
+              <b>matches?</b>(string)
+            
+            <a href="../../classes/REXML/Entity.html#method-c-matches-3F" name="method-c-matches-3F" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Evaluates whether the given string matches an entity definition, returning
+true if so, and false otherwise.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-matches-3F_source')" id="l_method-c-matches-3F_source">show</a>
+                
+              </p>
+              <div id="method-c-matches-3F_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rexml/entity.rb, line 69</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">Entity</span><span class="ruby-operator">::</span><span class="ruby-identifier">matches?</span> <span class="ruby-identifier">string</span>
+  (<span class="ruby-constant">ENTITYDECL</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">string</span>) <span class="ruby-operator">==</span> <span class="ruby-number">0</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <b>new</b>(stream, value=nil, parent=nil, reference=false)
+            
+            <a href="../../classes/REXML/Entity.html#method-c-new" name="method-c-new" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Create a new entity.  Simple entities can be constructed by passing a name,
+value to the constructor; this creates a generic, plain entity reference.
+For anything more complicated, you have to pass a <a
+href="Source.html">Source</a> to the constructor with the entity
+definition, or use the accessor methods. <code>WARNING</code>: There is no
+validation of entity state except when the entity is read from a stream. 
+If you start poking around with the accessors, you can easily create a
+non-conformant <a href="Entity.html">Entity</a>.  The best thing to do is
+dump the stupid DTDs and use XMLSchema instead.</p>
+
+<pre><code>e = Entity.new( &#39;amp&#39;, &#39;&amp;&#39; )
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rexml/entity.rb, line 36</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">initialize</span> <span class="ruby-identifier">stream</span>, <span class="ruby-identifier">value</span>=<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">parent</span>=<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">reference</span>=<span class="ruby-keyword">false</span>
+  <span class="ruby-keyword">super</span>(<span class="ruby-identifier">parent</span>)
+  <span class="ruby-ivar">@ndata</span> = <span class="ruby-ivar">@pubid</span> = <span class="ruby-ivar">@value</span> = <span class="ruby-ivar">@external</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">stream</span>.<span class="ruby-identifier">kind_of?</span> <span class="ruby-constant">Array</span>
+    <span class="ruby-ivar">@name</span> = <span class="ruby-identifier">stream</span>[<span class="ruby-number">1</span>]
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">stream</span>[<span class="ruby-number">-1</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&#39;%&#39;</span>
+      <span class="ruby-ivar">@reference</span> = <span class="ruby-keyword">true</span>
+      <span class="ruby-identifier">stream</span>.<span class="ruby-identifier">pop</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-ivar">@reference</span> = <span class="ruby-keyword">false</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">stream</span>[<span class="ruby-number">2</span>] <span class="ruby-operator">=~</span> <span class="ruby-regexp">/SYSTEM|PUBLIC/</span>
+      <span class="ruby-ivar">@external</span> = <span class="ruby-identifier">stream</span>[<span class="ruby-number">2</span>]
+      <span class="ruby-keyword">if</span> <span class="ruby-ivar">@external</span> <span class="ruby-operator">==</span> <span class="ruby-string">&#39;SYSTEM&#39;</span>
+        <span class="ruby-ivar">@ref</span> = <span class="ruby-identifier">stream</span>[<span class="ruby-number">3</span>]
+        <span class="ruby-ivar">@ndata</span> = <span class="ruby-identifier">stream</span>[<span class="ruby-number">4</span>] <span class="ruby-keyword">if</span> <span class="ruby-identifier">stream</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-number">5</span>
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-ivar">@pubid</span> = <span class="ruby-identifier">stream</span>[<span class="ruby-number">3</span>]
+        <span class="ruby-ivar">@ref</span> = <span class="ruby-identifier">stream</span>[<span class="ruby-number">4</span>]
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-ivar">@value</span> = <span class="ruby-identifier">stream</span>[<span class="ruby-number">2</span>]
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-ivar">@reference</span> = <span class="ruby-identifier">reference</span>
+    <span class="ruby-ivar">@external</span> = <span class="ruby-keyword">nil</span>
+    <span class="ruby-ivar">@name</span> = <span class="ruby-identifier">stream</span>
+    <span class="ruby-ivar">@value</span> = <span class="ruby-identifier">value</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-normalized">
+            
+              <b>normalized</b>()
+            
+            <a href="../../classes/REXML/Entity.html#method-i-normalized" name="method-i-normalized" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the value of this entity unprocessed – raw.  This is the normalized
+value; that is, with all %ent; and &amp;ent; entities intact</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-normalized_source')" id="l_method-i-normalized_source">show</a>
+                
+              </p>
+              <div id="method-i-normalized_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rexml/entity.rb, line 88</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">normalized</span>
+  <span class="ruby-ivar">@value</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-to_s">
+            
+              <b>to_s</b>()
+            
+            <a href="../../classes/REXML/Entity.html#method-i-to_s" name="method-i-to_s" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns this entity as a string.  See write().</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-to_s_source')" id="l_method-i-to_s_source">show</a>
+                
+              </p>
+              <div id="method-i-to_s_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rexml/entity.rb, line 122</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">to_s</span>
+  <span class="ruby-identifier">rv</span> = <span class="ruby-string">&#39;&#39;</span>
+  <span class="ruby-identifier">write</span> <span class="ruby-identifier">rv</span>
+  <span class="ruby-identifier">rv</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-unnormalized">
+            
+              <b>unnormalized</b>()
+            
+            <a href="../../classes/REXML/Entity.html#method-i-unnormalized" name="method-i-unnormalized" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Evaluates to the unnormalized value of this entity; that is, replacing all
+entities – both %ent; and &amp;ent; entities.  This differs from +value()+
+in that <code>value</code> only replaces %ent; entities.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-unnormalized_source')" id="l_method-i-unnormalized_source">show</a>
+                
+              </p>
+              <div id="method-i-unnormalized_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rexml/entity.rb, line 76</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">unnormalized</span>
+  <span class="ruby-identifier">document</span>.<span class="ruby-identifier">record_entity_expansion</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">document</span>.<span class="ruby-identifier">nil?</span>
+  <span class="ruby-identifier">v</span> = <span class="ruby-identifier">value</span>()
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">nil?</span>
+  <span class="ruby-ivar">@unnormalized</span> = <span class="ruby-constant">Text</span><span class="ruby-operator">::</span><span class="ruby-identifier">unnormalize</span>(<span class="ruby-identifier">v</span>, <span class="ruby-identifier">parent</span>)
+  <span class="ruby-ivar">@unnormalized</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-value">
+            
+              <b>value</b>()
+            
+            <a href="../../classes/REXML/Entity.html#method-i-value" name="method-i-value" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the value of this entity.  At the moment, only internal entities
+are processed.  If the value contains internal references (IE, %blah;),
+those are replaced with their values.  IE, if the doctype contains:</p>
+
+<pre><code>&lt;!ENTITY % foo &quot;bar&quot;&gt;
+&lt;!ENTITY yada &quot;nanoo %foo; nanoo&gt;</code></pre>
+
+<p>then:</p>
+
+<pre><code>doctype.entity(&#39;yada&#39;).value   #-&gt; &quot;nanoo bar nanoo&quot;
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-value_source')" id="l_method-i-value_source">show</a>
+                
+              </p>
+              <div id="method-i-value_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rexml/entity.rb, line 137</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">value</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@value</span>
+    <span class="ruby-identifier">matches</span> = <span class="ruby-ivar">@value</span>.<span class="ruby-identifier">scan</span>(<span class="ruby-constant">PEREFERENCE_RE</span>)
+    <span class="ruby-identifier">rv</span> = <span class="ruby-ivar">@value</span>.<span class="ruby-identifier">clone</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-ivar">@parent</span>
+      <span class="ruby-identifier">sum</span> = <span class="ruby-number">0</span>
+      <span class="ruby-identifier">matches</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">entity_reference</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">entity_value</span> = <span class="ruby-ivar">@parent</span>.<span class="ruby-identifier">entity</span>( <span class="ruby-identifier">entity_reference</span>[<span class="ruby-number">0</span>] )
+        <span class="ruby-keyword">if</span> <span class="ruby-identifier">sum</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">entity_value</span>.<span class="ruby-identifier">bytesize</span> <span class="ruby-operator">&gt;</span> <span class="ruby-constant">Security</span>.<span class="ruby-identifier">entity_expansion_text_limit</span>
+          <span class="ruby-identifier">raise</span> <span class="ruby-string">&quot;entity expansion has grown too large&quot;</span>
+        <span class="ruby-keyword">else</span>
+          <span class="ruby-identifier">sum</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">entity_value</span>.<span class="ruby-identifier">bytesize</span>
+        <span class="ruby-keyword">end</span>
+        <span class="ruby-identifier">rv</span>.<span class="ruby-identifier">gsub!</span>( <span class="ruby-node">/%#{entity_reference.join};/um</span>, <span class="ruby-identifier">entity_value</span> )
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-identifier">rv</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">nil</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-write">
+            
+              <b>write</b>(out, indent=-1)
+            
+            <a href="../../classes/REXML/Entity.html#method-i-write" name="method-i-write" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Write out a fully formed, correct entity definition (assuming the <a
+href="Entity.html">Entity</a> object itself is valid.)</p>
+<dl class="rdoc-list note-list"><dt>out
+<dd>
+<p>An object implementing &lt;TT&gt;&amp;lt;&amp;lt;&lt;TT&gt; to which the
+entity will be output</p>
+</dd><dt>indent
+<dd>
+<p><strong>DEPRECATED</strong> and ignored</p>
+</dd></dl>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-write_source')" id="l_method-i-write_source">show</a>
+                
+              </p>
+              <div id="method-i-write_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rexml/entity.rb, line 100</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">write</span> <span class="ruby-identifier">out</span>, <span class="ruby-identifier">indent</span>=<span class="ruby-number">-1</span>
+  <span class="ruby-identifier">out</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&#39;&lt;!ENTITY &#39;</span>
+  <span class="ruby-identifier">out</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&#39;% &#39;</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@reference</span>
+  <span class="ruby-identifier">out</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-ivar">@name</span>
+  <span class="ruby-identifier">out</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&#39; &#39;</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@external</span>
+    <span class="ruby-identifier">out</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-ivar">@external</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&#39; &#39;</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-ivar">@pubid</span>
+      <span class="ruby-identifier">q</span> = <span class="ruby-ivar">@pubid</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-string">&#39;&quot;&#39;</span>)<span class="ruby-operator">?</span><span class="ruby-string">&quot;&#39;&quot;</span><span class="ruby-operator">:</span><span class="ruby-string">&#39;&quot;&#39;</span>
+      <span class="ruby-identifier">out</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">q</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-ivar">@pubid</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">q</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&#39; &#39;</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">q</span> = <span class="ruby-ivar">@ref</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-string">&#39;&quot;&#39;</span>)<span class="ruby-operator">?</span><span class="ruby-string">&quot;&#39;&quot;</span><span class="ruby-operator">:</span><span class="ruby-string">&#39;&quot;&#39;</span>
+    <span class="ruby-identifier">out</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">q</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-ivar">@ref</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">q</span>
+    <span class="ruby-identifier">out</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&#39; NDATA &#39;</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-ivar">@ndata</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@ndata</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">q</span> = <span class="ruby-ivar">@value</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-string">&#39;&quot;&#39;</span>)<span class="ruby-operator">?</span><span class="ruby-string">&quot;&#39;&quot;</span><span class="ruby-operator">:</span><span class="ruby-string">&#39;&quot;&#39;</span>
+    <span class="ruby-identifier">out</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">q</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-ivar">@value</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">q</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">out</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&#39;&gt;&#39;</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+
+    </div>
+  </body>
+</html>    

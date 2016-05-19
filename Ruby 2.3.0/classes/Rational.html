@@ -1,0 +1,1805 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Rational</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/github.css" type="text/css" media="screen" />
+<script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            Rational 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="Numeric.html">Numeric</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../files/ext/bigdecimal/lib/bigdecimal/util_rb.html">ext/bigdecimal/lib/bigdecimal/util.rb</a></li>
+            
+            <li><a href="../files/ext/json/lib/json/add/rational_rb.html">ext/json/lib/json/add/rational.rb</a></li>
+            
+            <li><a href="../files/rational_c.html">rational.c</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p><a href="BigDecimal.html">BigDecimal</a> extends the native <a
+href="Rational.html">Rational</a> class to provide the <a
+href="Rational.html#method-i-to_d">to_d</a> method.</p>
+
+<p>When you require <a href="BigDecimal.html">BigDecimal</a> in your
+application, this method will be available on <a
+href="Rational.html">Rational</a> objects.</p>
+
+<p>A rational number can be represented as a paired integer number; a/b
+(b&gt;0).  Where a is numerator and b is denominator.  <a
+href="Integer.html">Integer</a> a equals rational a/1 mathematically.</p>
+
+<p>In ruby, you can create rational object with <a
+href="Rational.html">Rational</a>, <a
+href="Rational.html#method-i-to_r">#to_r</a>, rationalize method or
+suffixing r to a literal.  The return values will be irreducible.</p>
+
+<pre><code>Rational(1)      #=&gt; (1/1)
+Rational(2, 3)   #=&gt; (2/3)
+Rational(4, -6)  #=&gt; (-2/3)
+3.to_r           #=&gt; (3/1)
+2/3r             #=&gt; (2/3)
+</code></pre>
+
+<p>You can also create rational object from floating-point numbers or strings.</p>
+
+<pre><code>Rational(0.3)    #=&gt; (5404319552844595/18014398509481984)
+Rational(&#39;0.3&#39;)  #=&gt; (3/10)
+Rational(&#39;2/3&#39;)  #=&gt; (2/3)
+
+0.3.to_r         #=&gt; (5404319552844595/18014398509481984)
+&#39;0.3&#39;.to_r       #=&gt; (3/10)
+&#39;2/3&#39;.to_r       #=&gt; (2/3)
+0.3.rationalize  #=&gt; (3/10)
+</code></pre>
+
+<p>A rational object is an exact number, which helps you to write program
+without any rounding errors.</p>
+
+<pre><code>10.times.inject(0){|t,| t + 0.1}              #=&gt; 0.9999999999999999
+10.times.inject(0){|t,| t + Rational(&#39;0.1&#39;)}  #=&gt; (1/1)
+</code></pre>
+
+<p>However, when an expression has inexact factor (numerical value or
+operation), will produce an inexact result.</p>
+
+<pre><code>Rational(10) / 3   #=&gt; (10/3)
+Rational(10) / 3.0 #=&gt; 3.3333333333333335
+
+Rational(-8) ** Rational(1, 3)
+                   #=&gt; (1.0000000000000002+1.7320508075688772i)
+</code></pre>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+    <!-- Namespace -->
+    <div class="sectiontitle">Namespace</div>
+    <ul>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="Rational/compatible.html">Rational::compatible</a>
+        </li>
+      
+    </ul>
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>#</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-2A">*</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-2A-2A">**</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-2B">+</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-2D">-</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-2F">/</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-3C-3D-3E">&lt;=&gt;</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-3D-3D">==</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>A</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-as_json">as_json</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>C</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-ceil">ceil</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>D</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-denominator">denominator</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>F</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-fdiv">fdiv</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-floor">floor</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>I</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-inspect">inspect</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>J</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-json_create">json_create</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-numerator">numerator</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>Q</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-quo">quo</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>R</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-rationalize">rationalize</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-round">round</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-to_d">to_d</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-to_f">to_f</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-to_i">to_i</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-to_json">to_json</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-to_r">to_r</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-to_s">to_s</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-truncate">truncate</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-json_create">
+            
+              <b>json_create</b>(object)
+            
+            <a href="../classes/Rational.html#method-c-json_create" name="method-c-json_create" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Deserializes <a href="JSON.html">JSON</a> string by converting numerator
+value <code>n</code>, denominator value <code>d</code>, to a <a
+href="Rational.html">Rational</a> object.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-json_create_source')" id="l_method-c-json_create_source">show</a>
+                
+              </p>
+              <div id="method-c-json_create_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/json/lib/json/add/rational.rb, line 10</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">self</span>.<span class="ruby-identifier">json_create</span>(<span class="ruby-identifier">object</span>)
+  <span class="ruby-constant">Rational</span>(<span class="ruby-identifier">object</span>[<span class="ruby-string">&#39;n&#39;</span>], <span class="ruby-identifier">object</span>[<span class="ruby-string">&#39;d&#39;</span>])
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-2A">
+            
+              <b>rat * numeric  &rarr;  numeric
+</b>
+            
+            <a href="../classes/Rational.html#method-i-2A" name="method-i-2A" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Performs multiplication.</p>
+
+<pre><code>Rational(2, 3)  * Rational(2, 3)   #=&gt; (4/9)
+Rational(900)   * Rational(1)      #=&gt; (900/1)
+Rational(-2, 9) * Rational(-9, 2)  #=&gt; (1/1)
+Rational(9, 8)  * 4                #=&gt; (9/2)
+Rational(20, 9) * 9.8              #=&gt; 21.77777777777778
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-2A_source')" id="l_method-i-2A_source">show</a>
+                
+              </p>
+              <div id="method-i-2A_source" class="dyn-source">
+                <pre>static VALUE
+nurat_mul(VALUE self, VALUE other)
+{
+    if (RB_TYPE_P(other, T_FIXNUM) || RB_TYPE_P(other, T_BIGNUM)) {
+        {
+            get_dat1(self);
+
+            return f_muldiv(self,
+                            dat-&gt;num, dat-&gt;den,
+                            other, ONE, &#39;*&#39;);
+        }
+    }
+    else if (RB_TYPE_P(other, T_FLOAT)) {
+        return f_mul(f_to_f(self), other);
+    }
+    else if (RB_TYPE_P(other, T_RATIONAL)) {
+        {
+            get_dat2(self, other);
+
+            return f_muldiv(self,
+                            adat-&gt;num, adat-&gt;den,
+                            bdat-&gt;num, bdat-&gt;den, &#39;*&#39;);
+        }
+    }
+    else {
+        return rb_num_coerce_bin(self, other, &#39;*&#39;);
+    }
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-2A-2A">
+            
+              <b>rat ** numeric  &rarr;  numeric
+</b>
+            
+            <a href="../classes/Rational.html#method-i-2A-2A" name="method-i-2A-2A" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Performs exponentiation.</p>
+
+<pre><code>Rational(2)    ** Rational(3)    #=&gt; (8/1)
+Rational(10)   ** -2             #=&gt; (1/100)
+Rational(10)   ** -2.0           #=&gt; 0.01
+Rational(-4)   ** Rational(1,2)  #=&gt; (1.2246063538223773e-16+2.0i)
+Rational(1, 2) ** 0              #=&gt; (1/1)
+Rational(1, 2) ** 0.0            #=&gt; 1.0
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-2A-2A_source')" id="l_method-i-2A-2A_source">show</a>
+                
+              </p>
+              <div id="method-i-2A-2A_source" class="dyn-source">
+                <pre>static VALUE
+nurat_expt(VALUE self, VALUE other)
+{
+    if (k_numeric_p(other) &amp;&amp; k_exact_zero_p(other))
+        return f_rational_new_bang1(CLASS_OF(self), ONE);
+
+    if (k_rational_p(other)) {
+        get_dat1(other);
+
+        if (f_one_p(dat-&gt;den))
+            other = dat-&gt;num; /* c14n */
+    }
+
+    /* Deal with special cases of 0**n and 1**n */
+    if (k_numeric_p(other) &amp;&amp; k_exact_p(other)) {
+        get_dat1(self);
+        if (f_one_p(dat-&gt;den)) {
+            if (f_one_p(dat-&gt;num)) {
+                return f_rational_new_bang1(CLASS_OF(self), ONE);
+            }
+            else if (f_minus_one_p(dat-&gt;num) &amp;&amp; k_integer_p(other)) {
+                return f_rational_new_bang1(CLASS_OF(self), INT2FIX(f_odd_p(other) ? -1 : 1));
+            }
+            else if (f_zero_p(dat-&gt;num)) {
+                if (FIX2INT(f_cmp(other, ZERO)) == -1) {
+                    rb_raise_zerodiv();
+                }
+                else {
+                    return f_rational_new_bang1(CLASS_OF(self), ZERO);
+                }
+            }
+        }
+    }
+
+    /* General case */
+    if (RB_TYPE_P(other, T_FIXNUM)) {
+        {
+            VALUE num, den;
+
+            get_dat1(self);
+
+            switch (FIX2INT(f_cmp(other, ZERO))) {
+              case 1:
+                num = f_expt(dat-&gt;num, other);
+                den = f_expt(dat-&gt;den, other);
+                break;
+              case -1:
+                num = f_expt(dat-&gt;den, f_negate(other));
+                den = f_expt(dat-&gt;num, f_negate(other));
+                break;
+              default:
+                num = ONE;
+                den = ONE;
+                break;
+            }
+            return f_rational_new2(CLASS_OF(self), num, den);
+        }
+    }
+    else if (RB_TYPE_P(other, T_BIGNUM)) {
+        rb_warn(&quot;in a**b, b may be too big&quot;);
+        return f_expt(f_to_f(self), other);
+    }
+    else if (RB_TYPE_P(other, T_FLOAT) || RB_TYPE_P(other, T_RATIONAL)) {
+        return f_expt(f_to_f(self), other);
+    }
+    else {
+        return rb_num_coerce_bin(self, other, id_expt);
+    }
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-2B">
+            
+              <b>rat + numeric  &rarr;  numeric
+</b>
+            
+            <a href="../classes/Rational.html#method-i-2B" name="method-i-2B" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Performs addition.</p>
+
+<pre><code>Rational(2, 3)  + Rational(2, 3)   #=&gt; (4/3)
+Rational(900)   + Rational(1)      #=&gt; (900/1)
+Rational(-2, 9) + Rational(-9, 2)  #=&gt; (-85/18)
+Rational(9, 8)  + 4                #=&gt; (41/8)
+Rational(20, 9) + 9.8              #=&gt; 12.022222222222222
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-2B_source')" id="l_method-i-2B_source">show</a>
+                
+              </p>
+              <div id="method-i-2B_source" class="dyn-source">
+                <pre>static VALUE
+nurat_add(VALUE self, VALUE other)
+{
+    if (RB_TYPE_P(other, T_FIXNUM) || RB_TYPE_P(other, T_BIGNUM)) {
+        {
+            get_dat1(self);
+
+            return f_addsub(self,
+                            dat-&gt;num, dat-&gt;den,
+                            other, ONE, &#39;+&#39;);
+        }
+    }
+    else if (RB_TYPE_P(other, T_FLOAT)) {
+        return f_add(f_to_f(self), other);
+    }
+    else if (RB_TYPE_P(other, T_RATIONAL)) {
+        {
+            get_dat2(self, other);
+
+            return f_addsub(self,
+                            adat-&gt;num, adat-&gt;den,
+                            bdat-&gt;num, bdat-&gt;den, &#39;+&#39;);
+        }
+    }
+    else {
+        return rb_num_coerce_bin(self, other, &#39;+&#39;);
+    }
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-2D">
+            
+              <b>rat - numeric  &rarr;  numeric
+</b>
+            
+            <a href="../classes/Rational.html#method-i-2D" name="method-i-2D" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Performs subtraction.</p>
+
+<pre><code>Rational(2, 3)  - Rational(2, 3)   #=&gt; (0/1)
+Rational(900)   - Rational(1)      #=&gt; (899/1)
+Rational(-2, 9) - Rational(-9, 2)  #=&gt; (77/18)
+Rational(9, 8)  - 4                #=&gt; (23/8)
+Rational(20, 9) - 9.8              #=&gt; -7.577777777777778
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-2D_source')" id="l_method-i-2D_source">show</a>
+                
+              </p>
+              <div id="method-i-2D_source" class="dyn-source">
+                <pre>static VALUE
+nurat_sub(VALUE self, VALUE other)
+{
+    if (RB_TYPE_P(other, T_FIXNUM) || RB_TYPE_P(other, T_BIGNUM)) {
+        {
+            get_dat1(self);
+
+            return f_addsub(self,
+                            dat-&gt;num, dat-&gt;den,
+                            other, ONE, &#39;-&#39;);
+        }
+    }
+    else if (RB_TYPE_P(other, T_FLOAT)) {
+        return f_sub(f_to_f(self), other);
+    }
+    else if (RB_TYPE_P(other, T_RATIONAL)) {
+        {
+            get_dat2(self, other);
+
+            return f_addsub(self,
+                            adat-&gt;num, adat-&gt;den,
+                            bdat-&gt;num, bdat-&gt;den, &#39;-&#39;);
+        }
+    }
+    else {
+        return rb_num_coerce_bin(self, other, &#39;-&#39;);
+    }
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-2F">
+            
+              <b>rat / numeric     &rarr;  numeric</b>
+            
+            <a href="../classes/Rational.html#method-i-2F" name="method-i-2F" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Performs division.</p>
+
+<pre><code>Rational(2, 3)  / Rational(2, 3)   #=&gt; (1/1)
+Rational(900)   / Rational(1)      #=&gt; (900/1)
+Rational(-2, 9) / Rational(-9, 2)  #=&gt; (4/81)
+Rational(9, 8)  / 4                #=&gt; (9/32)
+Rational(20, 9) / 9.8              #=&gt; 0.22675736961451246
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-2F_source')" id="l_method-i-2F_source">show</a>
+                
+              </p>
+              <div id="method-i-2F_source" class="dyn-source">
+                <pre>static VALUE
+nurat_div(VALUE self, VALUE other)
+{
+    if (RB_TYPE_P(other, T_FIXNUM) || RB_TYPE_P(other, T_BIGNUM)) {
+        if (f_zero_p(other))
+            rb_raise_zerodiv();
+        {
+            get_dat1(self);
+
+            return f_muldiv(self,
+                            dat-&gt;num, dat-&gt;den,
+                            other, ONE, &#39;/&#39;);
+        }
+    }
+    else if (RB_TYPE_P(other, T_FLOAT))
+        return rb_funcall(f_to_f(self), &#39;/&#39;, 1, other);
+    else if (RB_TYPE_P(other, T_RATIONAL)) {
+        if (f_zero_p(other))
+            rb_raise_zerodiv();
+        {
+            get_dat2(self, other);
+
+            if (f_one_p(self))
+                return f_rational_new_no_reduce2(CLASS_OF(self),
+                                                 bdat-&gt;den, bdat-&gt;num);
+
+            return f_muldiv(self,
+                            adat-&gt;num, adat-&gt;den,
+                            bdat-&gt;num, bdat-&gt;den, &#39;/&#39;);
+        }
+    }
+    else {
+        return rb_num_coerce_bin(self, other, &#39;/&#39;);
+    }
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-3C-3D-3E">
+            
+              <b>rational <=> numeric  &rarr;  -1, 0, +1 or nil
+</b>
+            
+            <a href="../classes/Rational.html#method-i-3C-3D-3E" name="method-i-3C-3D-3E" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Performs comparison and returns -1, 0, or +1.</p>
+
+<p><code>nil</code> is returned if the two values are incomparable.</p>
+
+<pre><code>Rational(2, 3)  &lt;=&gt; Rational(2, 3)  #=&gt; 0
+Rational(5)     &lt;=&gt; 5               #=&gt; 0
+Rational(2,3)   &lt;=&gt; Rational(1,3)   #=&gt; 1
+Rational(1,3)   &lt;=&gt; 1               #=&gt; -1
+Rational(1,3)   &lt;=&gt; 0.3             #=&gt; 1
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-3C-3D-3E_source')" id="l_method-i-3C-3D-3E_source">show</a>
+                
+              </p>
+              <div id="method-i-3C-3D-3E_source" class="dyn-source">
+                <pre>static VALUE
+nurat_cmp(VALUE self, VALUE other)
+{
+    if (RB_TYPE_P(other, T_FIXNUM) || RB_TYPE_P(other, T_BIGNUM)) {
+        {
+            get_dat1(self);
+
+            if (FIXNUM_P(dat-&gt;den) &amp;&amp; FIX2LONG(dat-&gt;den) == 1)
+                return f_cmp(dat-&gt;num, other); /* c14n */
+            return f_cmp(self, f_rational_new_bang1(CLASS_OF(self), other));
+        }
+    }
+    else if (RB_TYPE_P(other, T_FLOAT)) {
+        return f_cmp(f_to_f(self), other);
+    }
+    else if (RB_TYPE_P(other, T_RATIONAL)) {
+        {
+            VALUE num1, num2;
+
+            get_dat2(self, other);
+
+            if (FIXNUM_P(adat-&gt;num) &amp;&amp; FIXNUM_P(adat-&gt;den) &amp;&amp;
+                FIXNUM_P(bdat-&gt;num) &amp;&amp; FIXNUM_P(bdat-&gt;den)) {
+                num1 = f_imul(FIX2LONG(adat-&gt;num), FIX2LONG(bdat-&gt;den));
+                num2 = f_imul(FIX2LONG(bdat-&gt;num), FIX2LONG(adat-&gt;den));
+            }
+            else {
+                num1 = f_mul(adat-&gt;num, bdat-&gt;den);
+                num2 = f_mul(bdat-&gt;num, adat-&gt;den);
+            }
+            return f_cmp(f_sub(num1, num2), ZERO);
+        }
+    }
+    else {
+        return rb_num_coerce_cmp(self, other, id_cmp);
+    }
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-3D-3D">
+            
+              <b>rat == object  &rarr;  true or false
+</b>
+            
+            <a href="../classes/Rational.html#method-i-3D-3D" name="method-i-3D-3D" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns true if rat equals object numerically.</p>
+
+<pre><code>Rational(2, 3)  == Rational(2, 3)   #=&gt; true
+Rational(5)     == 5                #=&gt; true
+Rational(0)     == 0.0              #=&gt; true
+Rational(&#39;1/3&#39;) == 0.33             #=&gt; false
+Rational(&#39;1/2&#39;) == &#39;1/2&#39;            #=&gt; false
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-3D-3D_source')" id="l_method-i-3D-3D_source">show</a>
+                
+              </p>
+              <div id="method-i-3D-3D_source" class="dyn-source">
+                <pre>static VALUE
+nurat_eqeq_p(VALUE self, VALUE other)
+{
+    if (RB_TYPE_P(other, T_FIXNUM) || RB_TYPE_P(other, T_BIGNUM)) {
+        {
+            get_dat1(self);
+
+            if (f_zero_p(dat-&gt;num) &amp;&amp; f_zero_p(other))
+                return Qtrue;
+
+            if (!FIXNUM_P(dat-&gt;den))
+                return Qfalse;
+            if (FIX2LONG(dat-&gt;den) != 1)
+                return Qfalse;
+            if (f_eqeq_p(dat-&gt;num, other))
+                return Qtrue;
+            return Qfalse;
+        }
+    }
+    else if (RB_TYPE_P(other, T_FLOAT)) {
+        return f_eqeq_p(f_to_f(self), other);
+    }
+    else if (RB_TYPE_P(other, T_RATIONAL)) {
+        {
+            get_dat2(self, other);
+
+            if (f_zero_p(adat-&gt;num) &amp;&amp; f_zero_p(bdat-&gt;num))
+                return Qtrue;
+
+            return f_boolcast(f_eqeq_p(adat-&gt;num, bdat-&gt;num) &amp;&amp;
+                              f_eqeq_p(adat-&gt;den, bdat-&gt;den));
+        }
+    }
+    else {
+        return f_eqeq_p(other, self);
+    }
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-as_json">
+            
+              <b>as_json</b>(*)
+            
+            <a href="../classes/Rational.html#method-i-as_json" name="method-i-as_json" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns a hash, that will be turned into a <a href="JSON.html">JSON</a>
+object and represent this object.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-as_json_source')" id="l_method-i-as_json_source">show</a>
+                
+              </p>
+              <div id="method-i-as_json_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/json/lib/json/add/rational.rb, line 16</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">as_json</span>(<span class="ruby-operator">*</span>)
+  {
+    <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">create_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">name</span>,
+    <span class="ruby-string">&#39;n&#39;</span>            =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">numerator</span>,
+    <span class="ruby-string">&#39;d&#39;</span>            =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">denominator</span>,
+  }
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-ceil">
+            
+              <b>rat.ceil               &rarr;  integer
+rat.ceil(precision=0)  &rarr;  rational
+</b>
+            
+            <a href="../classes/Rational.html#method-i-ceil" name="method-i-ceil" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the truncated value (toward positive infinity).</p>
+
+<pre><code>Rational(3).ceil      #=&gt; 3
+Rational(2, 3).ceil   #=&gt; 1
+Rational(-3, 2).ceil  #=&gt; -1
+
+       decimal      -  1  2  3 . 4  5  6
+                      ^  ^  ^  ^   ^  ^
+      precision      -3 -2 -1  0  +1 +2
+
+&#39;%f&#39; % Rational(&#39;-123.456&#39;).ceil(+1)  #=&gt; &quot;-123.400000&quot;
+&#39;%f&#39; % Rational(&#39;-123.456&#39;).ceil(-1)  #=&gt; &quot;-120.000000&quot;</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-ceil_source')" id="l_method-i-ceil_source">show</a>
+                
+              </p>
+              <div id="method-i-ceil_source" class="dyn-source">
+                <pre>static VALUE
+nurat_ceil_n(int argc, VALUE *argv, VALUE self)
+{
+    return f_round_common(argc, argv, self, nurat_ceil);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-denominator">
+            
+              <b>rat.denominator  &rarr;  integer
+</b>
+            
+            <a href="../classes/Rational.html#method-i-denominator" name="method-i-denominator" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the denominator (always positive).</p>
+
+<pre><code>Rational(7).denominator             #=&gt; 1
+Rational(7, 1).denominator          #=&gt; 1
+Rational(9, -4).denominator         #=&gt; 4
+Rational(-2, -10).denominator       #=&gt; 5
+rat.numerator.gcd(rat.denominator)  #=&gt; 1
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-denominator_source')" id="l_method-i-denominator_source">show</a>
+                
+              </p>
+              <div id="method-i-denominator_source" class="dyn-source">
+                <pre>static VALUE
+nurat_denominator(VALUE self)
+{
+    get_dat1(self);
+    return dat-&gt;den;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-fdiv">
+            
+              <b>rat.fdiv(numeric)  &rarr;  float
+</b>
+            
+            <a href="../classes/Rational.html#method-i-fdiv" name="method-i-fdiv" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Performs division and returns the value as a float.</p>
+
+<pre><code>Rational(2, 3).fdiv(1)       #=&gt; 0.6666666666666666
+Rational(2, 3).fdiv(0.5)     #=&gt; 1.3333333333333333
+Rational(2).fdiv(3)          #=&gt; 0.6666666666666666
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-fdiv_source')" id="l_method-i-fdiv_source">show</a>
+                
+              </p>
+              <div id="method-i-fdiv_source" class="dyn-source">
+                <pre>static VALUE
+nurat_fdiv(VALUE self, VALUE other)
+{
+    if (f_zero_p(other))
+        return f_div(self, f_to_f(other));
+    return f_to_f(f_div(self, other));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-floor">
+            
+              <b>rat.floor               &rarr;  integer
+rat.floor(precision=0)  &rarr;  rational
+</b>
+            
+            <a href="../classes/Rational.html#method-i-floor" name="method-i-floor" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the truncated value (toward negative infinity).</p>
+
+<pre><code>Rational(3).floor      #=&gt; 3
+Rational(2, 3).floor   #=&gt; 0
+Rational(-3, 2).floor  #=&gt; -1
+
+       decimal      -  1  2  3 . 4  5  6
+                      ^  ^  ^  ^   ^  ^
+      precision      -3 -2 -1  0  +1 +2
+
+&#39;%f&#39; % Rational(&#39;-123.456&#39;).floor(+1)  #=&gt; &quot;-123.500000&quot;
+&#39;%f&#39; % Rational(&#39;-123.456&#39;).floor(-1)  #=&gt; &quot;-130.000000&quot;</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-floor_source')" id="l_method-i-floor_source">show</a>
+                
+              </p>
+              <div id="method-i-floor_source" class="dyn-source">
+                <pre>static VALUE
+nurat_floor_n(int argc, VALUE *argv, VALUE self)
+{
+    return f_round_common(argc, argv, self, nurat_floor);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-inspect">
+            
+              <b>rat.inspect  &rarr;  string
+</b>
+            
+            <a href="../classes/Rational.html#method-i-inspect" name="method-i-inspect" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the value as a string for inspection.</p>
+
+<pre><code>Rational(2).inspect      #=&gt; &quot;(2/1)&quot;
+Rational(-8, 6).inspect  #=&gt; &quot;(-4/3)&quot;
+Rational(&#39;1/2&#39;).inspect  #=&gt; &quot;(1/2)&quot;
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-inspect_source')" id="l_method-i-inspect_source">show</a>
+                
+              </p>
+              <div id="method-i-inspect_source" class="dyn-source">
+                <pre>static VALUE
+nurat_inspect(VALUE self)
+{
+    VALUE s;
+
+    s = rb_usascii_str_new2(&quot;(&quot;);
+    rb_str_concat(s, f_format(self, f_inspect));
+    rb_str_cat2(s, &quot;)&quot;);
+
+    return s;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-numerator">
+            
+              <b>rat.numerator  &rarr;  integer
+</b>
+            
+            <a href="../classes/Rational.html#method-i-numerator" name="method-i-numerator" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the numerator.</p>
+
+<pre><code>Rational(7).numerator        #=&gt; 7
+Rational(7, 1).numerator     #=&gt; 7
+Rational(9, -4).numerator    #=&gt; -9
+Rational(-2, -10).numerator  #=&gt; 1
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-numerator_source')" id="l_method-i-numerator_source">show</a>
+                
+              </p>
+              <div id="method-i-numerator_source" class="dyn-source">
+                <pre>static VALUE
+nurat_numerator(VALUE self)
+{
+    get_dat1(self);
+    return dat-&gt;num;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-quo">
+            
+              <b>rat.quo(numeric)  &rarr;  numeric</b>
+            
+            <a href="../classes/Rational.html#method-i-quo" name="method-i-quo" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Performs division.</p>
+
+<pre><code>Rational(2, 3)  / Rational(2, 3)   #=&gt; (1/1)
+Rational(900)   / Rational(1)      #=&gt; (900/1)
+Rational(-2, 9) / Rational(-9, 2)  #=&gt; (4/81)
+Rational(9, 8)  / 4                #=&gt; (9/32)
+Rational(20, 9) / 9.8              #=&gt; 0.22675736961451246
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-quo_source')" id="l_method-i-quo_source">show</a>
+                
+              </p>
+              <div id="method-i-quo_source" class="dyn-source">
+                <pre>static VALUE
+nurat_div(VALUE self, VALUE other)
+{
+    if (RB_TYPE_P(other, T_FIXNUM) || RB_TYPE_P(other, T_BIGNUM)) {
+        if (f_zero_p(other))
+            rb_raise_zerodiv();
+        {
+            get_dat1(self);
+
+            return f_muldiv(self,
+                            dat-&gt;num, dat-&gt;den,
+                            other, ONE, &#39;/&#39;);
+        }
+    }
+    else if (RB_TYPE_P(other, T_FLOAT))
+        return rb_funcall(f_to_f(self), &#39;/&#39;, 1, other);
+    else if (RB_TYPE_P(other, T_RATIONAL)) {
+        if (f_zero_p(other))
+            rb_raise_zerodiv();
+        {
+            get_dat2(self, other);
+
+            if (f_one_p(self))
+                return f_rational_new_no_reduce2(CLASS_OF(self),
+                                                 bdat-&gt;den, bdat-&gt;num);
+
+            return f_muldiv(self,
+                            adat-&gt;num, adat-&gt;den,
+                            bdat-&gt;num, bdat-&gt;den, &#39;/&#39;);
+        }
+    }
+    else {
+        return rb_num_coerce_bin(self, other, &#39;/&#39;);
+    }
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-rationalize">
+            
+              <b>rat.rationalize       &rarr;  self
+rat.rationalize(eps)  &rarr;  rational
+</b>
+            
+            <a href="../classes/Rational.html#method-i-rationalize" name="method-i-rationalize" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns a simpler approximation of the value if the optional argument eps
+is given (rat-|eps| &lt;= result &lt;= rat+|eps|), self otherwise.</p>
+
+<pre><code>r = Rational(5033165, 16777216)
+r.rationalize                    #=&gt; (5033165/16777216)
+r.rationalize(Rational(&#39;0.01&#39;))  #=&gt; (3/10)
+r.rationalize(Rational(&#39;0.1&#39;))   #=&gt; (1/3)
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-rationalize_source')" id="l_method-i-rationalize_source">show</a>
+                
+              </p>
+              <div id="method-i-rationalize_source" class="dyn-source">
+                <pre>static VALUE
+nurat_rationalize(int argc, VALUE *argv, VALUE self)
+{
+    VALUE e, a, b, p, q;
+
+    if (argc == 0)
+        return self;
+
+    if (f_negative_p(self))
+        return f_negate(nurat_rationalize(argc, argv, f_abs(self)));
+
+    rb_scan_args(argc, argv, &quot;01&quot;, &amp;e);
+    e = f_abs(e);
+    a = f_sub(self, e);
+    b = f_add(self, e);
+
+    if (f_eqeq_p(a, b))
+        return self;
+
+    nurat_rationalize_internal(a, b, &amp;p, &amp;q);
+    return f_rational_new2(CLASS_OF(self), p, q);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-round">
+            
+              <b>rat.round               &rarr;  integer
+rat.round(precision=0)  &rarr;  rational
+</b>
+            
+            <a href="../classes/Rational.html#method-i-round" name="method-i-round" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the truncated value (toward the nearest integer; 0.5 =&gt; 1; -0.5
+=&gt; -1).</p>
+
+<pre><code>Rational(3).round      #=&gt; 3
+Rational(2, 3).round   #=&gt; 1
+Rational(-3, 2).round  #=&gt; -2
+
+       decimal      -  1  2  3 . 4  5  6
+                      ^  ^  ^  ^   ^  ^
+      precision      -3 -2 -1  0  +1 +2
+
+&#39;%f&#39; % Rational(&#39;-123.456&#39;).round(+1)  #=&gt; &quot;-123.500000&quot;
+&#39;%f&#39; % Rational(&#39;-123.456&#39;).round(-1)  #=&gt; &quot;-120.000000&quot;</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-round_source')" id="l_method-i-round_source">show</a>
+                
+              </p>
+              <div id="method-i-round_source" class="dyn-source">
+                <pre>static VALUE
+nurat_round_n(int argc, VALUE *argv, VALUE self)
+{
+    return f_round_common(argc, argv, self, nurat_round);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-to_d">
+            
+              <b>r.to_d(precision)   &rarr; bigdecimal
+</b>
+            
+            <a href="../classes/Rational.html#method-i-to_d" name="method-i-to_d" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Converts a <a href="Rational.html">Rational</a> to a <a
+href="BigDecimal.html">BigDecimal</a>.</p>
+
+<p>The required <code>precision</code> parameter is used to determine the
+amount of significant digits for the result. See <a
+href="BigDecimal.html#method-i-div">BigDecimal#div</a> for more
+information, as it is used along with the <a
+href="Rational.html#method-i-denominator">denominator</a> and the
+<code>precision</code> for parameters.</p>
+
+<pre><code>r = (22/7.0).to_r
+# =&gt; (7077085128725065/2251799813685248)
+r.to_d(3)
+# =&gt; #&lt;BigDecimal:1a44d08,&#39;0.314E1&#39;,18(36)&gt;
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-to_d_source')" id="l_method-i-to_d_source">show</a>
+                
+              </p>
+              <div id="method-i-to_d_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/bigdecimal/lib/bigdecimal/util.rb, line 121</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">to_d</span>(<span class="ruby-identifier">precision</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">precision</span> <span class="ruby-operator">&lt;=</span> <span class="ruby-number">0</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-string">&quot;negative precision&quot;</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">num</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">numerator</span>
+  <span class="ruby-constant">BigDecimal</span>(<span class="ruby-identifier">num</span>).<span class="ruby-identifier">div</span>(<span class="ruby-keyword">self</span>.<span class="ruby-identifier">denominator</span>, <span class="ruby-identifier">precision</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-to_f">
+            
+              <b>rat.to_f  &rarr;  float
+</b>
+            
+            <a href="../classes/Rational.html#method-i-to_f" name="method-i-to_f" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Return the value as a float.</p>
+
+<pre><code>Rational(2).to_f      #=&gt; 2.0
+Rational(9, 4).to_f   #=&gt; 2.25
+Rational(-3, 4).to_f  #=&gt; -0.75
+Rational(20, 3).to_f  #=&gt; 6.666666666666667
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-to_f_source')" id="l_method-i-to_f_source">show</a>
+                
+              </p>
+              <div id="method-i-to_f_source" class="dyn-source">
+                <pre>static VALUE
+nurat_to_f(VALUE self)
+{
+    get_dat1(self);
+    return f_fdiv(dat-&gt;num, dat-&gt;den);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-to_i">
+            
+              <b>rat.to_i  &rarr;  integer
+</b>
+            
+            <a href="../classes/Rational.html#method-i-to_i" name="method-i-to_i" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the truncated value as an integer.</p>
+
+<p>Equivalent to</p>
+
+<pre><code>rat.truncate.
+
+Rational(2, 3).to_i   #=&gt; 0
+Rational(3).to_i      #=&gt; 3
+Rational(300.6).to_i  #=&gt; 300
+Rational(98,71).to_i  #=&gt; 1
+Rational(-30,2).to_i  #=&gt; -15
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-to_i_source')" id="l_method-i-to_i_source">show</a>
+                
+              </p>
+              <div id="method-i-to_i_source" class="dyn-source">
+                <pre>static VALUE
+nurat_truncate(VALUE self)
+{
+    get_dat1(self);
+    if (f_negative_p(dat-&gt;num))
+        return f_negate(f_idiv(f_negate(dat-&gt;num), dat-&gt;den));
+    return f_idiv(dat-&gt;num, dat-&gt;den);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-to_json">
+            
+              <b>to_json</b>(*)
+            
+            <a href="../classes/Rational.html#method-i-to_json" name="method-i-to_json" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Stores class name (Rational) along with numerator value <code>n</code> and
+denominator value <code>d</code> as <a href="JSON.html">JSON</a> string</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-to_json_source')" id="l_method-i-to_json_source">show</a>
+                
+              </p>
+              <div id="method-i-to_json_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/json/lib/json/add/rational.rb, line 25</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">to_json</span>(<span class="ruby-operator">*</span>)
+  <span class="ruby-identifier">as_json</span>.<span class="ruby-identifier">to_json</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-to_r">
+            
+              <b>rat.to_r  &rarr;  self
+</b>
+            
+            <a href="../classes/Rational.html#method-i-to_r" name="method-i-to_r" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns self.</p>
+
+<pre><code>Rational(2).to_r      #=&gt; (2/1)
+Rational(-8, 6).to_r  #=&gt; (-4/3)
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-to_r_source')" id="l_method-i-to_r_source">show</a>
+                
+              </p>
+              <div id="method-i-to_r_source" class="dyn-source">
+                <pre>static VALUE
+nurat_to_r(VALUE self)
+{
+    return self;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-to_s">
+            
+              <b>rat.to_s  &rarr;  string
+</b>
+            
+            <a href="../classes/Rational.html#method-i-to_s" name="method-i-to_s" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the value as a string.</p>
+
+<pre><code>Rational(2).to_s      #=&gt; &quot;2/1&quot;
+Rational(-8, 6).to_s  #=&gt; &quot;-4/3&quot;
+Rational(&#39;1/2&#39;).to_s  #=&gt; &quot;1/2&quot;
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-to_s_source')" id="l_method-i-to_s_source">show</a>
+                
+              </p>
+              <div id="method-i-to_s_source" class="dyn-source">
+                <pre>static VALUE
+nurat_to_s(VALUE self)
+{
+    return f_format(self, f_to_s);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-truncate">
+            
+              <b>rat.truncate               &rarr;  integer
+rat.truncate(precision=0)  &rarr;  rational
+</b>
+            
+            <a href="../classes/Rational.html#method-i-truncate" name="method-i-truncate" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the truncated value (toward zero).</p>
+
+<pre><code>Rational(3).truncate      #=&gt; 3
+Rational(2, 3).truncate   #=&gt; 0
+Rational(-3, 2).truncate  #=&gt; -1
+
+       decimal      -  1  2  3 . 4  5  6
+                      ^  ^  ^  ^   ^  ^
+      precision      -3 -2 -1  0  +1 +2
+
+&#39;%f&#39; % Rational(&#39;-123.456&#39;).truncate(+1)  #=&gt;  &quot;-123.400000&quot;
+&#39;%f&#39; % Rational(&#39;-123.456&#39;).truncate(-1)  #=&gt;  &quot;-120.000000&quot;</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-truncate_source')" id="l_method-i-truncate_source">show</a>
+                
+              </p>
+              <div id="method-i-truncate_source" class="dyn-source">
+                <pre>static VALUE
+nurat_truncate_n(int argc, VALUE *argv, VALUE self)
+{
+    return f_round_common(argc, argv, self, nurat_truncate);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+
+    </div>
+  </body>
+</html>    

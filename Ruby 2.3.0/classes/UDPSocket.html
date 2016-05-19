@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>UDPSocket</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/github.css" type="text/css" media="screen" />
+<script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            UDPSocket 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="IPSocket.html">IPSocket</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../files/ext/socket/lib/socket_rb.html">ext/socket/lib/socket.rb</a></li>
+            
+            <li><a href="../files/ext/socket/udpsocket_c.html">ext/socket/udpsocket.c</a></li>
+            
+            <li><a href="../files/lib/resolv-replace_rb.html">lib/resolv-replace.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p><a href="UDPSocket.html">UDPSocket</a> represents a UDP/IP socket.</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>B</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-bind">bind</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>C</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-connect">connect</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>R</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-recvfrom_nonblock">recvfrom_nonblock</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>S</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-send">send</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <b>UDPSocket.new([address_family]) => socket
+</b>
+            
+            <a href="../classes/UDPSocket.html#method-c-new" name="method-c-new" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Creates a new <a href="UDPSocket.html">UDPSocket</a> object.</p>
+
+<p><em>address_family</em> should be an integer, a string or a symbol:
+Socket::AF_INET, “AF_INET”, :INET, etc.</p>
+
+<pre><code>UDPSocket.new                   #=&gt; #&lt;UDPSocket:fd 3&gt;
+UDPSocket.new(Socket::AF_INET6) #=&gt; #&lt;UDPSocket:fd 4&gt;
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre>static VALUE
+udp_init(int argc, VALUE *argv, VALUE sock)
+{
+    VALUE arg;
+    int family = AF_INET;
+    int fd;
+
+    if (rb_scan_args(argc, argv, &quot;01&quot;, &amp;arg) == 1) {
+        family = rsock_family_arg(arg);
+    }
+    fd = rsock_socket(family, SOCK_DGRAM, 0);
+    if (fd &lt; 0) {
+        rb_sys_fail(&quot;socket(2) - udp&quot;);
+    }
+
+    return rsock_init_sock(sock, fd);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-bind">
+            
+              <b>udpsocket.bind(host, port) #=> 0
+</b>
+            
+            <a href="../classes/UDPSocket.html#method-i-bind" name="method-i-bind" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Binds <em>udpsocket</em> to <em>host</em>:<em>port</em>.</p>
+
+<pre><code>u1 = UDPSocket.new
+u1.bind(&quot;127.0.0.1&quot;, 4913)
+u1.send &quot;message-to-self&quot;, 0, &quot;127.0.0.1&quot;, 4913
+p u1.recvfrom(10) #=&gt; [&quot;message-to&quot;, [&quot;AF_INET&quot;, 4913, &quot;localhost&quot;, &quot;127.0.0.1&quot;]]
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-bind_source')" id="l_method-i-bind_source">show</a>
+                
+              </p>
+              <div id="method-i-bind_source" class="dyn-source">
+                <pre>static VALUE
+udp_bind(VALUE sock, VALUE host, VALUE port)
+{
+    struct udp_arg arg;
+    VALUE ret;
+
+    GetOpenFile(sock, arg.fptr);
+    arg.res = rsock_addrinfo(host, port, rsock_fd_family(arg.fptr-&gt;fd), SOCK_DGRAM, 0);
+    ret = rb_ensure(udp_bind_internal, (VALUE)&amp;arg,
+                    rsock_freeaddrinfo, (VALUE)arg.res);
+    if (!ret) rsock_sys_fail_host_port(&quot;bind(2)&quot;, host, port);
+    return INT2FIX(0);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-connect">
+            
+              <b>udpsocket.connect(host, port) => 0
+</b>
+            
+            <a href="../classes/UDPSocket.html#method-i-connect" name="method-i-connect" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Connects <em>udpsocket</em> to <em>host</em>:<em>port</em>.</p>
+
+<p>This makes possible to send without destination address.</p>
+
+<pre><code>u1 = UDPSocket.new
+u1.bind(&quot;127.0.0.1&quot;, 4913)
+u2 = UDPSocket.new
+u2.connect(&quot;127.0.0.1&quot;, 4913)
+u2.send &quot;uuuu&quot;, 0
+p u1.recvfrom(10) #=&gt; [&quot;uuuu&quot;, [&quot;AF_INET&quot;, 33230, &quot;localhost&quot;, &quot;127.0.0.1&quot;]]
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-connect_source')" id="l_method-i-connect_source">show</a>
+                
+              </p>
+              <div id="method-i-connect_source" class="dyn-source">
+                <pre>static VALUE
+udp_connect(VALUE sock, VALUE host, VALUE port)
+{
+    struct udp_arg arg;
+    VALUE ret;
+
+    GetOpenFile(sock, arg.fptr);
+    arg.res = rsock_addrinfo(host, port, rsock_fd_family(arg.fptr-&gt;fd), SOCK_DGRAM, 0);
+    ret = rb_ensure(udp_connect_internal, (VALUE)&amp;arg,
+                    rsock_freeaddrinfo, (VALUE)arg.res);
+    if (!ret) rsock_sys_fail_host_port(&quot;connect(2)&quot;, host, port);
+    return INT2FIX(0);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-recvfrom_nonblock">
+            
+              <b>udpsocket.recvfrom_nonblock(maxlen [, flags[, outbuf [, options]]]) => [mesg, sender_inet_addr]
+</b>
+            
+            <a href="../classes/UDPSocket.html#method-i-recvfrom_nonblock" name="method-i-recvfrom_nonblock" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Receives up to <em>maxlen</em> bytes from <code>udpsocket</code> using
+recvfrom(2) after O_NONBLOCK is set for the underlying file descriptor. If
+<em>maxlen</em> is omitted, its default value is 65536. <em>flags</em> is
+zero or more of the <code>MSG_</code> options. The first element of the
+results, <em>mesg</em>, is the data received. The second element,
+<em>sender_inet_addr</em>, is an array to represent the sender address.</p>
+
+<p>When recvfrom(2) returns 0, <a
+href="Socket.html#method-i-recvfrom_nonblock">Socket#recvfrom_nonblock</a>
+returns an empty string as data. It means an empty packet.</p>
+
+<h3 id="method-i-recvfrom_nonblock-label-Parameters">Parameters</h3>
+<ul><li>
+<p><code>maxlen</code> - the number of bytes to receive from the socket</p>
+</li><li>
+<p><code>flags</code> - zero or more of the <code>MSG_</code> options</p>
+</li><li>
+<p><code>outbuf</code> - destination String buffer</p>
+</li><li>
+<p><code>options</code> - keyword hash, supporting `exception: false`</p>
+</li></ul>
+
+<h3 id="method-i-recvfrom_nonblock-label-Example">Example</h3>
+
+<pre><code>require &#39;socket&#39;
+s1 = UDPSocket.new
+s1.bind(&quot;127.0.0.1&quot;, 0)
+s2 = UDPSocket.new
+s2.bind(&quot;127.0.0.1&quot;, 0)
+s2.connect(*s1.addr.values_at(3,1))
+s1.connect(*s2.addr.values_at(3,1))
+s1.send &quot;aaa&quot;, 0
+begin # emulate blocking recvfrom
+  p s2.recvfrom_nonblock(10)  #=&gt; [&quot;aaa&quot;, [&quot;AF_INET&quot;, 33302, &quot;localhost.localdomain&quot;, &quot;127.0.0.1&quot;]]
+rescue IO::WaitReadable
+  IO.select([s2])
+  retry
+end
+</code></pre>
+
+<p>Refer to <a href="Socket.html#method-i-recvfrom">Socket#recvfrom</a> for
+the exceptions that may be thrown if the call to <em>recvfrom_nonblock</em>
+fails.</p>
+
+<p><a href="UDPSocket.html#method-i-recvfrom_nonblock">#recvfrom_nonblock</a>
+may raise any error corresponding to recvfrom(2) failure, including
+Errno::EWOULDBLOCK.</p>
+
+<p>If the exception is Errno::EWOULDBLOCK or Errno::EAGAIN, it is extended by
+<a href="IO/WaitReadable.html">IO::WaitReadable</a>. So <a
+href="IO/WaitReadable.html">IO::WaitReadable</a> can be used to rescue the
+exceptions for retrying recvfrom_nonblock.</p>
+
+<p>By specifying `exception: false`, the options hash allows you to indicate
+that recvmsg_nonblock should not raise an <a
+href="IO/WaitWritable.html">IO::WaitWritable</a> exception, but return the
+symbol :wait_writable instead.</p>
+
+<h3 id="method-i-recvfrom_nonblock-label-See">See</h3>
+<ul><li>
+<p><a href="Socket.html#method-i-recvfrom">Socket#recvfrom</a></p>
+</li></ul>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-recvfrom_nonblock_source')" id="l_method-i-recvfrom_nonblock_source">show</a>
+                
+              </p>
+              <div id="method-i-recvfrom_nonblock_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/socket/lib/socket.rb, line 1265</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">recvfrom_nonblock</span>(<span class="ruby-identifier">len</span>, <span class="ruby-identifier">flag</span> = <span class="ruby-number">0</span>, <span class="ruby-identifier">outbuf</span> = <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">exception</span><span class="ruby-operator">:</span> <span class="ruby-keyword">true</span>)
+  <span class="ruby-identifier">__recvfrom_nonblock</span>(<span class="ruby-identifier">len</span>, <span class="ruby-identifier">flag</span>, <span class="ruby-identifier">outbuf</span>, <span class="ruby-identifier">exception</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-send">
+            
+              <b>udpsocket.send(mesg, flags, host, port)  => numbytes_sent
+udpsocket.send(mesg, flags, sockaddr_to) => numbytes_sent
+udpsocket.send(mesg, flags)              => numbytes_sent
+</b>
+            
+            <a href="../classes/UDPSocket.html#method-i-send" name="method-i-send" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Sends <em>mesg</em> via <em>udpsocket</em>.</p>
+
+<p><em>flags</em> should be a bitwise OR of Socket::MSG_* constants.</p>
+
+<pre><code>u1 = UDPSocket.new
+u1.bind(&quot;127.0.0.1&quot;, 4913)
+
+u2 = UDPSocket.new
+u2.send &quot;hi&quot;, 0, &quot;127.0.0.1&quot;, 4913
+
+mesg, addr = u1.recvfrom(10)
+u1.send mesg, 0, addr[3], addr[1]
+
+p u2.recv(100) #=&gt; &quot;hi&quot;
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-send_source')" id="l_method-i-send_source">show</a>
+                
+              </p>
+              <div id="method-i-send_source" class="dyn-source">
+                <pre>static VALUE
+udp_send(int argc, VALUE *argv, VALUE sock)
+{
+    VALUE flags, host, port;
+    struct udp_send_arg arg;
+    VALUE ret;
+
+    if (argc == 2 || argc == 3) {
+        return rsock_bsock_send(argc, argv, sock);
+    }
+    rb_scan_args(argc, argv, &quot;4&quot;, &amp;arg.sarg.mesg, &amp;flags, &amp;host, &amp;port);
+
+    StringValue(arg.sarg.mesg);
+    GetOpenFile(sock, arg.fptr);
+    arg.sarg.fd = arg.fptr-&gt;fd;
+    arg.sarg.flags = NUM2INT(flags);
+    arg.res = rsock_addrinfo(host, port, rsock_fd_family(arg.fptr-&gt;fd), SOCK_DGRAM, 0);
+    ret = rb_ensure(udp_send_internal, (VALUE)&amp;arg,
+                    rsock_freeaddrinfo, (VALUE)arg.res);
+    if (!ret) rsock_sys_fail_host_port(&quot;sendto(2)&quot;, host, port);
+    return ret;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+
+    </div>
+  </body>
+</html>    

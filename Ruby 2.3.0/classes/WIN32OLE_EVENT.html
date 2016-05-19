@@ -1,0 +1,596 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>WIN32OLE_EVENT</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/github.css" type="text/css" media="screen" />
+<script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            WIN32OLE_EVENT 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../files/ext/win32ole/win32ole_event_c.html">ext/win32ole/win32ole_event.c</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p><code>WIN32OLE_EVENT</code> objects controls OLE event.</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>H</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-handler">handler</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-handler-3D">handler=</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>M</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-message_loop">message_loop</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>O</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-off_event">off_event</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-on_event">on_event</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-on_event_with_outargs">on_event_with_outargs</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>U</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-unadvise">unadvise</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-message_loop">
+            
+              <b>WIN32OLE_EVENT.message_loop
+</b>
+            
+            <a href="../classes/WIN32OLE_EVENT.html#method-c-message_loop" name="method-c-message_loop" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Translates and dispatches Windows message.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-message_loop_source')" id="l_method-c-message_loop_source">show</a>
+                
+              </p>
+              <div id="method-c-message_loop_source" class="dyn-source">
+                <pre>static VALUE
+fev_s_msg_loop(VALUE klass)
+{
+    ole_msg_loop();
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <b>WIN32OLE_EVENT.new(ole, event) #=> WIN32OLE_EVENT object.
+</b>
+            
+            <a href="../classes/WIN32OLE_EVENT.html#method-c-new" name="method-c-new" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns OLE event object. The first argument specifies <a
+href="WIN32OLE.html">WIN32OLE</a> object. The second argument specifies OLE
+event name.</p>
+
+<pre><code>ie = WIN32OLE.new(&#39;InternetExplorer.Application&#39;)
+ev = WIN32OLE_EVENT.new(ie, &#39;DWebBrowserEvents&#39;)
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre>static VALUE
+fev_initialize(int argc, VALUE *argv, VALUE self)
+{
+    ev_advise(argc, argv, self);
+    evs_push(self);
+    rb_ivar_set(self, id_events, rb_ary_new());
+    fev_set_handler(self, Qnil);
+    return self;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-handler">
+            
+              <b>WIN32OLE_EVENT#handler
+</b>
+            
+            <a href="../classes/WIN32OLE_EVENT.html#method-i-handler" name="method-i-handler" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>returns handler object.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-handler_source')" id="l_method-i-handler_source">show</a>
+                
+              </p>
+              <div id="method-i-handler_source" class="dyn-source">
+                <pre>static VALUE
+fev_get_handler(VALUE self)
+{
+    return rb_ivar_get(self, rb_intern(&quot;handler&quot;));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-handler-3D">
+            
+              <b>WIN32OLE_EVENT#handler=
+</b>
+            
+            <a href="../classes/WIN32OLE_EVENT.html#method-i-handler-3D" name="method-i-handler-3D" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>sets event handler object. If handler object has onXXX method according to
+XXX event, then onXXX method is called when XXX event occurs.</p>
+
+<p>If handler object has method_missing and there is no method according to
+the event, then method_missing called and 1-st argument is event name.</p>
+
+<p>If handler object has onXXX method and there is block defined by <a
+href="WIN32OLE_EVENT.html#method-i-on_event">#on_event</a>(&#39;XXX&#39;){},
+then block is executed but handler object method is not called when XXX
+event occurs.</p>
+
+<pre><code>class Handler
+  def onStatusTextChange(text)
+    puts &quot;StatusTextChanged&quot;
+  end
+  def onPropertyChange(prop)
+    puts &quot;PropertyChanged&quot;
+  end
+  def method_missing(ev, *arg)
+    puts &quot;other event #{ev}&quot;
+  end
+end
+
+handler = Handler.new
+ie = WIN32OLE.new(&#39;InternetExplorer.Application&#39;)
+ev = WIN32OLE_EVENT.new(ie)
+ev.on_event(&quot;StatusTextChange&quot;) {|*args|
+  puts &quot;this block executed.&quot;
+  puts &quot;handler.onStatusTextChange method is not called.&quot;
+}
+ev.handler = handler
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-handler-3D_source')" id="l_method-i-handler-3D_source">show</a>
+                
+              </p>
+              <div id="method-i-handler-3D_source" class="dyn-source">
+                <pre>static VALUE
+fev_set_handler(VALUE self, VALUE val)
+{
+    return rb_ivar_set(self, rb_intern(&quot;handler&quot;), val);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-off_event">
+            
+              <b>WIN32OLE_EVENT#off_event([event])
+</b>
+            
+            <a href="../classes/WIN32OLE_EVENT.html#method-i-off_event" name="method-i-off_event" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>removes the callback of event.</p>
+
+<pre><code>ie = WIN32OLE.new(&#39;InternetExplorer.Application&#39;)
+ev = WIN32OLE_EVENT.new(ie)
+ev.on_event(&#39;BeforeNavigate2&#39;) {|*args|
+  args.last[6] = true
+}
+  ...
+ev.off_event(&#39;BeforeNavigate2&#39;)
+  ...</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-off_event_source')" id="l_method-i-off_event_source">show</a>
+                
+              </p>
+              <div id="method-i-off_event_source" class="dyn-source">
+                <pre>static VALUE
+fev_off_event(int argc, VALUE *argv, VALUE self)
+{
+    VALUE event = Qnil;
+    VALUE events;
+
+    rb_scan_args(argc, argv, &quot;01&quot;, &amp;event);
+    if(!NIL_P(event)) {
+        if(!RB_TYPE_P(event, T_STRING) &amp;&amp; !RB_TYPE_P(event, T_SYMBOL)) {
+            rb_raise(rb_eTypeError, &quot;wrong argument type (expected String or Symbol)&quot;);
+        }
+        if (RB_TYPE_P(event, T_SYMBOL)) {
+            event = rb_sym2str(event);
+        }
+    }
+    events = rb_ivar_get(self, id_events);
+    if (NIL_P(events)) {
+        return Qnil;
+    }
+    ole_delete_event(events, event);
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-on_event">
+            
+              <b>WIN32OLE_EVENT#on_event([event]){...}
+</b>
+            
+            <a href="../classes/WIN32OLE_EVENT.html#method-i-on_event" name="method-i-on_event" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Defines the callback event. If argument is omitted, this method defines the
+callback of all events. If you want to modify reference argument in
+callback, return hash in callback. If you want to return value to OLE
+server as result of callback use `return&#39; or :return.</p>
+
+<pre><code>ie = WIN32OLE.new(&#39;InternetExplorer.Application&#39;)
+ev = WIN32OLE_EVENT.new(ie)
+ev.on_event(&quot;NavigateComplete&quot;) {|url| puts url}
+ev.on_event() {|ev, *args| puts &quot;#{ev} fired&quot;}
+
+ev.on_event(&quot;BeforeNavigate2&quot;) {|*args|
+  ...
+  # set true to BeforeNavigate reference argument `Cancel&#39;.
+  # Cancel is 7-th argument of BeforeNavigate,
+  # so you can use 6 as key of hash instead of &#39;Cancel&#39;.
+  # The argument is counted from 0.
+  # The hash key of 0 means first argument.)
+  {:Cancel =&gt; true}  # or {&#39;Cancel&#39; =&gt; true} or {6 =&gt; true}
+}
+
+ev.on_event(...) {|*args|
+  {:return =&gt; 1, :xxx =&gt; yyy}
+}</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-on_event_source')" id="l_method-i-on_event_source">show</a>
+                
+              </p>
+              <div id="method-i-on_event_source" class="dyn-source">
+                <pre>static VALUE
+fev_on_event(int argc, VALUE *argv, VALUE self)
+{
+    return ev_on_event(argc, argv, self, Qfalse);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-on_event_with_outargs">
+            
+              <b>WIN32OLE_EVENT#on_event_with_outargs([event]){...}
+</b>
+            
+            <a href="../classes/WIN32OLE_EVENT.html#method-i-on_event_with_outargs" name="method-i-on_event_with_outargs" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Defines the callback of event. If you want modify argument in callback, you
+could use this method instead of <a
+href="WIN32OLE_EVENT.html#method-i-on_event">#on_event</a>.</p>
+
+<pre><code>ie = WIN32OLE.new(&#39;InternetExplorer.Application&#39;)
+ev = WIN32OLE_EVENT.new(ie)
+ev.on_event_with_outargs(&#39;BeforeNavigate2&#39;) {|*args|
+  args.last[6] = true
+}
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-on_event_with_outargs_source')" id="l_method-i-on_event_with_outargs_source">show</a>
+                
+              </p>
+              <div id="method-i-on_event_with_outargs_source" class="dyn-source">
+                <pre>static VALUE
+fev_on_event_with_outargs(int argc, VALUE *argv, VALUE self)
+{
+    return ev_on_event(argc, argv, self, Qtrue);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-unadvise">
+            
+              <b>WIN32OLE_EVENT#unadvise &rarr; nil
+</b>
+            
+            <a href="../classes/WIN32OLE_EVENT.html#method-i-unadvise" name="method-i-unadvise" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>disconnects OLE server. If this method called, then the <a
+href="WIN32OLE_EVENT.html">WIN32OLE_EVENT</a> object does not receive the
+OLE server event any more. This method is trial implementation.</p>
+
+<pre><code>ie = WIN32OLE.new(&#39;InternetExplorer.Application&#39;)
+ev = WIN32OLE_EVENT.new(ie)
+ev.on_event() {...}
+   ...
+ev.unadvise</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-unadvise_source')" id="l_method-i-unadvise_source">show</a>
+                
+              </p>
+              <div id="method-i-unadvise_source" class="dyn-source">
+                <pre>static VALUE
+fev_unadvise(VALUE self)
+{
+    struct oleeventdata *poleev;
+    TypedData_Get_Struct(self, struct oleeventdata, &amp;oleevent_datatype, poleev);
+    if (poleev-&gt;pConnectionPoint) {
+        ole_msg_loop();
+        evs_delete(poleev-&gt;event_id);
+        poleev-&gt;pConnectionPoint-&gt;lpVtbl-&gt;Unadvise(poleev-&gt;pConnectionPoint, poleev-&gt;dwCookie);
+        OLE_RELEASE(poleev-&gt;pConnectionPoint);
+        poleev-&gt;pConnectionPoint = NULL;
+    }
+    OLE_FREE(poleev-&gt;pDispatch);
+    return Qnil;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+
+    </div>
+  </body>
+</html>    

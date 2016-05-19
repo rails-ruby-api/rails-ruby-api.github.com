@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>OpenURI</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/github.css" type="text/css" media="screen" />
+<script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Module</span> 
+            OpenURI 
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../files/lib/open-uri_rb.html">lib/open-uri.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p><a href="OpenURI.html">OpenURI</a> is an easy-to-use wrapper for <a
+href="Net/HTTP.html">Net::HTTP</a>, Net::HTTPS and <a
+href="Net/FTP.html">Net::FTP</a>.</p>
+
+<h2 id="module-OpenURI-label-Example">Example</h2>
+
+<p>It is possible to open an http, https or ftp URL as though it were a file:</p>
+
+<pre><code>open(&quot;http://www.ruby-lang.org/&quot;) {|f|
+  f.each_line {|line| p line}
+}
+</code></pre>
+
+<p>The opened file has several getter methods for its meta-information, as
+follows, since it is extended by <a
+href="OpenURI/Meta.html">OpenURI::Meta</a>.</p>
+
+<pre><code>open(&quot;http://www.ruby-lang.org/en&quot;) {|f|
+  f.each_line {|line| p line}
+  p f.base_uri         # &lt;URI::HTTP:0x40e6ef2 URL:http://www.ruby-lang.org/en/&gt;
+  p f.content_type     # &quot;text/html&quot;
+  p f.charset          # &quot;iso-8859-1&quot;
+  p f.content_encoding # []
+  p f.last_modified    # Thu Dec 05 02:45:02 UTC 2002
+}
+</code></pre>
+
+<p>Additional header fields can be specified by an optional hash argument.</p>
+
+<pre><code>open(&quot;http://www.ruby-lang.org/en/&quot;,
+  &quot;User-Agent&quot; =&gt; &quot;Ruby/#{RUBY_VERSION}&quot;,
+  &quot;From&quot; =&gt; &quot;foo@bar.invalid&quot;,
+  &quot;Referer&quot; =&gt; &quot;http://www.ruby-lang.org/&quot;) {|f|
+  # ...
+}
+</code></pre>
+
+<p>The environment variables such as http_proxy, https_proxy and ftp_proxy are
+in effect by default. Here we disable proxy:</p>
+
+<pre><code>open(&quot;http://www.ruby-lang.org/en/&quot;, :proxy =&gt; nil) {|f|
+  # ...
+}
+</code></pre>
+
+<p>See <a
+href="OpenURI/OpenRead.html#method-i-open">OpenURI::OpenRead#open</a> and
+Kernel#open for more on available options.</p>
+
+<p><a href="URI.html">URI</a> objects can be opened in a similar way.</p>
+
+<pre><code>uri = URI.parse(&quot;http://www.ruby-lang.org/en/&quot;)
+uri.open {|f|
+  # ...
+}
+</code></pre>
+
+<p><a href="URI.html">URI</a> objects can be read directly. The returned
+string is also extended by <a href="OpenURI/Meta.html">OpenURI::Meta</a>.</p>
+
+<pre><code>str = uri.read
+p str.base_uri
+</code></pre>
+<dl class="rdoc-list note-list"><dt>Author
+<dd>
+<p>Tanaka Akira &lt;akr@m17n.org&gt;</p>
+</dd></dl>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+    <!-- Namespace -->
+    <div class="sectiontitle">Namespace</div>
+    <ul>
+      
+        <li>
+          <span class="type">MODULE</span>
+          <a href="OpenURI/Meta.html">OpenURI::Meta</a>
+        </li>
+      
+        <li>
+          <span class="type">MODULE</span>
+          <a href="OpenURI/OpenRead.html">OpenURI::OpenRead</a>
+        </li>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="OpenURI/HTTPError.html">OpenURI::HTTPError</a>
+        </li>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="OpenURI/HTTPRedirect.html">OpenURI::HTTPRedirect</a>
+        </li>
+      
+    </ul>
+  
+
+
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+      <!-- Section constants -->
+      <div class="sectiontitle">Constants</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class="attr-name">Options</td>
+            <td>=</td>
+            <td class="attr-value">{
+:proxy =&gt; true,
+:proxy_http_basic_authentication =&gt; true,
+:progress_proc =&gt; true,
+:content_length_proc =&gt; true,
+:http_basic_authentication =&gt; true,
+:read_timeout =&gt; true,
+:open_timeout =&gt; true,
+:ssl_ca_cert =&gt; nil,
+:ssl_verify_mode =&gt; nil,
+:ftp_active_mode =&gt; false,
+:redirect =&gt; true,
+}</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+      </table>
+    
+
+
+    
+
+
+    <!-- Methods -->
+              </div>
+
+    </div>
+  </body>
+</html>    

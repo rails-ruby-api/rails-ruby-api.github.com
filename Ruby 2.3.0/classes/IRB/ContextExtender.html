@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>IRB::ContextExtender</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Module</span> 
+            IRB::ContextExtender 
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/lib/irb/extend-command_rb.html">lib/irb/extend-command.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>Extends methods for the <a href="Context.html">Context</a> module</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>D</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-def_extend_command">def_extend_command</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>I</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-install_extend_commands">install_extend_commands</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+      <!-- Section constants -->
+      <div class="sectiontitle">Constants</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class="attr-name">CE</td>
+            <td>=</td>
+            <td class="attr-value">ContextExtender</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+      </table>
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-def_extend_command">
+            
+              <b>def_extend_command</b>(cmd_name, load_file, *aliases)
+            
+            <a href="../../classes/IRB/ContextExtender.html#method-c-def_extend_command" name="method-c-def_extend_command" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Evaluate the given <code>command</code> from the given
+<code>load_file</code> on the <a href="Context.html">Context</a> module.</p>
+
+<p>Will also define any given <code>aliases</code> for the method.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-def_extend_command_source')" id="l_method-c-def_extend_command_source">show</a>
+                
+              </p>
+              <div id="method-c-def_extend_command_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/irb/extend-command.rb, line 239</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">self</span>.<span class="ruby-identifier">def_extend_command</span>(<span class="ruby-identifier">cmd_name</span>, <span class="ruby-identifier">load_file</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">aliases</span>)
+  <span class="ruby-identifier">line</span> = <span class="ruby-keyword">__LINE__</span>; <span class="ruby-constant">Context</span>.<span class="ruby-identifier">module_eval</span> <span class="ruby-node">%Q[
+    def #{cmd_name}(*opts, &amp;b)
+      Context.module_eval {remove_method(:#{cmd_name})}
+      require &quot;#{load_file}&quot;
+      send :#{cmd_name}, *opts, &amp;b
+    end
+    for ali in aliases
+      alias_method ali, cmd_name
+    end
+  ]</span>, <span class="ruby-keyword">__FILE__</span>, <span class="ruby-identifier">line</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-install_extend_commands">
+            
+              <b>install_extend_commands</b>()
+            
+            <a href="../../classes/IRB/ContextExtender.html#method-c-install_extend_commands" name="method-c-install_extend_commands" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Installs the default context extensions as irb commands:</p>
+<dl class="rdoc-list note-list"><dt><a href="Context.html#method-i-eval_history-3D">IRB::Context#eval_history=</a>
+<dd>
+<p><code>irb/ext/history.rb</code></p>
+</dd><dt><a href="Context.html#method-i-use_tracer-3D">IRB::Context#use_tracer=</a>
+<dd>
+<p><code>irb/ext/tracer.rb</code></p>
+</dd><dt><a href="Context.html#method-i-math_mode-3D">IRB::Context#math_mode=</a>
+<dd>
+<p><code>irb/ext/math-mode.rb</code></p>
+</dd><dt><a href="Context.html#method-i-use_loader-3D">IRB::Context#use_loader=</a>
+<dd>
+<p><code>irb/ext/use-loader.rb</code></p>
+</dd><dt><a href="Context.html#method-i-save_history-3D">IRB::Context#save_history=</a>
+<dd>
+<p><code>irb/ext/save-history.rb</code></p>
+</dd></dl>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-install_extend_commands_source')" id="l_method-c-install_extend_commands_source">show</a>
+                
+              </p>
+              <div id="method-c-install_extend_commands_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/irb/extend-command.rb, line 229</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">self</span>.<span class="ruby-identifier">install_extend_commands</span>
+  <span class="ruby-keyword">for</span> <span class="ruby-identifier">args</span> <span class="ruby-keyword">in</span> <span class="ruby-ivar">@EXTEND_COMMANDS</span>
+    <span class="ruby-identifier">def_extend_command</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                        </div>
+
+    </div>
+  </body>
+</html>    

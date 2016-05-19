@@ -1,0 +1,861 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>XMLRPC::BasicServer</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            XMLRPC::BasicServer 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/lib/xmlrpc/server_rb.html">lib/xmlrpc/server.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>This is the base class for all XML-RPC server-types (CGI, standalone). You
+can add handler and set a default handler. Do not use this server, as this
+is/should be an abstract class.</p>
+
+<h3 id="class-XMLRPC::BasicServer-label-How+the+method+to+call+is+found">How the method to call is found</h3>
+
+<p>The arity (number of accepted arguments) of a handler (method or <a
+href="../Proc.html">Proc</a> object) is compared to the given arguments
+submitted by the client for a RPC, or Remote Procedure Call.</p>
+
+<p>A handler is only called if it accepts the number of arguments, otherwise
+the search for another handler will go on. When at the end no handler was
+found, the default_handler, <a
+href="BasicServer.html#method-i-set_default_handler">#set_default_handler</a>
+will be called.</p>
+
+<p>With this technique it is possible to do overloading by number of
+parameters, but only for <a href="../Proc.html">Proc</a> handler, because
+you cannot define two methods of the same name in the same class.</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>A</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-add_handler">add_handler</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-add_introspection">add_introspection</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-add_multicall">add_multicall</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>G</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-get_default_handler">get_default_handler</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-get_service_hook">get_service_hook</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>P</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-process">process</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>S</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-set_default_handler">set_default_handler</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-set_service_hook">set_service_hook</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+    <!-- Includes -->
+    <div class="sectiontitle">Included Modules</div>
+    <ul>
+      
+        <li>
+          
+            <a href="ParserWriterChooseMixin.html">
+              XMLRPC::ParserWriterChooseMixin
+            </a>
+          
+        </li>
+      
+        <li>
+          
+            <a href="ParseContentType.html">
+              XMLRPC::ParseContentType
+            </a>
+          
+        </li>
+      
+    </ul>
+  
+
+
+
+  
+
+    
+
+    
+
+    
+      <!-- Section constants -->
+      <div class="sectiontitle">Constants</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class="attr-name">ERR_METHOD_MISSING</td>
+            <td>=</td>
+            <td class="attr-value">1</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">ERR_UNCAUGHT_EXCEPTION</td>
+            <td>=</td>
+            <td class="attr-value">2</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">ERR_MC_WRONG_PARAM</td>
+            <td>=</td>
+            <td class="attr-value">3</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">ERR_MC_MISSING_PARAMS</td>
+            <td>=</td>
+            <td class="attr-value">4</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">ERR_MC_MISSING_METHNAME</td>
+            <td>=</td>
+            <td class="attr-value">5</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">ERR_MC_RECURSIVE_CALL</td>
+            <td>=</td>
+            <td class="attr-value">6</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">ERR_MC_WRONG_PARAM_PARAMS</td>
+            <td>=</td>
+            <td class="attr-value">7</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">ERR_MC_EXPECTED_STRUCT</td>
+            <td>=</td>
+            <td class="attr-value">8</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+      </table>
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <b>new</b>(class_delim=&quot;.&quot;)
+            
+            <a href="../../classes/XMLRPC/BasicServer.html#method-c-new" name="method-c-new" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Creates a new <a href="BasicServer.html">XMLRPC::BasicServer</a> instance,
+which should not be done, because <a
+href="BasicServer.html">XMLRPC::BasicServer</a> is an abstract class. This
+method should be called from a subclass indirectly by a <code>super</code>
+call in the initialize method.</p>
+
+<p>The parameter <code>class_delim</code> is used by <a
+href="BasicServer.html#method-i-add_handler">#add_handler</a>, see <a
+href="BasicServer.html#method-i-add_handler">#add_handler</a>, when an
+object is added as a handler, to delimit the object-prefix and the
+method-name.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/xmlrpc/server.rb, line 57</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">initialize</span>(<span class="ruby-identifier">class_delim</span>=<span class="ruby-string">&quot;.&quot;</span>)
+  <span class="ruby-ivar">@handler</span> = []
+  <span class="ruby-ivar">@default_handler</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-ivar">@service_hook</span> = <span class="ruby-keyword">nil</span>
+
+  <span class="ruby-ivar">@class_delim</span> = <span class="ruby-identifier">class_delim</span>
+  <span class="ruby-ivar">@create</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-ivar">@parser</span> = <span class="ruby-keyword">nil</span>
+
+  <span class="ruby-identifier">add_multicall</span>     <span class="ruby-keyword">if</span> <span class="ruby-constant">Config</span><span class="ruby-operator">::</span><span class="ruby-constant">ENABLE_MULTICALL</span>
+  <span class="ruby-identifier">add_introspection</span> <span class="ruby-keyword">if</span> <span class="ruby-constant">Config</span><span class="ruby-operator">::</span><span class="ruby-constant">ENABLE_INTROSPECTION</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-add_handler">
+            
+              <b>add_handler</b>(prefix, obj_or_signature=nil, help=nil, &amp;block)
+            
+            <a href="../../classes/XMLRPC/BasicServer.html#method-i-add_handler" name="method-i-add_handler" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Adds <code>aBlock</code> to the list of handlers, with <code>name</code> as
+the name of the method.</p>
+
+<p>Parameters <code>signature</code> and <code>help</code> are used by the
+Introspection method if specified, where <code>signature</code> is either
+an Array containing strings each representing a type of it&#39;s signature
+(the first is the return value) or an Array of Arrays if the method has
+multiple signatures.</p>
+
+<p>Value type-names are “int, boolean, double, string, <a
+href="../Time.html#method-c-iso8601">Time.iso8601</a>, base64, array,
+struct”.</p>
+
+<p>Parameter <code>help</code> is a String with information about how to call
+this method etc.</p>
+
+<p>When a method fails, it can tell the client by throwing an <a
+href="FaultException.html">XMLRPC::FaultException</a> like in this example:</p>
+
+<pre><code>s.add_handler(&quot;michael.div&quot;) do |a,b|
+  if b == 0
+    raise XMLRPC::FaultException.new(1, &quot;division by zero&quot;)
+  else
+    a / b
+  end
+end
+</code></pre>
+
+<p>In the case of <code>b==0</code> the client gets an object back of type <a
+href="FaultException.html">XMLRPC::FaultException</a> that has a
+<code>faultCode</code> and <code>faultString</code> field.</p>
+
+<p>This is the second form of
+((&lt;add_handler|XMLRPC::BasicServer#add_handler&gt;)). To add an object
+write:</p>
+
+<pre><code>server.add_handler(&quot;michael&quot;, MyHandlerClass.new)
+</code></pre>
+
+<p>All public methods of MyHandlerClass are accessible to the XML-RPC clients
+by <code>michael.&quot;name of method&quot;</code>. This is where the
+<code>class_delim</code> in <a
+href="BasicServer.html#method-c-new">::new</a> plays it&#39;s role, a
+XML-RPC method-name is defined by <code>prefix</code> +
+<code>class_delim</code> + <code>&quot;name of method&quot;</code>.</p>
+
+<p>The third form of +add_handler is to use <a
+href="Service/Interface.html">XMLRPC::Service::Interface</a> to generate an
+object, which represents an interface (with signature and help text) for a
+handler class.</p>
+
+<p>The <code>interface</code> parameter must be an instance of <a
+href="Service/Interface.html">XMLRPC::Service::Interface</a>. Adds all
+methods of <code>obj</code> which are defined in the <code>interface</code>
+to the server.</p>
+
+<p>This is the recommended way of adding services to a server!</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-add_handler_source')" id="l_method-i-add_handler_source">show</a>
+                
+              </p>
+              <div id="method-i-add_handler_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/xmlrpc/server.rb, line 116</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">add_handler</span>(<span class="ruby-identifier">prefix</span>, <span class="ruby-identifier">obj_or_signature</span>=<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">help</span>=<span class="ruby-keyword">nil</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">block_given?</span>
+    <span class="ruby-comment"># proc-handler</span>
+    <span class="ruby-ivar">@handler</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-identifier">prefix</span>, <span class="ruby-identifier">block</span>, <span class="ruby-identifier">obj_or_signature</span>, <span class="ruby-identifier">help</span>]
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">prefix</span>.<span class="ruby-identifier">kind_of?</span> <span class="ruby-constant">String</span>
+      <span class="ruby-comment"># class-handler</span>
+      <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-string">&quot;Expected non-nil value&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">obj_or_signature</span>.<span class="ruby-identifier">nil?</span>
+      <span class="ruby-ivar">@handler</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-identifier">prefix</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@class_delim</span>, <span class="ruby-identifier">obj_or_signature</span>]
+    <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">prefix</span>.<span class="ruby-identifier">kind_of?</span> <span class="ruby-constant">XMLRPC</span><span class="ruby-operator">::</span><span class="ruby-constant">Service</span><span class="ruby-operator">::</span><span class="ruby-constant">BasicInterface</span>
+      <span class="ruby-comment"># class-handler with interface</span>
+      <span class="ruby-comment"># add all methods</span>
+      <span class="ruby-ivar">@handler</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">prefix</span>.<span class="ruby-identifier">get_methods</span>(<span class="ruby-identifier">obj_or_signature</span>, <span class="ruby-ivar">@class_delim</span>)
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-string">&quot;Wrong type for parameter &#39;prefix&#39;&quot;</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">self</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-add_introspection">
+            
+              <b>add_introspection</b>()
+            
+            <a href="../../classes/XMLRPC/BasicServer.html#method-i-add_introspection" name="method-i-add_introspection" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Adds the introspection handlers
+<code>&quot;system.listMethods&quot;</code>,
+<code>&quot;system.methodSignature&quot;</code> and
+<code>&quot;system.methodHelp&quot;</code>, where only the first one works.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-add_introspection_source')" id="l_method-i-add_introspection_source">show</a>
+                
+              </p>
+              <div id="method-i-add_introspection_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/xmlrpc/server.rb, line 237</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">add_introspection</span>
+  <span class="ruby-identifier">add_handler</span>(<span class="ruby-string">&quot;system.listMethods&quot;</span>,<span class="ruby-node">%w(array)</span>, <span class="ruby-string">&quot;List methods available on this XML-RPC server&quot;</span>) <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">methods</span> = []
+    <span class="ruby-ivar">@handler</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">name</span>, <span class="ruby-identifier">obj</span><span class="ruby-operator">|</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">kind_of?</span> <span class="ruby-constant">Proc</span>
+        <span class="ruby-identifier">methods</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">name</span>
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">public_instance_methods</span>(<span class="ruby-keyword">false</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">meth</span><span class="ruby-operator">|</span>
+          <span class="ruby-identifier">methods</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;#{name}#{meth}&quot;</span>
+        <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">methods</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">add_handler</span>(<span class="ruby-string">&quot;system.methodSignature&quot;</span>, <span class="ruby-node">%w(array string)</span>, <span class="ruby-string">&quot;Returns method signature&quot;</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">meth</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">sigs</span> = []
+    <span class="ruby-ivar">@handler</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">name</span>, <span class="ruby-identifier">obj</span>, <span class="ruby-identifier">sig</span><span class="ruby-operator">|</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">kind_of?</span> <span class="ruby-constant">Proc</span> <span class="ruby-keyword">and</span> <span class="ruby-identifier">sig</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span> <span class="ruby-keyword">and</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">meth</span>
+        <span class="ruby-keyword">if</span> <span class="ruby-identifier">sig</span>[<span class="ruby-number">0</span>].<span class="ruby-identifier">kind_of?</span> <span class="ruby-constant">Array</span>
+          <span class="ruby-comment"># sig contains multiple signatures, e.g. [[&quot;array&quot;], [&quot;array&quot;, &quot;string&quot;]]</span>
+          <span class="ruby-identifier">sig</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span> <span class="ruby-identifier">sigs</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">s</span>}
+        <span class="ruby-keyword">else</span>
+          <span class="ruby-comment"># sig is a single signature, e.g. [&quot;array&quot;]</span>
+          <span class="ruby-identifier">sigs</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">sig</span>
+        <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">sigs</span>.<span class="ruby-identifier">uniq!</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">sigs</span>  <span class="ruby-comment"># remove eventually duplicated signatures</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">add_handler</span>(<span class="ruby-string">&quot;system.methodHelp&quot;</span>, <span class="ruby-node">%w(string string)</span>, <span class="ruby-string">&quot;Returns help on using this method&quot;</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">meth</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">help</span> = <span class="ruby-keyword">nil</span>
+    <span class="ruby-ivar">@handler</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">name</span>, <span class="ruby-identifier">obj</span>, <span class="ruby-identifier">sig</span>, <span class="ruby-identifier">hlp</span><span class="ruby-operator">|</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">kind_of?</span> <span class="ruby-constant">Proc</span> <span class="ruby-keyword">and</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">meth</span>
+        <span class="ruby-identifier">help</span> = <span class="ruby-identifier">hlp</span>
+        <span class="ruby-keyword">break</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+    <span class="ruby-identifier">help</span> <span class="ruby-operator">||</span> <span class="ruby-string">&quot;&quot;</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">self</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-add_multicall">
+            
+              <b>add_multicall</b>()
+            
+            <a href="../../classes/XMLRPC/BasicServer.html#method-i-add_multicall" name="method-i-add_multicall" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Adds the multi-call handler <code>&quot;system.multicall&quot;</code>.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-add_multicall_source')" id="l_method-i-add_multicall_source">show</a>
+                
+              </p>
+              <div id="method-i-add_multicall_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/xmlrpc/server.rb, line 192</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">add_multicall</span>
+  <span class="ruby-identifier">add_handler</span>(<span class="ruby-string">&quot;system.multicall&quot;</span>, <span class="ruby-node">%w(array array)</span>, <span class="ruby-string">&quot;Multicall Extension&quot;</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">arrStructs</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">unless</span> <span class="ruby-identifier">arrStructs</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">Array</span>
+      <span class="ruby-identifier">raise</span> <span class="ruby-constant">XMLRPC</span><span class="ruby-operator">::</span><span class="ruby-constant">FaultException</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">ERR_MC_WRONG_PARAM</span>, <span class="ruby-string">&quot;system.multicall expects an array&quot;</span>)
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-identifier">arrStructs</span>.<span class="ruby-identifier">collect</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">call</span><span class="ruby-operator">|</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">call</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">Hash</span>
+        <span class="ruby-identifier">methodName</span> = <span class="ruby-identifier">call</span>[<span class="ruby-string">&quot;methodName&quot;</span>]
+        <span class="ruby-identifier">params</span>     = <span class="ruby-identifier">call</span>[<span class="ruby-string">&quot;params&quot;</span>]
+
+        <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>.<span class="ruby-identifier">nil?</span>
+          <span class="ruby-identifier">multicall_fault</span>(<span class="ruby-constant">ERR_MC_MISSING_PARAMS</span>, <span class="ruby-string">&quot;Missing params&quot;</span>)
+        <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">methodName</span>.<span class="ruby-identifier">nil?</span>
+          <span class="ruby-identifier">multicall_fault</span>(<span class="ruby-constant">ERR_MC_MISSING_METHNAME</span>, <span class="ruby-string">&quot;Missing methodName&quot;</span>)
+        <span class="ruby-keyword">else</span>
+          <span class="ruby-keyword">if</span> <span class="ruby-identifier">methodName</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;system.multicall&quot;</span>
+            <span class="ruby-identifier">multicall_fault</span>(<span class="ruby-constant">ERR_MC_RECURSIVE_CALL</span>, <span class="ruby-string">&quot;Recursive system.multicall forbidden&quot;</span>)
+          <span class="ruby-keyword">else</span>
+            <span class="ruby-keyword">unless</span> <span class="ruby-identifier">params</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">Array</span>
+              <span class="ruby-identifier">multicall_fault</span>(<span class="ruby-constant">ERR_MC_WRONG_PARAM_PARAMS</span>, <span class="ruby-string">&quot;Parameter params have to be an Array&quot;</span>)
+            <span class="ruby-keyword">else</span>
+              <span class="ruby-identifier">ok</span>, <span class="ruby-identifier">val</span> = <span class="ruby-identifier">call_method</span>(<span class="ruby-identifier">methodName</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">params</span>)
+              <span class="ruby-keyword">if</span> <span class="ruby-identifier">ok</span>
+                <span class="ruby-comment"># correct return value</span>
+                [<span class="ruby-identifier">val</span>]
+              <span class="ruby-keyword">else</span>
+                <span class="ruby-comment"># exception</span>
+                <span class="ruby-identifier">multicall_fault</span>(<span class="ruby-identifier">val</span>.<span class="ruby-identifier">faultCode</span>, <span class="ruby-identifier">val</span>.<span class="ruby-identifier">faultString</span>)
+              <span class="ruby-keyword">end</span>
+            <span class="ruby-keyword">end</span>
+          <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">end</span>
+
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-identifier">multicall_fault</span>(<span class="ruby-constant">ERR_MC_EXPECTED_STRUCT</span>, <span class="ruby-string">&quot;system.multicall expected struct&quot;</span>)
+      <span class="ruby-keyword">end</span>
+    }
+  <span class="ruby-keyword">end</span> <span class="ruby-comment"># end add_handler</span>
+  <span class="ruby-keyword">self</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-get_default_handler">
+            
+              <b>get_default_handler</b>()
+            
+            <a href="../../classes/XMLRPC/BasicServer.html#method-i-get_default_handler" name="method-i-get_default_handler" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the default-handler, which is called when no handler for a
+method-name is found.</p>
+
+<p>It is either a <a href="../Proc.html">Proc</a> object or <code>nil</code>.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-get_default_handler_source')" id="l_method-i-get_default_handler_source">show</a>
+                
+              </p>
+              <div id="method-i-get_default_handler_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/xmlrpc/server.rb, line 171</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">get_default_handler</span>
+  <span class="ruby-ivar">@default_handler</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-get_service_hook">
+            
+              <b>get_service_hook</b>()
+            
+            <a href="../../classes/XMLRPC/BasicServer.html#method-i-get_service_hook" name="method-i-get_service_hook" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the service-hook, which is called on each service request (RPC)
+unless it&#39;s <code>nil</code>.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-get_service_hook_source')" id="l_method-i-get_service_hook_source">show</a>
+                
+              </p>
+              <div id="method-i-get_service_hook_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/xmlrpc/server.rb, line 138</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">get_service_hook</span>
+  <span class="ruby-ivar">@service_hook</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-process">
+            
+              <b>process</b>(data)
+            
+            <a href="../../classes/XMLRPC/BasicServer.html#method-i-process" name="method-i-process" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-process_source')" id="l_method-i-process_source">show</a>
+                
+              </p>
+              <div id="method-i-process_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/xmlrpc/server.rb, line 284</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">process</span>(<span class="ruby-identifier">data</span>)
+  <span class="ruby-identifier">method</span>, <span class="ruby-identifier">params</span> = <span class="ruby-identifier">parser</span>().<span class="ruby-identifier">parseMethodCall</span>(<span class="ruby-identifier">data</span>)
+  <span class="ruby-identifier">handle</span>(<span class="ruby-identifier">method</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">params</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-set_default_handler">
+            
+              <b>set_default_handler</b>(&amp;handler)
+            
+            <a href="../../classes/XMLRPC/BasicServer.html#method-i-set_default_handler" name="method-i-set_default_handler" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Sets <code>handler</code> as the default-handler, which is called when no
+handler for a method-name is found.</p>
+
+<p><code>handler</code> is a code-block.</p>
+
+<p>The default-handler is called with the (XML-RPC) method-name as first
+argument, and the other arguments are the parameters given by the
+client-call.</p>
+
+<p>If no block is specified the default of <a
+href="BasicServer.html">XMLRPC::BasicServer</a> is used, which raises a <a
+href="FaultException.html">XMLRPC::FaultException</a> saying “method
+missing”.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-set_default_handler_source')" id="l_method-i-set_default_handler_source">show</a>
+                
+              </p>
+              <div id="method-i-set_default_handler_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/xmlrpc/server.rb, line 186</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">set_default_handler</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">handler</span>)
+  <span class="ruby-ivar">@default_handler</span> = <span class="ruby-identifier">handler</span>
+  <span class="ruby-keyword">self</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-set_service_hook">
+            
+              <b>set_service_hook</b>(&amp;handler)
+            
+            <a href="../../classes/XMLRPC/BasicServer.html#method-i-set_service_hook" name="method-i-set_service_hook" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>A service-hook is called for each service request (RPC).</p>
+
+<p>You can use a service-hook for example to wrap existing methods and catch
+exceptions of them or convert values to values recognized by <a
+href="../XMLRPC.html">XMLRPC</a>.</p>
+
+<p>You can disable it by passing <code>nil</code> as the <code>handler</code>
+parameter.</p>
+
+<p>The service-hook is called with a <a href="../Proc.html">Proc</a> object
+along with any parameters.</p>
+
+<p>An example:</p>
+
+<pre><code>server.set_service_hook {|obj, *args|
+  begin
+    ret = obj.call(*args)  # call the original service-method
+    # could convert the return value
+  rescue
+    # rescue exceptions
+  end
+}
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-set_service_hook_source')" id="l_method-i-set_service_hook_source">show</a>
+                
+              </p>
+              <div id="method-i-set_service_hook_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/xmlrpc/server.rb, line 162</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">set_service_hook</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">handler</span>)
+  <span class="ruby-ivar">@service_hook</span> = <span class="ruby-identifier">handler</span>
+  <span class="ruby-keyword">self</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+
+    </div>
+  </body>
+</html>    

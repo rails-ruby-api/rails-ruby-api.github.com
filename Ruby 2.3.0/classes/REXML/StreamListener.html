@@ -1,0 +1,755 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>REXML::StreamListener</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Module</span> 
+            REXML::StreamListener 
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/lib/rexml/streamlistener_rb.html">lib/rexml/streamlistener.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>A template for stream parser listeners. Note that the declarations
+(attlistdecl, elementdecl, etc) are trivially processed; <a
+href="../REXML.html">REXML</a> doesn&#39;t yet handle doctype entity
+declarations, so you have to parse them out yourself.</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>A</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-attlistdecl">attlistdecl</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>C</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-cdata">cdata</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-comment">comment</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>D</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-doctype">doctype</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-doctype_end">doctype_end</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>E</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-elementdecl">elementdecl</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-entity">entity</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-entitydecl">entitydecl</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>I</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-instruction">instruction</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-notationdecl">notationdecl</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-tag_end">tag_end</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-tag_start">tag_start</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-text">text</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>X</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-xmldecl">xmldecl</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+        
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-attlistdecl">
+            
+              <b>attlistdecl</b>(element_name, attributes, raw_content)
+            
+            <a href="../../classes/REXML/StreamListener.html#method-i-attlistdecl" name="method-i-attlistdecl" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>If a doctype includes an ATTLIST declaration, it will cause this method to
+be called.  The content is the declaration itself, unparsed. EG,
+&lt;!ATTLIST el attr CDATA #REQUIRED&gt; will come to this method as “el
+attr CDATA #REQUIRED”.  This is the same for all of the .*decl methods.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-attlistdecl_source')" id="l_method-i-attlistdecl_source">show</a>
+                
+              </p>
+              <div id="method-i-attlistdecl_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rexml/streamlistener.rb, line 51</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">attlistdecl</span> <span class="ruby-identifier">element_name</span>, <span class="ruby-identifier">attributes</span>, <span class="ruby-identifier">raw_content</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-cdata">
+            
+              <b>cdata</b>(content)
+            
+            <a href="../../classes/REXML/StreamListener.html#method-i-cdata" name="method-i-cdata" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Called when &lt;![CDATA[ … ]]&gt; is encountered in a document. @p content
+“…”</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-cdata_source')" id="l_method-i-cdata_source">show</a>
+                
+              </p>
+              <div id="method-i-cdata_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rexml/streamlistener.rb, line 83</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">cdata</span> <span class="ruby-identifier">content</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-comment">
+            
+              <b>comment</b>(comment)
+            
+            <a href="../../classes/REXML/StreamListener.html#method-i-comment" name="method-i-comment" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Called when a comment is encountered. @p comment The content of the comment</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-comment_source')" id="l_method-i-comment_source">show</a>
+                
+              </p>
+              <div id="method-i-comment_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rexml/streamlistener.rb, line 33</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">comment</span> <span class="ruby-identifier">comment</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-doctype">
+            
+              <b>doctype</b>(name, pub_sys, long_name, uri)
+            
+            <a href="../../classes/REXML/StreamListener.html#method-i-doctype" name="method-i-doctype" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Handles a doctype declaration. Any attributes of the doctype which are not
+supplied will be nil.  # EG, &lt;!DOCTYPE me PUBLIC “foo” “bar”&gt; @p name
+the name of the doctype; EG, “me” @p pub_sys “PUBLIC”, “SYSTEM”, or nil. 
+EG, “PUBLIC” @p long_name the supplied long name, or nil.  EG, “foo” @p uri
+the uri of the doctype, or nil.  EG, “bar”</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-doctype_source')" id="l_method-i-doctype_source">show</a>
+                
+              </p>
+              <div id="method-i-doctype_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rexml/streamlistener.rb, line 41</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">doctype</span> <span class="ruby-identifier">name</span>, <span class="ruby-identifier">pub_sys</span>, <span class="ruby-identifier">long_name</span>, <span class="ruby-identifier">uri</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-doctype_end">
+            
+              <b>doctype_end</b>()
+            
+            <a href="../../classes/REXML/StreamListener.html#method-i-doctype_end" name="method-i-doctype_end" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Called when the doctype is done</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-doctype_end_source')" id="l_method-i-doctype_end_source">show</a>
+                
+              </p>
+              <div id="method-i-doctype_end_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rexml/streamlistener.rb, line 44</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">doctype_end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-elementdecl">
+            
+              <b>elementdecl</b>(content)
+            
+            <a href="../../classes/REXML/StreamListener.html#method-i-elementdecl" name="method-i-elementdecl" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>&lt;!ELEMENT …&gt;</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-elementdecl_source')" id="l_method-i-elementdecl_source">show</a>
+                
+              </p>
+              <div id="method-i-elementdecl_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rexml/streamlistener.rb, line 54</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">elementdecl</span> <span class="ruby-identifier">content</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-entity">
+            
+              <b>entity</b>(content)
+            
+            <a href="../../classes/REXML/StreamListener.html#method-i-entity" name="method-i-entity" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Called when %foo; is encountered in a doctype declaration. @p content “foo”</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-entity_source')" id="l_method-i-entity_source">show</a>
+                
+              </p>
+              <div id="method-i-entity_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rexml/streamlistener.rb, line 79</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">entity</span> <span class="ruby-identifier">content</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-entitydecl">
+            
+              <b>entitydecl</b>(content)
+            
+            <a href="../../classes/REXML/StreamListener.html#method-i-entitydecl" name="method-i-entitydecl" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>&lt;!ENTITY …&gt; The argument passed to this method is an array of the
+entity declaration.  It can be in a number of formats, but in general it
+returns (example, result):</p>
+
+<pre><code>&lt;!ENTITY % YN &#39;&quot;Yes&quot;&#39;&gt;
+[&quot;YN&quot;, &quot;\&quot;Yes\&quot;&quot;, &quot;%&quot;]
+&lt;!ENTITY % YN &#39;Yes&#39;&gt;
+[&quot;YN&quot;, &quot;Yes&quot;, &quot;%&quot;]
+&lt;!ENTITY WhatHeSaid &quot;He said %YN;&quot;&gt;
+[&quot;WhatHeSaid&quot;, &quot;He said %YN;&quot;]
+&lt;!ENTITY open-hatch SYSTEM &quot;http://www.textuality.com/boilerplate/OpenHatch.xml&quot;&gt;
+[&quot;open-hatch&quot;, &quot;SYSTEM&quot;, &quot;http://www.textuality.com/boilerplate/OpenHatch.xml&quot;]
+&lt;!ENTITY open-hatch PUBLIC &quot;-//Textuality//TEXT Standard open-hatch boilerplate//EN&quot; &quot;http://www.textuality.com/boilerplate/OpenHatch.xml&quot;&gt;
+[&quot;open-hatch&quot;, &quot;PUBLIC&quot;, &quot;-//Textuality//TEXT Standard open-hatch boilerplate//EN&quot;, &quot;http://www.textuality.com/boilerplate/OpenHatch.xml&quot;]
+&lt;!ENTITY hatch-pic SYSTEM &quot;../grafix/OpenHatch.gif&quot; NDATA gif&gt;
+[&quot;hatch-pic&quot;, &quot;SYSTEM&quot;, &quot;../grafix/OpenHatch.gif&quot;, &quot;gif&quot;]</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-entitydecl_source')" id="l_method-i-entitydecl_source">show</a>
+                
+              </p>
+              <div id="method-i-entitydecl_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rexml/streamlistener.rb, line 72</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">entitydecl</span> <span class="ruby-identifier">content</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-instruction">
+            
+              <b>instruction</b>(name, instruction)
+            
+            <a href="../../classes/REXML/StreamListener.html#method-i-instruction" name="method-i-instruction" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Called when an instruction is encountered.  EG: &lt;?xsl
+sheet=&#39;foo&#39;?&gt; @p name the instruction name; in the example,
+“xsl” @p instruction the rest of the instruction.  In the example,
+“sheet=&#39;foo&#39;”</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-instruction_source')" id="l_method-i-instruction_source">show</a>
+                
+              </p>
+              <div id="method-i-instruction_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rexml/streamlistener.rb, line 29</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">instruction</span> <span class="ruby-identifier">name</span>, <span class="ruby-identifier">instruction</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-notationdecl">
+            
+              <b>notationdecl</b>(content)
+            
+            <a href="../../classes/REXML/StreamListener.html#method-i-notationdecl" name="method-i-notationdecl" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>&lt;!NOTATION …&gt;</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-notationdecl_source')" id="l_method-i-notationdecl_source">show</a>
+                
+              </p>
+              <div id="method-i-notationdecl_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rexml/streamlistener.rb, line 75</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">notationdecl</span> <span class="ruby-identifier">content</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-tag_end">
+            
+              <b>tag_end</b>(name)
+            
+            <a href="../../classes/REXML/StreamListener.html#method-i-tag_end" name="method-i-tag_end" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Called when the end tag is reached.  In the case of &lt;tag/&gt;, <a
+href="StreamListener.html#method-i-tag_end">#tag_end</a> will be called
+immediately after <a
+href="StreamListener.html#method-i-tag_start">#tag_start</a> @p the name of
+the tag</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-tag_end_source')" id="l_method-i-tag_end_source">show</a>
+                
+              </p>
+              <div id="method-i-tag_end_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rexml/streamlistener.rb, line 19</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">tag_end</span> <span class="ruby-identifier">name</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-tag_start">
+            
+              <b>tag_start</b>(name, attrs)
+            
+            <a href="../../classes/REXML/StreamListener.html#method-i-tag_start" name="method-i-tag_start" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Called when a tag is encountered. @p name the tag name @p attrs an array of
+arrays of attribute/value pairs, suitable for use with assoc or rassoc. 
+IE, &lt;tag attr1=“value1” attr2=“value2”&gt; will result in <a
+href="StreamListener.html#method-i-tag_start">#tag_start</a>( “tag”, #
+[[“<a href=""attr2","value2"">attr1”,“value1”],</a>])</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-tag_start_source')" id="l_method-i-tag_start_source">show</a>
+                
+              </p>
+              <div id="method-i-tag_start_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rexml/streamlistener.rb, line 14</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">tag_start</span> <span class="ruby-identifier">name</span>, <span class="ruby-identifier">attrs</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-text">
+            
+              <b>text</b>(text)
+            
+            <a href="../../classes/REXML/StreamListener.html#method-i-text" name="method-i-text" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Called when text is encountered in the document @p text the text content.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-text_source')" id="l_method-i-text_source">show</a>
+                
+              </p>
+              <div id="method-i-text_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rexml/streamlistener.rb, line 23</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">text</span> <span class="ruby-identifier">text</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-xmldecl">
+            
+              <b>xmldecl</b>(version, encoding, standalone)
+            
+            <a href="../../classes/REXML/StreamListener.html#method-i-xmldecl" name="method-i-xmldecl" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Called when an <a href="../XML.html">XML</a> PI is encountered in the
+document. EG: &lt;?xml version=“1.0” encoding=“utf”?&gt; @p version the
+version attribute value.  EG, “1.0” @p encoding the encoding attribute
+value, or nil.  EG, “utf” @p standalone the standalone attribute value, or
+nil.  EG, nil</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-xmldecl_source')" id="l_method-i-xmldecl_source">show</a>
+                
+              </p>
+              <div id="method-i-xmldecl_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rexml/streamlistener.rb, line 90</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">xmldecl</span> <span class="ruby-identifier">version</span>, <span class="ruby-identifier">encoding</span>, <span class="ruby-identifier">standalone</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+
+    </div>
+  </body>
+</html>    

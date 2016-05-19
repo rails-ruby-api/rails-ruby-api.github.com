@@ -1,0 +1,790 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Gem::CommandManager</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            Gem::CommandManager 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/lib/rubygems/command_manager_rb.html">lib/rubygems/command_manager.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>The command manager registers and installs all the individual sub-commands
+supported by the gem command.</p>
+
+<p>Extra commands can be provided by writing a rubygems_plugin.rb file in an
+installed gem.  You should register your command against the <a
+href="CommandManager.html">Gem::CommandManager</a> instance, like this:</p>
+
+<pre><code># file rubygems_plugin.rb
+require &#39;rubygems/command_manager&#39;
+
+Gem::CommandManager.instance.register_command :edit
+</code></pre>
+
+<p>You should put the implementation of your command in rubygems/commands.</p>
+
+<pre><code># file rubygems/commands/edit_command.rb
+class Gem::Commands::EditCommand &lt; Gem::Command
+  # ...
+end
+</code></pre>
+
+<p>See <a href="Command.html">Gem::Command</a> for instructions on writing gem
+commands.</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>#</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-5B-5D">[]</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>C</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-command_names">command_names</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>F</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-find_command">find_command</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-find_command_possibilities">find_command_possibilities</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>I</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-instance">instance</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-instance">instance</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>P</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-process_args">process_args</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>R</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-register_command">register_command</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-reset">reset</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-run">run</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>U</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-unregister_command">unregister_command</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+    <!-- Includes -->
+    <div class="sectiontitle">Included Modules</div>
+    <ul>
+      
+        <li>
+          
+            <a href="UserInteraction.html">
+              Gem::UserInteraction
+            </a>
+          
+        </li>
+      
+    </ul>
+  
+
+
+
+  
+
+    
+
+    
+
+    
+      <!-- Section constants -->
+      <div class="sectiontitle">Constants</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class="attr-name">BUILTIN_COMMANDS</td>
+            <td>=</td>
+            <td class="attr-value">[ # :nodoc:
+:build,
+:cert,
+:check,
+:cleanup,
+:contents,
+:dependency,
+:environment,
+:fetch,
+:generate_index,
+:help,
+:install,
+:list,
+:lock,
+:mirror,
+:open,
+:outdated,
+:owner,
+:pristine,
+:push,
+:query,
+:rdoc,
+:search,
+:server,
+:sources,
+:specification,
+:stale,
+:uninstall,
+:unpack,
+:update,
+:which,
+:yank,
+]</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+      </table>
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-instance">
+            
+              <b>instance</b>()
+            
+            <a href="../../classes/Gem/CommandManager.html#method-c-instance" name="method-c-instance" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Return the authoritative instance of the command manager.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-instance_source')" id="l_method-c-instance_source">show</a>
+                
+              </p>
+              <div id="method-c-instance_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/command_manager.rb, line 74</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">self</span>.<span class="ruby-identifier">instance</span>
+  <span class="ruby-ivar">@command_manager</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">new</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <b>new</b>()
+            
+            <a href="../../classes/Gem/CommandManager.html#method-c-new" name="method-c-new" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Register all the subcommands supported by the gem command.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/command_manager.rb, line 96</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">initialize</span>
+  <span class="ruby-identifier">require</span> <span class="ruby-string">&#39;timeout&#39;</span>
+  <span class="ruby-ivar">@commands</span> = {}
+
+  <span class="ruby-constant">BUILTIN_COMMANDS</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">name</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">register_command</span> <span class="ruby-identifier">name</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-reset">
+            
+              <b>reset</b>()
+            
+            <a href="../../classes/Gem/CommandManager.html#method-c-reset" name="method-c-reset" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Reset the authoritative instance of the command manager.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-reset_source')" id="l_method-c-reset_source">show</a>
+                
+              </p>
+              <div id="method-c-reset_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/command_manager.rb, line 89</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">self</span>.<span class="ruby-identifier">reset</span>
+  <span class="ruby-ivar">@command_manager</span> = <span class="ruby-keyword">nil</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-5B-5D">
+            
+              <b>[]</b>(command_name)
+            
+            <a href="../../classes/Gem/CommandManager.html#method-i-5B-5D" name="method-i-5B-5D" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns a Command instance for <code>command_name</code></p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-5B-5D_source')" id="l_method-i-5B-5D_source">show</a>
+                
+              </p>
+              <div id="method-i-5B-5D_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/command_manager.rb, line 122</span>
+<span class="ruby-keyword">def</span> <span class="ruby-operator">[]</span>(<span class="ruby-keyword ruby-title">command_name</span>)
+  <span class="ruby-identifier">command_name</span> = <span class="ruby-identifier">command_name</span>.<span class="ruby-identifier">intern</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">nil</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@commands</span>[<span class="ruby-identifier">command_name</span>].<span class="ruby-identifier">nil?</span>
+  <span class="ruby-ivar">@commands</span>[<span class="ruby-identifier">command_name</span>] <span class="ruby-operator">||=</span> <span class="ruby-identifier">load_and_instantiate</span>(<span class="ruby-identifier">command_name</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-command_names">
+            
+              <b>command_names</b>()
+            
+            <a href="../../classes/Gem/CommandManager.html#method-i-command_names" name="method-i-command_names" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Return a sorted list of all command names as strings.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-command_names_source')" id="l_method-i-command_names_source">show</a>
+                
+              </p>
+              <div id="method-i-command_names_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/command_manager.rb, line 131</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">command_names</span>
+  <span class="ruby-ivar">@commands</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">collect</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">key</span><span class="ruby-operator">|</span> <span class="ruby-identifier">key</span>.<span class="ruby-identifier">to_s</span>}.<span class="ruby-identifier">sort</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-find_command">
+            
+              <b>find_command</b>(cmd_name)
+            
+            <a href="../../classes/Gem/CommandManager.html#method-i-find_command" name="method-i-find_command" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-find_command_source')" id="l_method-i-find_command_source">show</a>
+                
+              </p>
+              <div id="method-i-find_command_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/command_manager.rb, line 173</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">find_command</span>(<span class="ruby-identifier">cmd_name</span>)
+  <span class="ruby-identifier">possibilities</span> = <span class="ruby-identifier">find_command_possibilities</span> <span class="ruby-identifier">cmd_name</span>
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">possibilities</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-number">1</span> <span class="ruby-keyword">then</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">CommandLineError</span>,
+          <span class="ruby-node">&quot;Ambiguous command #{cmd_name} matches [#{possibilities.join(&#39;, &#39;)}]&quot;</span>
+  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">possibilities</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-keyword">then</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">CommandLineError</span>, <span class="ruby-node">&quot;Unknown command #{cmd_name}&quot;</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">self</span>[<span class="ruby-identifier">possibilities</span>.<span class="ruby-identifier">first</span>]
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-find_command_possibilities">
+            
+              <b>find_command_possibilities</b>(cmd_name)
+            
+            <a href="../../classes/Gem/CommandManager.html#method-i-find_command_possibilities" name="method-i-find_command_possibilities" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-find_command_possibilities_source')" id="l_method-i-find_command_possibilities_source">show</a>
+                
+              </p>
+              <div id="method-i-find_command_possibilities_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/command_manager.rb, line 186</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">find_command_possibilities</span>(<span class="ruby-identifier">cmd_name</span>)
+  <span class="ruby-identifier">len</span> = <span class="ruby-identifier">cmd_name</span>.<span class="ruby-identifier">length</span>
+
+  <span class="ruby-identifier">found</span> = <span class="ruby-identifier">command_names</span>.<span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">name</span><span class="ruby-operator">|</span> <span class="ruby-identifier">cmd_name</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">name</span>[<span class="ruby-number">0</span>, <span class="ruby-identifier">len</span>] }
+
+  <span class="ruby-identifier">exact</span> = <span class="ruby-identifier">found</span>.<span class="ruby-identifier">find</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">name</span><span class="ruby-operator">|</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">cmd_name</span> }
+
+  <span class="ruby-identifier">exact</span> <span class="ruby-operator">?</span> [<span class="ruby-identifier">exact</span>] <span class="ruby-operator">:</span> <span class="ruby-identifier">found</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-instance">
+            
+              <b>instance</b>()
+            
+            <a href="../../classes/Gem/CommandManager.html#method-i-instance" name="method-i-instance" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns self. Allows a <a href="CommandManager.html">CommandManager</a>
+instance to stand in for the class itself.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-instance_source')" id="l_method-i-instance_source">show</a>
+                
+              </p>
+              <div id="method-i-instance_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/command_manager.rb, line 82</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">instance</span>
+  <span class="ruby-keyword">self</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-process_args">
+            
+              <b>process_args</b>(args, build_args=nil)
+            
+            <a href="../../classes/Gem/CommandManager.html#method-i-process_args" name="method-i-process_args" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-process_args_source')" id="l_method-i-process_args_source">show</a>
+                
+              </p>
+              <div id="method-i-process_args_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/command_manager.rb, line 150</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">process_args</span>(<span class="ruby-identifier">args</span>, <span class="ruby-identifier">build_args</span>=<span class="ruby-keyword">nil</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-keyword">then</span>
+    <span class="ruby-identifier">say</span> <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Command</span><span class="ruby-operator">::</span><span class="ruby-constant">HELP</span>
+    <span class="ruby-identifier">terminate_interaction</span> <span class="ruby-number">1</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">case</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">first</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;-h&#39;</span>, <span class="ruby-string">&#39;--help&#39;</span> <span class="ruby-keyword">then</span>
+    <span class="ruby-identifier">say</span> <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Command</span><span class="ruby-operator">::</span><span class="ruby-constant">HELP</span>
+    <span class="ruby-identifier">terminate_interaction</span> <span class="ruby-number">0</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;-v&#39;</span>, <span class="ruby-string">&#39;--version&#39;</span> <span class="ruby-keyword">then</span>
+    <span class="ruby-identifier">say</span> <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">VERSION</span>
+    <span class="ruby-identifier">terminate_interaction</span> <span class="ruby-number">0</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-regexp">/^-/</span> <span class="ruby-keyword">then</span>
+    <span class="ruby-identifier">alert_error</span> <span class="ruby-node">&quot;Invalid option: #{args.first}.  See &#39;gem --help&#39;.&quot;</span>
+    <span class="ruby-identifier">terminate_interaction</span> <span class="ruby-number">1</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">cmd_name</span> = <span class="ruby-identifier">args</span>.<span class="ruby-identifier">shift</span>.<span class="ruby-identifier">downcase</span>
+    <span class="ruby-identifier">cmd</span> = <span class="ruby-identifier">find_command</span> <span class="ruby-identifier">cmd_name</span>
+    <span class="ruby-identifier">cmd</span>.<span class="ruby-identifier">invoke_with_build_args</span> <span class="ruby-identifier">args</span>, <span class="ruby-identifier">build_args</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-register_command">
+            
+              <b>register_command</b>(command, obj=false)
+            
+            <a href="../../classes/Gem/CommandManager.html#method-i-register_command" name="method-i-register_command" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Register the <a href="../Symbol.html">Symbol</a> <code>command</code> as a
+gem command.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-register_command_source')" id="l_method-i-register_command_source">show</a>
+                
+              </p>
+              <div id="method-i-register_command_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/command_manager.rb, line 108</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">register_command</span>(<span class="ruby-identifier">command</span>, <span class="ruby-identifier">obj</span>=<span class="ruby-keyword">false</span>)
+  <span class="ruby-ivar">@commands</span>[<span class="ruby-identifier">command</span>] = <span class="ruby-identifier">obj</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-run">
+            
+              <b>run</b>(args, build_args=nil)
+            
+            <a href="../../classes/Gem/CommandManager.html#method-i-run" name="method-i-run" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Run the command specified by <code>args</code>.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-run_source')" id="l_method-i-run_source">show</a>
+                
+              </p>
+              <div id="method-i-run_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/command_manager.rb, line 138</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">run</span>(<span class="ruby-identifier">args</span>, <span class="ruby-identifier">build_args</span>=<span class="ruby-keyword">nil</span>)
+  <span class="ruby-identifier">process_args</span>(<span class="ruby-identifier">args</span>, <span class="ruby-identifier">build_args</span>)
+<span class="ruby-keyword">rescue</span> <span class="ruby-constant">StandardError</span>, <span class="ruby-constant">Timeout</span><span class="ruby-operator">::</span><span class="ruby-constant">Error</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ex</span>
+  <span class="ruby-identifier">alert_error</span> <span class="ruby-node">&quot;While executing gem ... (#{ex.class})\n    #{ex}&quot;</span>
+  <span class="ruby-identifier">ui</span>.<span class="ruby-identifier">backtrace</span> <span class="ruby-identifier">ex</span>
+
+  <span class="ruby-identifier">terminate_interaction</span>(<span class="ruby-number">1</span>)
+<span class="ruby-keyword">rescue</span> <span class="ruby-constant">Interrupt</span>
+  <span class="ruby-identifier">alert_error</span> <span class="ruby-string">&quot;Interrupted&quot;</span>
+  <span class="ruby-identifier">terminate_interaction</span>(<span class="ruby-number">1</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-unregister_command">
+            
+              <b>unregister_command</b>(command)
+            
+            <a href="../../classes/Gem/CommandManager.html#method-i-unregister_command" name="method-i-unregister_command" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Unregister the <a href="../Symbol.html">Symbol</a> <code>command</code> as
+a gem command.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-unregister_command_source')" id="l_method-i-unregister_command_source">show</a>
+                
+              </p>
+              <div id="method-i-unregister_command_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/command_manager.rb, line 115</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">unregister_command</span>(<span class="ruby-identifier">command</span>)
+  <span class="ruby-ivar">@commands</span>.<span class="ruby-identifier">delete</span> <span class="ruby-identifier">command</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+
+    </div>
+  </body>
+</html>    

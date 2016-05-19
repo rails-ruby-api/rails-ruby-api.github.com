@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Timeout::Error</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            Timeout::Error 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../RuntimeError.html">RuntimeError</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/lib/timeout_rb.html">lib/timeout.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>Raised by Timeout#timeout when the block times out.</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>C</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-catch">catch</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>E</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-exception">exception</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+      <!-- Section attributes -->
+      <div class="sectiontitle">Attributes</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [R]
+            </td>
+            <td class='attr-name'>thread</td>
+            <td class='attr-desc'></td>
+          </tr>
+        
+      </table>
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-catch">
+            
+              <b>catch</b>(*args)
+            
+            <a href="../../classes/Timeout/Error.html#method-c-catch" name="method-c-catch" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-catch_source')" id="l_method-c-catch_source">show</a>
+                
+              </p>
+              <div id="method-c-catch_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/timeout.rb, line 30</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">self</span>.<span class="ruby-identifier">catch</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+  <span class="ruby-identifier">exc</span> = <span class="ruby-identifier">new</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+  <span class="ruby-identifier">exc</span>.<span class="ruby-identifier">instance_variable_set</span>(<span class="ruby-value">:@thread</span>, <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">current</span>)
+  <span class="ruby-operator">::</span><span class="ruby-constant">Kernel</span>.<span class="ruby-identifier">catch</span>(<span class="ruby-identifier">exc</span>) {<span class="ruby-keyword">yield</span> <span class="ruby-identifier">exc</span>}
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-exception">
+            
+              <b>exception</b>(*)
+            
+            <a href="../../classes/Timeout/Error.html#method-i-exception" name="method-i-exception" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-exception_source')" id="l_method-i-exception_source">show</a>
+                
+              </p>
+              <div id="method-i-exception_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/timeout.rb, line 36</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">exception</span>(<span class="ruby-operator">*</span>)
+  <span class="ruby-comment"># TODO: use Fiber.current to see if self can be thrown</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">thread</span> <span class="ruby-operator">==</span> <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">current</span>
+    <span class="ruby-identifier">bt</span> = <span class="ruby-identifier">caller</span>
+    <span class="ruby-keyword">begin</span>
+      <span class="ruby-identifier">throw</span>(<span class="ruby-keyword">self</span>, <span class="ruby-identifier">bt</span>)
+    <span class="ruby-keyword">rescue</span> <span class="ruby-constant">UncaughtThrowError</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">self</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+
+    </div>
+  </body>
+</html>    

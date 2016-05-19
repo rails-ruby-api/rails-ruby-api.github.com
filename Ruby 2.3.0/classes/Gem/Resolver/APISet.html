@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Gem::Resolver::APISet</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/github.css" type="text/css" media="screen" />
+<script src="../../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            Gem::Resolver::APISet 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="Set.html">Gem::Resolver::Set</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../../files/lib/rubygems/resolver/api_set_rb.html">lib/rubygems/resolver/api_set.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>frozen_string_literal: false</p>
+
+<p>The global rubygems pool, available via the rubygems.org API. Returns
+instances of APISpecification.</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>F</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-find_all">find_all</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>P</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-prefetch">prefetch</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+      <!-- Section attributes -->
+      <div class="sectiontitle">Attributes</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [R]
+            </td>
+            <td class='attr-name'>source</td>
+            <td class='attr-desc'><p>The <a href="../Source.html">Gem::Source</a> that gems are fetched from</p></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [R]
+            </td>
+            <td class='attr-name'>uri</td>
+            <td class='attr-desc'><p>The corresponding place to fetch gems.</p></td>
+          </tr>
+        
+      </table>
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <b>new</b>(dep_uri = &#39;https://rubygems.org/api/v1/dependencies&#39;)
+            
+            <a href="../../../classes/Gem/Resolver/APISet.html#method-c-new" name="method-c-new" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Creates a new <a href="APISet.html">APISet</a> that will retrieve gems from
+<code>uri</code> using the RubyGems API URL <code>dep_uri</code> which is
+described at <a
+href="http://guides.rubygems.org/rubygems-org-api">guides.rubygems.org/rubygems-org-api</a></p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/resolver/api_set.rb, line 28</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">initialize</span> <span class="ruby-identifier">dep_uri</span> = <span class="ruby-string">&#39;https://rubygems.org/api/v1/dependencies&#39;</span>
+  <span class="ruby-keyword">super</span>()
+
+  <span class="ruby-identifier">dep_uri</span> = <span class="ruby-constant">URI</span> <span class="ruby-identifier">dep_uri</span> <span class="ruby-keyword">unless</span> <span class="ruby-constant">URI</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">dep_uri</span> <span class="ruby-comment"># for ruby 1.8</span>
+
+  <span class="ruby-ivar">@dep_uri</span> = <span class="ruby-identifier">dep_uri</span>
+  <span class="ruby-ivar">@uri</span>     = <span class="ruby-identifier">dep_uri</span> <span class="ruby-operator">+</span> <span class="ruby-string">&#39;../..&#39;</span>
+
+  <span class="ruby-ivar">@data</span>   = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">h</span>,<span class="ruby-identifier">k</span><span class="ruby-operator">|</span> <span class="ruby-identifier">h</span>[<span class="ruby-identifier">k</span>] = [] }
+  <span class="ruby-ivar">@source</span> = <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Source</span>.<span class="ruby-identifier">new</span> <span class="ruby-ivar">@uri</span>
+
+  <span class="ruby-ivar">@to_fetch</span> = []
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-find_all">
+            
+              <b>find_all</b>(req)
+            
+            <a href="../../../classes/Gem/Resolver/APISet.html#method-i-find_all" name="method-i-find_all" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Return an array of APISpecification objects matching DependencyRequest
+<code>req</code>.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-find_all_source')" id="l_method-i-find_all_source">show</a>
+                
+              </p>
+              <div id="method-i-find_all_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/resolver/api_set.rb, line 46</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">find_all</span> <span class="ruby-identifier">req</span>
+  <span class="ruby-identifier">res</span> = []
+
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">res</span> <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@remote</span>
+
+  <span class="ruby-keyword">if</span> <span class="ruby-ivar">@to_fetch</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">req</span>.<span class="ruby-identifier">name</span>)
+    <span class="ruby-identifier">prefetch_now</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">versions</span>(<span class="ruby-identifier">req</span>.<span class="ruby-identifier">name</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">ver</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">req</span>.<span class="ruby-identifier">dependency</span>.<span class="ruby-identifier">match?</span> <span class="ruby-identifier">req</span>.<span class="ruby-identifier">name</span>, <span class="ruby-identifier">ver</span>[<span class="ruby-value">:number</span>]
+      <span class="ruby-identifier">res</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Resolver</span><span class="ruby-operator">::</span><span class="ruby-constant">APISpecification</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>, <span class="ruby-identifier">ver</span>)
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">res</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-prefetch">
+            
+              <b>prefetch</b>(reqs)
+            
+            <a href="../../../classes/Gem/Resolver/APISet.html#method-i-prefetch" name="method-i-prefetch" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>A hint run by the resolver to allow the <a href="../../Set.html">Set</a> to
+fetch data for DependencyRequests <code>reqs</code>.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-prefetch_source')" id="l_method-i-prefetch_source">show</a>
+                
+              </p>
+              <div id="method-i-prefetch_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/resolver/api_set.rb, line 68</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">prefetch</span> <span class="ruby-identifier">reqs</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@remote</span>
+  <span class="ruby-identifier">names</span> = <span class="ruby-identifier">reqs</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span> <span class="ruby-identifier">r</span>.<span class="ruby-identifier">dependency</span>.<span class="ruby-identifier">name</span> }
+  <span class="ruby-identifier">needed</span> = <span class="ruby-identifier">names</span> <span class="ruby-operator">-</span> <span class="ruby-ivar">@data</span>.<span class="ruby-identifier">keys</span> <span class="ruby-operator">-</span> <span class="ruby-ivar">@to_fetch</span>
+
+  <span class="ruby-ivar">@to_fetch</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">needed</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+
+    </div>
+  </body>
+</html>    

@@ -1,0 +1,575 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>RackMountIntegrationTests</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../css/github.css" type="text/css" media="screen" />
+<script src="../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            RackMountIntegrationTests 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="ActiveSupport/TestCase.html">ActiveSupport::TestCase</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../files/actionpack/test/controller/routing_test_rb.html">actionpack/test/controller/routing_test.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>S</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-setup">setup</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-test_downcased_unicode_path">test_downcased_unicode_path</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_extras">test_extras</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_generate_extras">test_generate_extras</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_recognize_path">test_recognize_path</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_unicode_path">test_unicode_path</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+    <!-- Includes -->
+    <div class="sectiontitle">Included Modules</div>
+    <ul>
+      
+        <li>
+          
+            <a href="RoutingTestHelpers.html">
+              RoutingTestHelpers
+            </a>
+          
+        </li>
+      
+    </ul>
+  
+
+
+
+  
+
+    
+
+    
+
+    
+      <!-- Section constants -->
+      <div class="sectiontitle">Constants</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class="attr-name">Model</td>
+            <td>=</td>
+            <td class="attr-value">Struct.new(:to_param)</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">Mapping</td>
+            <td>=</td>
+            <td class="attr-value">lambda {
+namespace :admin do
+resources :users, :posts
+end
+
+namespace &#39;api&#39; do
+root :to =&gt; &#39;users#index&#39;
+end
+
+get &#39;/blog(/:year(/:month(/:day)))&#39; =&gt; &#39;posts#show_date&#39;,
+:constraints =&gt; {
+:year =&gt; /(19|20)\d\d/,
+:month =&gt; /[01]?\d/,
+:day =&gt; /[0-3]?\d/
+},
+:day =&gt; nil,
+:month =&gt; nil
+
+get &#39;archive/:year&#39;, :controller =&gt; &#39;archive&#39;, :action =&gt; &#39;index&#39;,
+:defaults =&gt; { :year =&gt; nil },
+:constraints =&gt; { :year =&gt; /\d{4}/ },
+:as =&gt; &quot;blog&quot;
+
+resources :people
+get &#39;legacy/people&#39; =&gt; &quot;people#index&quot;, :legacy =&gt; &quot;true&quot;
+
+get &#39;symbols&#39;, :controller =&gt; :symbols, :action =&gt; :show, :name =&gt; :as_symbol
+get &#39;id_default(/:id)&#39; =&gt; &quot;foo#id_default&quot;, :id =&gt; 1
+match &#39;get_or_post&#39; =&gt; &quot;foo#get_or_post&quot;, :via =&gt; [:get, :post]
+get &#39;optional/:optional&#39; =&gt; &quot;posts#index&quot;
+get &#39;projects/:project_id&#39; =&gt; &quot;project#index&quot;, :as =&gt; &quot;project&quot;
+get &#39;clients&#39; =&gt; &quot;projects#index&quot;
+
+get &#39;ignorecase/geocode/:postalcode&#39; =&gt; &#39;geocode#show&#39;, :postalcode =&gt; /hx\d\d-\d[a-z]{2}/i
+get &#39;extended/geocode/:postalcode&#39; =&gt; &#39;geocode#show&#39;,:constraints =&gt; {
+:postalcode =&gt; /# Postcode format
+\d{5} #Prefix
+(-\d{4})? #Suffix
+/x
+}, :as =&gt; &quot;geocode&quot;
+
+get &#39;news(.:format)&#39; =&gt; &quot;news#index&quot;
+
+get &#39;comment/:id(/:action)&#39; =&gt; &quot;comments#show&quot;
+get &#39;ws/:controller(/:action(/:id))&#39;, :ws =&gt; true
+get &#39;account(/:action)&#39; =&gt; &quot;account#subscription&quot;
+get &#39;pages/:page_id/:controller(/:action(/:id))&#39;
+get &#39;:controller/ping&#39;, :action =&gt; &#39;ping&#39;
+get &#39;こんにちは/世界&#39;, :controller =&gt; &#39;news&#39;, :action =&gt; &#39;index&#39;
+match &#39;:controller(/:action(/:id))(.:format)&#39;, :via =&gt; :all
+root :to =&gt; &quot;news#index&quot;
+}</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+      </table>
+    
+
+
+    
+      <!-- Section attributes -->
+      <div class="sectiontitle">Attributes</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [R]
+            </td>
+            <td class='attr-name'>controller</td>
+            <td class='attr-desc'></td>
+          </tr>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [R]
+            </td>
+            <td class='attr-name'>routes</td>
+            <td class='attr-desc'></td>
+          </tr>
+        
+      </table>
+    
+
+
+    <!-- Methods -->
+        
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-setup">
+            
+              <b>setup</b>()
+            
+            <a href="../classes/RackMountIntegrationTests.html#method-i-setup" name="method-i-setup" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-setup_source')" id="l_method-i-setup_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/938d130c62b530d3445c9f06933cb113ff477fed/actionpack/test/controller/routing_test.rb#L1898" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-setup_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionpack/test/controller/routing_test.rb, line 1898</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">setup</span>
+  <span class="ruby-ivar">@routes</span> = <span class="ruby-constant">ActionDispatch</span><span class="ruby-operator">::</span><span class="ruby-constant">Routing</span><span class="ruby-operator">::</span><span class="ruby-constant">RouteSet</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">draw</span>(<span class="ruby-operator">&amp;</span><span class="ruby-constant">Mapping</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_downcased_unicode_path">
+            
+              <b>test_downcased_unicode_path</b>()
+            
+            <a href="../classes/RackMountIntegrationTests.html#method-i-test_downcased_unicode_path" name="method-i-test_downcased_unicode_path" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_downcased_unicode_path_source')" id="l_method-i-test_downcased_unicode_path_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/938d130c62b530d3445c9f06933cb113ff477fed/actionpack/test/controller/routing_test.rb#L2014" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_downcased_unicode_path_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionpack/test/controller/routing_test.rb, line 2014</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_downcased_unicode_path</span>
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;news&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;index&#39;</span>}, <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-constant">URI</span>.<span class="ruby-identifier">parser</span>.<span class="ruby-identifier">escape</span>(<span class="ruby-string">&#39;こんにちは/世界&#39;</span>).<span class="ruby-identifier">downcase</span>, <span class="ruby-value">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:get</span>))
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_extras">
+            
+              <b>test_extras</b>()
+            
+            <a href="../classes/RackMountIntegrationTests.html#method-i-test_extras" name="method-i-test_extras" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_extras_source')" id="l_method-i-test_extras_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/938d130c62b530d3445c9f06933cb113ff477fed/actionpack/test/controller/routing_test.rb#L1996" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_extras_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionpack/test/controller/routing_test.rb, line 1996</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_extras</span>
+  <span class="ruby-identifier">params</span> = {<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;people&#39;</span>}
+  <span class="ruby-identifier">assert_equal</span> [], <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">extra_keys</span>(<span class="ruby-identifier">params</span>)
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;people&#39;</span>}, <span class="ruby-identifier">params</span>)
+
+  <span class="ruby-identifier">params</span> = {<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;people&#39;</span>, <span class="ruby-value">:foo</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;bar&#39;</span>}
+  <span class="ruby-identifier">assert_equal</span> [<span class="ruby-value">:foo</span>], <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">extra_keys</span>(<span class="ruby-identifier">params</span>)
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;people&#39;</span>, <span class="ruby-value">:foo</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;bar&#39;</span>}, <span class="ruby-identifier">params</span>)
+
+  <span class="ruby-identifier">params</span> = {<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;people&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;create&#39;</span>, <span class="ruby-value">:person</span> =<span class="ruby-operator">&gt;</span> { <span class="ruby-value">:name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;Josh&#39;</span>}}
+  <span class="ruby-identifier">assert_equal</span> [<span class="ruby-value">:person</span>], <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">extra_keys</span>(<span class="ruby-identifier">params</span>)
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;people&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;create&#39;</span>, <span class="ruby-value">:person</span> =<span class="ruby-operator">&gt;</span> { <span class="ruby-value">:name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;Josh&#39;</span>}}, <span class="ruby-identifier">params</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_generate_extras">
+            
+              <b>test_generate_extras</b>()
+            
+            <a href="../classes/RackMountIntegrationTests.html#method-i-test_generate_extras" name="method-i-test_generate_extras" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_generate_extras_source')" id="l_method-i-test_generate_extras_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/938d130c62b530d3445c9f06933cb113ff477fed/actionpack/test/controller/routing_test.rb#L1978" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_generate_extras_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionpack/test/controller/routing_test.rb, line 1978</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_generate_extras</span>
+  <span class="ruby-identifier">assert_equal</span> [<span class="ruby-string">&#39;/people&#39;</span>, []], <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">generate_extras</span>(<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;people&#39;</span>)
+  <span class="ruby-identifier">assert_equal</span> [<span class="ruby-string">&#39;/people&#39;</span>, [<span class="ruby-value">:foo</span>]], <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">generate_extras</span>(<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;people&#39;</span>, <span class="ruby-value">:foo</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;bar&#39;</span>)
+  <span class="ruby-identifier">assert_equal</span> [<span class="ruby-string">&#39;/people&#39;</span>, []], <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">generate_extras</span>(<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;people&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;index&#39;</span>)
+  <span class="ruby-identifier">assert_equal</span> [<span class="ruby-string">&#39;/people&#39;</span>, [<span class="ruby-value">:foo</span>]], <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">generate_extras</span>(<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;people&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;index&#39;</span>, <span class="ruby-value">:foo</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;bar&#39;</span>)
+  <span class="ruby-identifier">assert_equal</span> [<span class="ruby-string">&#39;/people/new&#39;</span>, []], <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">generate_extras</span>(<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;people&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;new&#39;</span>)
+  <span class="ruby-identifier">assert_equal</span> [<span class="ruby-string">&#39;/people/new&#39;</span>, [<span class="ruby-value">:foo</span>]], <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">generate_extras</span>(<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;people&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;new&#39;</span>, <span class="ruby-value">:foo</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;bar&#39;</span>)
+  <span class="ruby-identifier">assert_equal</span> [<span class="ruby-string">&#39;/people/1&#39;</span>, []], <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">generate_extras</span>(<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;people&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;show&#39;</span>, <span class="ruby-value">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;1&#39;</span>)
+  <span class="ruby-identifier">assert_equal</span> [<span class="ruby-string">&#39;/people/1&#39;</span>, [<span class="ruby-value">:bar</span>, <span class="ruby-value">:foo</span>]], <span class="ruby-identifier">sort_extras!</span>(<span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">generate_extras</span>(<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;people&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;show&#39;</span>, <span class="ruby-value">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;1&#39;</span>, <span class="ruby-value">:foo</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;2&#39;</span>, <span class="ruby-value">:bar</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;3&#39;</span>))
+  <span class="ruby-identifier">assert_equal</span> [<span class="ruby-string">&#39;/people&#39;</span>, [<span class="ruby-value">:person</span>]], <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">generate_extras</span>(<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;people&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;create&#39;</span>, <span class="ruby-value">:person</span> =<span class="ruby-operator">&gt;</span> { <span class="ruby-value">:first_name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;Josh&#39;</span>, <span class="ruby-value">:last_name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;Peek&#39;</span> })
+  <span class="ruby-identifier">assert_equal</span> [<span class="ruby-string">&#39;/people&#39;</span>, [<span class="ruby-value">:people</span>]], <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">generate_extras</span>(<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;people&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;create&#39;</span>, <span class="ruby-value">:people</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-string">&#39;Josh&#39;</span>, <span class="ruby-string">&#39;Dave&#39;</span>])
+
+  <span class="ruby-identifier">assert_equal</span> [<span class="ruby-string">&#39;/posts/show/1&#39;</span>, []], <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">generate_extras</span>(<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;posts&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;show&#39;</span>, <span class="ruby-value">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;1&#39;</span>)
+  <span class="ruby-identifier">assert_equal</span> [<span class="ruby-string">&#39;/posts/show/1&#39;</span>, [<span class="ruby-value">:bar</span>, <span class="ruby-value">:foo</span>]], <span class="ruby-identifier">sort_extras!</span>(<span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">generate_extras</span>(<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;posts&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;show&#39;</span>, <span class="ruby-value">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;1&#39;</span>, <span class="ruby-value">:foo</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;2&#39;</span>, <span class="ruby-value">:bar</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;3&#39;</span>))
+  <span class="ruby-identifier">assert_equal</span> [<span class="ruby-string">&#39;/posts&#39;</span>, []], <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">generate_extras</span>(<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;posts&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;index&#39;</span>)
+  <span class="ruby-identifier">assert_equal</span> [<span class="ruby-string">&#39;/posts&#39;</span>, [<span class="ruby-value">:foo</span>]], <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">generate_extras</span>(<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;posts&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;index&#39;</span>, <span class="ruby-value">:foo</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;bar&#39;</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_recognize_path">
+            
+              <b>test_recognize_path</b>()
+            
+            <a href="../classes/RackMountIntegrationTests.html#method-i-test_recognize_path" name="method-i-test_recognize_path" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_recognize_path_source')" id="l_method-i-test_recognize_path_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/938d130c62b530d3445c9f06933cb113ff477fed/actionpack/test/controller/routing_test.rb#L1903" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_recognize_path_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionpack/test/controller/routing_test.rb, line 1903</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_recognize_path</span>
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;admin/users&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;index&#39;</span>}, <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-string">&#39;/admin/users&#39;</span>, <span class="ruby-value">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:get</span>))
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;admin/users&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;create&#39;</span>}, <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-string">&#39;/admin/users&#39;</span>, <span class="ruby-value">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:post</span>))
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;admin/users&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;new&#39;</span>}, <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-string">&#39;/admin/users/new&#39;</span>, <span class="ruby-value">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:get</span>))
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;admin/users&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;show&#39;</span>, <span class="ruby-value">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;1&#39;</span>}, <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-string">&#39;/admin/users/1&#39;</span>, <span class="ruby-value">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:get</span>))
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;admin/users&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;update&#39;</span>, <span class="ruby-value">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;1&#39;</span>}, <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-string">&#39;/admin/users/1&#39;</span>, <span class="ruby-value">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:put</span>))
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;admin/users&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;destroy&#39;</span>, <span class="ruby-value">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;1&#39;</span>}, <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-string">&#39;/admin/users/1&#39;</span>, <span class="ruby-value">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:delete</span>))
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;admin/users&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;edit&#39;</span>, <span class="ruby-value">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;1&#39;</span>}, <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-string">&#39;/admin/users/1/edit&#39;</span>, <span class="ruby-value">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:get</span>))
+
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;admin/posts&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;index&#39;</span>}, <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-string">&#39;/admin/posts&#39;</span>, <span class="ruby-value">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:get</span>))
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;admin/posts&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;new&#39;</span>}, <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-string">&#39;/admin/posts/new&#39;</span>, <span class="ruby-value">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:get</span>))
+
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;api/users&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;index&#39;</span>}, <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-string">&#39;/api&#39;</span>, <span class="ruby-value">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:get</span>))
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;api/users&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;index&#39;</span>}, <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-string">&#39;/api/&#39;</span>, <span class="ruby-value">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:get</span>))
+
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;posts&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;show_date&#39;</span>, <span class="ruby-value">:year</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;2009&#39;</span>, <span class="ruby-value">:month</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">nil</span>, <span class="ruby-value">:day</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">nil</span> }, <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-string">&#39;/blog/2009&#39;</span>, <span class="ruby-value">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:get</span>))
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;posts&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;show_date&#39;</span>, <span class="ruby-value">:year</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;2009&#39;</span>, <span class="ruby-value">:month</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;01&#39;</span>, <span class="ruby-value">:day</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">nil</span> }, <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-string">&#39;/blog/2009/01&#39;</span>, <span class="ruby-value">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:get</span>))
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;posts&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;show_date&#39;</span>, <span class="ruby-value">:year</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;2009&#39;</span>, <span class="ruby-value">:month</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;01&#39;</span>, <span class="ruby-value">:day</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;01&#39;</span>}, <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-string">&#39;/blog/2009/01/01&#39;</span>, <span class="ruby-value">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:get</span>))
+
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;archive&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;index&#39;</span>, <span class="ruby-value">:year</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;2010&#39;</span>}, <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-string">&#39;/archive/2010&#39;</span>))
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;archive&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;index&#39;</span>}, <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-string">&#39;/archive&#39;</span>))
+
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;people&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;index&#39;</span>}, <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-string">&#39;/people&#39;</span>, <span class="ruby-value">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:get</span>))
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;people&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;index&#39;</span>, <span class="ruby-value">:format</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;xml&#39;</span>}, <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-string">&#39;/people.xml&#39;</span>, <span class="ruby-value">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:get</span>))
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;people&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;create&#39;</span>}, <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-string">&#39;/people&#39;</span>, <span class="ruby-value">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:post</span>))
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;people&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;new&#39;</span>}, <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-string">&#39;/people/new&#39;</span>, <span class="ruby-value">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:get</span>))
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;people&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;show&#39;</span>, <span class="ruby-value">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;1&#39;</span>}, <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-string">&#39;/people/1&#39;</span>, <span class="ruby-value">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:get</span>))
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;people&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;show&#39;</span>, <span class="ruby-value">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;1&#39;</span>, <span class="ruby-value">:format</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;xml&#39;</span>}, <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-string">&#39;/people/1.xml&#39;</span>, <span class="ruby-value">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:get</span>))
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;people&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;update&#39;</span>, <span class="ruby-value">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;1&#39;</span>}, <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-string">&#39;/people/1&#39;</span>, <span class="ruby-value">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:put</span>))
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;people&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;destroy&#39;</span>, <span class="ruby-value">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;1&#39;</span>}, <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-string">&#39;/people/1&#39;</span>, <span class="ruby-value">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:delete</span>))
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;people&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;edit&#39;</span>, <span class="ruby-value">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;1&#39;</span>}, <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-string">&#39;/people/1/edit&#39;</span>, <span class="ruby-value">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:get</span>))
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;people&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;edit&#39;</span>, <span class="ruby-value">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;1&#39;</span>, <span class="ruby-value">:format</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;xml&#39;</span>}, <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-string">&#39;/people/1/edit.xml&#39;</span>, <span class="ruby-value">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:get</span>))
+
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;symbols&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;show&#39;</span>, <span class="ruby-value">:name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:as_symbol</span>}, <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-string">&#39;/symbols&#39;</span>))
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;foo&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;id_default&#39;</span>, <span class="ruby-value">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;1&#39;</span>}, <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-string">&#39;/id_default/1&#39;</span>))
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;foo&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;id_default&#39;</span>, <span class="ruby-value">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;2&#39;</span>}, <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-string">&#39;/id_default/2&#39;</span>))
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;foo&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;id_default&#39;</span>, <span class="ruby-value">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-number">1</span> }, <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-string">&#39;/id_default&#39;</span>))
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;foo&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;get_or_post&#39;</span>}, <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-string">&#39;/get_or_post&#39;</span>, <span class="ruby-value">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:get</span>))
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;foo&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;get_or_post&#39;</span>}, <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-string">&#39;/get_or_post&#39;</span>, <span class="ruby-value">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:post</span>))
+  <span class="ruby-identifier">assert_raise</span>(<span class="ruby-constant">ActionController</span><span class="ruby-operator">::</span><span class="ruby-constant">RoutingError</span>) { <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-string">&#39;/get_or_post&#39;</span>, <span class="ruby-value">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:put</span>) }
+  <span class="ruby-identifier">assert_raise</span>(<span class="ruby-constant">ActionController</span><span class="ruby-operator">::</span><span class="ruby-constant">RoutingError</span>) { <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-string">&#39;/get_or_post&#39;</span>, <span class="ruby-value">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:delete</span>) }
+
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;posts&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;index&#39;</span>, <span class="ruby-value">:optional</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;bar&#39;</span>}, <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-string">&#39;/optional/bar&#39;</span>))
+  <span class="ruby-identifier">assert_raise</span>(<span class="ruby-constant">ActionController</span><span class="ruby-operator">::</span><span class="ruby-constant">RoutingError</span>) { <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-string">&#39;/optional&#39;</span>) }
+
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;posts&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;show&#39;</span>, <span class="ruby-value">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;1&#39;</span>, <span class="ruby-value">:ws</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>}, <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-string">&#39;/ws/posts/show/1&#39;</span>, <span class="ruby-value">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:get</span>))
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;posts&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;list&#39;</span>, <span class="ruby-value">:ws</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>}, <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-string">&#39;/ws/posts/list&#39;</span>, <span class="ruby-value">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:get</span>))
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;posts&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;index&#39;</span>, <span class="ruby-value">:ws</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">true</span>}, <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-string">&#39;/ws/posts&#39;</span>, <span class="ruby-value">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:get</span>))
+
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;account&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;subscription&#39;</span>}, <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-string">&#39;/account&#39;</span>, <span class="ruby-value">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:get</span>))
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;account&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;subscription&#39;</span>}, <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-string">&#39;/account/subscription&#39;</span>, <span class="ruby-value">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:get</span>))
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;account&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;billing&#39;</span>}, <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-string">&#39;/account/billing&#39;</span>, <span class="ruby-value">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:get</span>))
+
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:page_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;1&#39;</span>, <span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;notes&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;index&#39;</span>}, <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-string">&#39;/pages/1/notes&#39;</span>, <span class="ruby-value">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:get</span>))
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:page_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;1&#39;</span>, <span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;notes&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;list&#39;</span>}, <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-string">&#39;/pages/1/notes/list&#39;</span>, <span class="ruby-value">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:get</span>))
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:page_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;1&#39;</span>, <span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;notes&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;show&#39;</span>, <span class="ruby-value">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;2&#39;</span>}, <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-string">&#39;/pages/1/notes/show/2&#39;</span>, <span class="ruby-value">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:get</span>))
+
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;posts&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;ping&#39;</span>}, <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-string">&#39;/posts/ping&#39;</span>, <span class="ruby-value">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:get</span>))
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;posts&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;index&#39;</span>}, <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-string">&#39;/posts&#39;</span>, <span class="ruby-value">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:get</span>))
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;posts&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;index&#39;</span>}, <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-string">&#39;/posts/index&#39;</span>, <span class="ruby-value">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:get</span>))
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;posts&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;show&#39;</span>}, <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-string">&#39;/posts/show&#39;</span>, <span class="ruby-value">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:get</span>))
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;posts&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;show&#39;</span>, <span class="ruby-value">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;1&#39;</span>}, <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-string">&#39;/posts/show/1&#39;</span>, <span class="ruby-value">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:get</span>))
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;posts&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;create&#39;</span>}, <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-string">&#39;/posts/create&#39;</span>, <span class="ruby-value">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:post</span>))
+
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;geocode&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;show&#39;</span>, <span class="ruby-value">:postalcode</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;hx12-1az&#39;</span>}, <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-string">&#39;/ignorecase/geocode/hx12-1az&#39;</span>))
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;geocode&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;show&#39;</span>, <span class="ruby-value">:postalcode</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;hx12-1AZ&#39;</span>}, <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-string">&#39;/ignorecase/geocode/hx12-1AZ&#39;</span>))
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;geocode&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;show&#39;</span>, <span class="ruby-value">:postalcode</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;12345-1234&#39;</span>}, <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-string">&#39;/extended/geocode/12345-1234&#39;</span>))
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;geocode&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;show&#39;</span>, <span class="ruby-value">:postalcode</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;12345&#39;</span>}, <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-string">&#39;/extended/geocode/12345&#39;</span>))
+
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;news&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;index&#39;</span> }, <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-string">&#39;/&#39;</span>, <span class="ruby-value">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:get</span>))
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;news&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;index&#39;</span>, <span class="ruby-value">:format</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;rss&#39;</span>}, <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-string">&#39;/news.rss&#39;</span>, <span class="ruby-value">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:get</span>))
+
+  <span class="ruby-identifier">assert_raise</span>(<span class="ruby-constant">ActionController</span><span class="ruby-operator">::</span><span class="ruby-constant">RoutingError</span>) { <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-string">&#39;/none&#39;</span>, <span class="ruby-value">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:get</span>) }
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_unicode_path">
+            
+              <b>test_unicode_path</b>()
+            
+            <a href="../classes/RackMountIntegrationTests.html#method-i-test_unicode_path" name="method-i-test_unicode_path" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_unicode_path_source')" id="l_method-i-test_unicode_path_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/938d130c62b530d3445c9f06933cb113ff477fed/actionpack/test/controller/routing_test.rb#L2010" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_unicode_path_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File actionpack/test/controller/routing_test.rb, line 2010</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_unicode_path</span>
+  <span class="ruby-identifier">assert_equal</span>({<span class="ruby-value">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;news&#39;</span>, <span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;index&#39;</span>}, <span class="ruby-ivar">@routes</span>.<span class="ruby-identifier">recognize_path</span>(<span class="ruby-constant">URI</span>.<span class="ruby-identifier">parser</span>.<span class="ruby-identifier">escape</span>(<span class="ruby-string">&#39;こんにちは/世界&#39;</span>), <span class="ruby-value">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:get</span>))
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+
+    </div>
+  </body>
+</html>    

@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Gem::Resolver::GitSet</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/github.css" type="text/css" media="screen" />
+<script src="../../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            Gem::Resolver::GitSet 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="Set.html">Gem::Resolver::Set</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../../files/lib/rubygems/resolver/git_set_rb.html">lib/rubygems/resolver/git_set.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>frozen_string_literal: false</p>
+
+<p>A <a href="GitSet.html">GitSet</a> represents gems that are sourced from
+git repositories.</p>
+
+<p>This is used for gem dependency file support.</p>
+
+<p>Example:</p>
+
+<pre><code>set = Gem::Resolver::GitSet.new
+set.add_git_gem &#39;rake&#39;, &#39;git://example/rake.git&#39;, tag: &#39;rake-10.1.0&#39;
+</code></pre>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>F</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-find_all">find_all</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>P</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-prefetch">prefetch</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+      <!-- Section attributes -->
+      <div class="sectiontitle">Attributes</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class='attr-rw'>
+              [RW]
+            </td>
+            <td class='attr-name'>root_dir</td>
+            <td class='attr-desc'><p>The root directory for git gems in this set.  This is usually <a
+href="../../Gem.html#method-c-dir">Gem.dir</a>, the installation directory
+for regular gems.</p></td>
+          </tr>
+        
+      </table>
+    
+
+
+    <!-- Methods -->
+        
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-find_all">
+            
+              <b>find_all</b>(req)
+            
+            <a href="../../../classes/Gem/Resolver/GitSet.html#method-i-find_all" name="method-i-find_all" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Finds all git gems matching <code>req</code></p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-find_all_source')" id="l_method-i-find_all_source">show</a>
+                
+              </p>
+              <div id="method-i-find_all_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/resolver/git_set.rb, line 80</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">find_all</span> <span class="ruby-identifier">req</span>
+  <span class="ruby-identifier">prefetch</span> <span class="ruby-keyword">nil</span>
+
+  <span class="ruby-identifier">specs</span>.<span class="ruby-identifier">values</span>.<span class="ruby-identifier">select</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">spec</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">req</span>.<span class="ruby-identifier">match?</span> <span class="ruby-identifier">spec</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-prefetch">
+            
+              <b>prefetch</b>(reqs)
+            
+            <a href="../../../classes/Gem/Resolver/GitSet.html#method-i-prefetch" name="method-i-prefetch" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Prefetches specifications from the git repositories in this set.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-prefetch_source')" id="l_method-i-prefetch_source">show</a>
+                
+              </p>
+              <div id="method-i-prefetch_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/resolver/git_set.rb, line 91</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">prefetch</span> <span class="ruby-identifier">reqs</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@specs</span>.<span class="ruby-identifier">empty?</span>
+
+  <span class="ruby-ivar">@repositories</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">name</span>, (<span class="ruby-identifier">repository</span>, <span class="ruby-identifier">reference</span>)<span class="ruby-operator">|</span>
+    <span class="ruby-identifier">source</span> = <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Source</span><span class="ruby-operator">::</span><span class="ruby-constant">Git</span>.<span class="ruby-identifier">new</span> <span class="ruby-identifier">name</span>, <span class="ruby-identifier">repository</span>, <span class="ruby-identifier">reference</span>
+    <span class="ruby-identifier">source</span>.<span class="ruby-identifier">root_dir</span> = <span class="ruby-ivar">@root_dir</span>
+    <span class="ruby-identifier">source</span>.<span class="ruby-identifier">remote</span> = <span class="ruby-ivar">@remote</span>
+
+    <span class="ruby-identifier">source</span>.<span class="ruby-identifier">specs</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">spec</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">git_spec</span> = <span class="ruby-constant">Gem</span><span class="ruby-operator">::</span><span class="ruby-constant">Resolver</span><span class="ruby-operator">::</span><span class="ruby-constant">GitSpecification</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword">self</span>, <span class="ruby-identifier">spec</span>, <span class="ruby-identifier">source</span>
+
+      <span class="ruby-ivar">@specs</span>[<span class="ruby-identifier">spec</span>.<span class="ruby-identifier">name</span>] = <span class="ruby-identifier">git_spec</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+
+    </div>
+  </body>
+</html>    

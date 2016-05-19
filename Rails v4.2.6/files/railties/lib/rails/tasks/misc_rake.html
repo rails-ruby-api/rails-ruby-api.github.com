@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>misc.rake</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../../../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../../../css/github.css" type="text/css" media="screen" />
+<script src="../../../../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            misc.rake
+        </h1>
+        <ul class="files">
+            
+            <li>
+                railties/lib/rails/tasks/misc.rake
+                
+                    <a href="https://github.com/rails/rails/blob/5ad7f8ab418f0c760dbb584f7c78d94ce32e9ee3/railties/lib/rails/tasks/misc.rake" target="_blank" class="github_url">on GitHub</a>
+                
+            </li>
+            <li>Last modified: 2016-05-19 14:28:33 +0200</li>
+        </ul>
+    </div>
+
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>desc &#39;Generate a cryptographically secure secret key (this is typically
+used to generate a secret for cookie sessions).&#39; task :secret do</p>
+
+<pre><code>require &#39;securerandom&#39;
+puts SecureRandom.hex(64)
+</code></pre>
+
+<p>end</p>
+
+<p>desc &#39;List versions of all Rails frameworks and the environment&#39;
+task about: :environment do</p>
+
+<pre><code>puts Rails::Info
+</code></pre>
+
+<p>end</p>
+
+<p>namespace :time do</p>
+
+<pre><code>namespace :zones do
+  desc &#39;Displays all time zones, also available: time:zones:us, time:zones:local -- filter with OFFSET parameter, e.g., OFFSET=-6&#39;
+  task :all do
+    build_time_zone_list(:all)
+  end
+
+  # desc &#39;Displays names of US time zones recognized by the Rails TimeZone class, grouped by offset. Results can be filtered with optional OFFSET parameter, e.g., OFFSET=-6&#39;
+  task :us do
+    build_time_zone_list(:us_zones)
+  end
+
+  # desc &#39;Displays names of time zones recognized by the Rails TimeZone class with the same offset as the system local time&#39;
+  task :local do
+    require &#39;active_support&#39;
+    require &#39;active_support/time&#39;
+    jan_offset = Time.now.beginning_of_year.utc_offset
+    jul_offset = Time.now.beginning_of_year.change(month: 7).utc_offset
+    offset = jan_offset &lt; jul_offset ? jan_offset : jul_offset
+    build_time_zone_list(:all, offset)
+  end
+
+  # to find UTC -06:00 zones, OFFSET can be set to either -6, -6:00 or 21600
+  def build_time_zone_list(method, offset = ENV[&#39;OFFSET&#39;])
+    require &#39;active_support&#39;
+    require &#39;active_support/time&#39;
+    if offset
+      offset = if offset.to_s.match(/(\+|-)?(\d+):(\d+)/)
+        sign = $1 == &#39;-&#39; ? -1 : 1
+        hours, minutes = $2.to_f, $3.to_f
+        ((hours * 3600) + (minutes.to_f * 60)) * sign
+      elsif offset.to_f.abs &lt;= 13
+        offset.to_f * 3600
+      else
+        offset.to_f
+      end
+    end
+    previous_offset = nil
+    ActiveSupport::TimeZone.__send__(method).each do |zone|
+      if offset.nil? || offset == zone.utc_offset
+        puts &quot;\n* UTC #{zone.formatted_offset} *&quot; unless zone.utc_offset == previous_offset
+        puts zone.name
+        previous_offset = zone.utc_offset
+      end
+    end
+    puts &quot;\n&quot;
+  end
+end
+</code></pre>
+
+<p>end</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+              </div>
+
+    </div>
+  </body>
+</html>

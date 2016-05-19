@@ -1,0 +1,499 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>ActiveRecord::MysqlDBCreateAsRootTest</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            ActiveRecord::MysqlDBCreateAsRootTest 
+            
+                <span class="parent">&lt; 
+                    
+                    ActiveRecord::TestCase
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/activerecord/test/cases/tasks/mysql_rake_test_rb.html">activerecord/test/cases/tasks/mysql_rake_test.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>S</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-setup">setup</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-test_connection_established_as_normal_user">test_connection_established_as_normal_user</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_connection_established_as_root">test_connection_established_as_root</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_database_created_by_root">test_database_created_by_root</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_do_not_grant_privileges_for_root_user">test_do_not_grant_privileges_for_root_user</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_grant_privileges_for_normal_user">test_grant_privileges_for_normal_user</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_root_password_is_requested">test_root_password_is_requested</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-test_sends_output_to_stderr_when_other_errors">test_sends_output_to_stderr_when_other_errors</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+        
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-setup">
+            
+              <b>setup</b>()
+            
+            <a href="../../classes/ActiveRecord/MysqlDBCreateAsRootTest.html#method-i-setup" name="method-i-setup" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-setup_source')" id="l_method-i-setup_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/f957a1d3551f8e6d6708de4e6b6eb4637b0ae693/activerecord/test/cases/tasks/mysql_rake_test.rb#L71" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-setup_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/tasks/mysql_rake_test.rb, line 71</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">setup</span>
+  <span class="ruby-ivar">@connection</span>    = <span class="ruby-identifier">stub</span>(<span class="ruby-string">&quot;Connection&quot;</span>, <span class="ruby-identifier">create_database</span><span class="ruby-operator">:</span> <span class="ruby-keyword">true</span>)
+  <span class="ruby-ivar">@error</span>         = <span class="ruby-constant">Mysql</span><span class="ruby-operator">::</span><span class="ruby-constant">Error</span>.<span class="ruby-identifier">new</span> <span class="ruby-string">&quot;Invalid permissions&quot;</span>
+  <span class="ruby-ivar">@configuration</span> = {
+    <span class="ruby-string">&#39;adapter&#39;</span>  =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;mysql&#39;</span>,
+    <span class="ruby-string">&#39;database&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;my-app-db&#39;</span>,
+    <span class="ruby-string">&#39;username&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;pat&#39;</span>,
+    <span class="ruby-string">&#39;password&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;wossname&#39;</span>
+  }
+
+  <span class="ruby-identifier">$stdin</span>.<span class="ruby-identifier">stubs</span>(<span class="ruby-value">:gets</span>).<span class="ruby-identifier">returns</span>(<span class="ruby-string">&quot;secret\n&quot;</span>)
+  <span class="ruby-identifier">$stdout</span>.<span class="ruby-identifier">stubs</span>(<span class="ruby-value">:print</span>).<span class="ruby-identifier">returns</span>(<span class="ruby-keyword">nil</span>)
+  <span class="ruby-ivar">@error</span>.<span class="ruby-identifier">stubs</span>(<span class="ruby-value">:errno</span>).<span class="ruby-identifier">returns</span>(<span class="ruby-number">1045</span>)
+  <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">stubs</span>(<span class="ruby-value">:connection</span>).<span class="ruby-identifier">returns</span>(<span class="ruby-ivar">@connection</span>)
+  <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">stubs</span>(<span class="ruby-value">:establish_connection</span>).
+    <span class="ruby-identifier">raises</span>(<span class="ruby-ivar">@error</span>).
+    <span class="ruby-identifier">then</span>.<span class="ruby-identifier">returns</span>(<span class="ruby-keyword">true</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_connection_established_as_normal_user">
+            
+              <b>test_connection_established_as_normal_user</b>()
+            
+            <a href="../../classes/ActiveRecord/MysqlDBCreateAsRootTest.html#method-i-test_connection_established_as_normal_user" name="method-i-test_connection_established_as_normal_user" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_connection_established_as_normal_user_source')" id="l_method-i-test_connection_established_as_normal_user_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/f957a1d3551f8e6d6708de4e6b6eb4637b0ae693/activerecord/test/cases/tasks/mysql_rake_test.rb#L130" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_connection_established_as_normal_user_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/tasks/mysql_rake_test.rb, line 130</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_connection_established_as_normal_user</span>
+  <span class="ruby-identifier">assert_permissions_granted_for</span> <span class="ruby-string">&quot;pat&quot;</span>
+  <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">expects</span>(<span class="ruby-value">:establish_connection</span>).<span class="ruby-identifier">returns</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">expects</span>(<span class="ruby-value">:establish_connection</span>).<span class="ruby-identifier">with</span>(
+      <span class="ruby-string">&#39;adapter&#39;</span>  =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;mysql&#39;</span>,
+      <span class="ruby-string">&#39;database&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;my-app-db&#39;</span>,
+      <span class="ruby-string">&#39;username&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;pat&#39;</span>,
+      <span class="ruby-string">&#39;password&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;secret&#39;</span>
+    )
+
+    <span class="ruby-identifier">raise</span> <span class="ruby-ivar">@error</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Tasks</span><span class="ruby-operator">::</span><span class="ruby-constant">DatabaseTasks</span>.<span class="ruby-identifier">create</span> <span class="ruby-ivar">@configuration</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_connection_established_as_root">
+            
+              <b>test_connection_established_as_root</b>()
+            
+            <a href="../../classes/ActiveRecord/MysqlDBCreateAsRootTest.html#method-i-test_connection_established_as_root" name="method-i-test_connection_established_as_root" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_connection_established_as_root_source')" id="l_method-i-test_connection_established_as_root_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/f957a1d3551f8e6d6708de4e6b6eb4637b0ae693/activerecord/test/cases/tasks/mysql_rake_test.rb#L99" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_connection_established_as_root_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/tasks/mysql_rake_test.rb, line 99</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_connection_established_as_root</span>
+  <span class="ruby-identifier">assert_permissions_granted_for</span> <span class="ruby-string">&quot;pat&quot;</span>
+  <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">expects</span>(<span class="ruby-value">:establish_connection</span>).<span class="ruby-identifier">with</span>(
+    <span class="ruby-string">&#39;adapter&#39;</span>  =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;mysql&#39;</span>,
+    <span class="ruby-string">&#39;database&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">nil</span>,
+    <span class="ruby-string">&#39;username&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;root&#39;</span>,
+    <span class="ruby-string">&#39;password&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;secret&#39;</span>
+  )
+
+  <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Tasks</span><span class="ruby-operator">::</span><span class="ruby-constant">DatabaseTasks</span>.<span class="ruby-identifier">create</span> <span class="ruby-ivar">@configuration</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_database_created_by_root">
+            
+              <b>test_database_created_by_root</b>()
+            
+            <a href="../../classes/ActiveRecord/MysqlDBCreateAsRootTest.html#method-i-test_database_created_by_root" name="method-i-test_database_created_by_root" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_database_created_by_root_source')" id="l_method-i-test_database_created_by_root_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/f957a1d3551f8e6d6708de4e6b6eb4637b0ae693/activerecord/test/cases/tasks/mysql_rake_test.rb#L111" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_database_created_by_root_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/tasks/mysql_rake_test.rb, line 111</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_database_created_by_root</span>
+  <span class="ruby-identifier">assert_permissions_granted_for</span> <span class="ruby-string">&quot;pat&quot;</span>
+  <span class="ruby-ivar">@connection</span>.<span class="ruby-identifier">expects</span>(<span class="ruby-value">:create_database</span>).
+    <span class="ruby-identifier">with</span>(<span class="ruby-string">&#39;my-app-db&#39;</span>, <span class="ruby-value">:charset</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;utf8&#39;</span>, <span class="ruby-value">:collation</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;utf8_unicode_ci&#39;</span>)
+
+  <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Tasks</span><span class="ruby-operator">::</span><span class="ruby-constant">DatabaseTasks</span>.<span class="ruby-identifier">create</span> <span class="ruby-ivar">@configuration</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_do_not_grant_privileges_for_root_user">
+            
+              <b>test_do_not_grant_privileges_for_root_user</b>()
+            
+            <a href="../../classes/ActiveRecord/MysqlDBCreateAsRootTest.html#method-i-test_do_not_grant_privileges_for_root_user" name="method-i-test_do_not_grant_privileges_for_root_user" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_do_not_grant_privileges_for_root_user_source')" id="l_method-i-test_do_not_grant_privileges_for_root_user_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/f957a1d3551f8e6d6708de4e6b6eb4637b0ae693/activerecord/test/cases/tasks/mysql_rake_test.rb#L124" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_do_not_grant_privileges_for_root_user_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/tasks/mysql_rake_test.rb, line 124</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_do_not_grant_privileges_for_root_user</span>
+  <span class="ruby-ivar">@configuration</span>[<span class="ruby-string">&#39;username&#39;</span>] = <span class="ruby-string">&#39;root&#39;</span>
+  <span class="ruby-ivar">@configuration</span>[<span class="ruby-string">&#39;password&#39;</span>] = <span class="ruby-string">&#39;&#39;</span>
+  <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Tasks</span><span class="ruby-operator">::</span><span class="ruby-constant">DatabaseTasks</span>.<span class="ruby-identifier">create</span> <span class="ruby-ivar">@configuration</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_grant_privileges_for_normal_user">
+            
+              <b>test_grant_privileges_for_normal_user</b>()
+            
+            <a href="../../classes/ActiveRecord/MysqlDBCreateAsRootTest.html#method-i-test_grant_privileges_for_normal_user" name="method-i-test_grant_privileges_for_normal_user" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_grant_privileges_for_normal_user_source')" id="l_method-i-test_grant_privileges_for_normal_user_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/f957a1d3551f8e6d6708de4e6b6eb4637b0ae693/activerecord/test/cases/tasks/mysql_rake_test.rb#L119" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_grant_privileges_for_normal_user_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/tasks/mysql_rake_test.rb, line 119</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_grant_privileges_for_normal_user</span>
+  <span class="ruby-identifier">assert_permissions_granted_for</span> <span class="ruby-string">&quot;pat&quot;</span>
+  <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Tasks</span><span class="ruby-operator">::</span><span class="ruby-constant">DatabaseTasks</span>.<span class="ruby-identifier">create</span> <span class="ruby-ivar">@configuration</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_root_password_is_requested">
+            
+              <b>test_root_password_is_requested</b>()
+            
+            <a href="../../classes/ActiveRecord/MysqlDBCreateAsRootTest.html#method-i-test_root_password_is_requested" name="method-i-test_root_password_is_requested" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_root_password_is_requested_source')" id="l_method-i-test_root_password_is_requested_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/f957a1d3551f8e6d6708de4e6b6eb4637b0ae693/activerecord/test/cases/tasks/mysql_rake_test.rb#L91" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_root_password_is_requested_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/tasks/mysql_rake_test.rb, line 91</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_root_password_is_requested</span>
+  <span class="ruby-identifier">assert_permissions_granted_for</span> <span class="ruby-string">&quot;pat&quot;</span>
+  <span class="ruby-identifier">$stdin</span>.<span class="ruby-identifier">expects</span>(<span class="ruby-value">:gets</span>).<span class="ruby-identifier">returns</span>(<span class="ruby-string">&quot;secret\n&quot;</span>)
+
+  <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Tasks</span><span class="ruby-operator">::</span><span class="ruby-constant">DatabaseTasks</span>.<span class="ruby-identifier">create</span> <span class="ruby-ivar">@configuration</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-test_sends_output_to_stderr_when_other_errors">
+            
+              <b>test_sends_output_to_stderr_when_other_errors</b>()
+            
+            <a href="../../classes/ActiveRecord/MysqlDBCreateAsRootTest.html#method-i-test_sends_output_to_stderr_when_other_errors" name="method-i-test_sends_output_to_stderr_when_other_errors" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-test_sends_output_to_stderr_when_other_errors_source')" id="l_method-i-test_sends_output_to_stderr_when_other_errors_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/f957a1d3551f8e6d6708de4e6b6eb4637b0ae693/activerecord/test/cases/tasks/mysql_rake_test.rb#L146" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-test_sends_output_to_stderr_when_other_errors_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activerecord/test/cases/tasks/mysql_rake_test.rb, line 146</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">test_sends_output_to_stderr_when_other_errors</span>
+  <span class="ruby-ivar">@error</span>.<span class="ruby-identifier">stubs</span>(<span class="ruby-value">:errno</span>).<span class="ruby-identifier">returns</span>(<span class="ruby-number">42</span>)
+
+  <span class="ruby-identifier">$stderr</span>.<span class="ruby-identifier">expects</span>(<span class="ruby-value">:puts</span>).<span class="ruby-identifier">at_least_once</span>.<span class="ruby-identifier">returns</span>(<span class="ruby-keyword">nil</span>)
+
+  <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Tasks</span><span class="ruby-operator">::</span><span class="ruby-constant">DatabaseTasks</span>.<span class="ruby-identifier">create</span> <span class="ruby-ivar">@configuration</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+
+    </div>
+  </body>
+</html>    

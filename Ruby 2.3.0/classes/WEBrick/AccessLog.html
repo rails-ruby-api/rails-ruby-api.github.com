@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>WEBrick::AccessLog</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Module</span> 
+            WEBrick::AccessLog 
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/lib/webrick/accesslog_rb.html">lib/webrick/accesslog.rb</a></li>
+            
+            <li><a href="../../files/lib/webrick/httpserver_rb.html">lib/webrick/httpserver.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p><a href="AccessLog.html">AccessLog</a> provides logging to various files in
+various formats.</p>
+
+<p>Multiple logs may be written to at the same time:</p>
+
+<pre><code>access_log = [
+  [$stderr, WEBrick::AccessLog::COMMON_LOG_FORMAT],
+  [$stderr, WEBrick::AccessLog::REFERER_LOG_FORMAT],
+]
+
+server = WEBrick::HTTPServer.new :AccessLog =&gt; access_log
+</code></pre>
+
+<p>Custom log formats may be defined.  <a
+href="AccessLog.html">WEBrick::AccessLog</a> provides a subset of the
+formatting from Apache&#39;s mod_log_config <a
+href="http://httpd.apache.org/docs/mod/mod_log_config.html#formats">httpd.apache.org/docs/mod/mod_log_config.html#formats</a>.
+See AccessLog::setup_params for a list of supported options</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+    <!-- Namespace -->
+    <div class="sectiontitle">Namespace</div>
+    <ul>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="AccessLog/AccessLogError.html">WEBrick::AccessLog::AccessLogError</a>
+        </li>
+      
+    </ul>
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>E</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-escape">escape</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>F</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-format">format</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>S</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-setup_params">setup_params</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+      <!-- Section constants -->
+      <div class="sectiontitle">Constants</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class="attr-name">CLF_TIME_FORMAT</td>
+            <td>=</td>
+            <td class="attr-value">&quot;[%d/%b/%Y:%H:%M:%S %Z]&quot;</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>The Common <a href="Log.html">Log</a> Format&#39;s time format</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">COMMON_LOG_FORMAT</td>
+            <td>=</td>
+            <td class="attr-value">&quot;%h %l %u %t \&quot;%r\&quot; %s %b&quot;</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Common <a href="Log.html">Log</a> Format</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">CLF</td>
+            <td>=</td>
+            <td class="attr-value">COMMON_LOG_FORMAT</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Short alias for Common <a href="Log.html">Log</a> Format</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">REFERER_LOG_FORMAT</td>
+            <td>=</td>
+            <td class="attr-value">&quot;%{Referer}i -&gt; %U&quot;</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Referer <a href="Log.html">Log</a> Format</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">AGENT_LOG_FORMAT</td>
+            <td>=</td>
+            <td class="attr-value">&quot;%{User-Agent}i&quot;</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>User-Agent <a href="Log.html">Log</a> Format</p></td>
+            </tr>
+          
+        
+          <tr valign='top'>
+            <td class="attr-name">COMBINED_LOG_FORMAT</td>
+            <td>=</td>
+            <td class="attr-value">&quot;#{CLF} \&quot;%{Referer}i\&quot; \&quot;%{User-agent}i\&quot;&quot;</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"><p>Combined <a href="Log.html">Log</a> Format</p></td>
+            </tr>
+          
+        
+      </table>
+    
+
+
+    
+
+
+    <!-- Methods -->
+        
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-escape">
+            
+              <b>escape</b>(data)
+            
+            <a href="../../classes/WEBrick/AccessLog.html#method-i-escape" name="method-i-escape" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Escapes control characters in <code>data</code></p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-escape_source')" id="l_method-i-escape_source">show</a>
+                
+              </p>
+              <div id="method-i-escape_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/webrick/accesslog.rb, line 151</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">escape</span>(<span class="ruby-identifier">data</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">data</span>.<span class="ruby-identifier">tainted?</span>
+    <span class="ruby-identifier">data</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">/[[:cntrl:]\]+/</span>) {<span class="ruby-node">$&amp;</span>.<span class="ruby-identifier">dump</span>[<span class="ruby-number">1</span><span class="ruby-operator">...</span><span class="ruby-number">-1</span>]}.<span class="ruby-identifier">untaint</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">data</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-format">
+            
+              <b>format</b>(format_string, params)
+            
+            <a href="../../classes/WEBrick/AccessLog.html#method-i-format" name="method-i-format" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Formats <code>params</code> according to <code>format_string</code> which
+is described in setup_params.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-format_source')" id="l_method-i-format_source">show</a>
+                
+              </p>
+              <div id="method-i-format_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/webrick/accesslog.rb, line 123</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">format</span>(<span class="ruby-identifier">format_string</span>, <span class="ruby-identifier">params</span>)
+  <span class="ruby-identifier">format_string</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">/\%(?:\{(.*?)\})?&gt;?([a-zA-Z%])/</span>){
+     <span class="ruby-identifier">param</span>, <span class="ruby-identifier">spec</span> = <span class="ruby-node">$1</span>, <span class="ruby-node">$2</span>
+     <span class="ruby-keyword">case</span> <span class="ruby-identifier">spec</span>[<span class="ruby-number">0</span>]
+     <span class="ruby-keyword">when</span> <span class="ruby-value">?e</span>, <span class="ruby-value">?i</span>, <span class="ruby-value">?n</span>, <span class="ruby-value">?o</span>
+       <span class="ruby-identifier">raise</span> <span class="ruby-constant">AccessLogError</span>,
+         <span class="ruby-node">&quot;parameter is required for \&quot;#{spec}\&quot;&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">param</span>
+       (<span class="ruby-identifier">param</span> = <span class="ruby-identifier">params</span>[<span class="ruby-identifier">spec</span>][<span class="ruby-identifier">param</span>]) <span class="ruby-operator">?</span> <span class="ruby-identifier">escape</span>(<span class="ruby-identifier">param</span>) <span class="ruby-operator">:</span> <span class="ruby-string">&quot;-&quot;</span>
+     <span class="ruby-keyword">when</span> <span class="ruby-value">?t</span>
+       <span class="ruby-identifier">params</span>[<span class="ruby-identifier">spec</span>].<span class="ruby-identifier">strftime</span>(<span class="ruby-identifier">param</span> <span class="ruby-operator">||</span> <span class="ruby-constant">CLF_TIME_FORMAT</span>)
+     <span class="ruby-keyword">when</span> <span class="ruby-value">?p</span>
+       <span class="ruby-keyword">case</span> <span class="ruby-identifier">param</span>
+       <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;remote&#39;</span>
+         <span class="ruby-identifier">escape</span>(<span class="ruby-identifier">params</span>[<span class="ruby-string">&quot;i&quot;</span>].<span class="ruby-identifier">peeraddr</span>[<span class="ruby-number">1</span>].<span class="ruby-identifier">to_s</span>)
+       <span class="ruby-keyword">else</span>
+         <span class="ruby-identifier">escape</span>(<span class="ruby-identifier">params</span>[<span class="ruby-string">&quot;p&quot;</span>].<span class="ruby-identifier">to_s</span>)
+       <span class="ruby-keyword">end</span>
+     <span class="ruby-keyword">when</span> <span class="ruby-value">?%</span>
+       <span class="ruby-string">&quot;%&quot;</span>
+     <span class="ruby-keyword">else</span>
+       <span class="ruby-identifier">escape</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">spec</span>].<span class="ruby-identifier">to_s</span>)
+     <span class="ruby-keyword">end</span>
+  }
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-setup_params">
+            
+              <b>setup_params</b>(config, req, res)
+            
+            <a href="../../classes/WEBrick/AccessLog.html#method-i-setup_params" name="method-i-setup_params" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>This format specification is a subset of mod_log_config of Apache:</p>
+<dl class="rdoc-list note-list"><dt>%a
+<dd>
+<p>Remote IP address</p>
+</dd><dt>%b
+<dd>
+<p>Total response size</p>
+</dd><dt>%e{variable}
+<dd>
+<p>Given variable in <a href="../ENV.html">ENV</a></p>
+</dd><dt>%f
+<dd>
+<p>Response filename</p>
+</dd><dt>%h
+<dd>
+<p>Remote host name</p>
+</dd><dt>%{header}i
+<dd>
+<p>Given request header</p>
+</dd><dt>%l
+<dd>
+<p>Remote logname, always “-”</p>
+</dd><dt>%m
+<dd>
+<p>Request method</p>
+</dd><dt>%{attr}n
+<dd>
+<p>Given request attribute from <code>req.attributes</code></p>
+</dd><dt>%{header}o
+<dd>
+<p>Given response header</p>
+</dd><dt>%p
+<dd>
+<p>Server&#39;s request port</p>
+</dd><dt>%{format}p
+<dd>
+<p>The canonical port of the server serving the request or the actual port or
+the client&#39;s actual port.  Valid formats are canonical, local or
+remote.</p>
+</dd><dt>%q
+<dd>
+<p>Request query string</p>
+</dd><dt>%r
+<dd>
+<p>First line of the request</p>
+</dd><dt>%s
+<dd>
+<p>Request status</p>
+</dd><dt>%t
+<dd>
+<p><a href="../Time.html">Time</a> the request was received</p>
+</dd><dt>%T
+<dd>
+<p><a href="../Time.html">Time</a> taken to process the request</p>
+</dd><dt>%u
+<dd>
+<p>Remote user from auth</p>
+</dd><dt>%U
+<dd>
+<p>Unparsed <a href="../URI.html">URI</a></p>
+</dd><dt>%%
+<dd>
+<p>Literal %</p>
+</dd></dl>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-setup_params_source')" id="l_method-i-setup_params_source">show</a>
+                
+              </p>
+              <div id="method-i-setup_params_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/webrick/accesslog.rb, line 95</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">setup_params</span>(<span class="ruby-identifier">config</span>, <span class="ruby-identifier">req</span>, <span class="ruby-identifier">res</span>)
+  <span class="ruby-identifier">params</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&quot;&quot;</span>)
+  <span class="ruby-identifier">params</span>[<span class="ruby-string">&quot;a&quot;</span>] = <span class="ruby-identifier">req</span>.<span class="ruby-identifier">peeraddr</span>[<span class="ruby-number">3</span>]
+  <span class="ruby-identifier">params</span>[<span class="ruby-string">&quot;b&quot;</span>] = <span class="ruby-identifier">res</span>.<span class="ruby-identifier">sent_size</span>
+  <span class="ruby-identifier">params</span>[<span class="ruby-string">&quot;e&quot;</span>] = <span class="ruby-constant">ENV</span>
+  <span class="ruby-identifier">params</span>[<span class="ruby-string">&quot;f&quot;</span>] = <span class="ruby-identifier">res</span>.<span class="ruby-identifier">filename</span> <span class="ruby-operator">||</span> <span class="ruby-string">&quot;&quot;</span>
+  <span class="ruby-identifier">params</span>[<span class="ruby-string">&quot;h&quot;</span>] = <span class="ruby-identifier">req</span>.<span class="ruby-identifier">peeraddr</span>[<span class="ruby-number">2</span>]
+  <span class="ruby-identifier">params</span>[<span class="ruby-string">&quot;i&quot;</span>] = <span class="ruby-identifier">req</span>
+  <span class="ruby-identifier">params</span>[<span class="ruby-string">&quot;l&quot;</span>] = <span class="ruby-string">&quot;-&quot;</span>
+  <span class="ruby-identifier">params</span>[<span class="ruby-string">&quot;m&quot;</span>] = <span class="ruby-identifier">req</span>.<span class="ruby-identifier">request_method</span>
+  <span class="ruby-identifier">params</span>[<span class="ruby-string">&quot;n&quot;</span>] = <span class="ruby-identifier">req</span>.<span class="ruby-identifier">attributes</span>
+  <span class="ruby-identifier">params</span>[<span class="ruby-string">&quot;o&quot;</span>] = <span class="ruby-identifier">res</span>
+  <span class="ruby-identifier">params</span>[<span class="ruby-string">&quot;p&quot;</span>] = <span class="ruby-identifier">req</span>.<span class="ruby-identifier">port</span>
+  <span class="ruby-identifier">params</span>[<span class="ruby-string">&quot;q&quot;</span>] = <span class="ruby-identifier">req</span>.<span class="ruby-identifier">query_string</span>
+  <span class="ruby-identifier">params</span>[<span class="ruby-string">&quot;r&quot;</span>] = <span class="ruby-identifier">req</span>.<span class="ruby-identifier">request_line</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-regexp">/\x0d?\x0a\z/o</span>, <span class="ruby-string">&#39;&#39;</span>)
+  <span class="ruby-identifier">params</span>[<span class="ruby-string">&quot;s&quot;</span>] = <span class="ruby-identifier">res</span>.<span class="ruby-identifier">status</span>       <span class="ruby-comment"># won&#39;t support &quot;%&gt;s&quot;</span>
+  <span class="ruby-identifier">params</span>[<span class="ruby-string">&quot;t&quot;</span>] = <span class="ruby-identifier">req</span>.<span class="ruby-identifier">request_time</span>
+  <span class="ruby-identifier">params</span>[<span class="ruby-string">&quot;T&quot;</span>] = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">req</span>.<span class="ruby-identifier">request_time</span>
+  <span class="ruby-identifier">params</span>[<span class="ruby-string">&quot;u&quot;</span>] = <span class="ruby-identifier">req</span>.<span class="ruby-identifier">user</span> <span class="ruby-operator">||</span> <span class="ruby-string">&quot;-&quot;</span>
+  <span class="ruby-identifier">params</span>[<span class="ruby-string">&quot;U&quot;</span>] = <span class="ruby-identifier">req</span>.<span class="ruby-identifier">unparsed_uri</span>
+  <span class="ruby-identifier">params</span>[<span class="ruby-string">&quot;v&quot;</span>] = <span class="ruby-identifier">config</span>[<span class="ruby-value">:ServerName</span>]
+  <span class="ruby-identifier">params</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+
+    </div>
+  </body>
+</html>    

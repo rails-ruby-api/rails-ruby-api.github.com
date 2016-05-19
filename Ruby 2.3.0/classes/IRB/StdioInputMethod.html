@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>IRB::StdioInputMethod</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            IRB::StdioInputMethod 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="InputMethod.html">IRB::InputMethod</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/lib/irb/input-method_rb.html">lib/irb/input-method.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>E</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-encoding">encoding</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-eof-3F">eof?</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>G</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-gets">gets</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>L</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-line">line</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>R</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-readable_after_eof-3F">readable_after_eof?</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <b>new</b>()
+            
+            <a href="../../classes/IRB/StdioInputMethod.html#method-c-new" name="method-c-new" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Creates a new input method object</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/irb/input-method.rb, line 48</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">initialize</span>
+  <span class="ruby-keyword">super</span>
+  <span class="ruby-ivar">@line_no</span> = <span class="ruby-number">0</span>
+  <span class="ruby-ivar">@line</span> = []
+  <span class="ruby-ivar">@stdin</span> = <span class="ruby-constant">IO</span>.<span class="ruby-identifier">open</span>(<span class="ruby-constant">STDIN</span>.<span class="ruby-identifier">to_i</span>, <span class="ruby-value">:external_encoding</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">IRB</span>.<span class="ruby-identifier">conf</span>[<span class="ruby-value">:LC_MESSAGES</span>].<span class="ruby-identifier">encoding</span>, <span class="ruby-value">:internal_encoding</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;-&quot;</span>)
+  <span class="ruby-ivar">@stdout</span> = <span class="ruby-constant">IO</span>.<span class="ruby-identifier">open</span>(<span class="ruby-constant">STDOUT</span>.<span class="ruby-identifier">to_i</span>, <span class="ruby-string">&#39;w&#39;</span>, <span class="ruby-value">:external_encoding</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">IRB</span>.<span class="ruby-identifier">conf</span>[<span class="ruby-value">:LC_MESSAGES</span>].<span class="ruby-identifier">encoding</span>, <span class="ruby-value">:internal_encoding</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;-&quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-encoding">
+            
+              <b>encoding</b>()
+            
+            <a href="../../classes/IRB/StdioInputMethod.html#method-i-encoding" name="method-i-encoding" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>The external encoding for standard input.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-encoding_source')" id="l_method-i-encoding_source">show</a>
+                
+              </p>
+              <div id="method-i-encoding_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/irb/input-method.rb, line 91</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">encoding</span>
+  <span class="ruby-ivar">@stdin</span>.<span class="ruby-identifier">external_encoding</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-eof-3F">
+            
+              <b>eof?</b>()
+            
+            <a href="../../classes/IRB/StdioInputMethod.html#method-i-eof-3F" name="method-i-eof-3F" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Whether the end of this input method has been reached, returns
+<code>true</code> if there is no more data to read.</p>
+
+<p>See <a href="../IO.html#method-i-eof-3F">IO#eof?</a> for more information.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-eof-3F_source')" id="l_method-i-eof-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-eof-3F_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/irb/input-method.rb, line 69</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">eof?</span>
+  <span class="ruby-ivar">@stdin</span>.<span class="ruby-identifier">eof?</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-gets">
+            
+              <b>gets</b>()
+            
+            <a href="../../classes/IRB/StdioInputMethod.html#method-i-gets" name="method-i-gets" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Reads the next line from this input method.</p>
+
+<p>See <a href="../IO.html#method-i-gets">IO#gets</a> for more information.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-gets_source')" id="l_method-i-gets_source">show</a>
+                
+              </p>
+              <div id="method-i-gets_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/irb/input-method.rb, line 59</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">gets</span>
+  <span class="ruby-identifier">print</span> <span class="ruby-ivar">@prompt</span>
+  <span class="ruby-identifier">line</span> = <span class="ruby-ivar">@stdin</span>.<span class="ruby-identifier">gets</span>
+  <span class="ruby-ivar">@line</span>[<span class="ruby-ivar">@line_no</span> <span class="ruby-operator">+=</span> <span class="ruby-number">1</span>] = <span class="ruby-identifier">line</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-line">
+            
+              <b>line</b>(line_no)
+            
+            <a href="../../classes/IRB/StdioInputMethod.html#method-i-line" name="method-i-line" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Returns the current line number for io.</p>
+
+<p><a href="StdioInputMethod.html#method-i-line">line</a> counts the number of
+times <a href="StdioInputMethod.html#method-i-gets">gets</a> is called.</p>
+
+<p>See <a href="../IO.html#method-i-lineno">IO#lineno</a> for more
+information.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-line_source')" id="l_method-i-line_source">show</a>
+                
+              </p>
+              <div id="method-i-line_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/irb/input-method.rb, line 86</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">line</span>(<span class="ruby-identifier">line_no</span>)
+  <span class="ruby-ivar">@line</span>[<span class="ruby-identifier">line_no</span>]
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-readable_after_eof-3F">
+            
+              <b>readable_after_eof?</b>()
+            
+            <a href="../../classes/IRB/StdioInputMethod.html#method-i-readable_after_eof-3F" name="method-i-readable_after_eof-3F" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Whether this input method is still readable when there is no more data to
+read.</p>
+
+<p>See <a href="../IO.html#method-i-eof">IO#eof</a> for more information.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-readable_after_eof-3F_source')" id="l_method-i-readable_after_eof-3F_source">show</a>
+                
+              </p>
+              <div id="method-i-readable_after_eof-3F_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/irb/input-method.rb, line 77</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">readable_after_eof?</span>
+  <span class="ruby-keyword">true</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+
+    </div>
+  </body>
+</html>    

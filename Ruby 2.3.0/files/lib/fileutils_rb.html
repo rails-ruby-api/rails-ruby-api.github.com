@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>fileutils.rb</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            fileutils.rb
+        </h1>
+        <ul class="files">
+            
+            <li>
+                lib/fileutils.rb
+                
+            </li>
+            <li>Last modified: 2015-12-16 06:07:31 +0100</li>
+        </ul>
+    </div>
+
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>frozen_string_literal: false</p>
+
+<h1 id="label-fileutils.rb">fileutils.rb</h1>
+
+<p>Copyright © 2000-2007 Minero Aoki</p>
+
+<p>This program is free software. You can distribute/modify this program under
+the same terms of ruby.</p>
+
+<h2 id="label-module+FileUtils">module <a href="../../classes/FileUtils.html">FileUtils</a></h2>
+
+<p>Namespace for several file utility methods for copying, moving, removing,
+etc.</p>
+
+<h3 id="label-Module+Functions"><a href="../../classes/Module.html">Module</a> Functions</h3>
+
+<pre><code>require &#39;fileutils&#39;
+
+FileUtils.cd(dir, options)
+FileUtils.cd(dir, options) {|dir| .... }
+FileUtils.pwd()
+FileUtils.mkdir(dir, options)
+FileUtils.mkdir(list, options)
+FileUtils.mkdir_p(dir, options)
+FileUtils.mkdir_p(list, options)
+FileUtils.rmdir(dir, options)
+FileUtils.rmdir(list, options)
+FileUtils.ln(old, new, options)
+FileUtils.ln(list, destdir, options)
+FileUtils.ln_s(old, new, options)
+FileUtils.ln_s(list, destdir, options)
+FileUtils.ln_sf(src, dest, options)
+FileUtils.cp(src, dest, options)
+FileUtils.cp(list, dir, options)
+FileUtils.cp_r(src, dest, options)
+FileUtils.cp_r(list, dir, options)
+FileUtils.mv(src, dest, options)
+FileUtils.mv(list, dir, options)
+FileUtils.rm(list, options)
+FileUtils.rm_r(list, options)
+FileUtils.rm_rf(list, options)
+FileUtils.install(src, dest, mode = &lt;src&#39;s&gt;, options)
+FileUtils.chmod(mode, list, options)
+FileUtils.chmod_R(mode, list, options)
+FileUtils.chown(user, group, list, options)
+FileUtils.chown_R(user, group, list, options)
+FileUtils.touch(list, options)</code></pre>
+
+<p>The <code>options</code> parameter is a hash of options, taken from the
+list <code>:force</code>, <code>:noop</code>, <code>:preserve</code>, and
+<code>:verbose</code>. <code>:noop</code> means that no changes are made. 
+The other two are obvious. Each method documents the options that it
+honours.</p>
+
+<p>All methods that have the concept of a “source” file or directory can take
+either one file or a list of files in that argument.  See the method
+documentation for examples.</p>
+
+<p>There are some `low level&#39; methods, which do not accept any option:</p>
+
+<pre><code>FileUtils.copy_entry(src, dest, preserve = false, dereference = false)
+FileUtils.copy_file(src, dest, preserve = false, dereference = true)
+FileUtils.copy_stream(srcstream, deststream)
+FileUtils.remove_entry(path, force = false)
+FileUtils.remove_entry_secure(path, force = false)
+FileUtils.remove_file(path, force = false)
+FileUtils.compare_file(path_a, path_b)
+FileUtils.compare_stream(stream_a, stream_b)
+FileUtils.uptodate?(file, cmp_list)
+</code></pre>
+
+<h2 id="label-module+FileUtils-3A-3AVerbose">module <a href="../../classes/FileUtils/Verbose.html">FileUtils::Verbose</a></h2>
+
+<p>This module has all methods of <a
+href="../../classes/FileUtils.html">FileUtils</a> module, but it outputs
+messages before acting.  This equates to passing the <code>:verbose</code>
+flag to methods in <a href="../../classes/FileUtils.html">FileUtils</a>.</p>
+
+<h2 id="label-module+FileUtils-3A-3ANoWrite">module <a href="../../classes/FileUtils/NoWrite.html">FileUtils::NoWrite</a></h2>
+
+<p>This module has all methods of <a
+href="../../classes/FileUtils.html">FileUtils</a> module, but never changes
+files/directories.  This equates to passing the <code>:noop</code> flag to
+methods in <a href="../../classes/FileUtils.html">FileUtils</a>.</p>
+
+<h2 id="label-module+FileUtils-3A-3ADryRun">module <a href="../../classes/FileUtils/DryRun.html">FileUtils::DryRun</a></h2>
+
+<p>This module has all methods of <a
+href="../../classes/FileUtils.html">FileUtils</a> module, but never changes
+files/directories.  This equates to passing the <code>:noop</code> and
+<code>:verbose</code> flags to methods in <a
+href="../../classes/FileUtils.html">FileUtils</a>.</p>
+
+    </div>
+  
+
+
+  
+    <!-- File only: requires -->
+    <div class="sectiontitle">Required Files</div>
+    <ul>
+      
+        <li>etc</li>
+      
+    </ul>
+  
+
+
+  
+  
+
+
+  
+    <!-- Namespace -->
+    <div class="sectiontitle">Namespace</div>
+    <ul>
+      
+        <li>
+          <span class="type">MODULE</span>
+          <a href="../../classes/Errno.html">Errno</a>
+        </li>
+      
+        <li>
+          <span class="type">MODULE</span>
+          <a href="../../classes/FileUtils.html">FileUtils</a>
+        </li>
+      
+        <li>
+          <span class="type">MODULE</span>
+          <a href="../../classes/FileUtils/DryRun.html">FileUtils::DryRun</a>
+        </li>
+      
+        <li>
+          <span class="type">MODULE</span>
+          <a href="../../classes/FileUtils/LowMethods.html">FileUtils::LowMethods</a>
+        </li>
+      
+        <li>
+          <span class="type">MODULE</span>
+          <a href="../../classes/FileUtils/NoWrite.html">FileUtils::NoWrite</a>
+        </li>
+      
+        <li>
+          <span class="type">MODULE</span>
+          <a href="../../classes/FileUtils/StreamUtils_.html">FileUtils::StreamUtils_</a>
+        </li>
+      
+        <li>
+          <span class="type">MODULE</span>
+          <a href="../../classes/FileUtils/Verbose.html">FileUtils::Verbose</a>
+        </li>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="../../classes/Encoding.html">Encoding</a>
+        </li>
+      
+        <li>
+          <span class="type">CLASS</span>
+          <a href="../../classes/File.html">File</a>
+        </li>
+      
+    </ul>
+  
+
+
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+              </div>
+
+    </div>
+  </body>
+</html>

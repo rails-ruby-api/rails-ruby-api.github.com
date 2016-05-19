@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>DRb::GWIdConv</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            DRb::GWIdConv 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="DRbIdConv.html">DRb::DRbIdConv</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/lib/drb/gw_rb.html">lib/drb/gw.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>Gateway id conversion forms a gateway between different <a
+href="../DRb.html">DRb</a> protocols or networks.</p>
+
+<p>The gateway needs to install this id conversion and create servers for each
+of the protocols or networks it will be a gateway between.  It then needs
+to create a server that attaches to each of these networks.  For example:</p>
+
+<pre><code>require &#39;drb/drb&#39;
+require &#39;drb/unix&#39;
+require &#39;drb/gw&#39;
+
+DRb.install_id_conv DRb::GWIdConv.new
+gw = DRb::GW.new
+s1 = DRb::DRbServer.new &#39;drbunix:/path/to/gateway&#39;, gw
+s2 = DRb::DRbServer.new &#39;druby://example:10000&#39;, gw
+
+s1.thread.join
+s2.thread.join
+</code></pre>
+
+<p>Each client must register services with the gateway, for example:</p>
+
+<pre><code>DRb.start_service &#39;drbunix:&#39;, nil # an anonymous server
+gw = DRbObject.new nil, &#39;drbunix:/path/to/gateway&#39;
+gw[:unix] = some_service
+DRb.thread.join
+</code></pre>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+              </div>
+
+    </div>
+  </body>
+</html>    

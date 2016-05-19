@@ -1,0 +1,1728 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>OpenSSL::X509::Certificate</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../../css/github.css" type="text/css" media="screen" />
+<script src="../../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Class</span> 
+            OpenSSL::X509::Certificate 
+            
+                <span class="parent">&lt; 
+                    
+                    <a href="../../Object.html">Object</a>
+                    
+                </span>
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../../files/ext/openssl/lib/openssl/x509_rb.html">ext/openssl/lib/openssl/x509.rb</a></li>
+            
+            <li><a href="../../../files/ext/openssl/ossl_ssl_session_c.html">ext/openssl/ossl_ssl_session.c</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>Implementation of an X.509 certificate as specified in RFC 5280. Provides
+access to a certificate&#39;s attributes and allows certificates to be read
+from a string, but also supports the creation of new certificates from
+scratch.</p>
+
+<h3 id="class-OpenSSL::X509::Certificate-label-Reading+a+certificate+from+a+file">Reading a certificate from a file</h3>
+
+<p><a href="Certificate.html">Certificate</a> is capable of handling
+DER-encoded certificates and certificates encoded in OpenSSL&#39;s PEM
+format.</p>
+
+<pre><code>raw = File.read &quot;cert.cer&quot; # DER- or PEM-encoded
+certificate = OpenSSL::X509::Certificate.new raw
+</code></pre>
+
+<h3 id="class-OpenSSL::X509::Certificate-label-Saving+a+certificate+to+a+file">Saving a certificate to a file</h3>
+
+<p>A certificate may be encoded in DER format</p>
+
+<pre><code>cert = ...
+File.open(&quot;cert.cer&quot;, &quot;wb&quot;) { |f| f.print cert.to_der }</code></pre>
+
+<p>or in PEM format</p>
+
+<pre><code>cert = ...
+File.open(&quot;cert.pem&quot;, &quot;wb&quot;) { |f| f.print cert.to_pem }</code></pre>
+
+<p>X.509 certificates are associated with a private/public key pair, typically
+a RSA, DSA or ECC key (see also <a
+href="../PKey/RSA.html">OpenSSL::PKey::RSA</a>, <a
+href="../PKey/DSA.html">OpenSSL::PKey::DSA</a> and <a
+href="../PKey/EC.html">OpenSSL::PKey::EC</a>), the public key itself is
+stored within the certificate and can be accessed in form of an <a
+href="../PKey.html">OpenSSL::PKey</a>. Certificates are typically used to
+be able to associate some form of identity with a key pair, for example web
+servers serving pages over HTTPs use certificates to authenticate
+themselves to the user.</p>
+
+<p>The public key infrastructure (PKI) model relies on trusted certificate
+authorities (“root CAs”) that issue these certificates, so that end users
+need to base their trust just on a selected few authorities that themselves
+again vouch for subordinate CAs issuing their certificates to end users.</p>
+
+<p>The <a href="../X509.html">OpenSSL::X509</a> module provides the tools to
+set up an independent PKI, similar to scenarios where the &#39;openssl&#39;
+command line tool is used for issuing certificates in a private PKI.</p>
+
+<h3 id="class-OpenSSL::X509::Certificate-label-Creating+a+root+CA+certificate+and+an+end-entity+certificate">Creating a root CA certificate and an end-entity certificate</h3>
+
+<p>First, we need to create a “self-signed” root certificate. To do so, we
+need to generate a key first. Please note that the choice of “1” as a
+serial number is considered a security flaw for real certificates. Secure
+choices are integers in the two-digit byte range and ideally not sequential
+but secure random numbers, steps omitted here to keep the example concise.</p>
+
+<pre><code>root_key = OpenSSL::PKey::RSA.new 2048 # the CA&#39;s public/private key
+root_ca = OpenSSL::X509::Certificate.new
+root_ca.version = 2 # cf. RFC 5280 - to make it a &quot;v3&quot; certificate
+root_ca.serial = 1
+root_ca.subject = OpenSSL::X509::Name.parse &quot;/DC=org/DC=ruby-lang/CN=Ruby CA&quot;
+root_ca.issuer = root_ca.subject # root CA&#39;s are &quot;self-signed&quot;
+root_ca.public_key = root_key.public_key
+root_ca.not_before = Time.now
+root_ca.not_after = root_ca.not_before + 2 * 365 * 24 * 60 * 60 # 2 years validity
+ef = OpenSSL::X509::ExtensionFactory.new
+ef.subject_certificate = root_ca
+ef.issuer_certificate = root_ca
+root_ca.add_extension(ef.create_extension(&quot;basicConstraints&quot;,&quot;CA:TRUE&quot;,true))
+root_ca.add_extension(ef.create_extension(&quot;keyUsage&quot;,&quot;keyCertSign, cRLSign&quot;, true))
+root_ca.add_extension(ef.create_extension(&quot;subjectKeyIdentifier&quot;,&quot;hash&quot;,false))
+root_ca.add_extension(ef.create_extension(&quot;authorityKeyIdentifier&quot;,&quot;keyid:always&quot;,false))
+root_ca.sign(root_key, OpenSSL::Digest::SHA256.new)
+</code></pre>
+
+<p>The next step is to create the end-entity certificate using the root CA
+certificate.</p>
+
+<pre><code>key = OpenSSL::PKey::RSA.new 2048
+cert = OpenSSL::X509::Certificate.new
+cert.version = 2
+cert.serial = 2
+cert.subject = OpenSSL::X509::Name.parse &quot;/DC=org/DC=ruby-lang/CN=Ruby certificate&quot;
+cert.issuer = root_ca.subject # root CA is the issuer
+cert.public_key = key.public_key
+cert.not_before = Time.now
+cert.not_after = cert.not_before + 1 * 365 * 24 * 60 * 60 # 1 years validity
+ef = OpenSSL::X509::ExtensionFactory.new
+ef.subject_certificate = cert
+ef.issuer_certificate = root_ca
+cert.add_extension(ef.create_extension(&quot;keyUsage&quot;,&quot;digitalSignature&quot;, true))
+cert.add_extension(ef.create_extension(&quot;subjectKeyIdentifier&quot;,&quot;hash&quot;,false))
+cert.sign(root_key, OpenSSL::Digest::SHA256.new)
+</code></pre>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>A</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-add_extension">add_extension</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>C</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-check_private_key">check_private_key</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>E</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-extensions">extensions</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-extensions-3D">extensions=</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>I</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-inspect">inspect</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-issuer">issuer</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-issuer-3D">issuer=</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-new">new</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-not_after">not_after</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-not_after-3D">not_after=</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-not_before">not_before</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-not_before-3D">not_before=</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>P</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-pretty_print">pretty_print</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-public_key">public_key</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-public_key-3D">public_key=</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>S</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-serial">serial</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-serial-3D">serial=</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-sign">sign</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-signature_algorithm">signature_algorithm</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-subject">subject</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-subject-3D">subject=</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-to_der">to_der</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-to_pem">to_pem</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-to_s">to_s</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-to_text">to_text</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>V</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-i-verify">verify</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-version">version</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-i-version-3D">version=</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <b>Certificate.new => cert
+Certificate.new(string) => cert</b>
+            
+            <a href="../../../classes/OpenSSL/X509/Certificate.html#method-c-new" name="method-c-new" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre>static VALUE
+ossl_x509_initialize(int argc, VALUE *argv, VALUE self)
+{
+    BIO *in;
+    X509 *x509, *x = DATA_PTR(self);
+    VALUE arg;
+
+    if (rb_scan_args(argc, argv, &quot;01&quot;, &amp;arg) == 0) {
+        /* create just empty X509Cert */
+        return self;
+    }
+    arg = ossl_to_der_if_possible(arg);
+    in = ossl_obj2bio(arg);
+    x509 = PEM_read_bio_X509(in, &amp;x, NULL, NULL);
+    DATA_PTR(self) = x;
+    if (!x509) {
+        OSSL_BIO_reset(in);
+        x509 = d2i_X509_bio(in, &amp;x);
+        DATA_PTR(self) = x;
+    }
+    BIO_free(in);
+    if (!x509) ossl_raise(eX509CertError, NULL);
+
+    return self;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-add_extension">
+            
+              <b>cert.add_extension(extension) => extension</b>
+            
+            <a href="../../../classes/OpenSSL/X509/Certificate.html#method-i-add_extension" name="method-i-add_extension" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-add_extension_source')" id="l_method-i-add_extension_source">show</a>
+                
+              </p>
+              <div id="method-i-add_extension_source" class="dyn-source">
+                <pre>static VALUE
+ossl_x509_add_extension(VALUE self, VALUE extension)
+{
+    X509 *x509;
+    X509_EXTENSION *ext;
+
+    GetX509(self, x509);
+    ext = DupX509ExtPtr(extension);
+    if (!X509_add_ext(x509, ext, -1)) { /* DUPs ext - FREE it */
+        X509_EXTENSION_free(ext);
+        ossl_raise(eX509CertError, NULL);
+    }
+    X509_EXTENSION_free(ext);
+
+    return extension;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-check_private_key">
+            
+              <b>cert.check_private_key(key)
+</b>
+            
+            <a href="../../../classes/OpenSSL/X509/Certificate.html#method-i-check_private_key" name="method-i-check_private_key" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Checks if &#39;key&#39; is PRIV key for this cert</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-check_private_key_source')" id="l_method-i-check_private_key_source">show</a>
+                
+              </p>
+              <div id="method-i-check_private_key_source" class="dyn-source">
+                <pre>static VALUE
+ossl_x509_check_private_key(VALUE self, VALUE key)
+{
+    X509 *x509;
+    EVP_PKEY *pkey;
+
+    /* not needed private key, but should be */
+    pkey = GetPrivPKeyPtr(key); /* NO NEED TO DUP */
+    GetX509(self, x509);
+    if (!X509_check_private_key(x509, pkey)) {
+        OSSL_Warning(&quot;Check private key:%s&quot;, OSSL_ErrMsg());
+        return Qfalse;
+    }
+
+    return Qtrue;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-extensions">
+            
+              <b>cert.extensions => [extension...]</b>
+            
+            <a href="../../../classes/OpenSSL/X509/Certificate.html#method-i-extensions" name="method-i-extensions" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-extensions_source')" id="l_method-i-extensions_source">show</a>
+                
+              </p>
+              <div id="method-i-extensions_source" class="dyn-source">
+                <pre>static VALUE
+ossl_x509_get_extensions(VALUE self)
+{
+    X509 *x509;
+    int count, i;
+    X509_EXTENSION *ext;
+    VALUE ary;
+
+    GetX509(self, x509);
+    count = X509_get_ext_count(x509);
+    if (count &lt; 0) {
+        return rb_ary_new();
+    }
+    ary = rb_ary_new2(count);
+    for (i=0; i&lt;count; i++) {
+        ext = X509_get_ext(x509, i); /* NO DUP - don&#39;t free! */
+        rb_ary_push(ary, ossl_x509ext_new(ext));
+    }
+
+    return ary;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-extensions-3D">
+            
+              <b>cert.extensions = [ext...] => [ext...]</b>
+            
+            <a href="../../../classes/OpenSSL/X509/Certificate.html#method-i-extensions-3D" name="method-i-extensions-3D" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-extensions-3D_source')" id="l_method-i-extensions-3D_source">show</a>
+                
+              </p>
+              <div id="method-i-extensions-3D_source" class="dyn-source">
+                <pre>static VALUE
+ossl_x509_set_extensions(VALUE self, VALUE ary)
+{
+    X509 *x509;
+    X509_EXTENSION *ext;
+    long i;
+
+    Check_Type(ary, T_ARRAY);
+    /* All ary&#39;s members should be X509Extension */
+    for (i=0; i&lt;RARRAY_LEN(ary); i++) {
+        OSSL_Check_Kind(RARRAY_AREF(ary, i), cX509Ext);
+    }
+    GetX509(self, x509);
+    sk_X509_EXTENSION_pop_free(x509-&gt;cert_info-&gt;extensions, X509_EXTENSION_free);
+    x509-&gt;cert_info-&gt;extensions = NULL;
+    for (i=0; i&lt;RARRAY_LEN(ary); i++) {
+        ext = DupX509ExtPtr(RARRAY_AREF(ary, i));
+
+        if (!X509_add_ext(x509, ext, -1)) { /* DUPs ext - FREE it */
+            X509_EXTENSION_free(ext);
+            ossl_raise(eX509CertError, NULL);
+        }
+        X509_EXTENSION_free(ext);
+    }
+
+    return ary;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-inspect">
+            
+              <b>inspect</b>()
+            
+            <a href="../../../classes/OpenSSL/X509/Certificate.html#method-i-inspect" name="method-i-inspect" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-inspect_source')" id="l_method-i-inspect_source">show</a>
+                
+              </p>
+              <div id="method-i-inspect_source" class="dyn-source">
+                <pre>static VALUE
+ossl_x509_inspect(VALUE self)
+{
+    return rb_sprintf(&quot;#&lt;%&quot;PRIsVALUE&quot;: subject=%+&quot;PRIsVALUE&quot;, &quot;
+                      &quot;issuer=%+&quot;PRIsVALUE&quot;, serial=%+&quot;PRIsVALUE&quot;, &quot;
+                      &quot;not_before=%+&quot;PRIsVALUE&quot;, not_after=%+&quot;PRIsVALUE&quot;&gt;&quot;,
+                      rb_obj_class(self),
+                      ossl_x509_get_subject(self),
+                      ossl_x509_get_issuer(self),
+                      ossl_x509_get_serial(self),
+                      ossl_x509_get_not_before(self),
+                      ossl_x509_get_not_after(self));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-issuer">
+            
+              <b>cert.issuer => name</b>
+            
+            <a href="../../../classes/OpenSSL/X509/Certificate.html#method-i-issuer" name="method-i-issuer" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-issuer_source')" id="l_method-i-issuer_source">show</a>
+                
+              </p>
+              <div id="method-i-issuer_source" class="dyn-source">
+                <pre>static VALUE
+ossl_x509_get_issuer(VALUE self)
+{
+    X509 *x509;
+    X509_NAME *name;
+
+    GetX509(self, x509);
+    if(!(name = X509_get_issuer_name(x509))) { /* NO DUP - don&#39;t free! */
+        ossl_raise(eX509CertError, NULL);
+    }
+
+    return ossl_x509name_new(name);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-issuer-3D">
+            
+              <b>cert.issuer = name => name</b>
+            
+            <a href="../../../classes/OpenSSL/X509/Certificate.html#method-i-issuer-3D" name="method-i-issuer-3D" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-issuer-3D_source')" id="l_method-i-issuer-3D_source">show</a>
+                
+              </p>
+              <div id="method-i-issuer-3D_source" class="dyn-source">
+                <pre>static VALUE
+ossl_x509_set_issuer(VALUE self, VALUE issuer)
+{
+    X509 *x509;
+
+    GetX509(self, x509);
+    if (!X509_set_issuer_name(x509, GetX509NamePtr(issuer))) { /* DUPs name */
+        ossl_raise(eX509CertError, NULL);
+    }
+
+    return issuer;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-not_after">
+            
+              <b>cert.not_after => time</b>
+            
+            <a href="../../../classes/OpenSSL/X509/Certificate.html#method-i-not_after" name="method-i-not_after" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-not_after_source')" id="l_method-i-not_after_source">show</a>
+                
+              </p>
+              <div id="method-i-not_after_source" class="dyn-source">
+                <pre>static VALUE
+ossl_x509_get_not_after(VALUE self)
+{
+    X509 *x509;
+    ASN1_TIME *asn1time;
+
+    GetX509(self, x509);
+    if (!(asn1time = X509_get_notAfter(x509))) { /* NO DUP - don&#39;t free! */
+        ossl_raise(eX509CertError, NULL);
+    }
+
+    return asn1time_to_time(asn1time);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-not_after-3D">
+            
+              <b>cert.not_after = time => time</b>
+            
+            <a href="../../../classes/OpenSSL/X509/Certificate.html#method-i-not_after-3D" name="method-i-not_after-3D" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-not_after-3D_source')" id="l_method-i-not_after-3D_source">show</a>
+                
+              </p>
+              <div id="method-i-not_after-3D_source" class="dyn-source">
+                <pre>static VALUE
+ossl_x509_set_not_after(VALUE self, VALUE time)
+{
+    X509 *x509;
+    time_t sec;
+
+    sec = time_to_time_t(time);
+    GetX509(self, x509);
+    if (!X509_time_adj(X509_get_notAfter(x509), 0, &amp;sec)) {
+        ossl_raise(eX509CertError, NULL);
+    }
+
+    return time;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-not_before">
+            
+              <b>cert.not_before => time</b>
+            
+            <a href="../../../classes/OpenSSL/X509/Certificate.html#method-i-not_before" name="method-i-not_before" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-not_before_source')" id="l_method-i-not_before_source">show</a>
+                
+              </p>
+              <div id="method-i-not_before_source" class="dyn-source">
+                <pre>static VALUE
+ossl_x509_get_not_before(VALUE self)
+{
+    X509 *x509;
+    ASN1_UTCTIME *asn1time;
+
+    GetX509(self, x509);
+    if (!(asn1time = X509_get_notBefore(x509))) { /* NO DUP - don&#39;t free! */
+        ossl_raise(eX509CertError, NULL);
+    }
+
+    return asn1time_to_time(asn1time);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-not_before-3D">
+            
+              <b>cert.not_before = time => time</b>
+            
+            <a href="../../../classes/OpenSSL/X509/Certificate.html#method-i-not_before-3D" name="method-i-not_before-3D" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-not_before-3D_source')" id="l_method-i-not_before-3D_source">show</a>
+                
+              </p>
+              <div id="method-i-not_before-3D_source" class="dyn-source">
+                <pre>static VALUE
+ossl_x509_set_not_before(VALUE self, VALUE time)
+{
+    X509 *x509;
+    time_t sec;
+
+    sec = time_to_time_t(time);
+    GetX509(self, x509);
+    if (!X509_time_adj(X509_get_notBefore(x509), 0, &amp;sec)) {
+        ossl_raise(eX509CertError, NULL);
+    }
+
+    return time;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-pretty_print">
+            
+              <b>pretty_print</b>(q)
+            
+            <a href="../../../classes/OpenSSL/X509/Certificate.html#method-i-pretty_print" name="method-i-pretty_print" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-pretty_print_source')" id="l_method-i-pretty_print_source">show</a>
+                
+              </p>
+              <div id="method-i-pretty_print_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File ext/openssl/lib/openssl/x509.rb, line 164</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">pretty_print</span>(<span class="ruby-identifier">q</span>)
+  <span class="ruby-identifier">q</span>.<span class="ruby-identifier">object_group</span>(<span class="ruby-keyword">self</span>) {
+    <span class="ruby-identifier">q</span>.<span class="ruby-identifier">breakable</span>
+    <span class="ruby-identifier">q</span>.<span class="ruby-identifier">text</span> <span class="ruby-string">&#39;subject=&#39;</span>; <span class="ruby-identifier">q</span>.<span class="ruby-identifier">pp</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">subject</span>; <span class="ruby-identifier">q</span>.<span class="ruby-identifier">text</span> <span class="ruby-string">&#39;,&#39;</span>; <span class="ruby-identifier">q</span>.<span class="ruby-identifier">breakable</span>
+    <span class="ruby-identifier">q</span>.<span class="ruby-identifier">text</span> <span class="ruby-string">&#39;issuer=&#39;</span>; <span class="ruby-identifier">q</span>.<span class="ruby-identifier">pp</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">issuer</span>; <span class="ruby-identifier">q</span>.<span class="ruby-identifier">text</span> <span class="ruby-string">&#39;,&#39;</span>; <span class="ruby-identifier">q</span>.<span class="ruby-identifier">breakable</span>
+    <span class="ruby-identifier">q</span>.<span class="ruby-identifier">text</span> <span class="ruby-string">&#39;serial=&#39;</span>; <span class="ruby-identifier">q</span>.<span class="ruby-identifier">pp</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">serial</span>; <span class="ruby-identifier">q</span>.<span class="ruby-identifier">text</span> <span class="ruby-string">&#39;,&#39;</span>; <span class="ruby-identifier">q</span>.<span class="ruby-identifier">breakable</span>
+    <span class="ruby-identifier">q</span>.<span class="ruby-identifier">text</span> <span class="ruby-string">&#39;not_before=&#39;</span>; <span class="ruby-identifier">q</span>.<span class="ruby-identifier">pp</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">not_before</span>; <span class="ruby-identifier">q</span>.<span class="ruby-identifier">text</span> <span class="ruby-string">&#39;,&#39;</span>; <span class="ruby-identifier">q</span>.<span class="ruby-identifier">breakable</span>
+    <span class="ruby-identifier">q</span>.<span class="ruby-identifier">text</span> <span class="ruby-string">&#39;not_after=&#39;</span>; <span class="ruby-identifier">q</span>.<span class="ruby-identifier">pp</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">not_after</span>
+  }
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-public_key">
+            
+              <b>cert.public_key => key</b>
+            
+            <a href="../../../classes/OpenSSL/X509/Certificate.html#method-i-public_key" name="method-i-public_key" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-public_key_source')" id="l_method-i-public_key_source">show</a>
+                
+              </p>
+              <div id="method-i-public_key_source" class="dyn-source">
+                <pre>static VALUE
+ossl_x509_get_public_key(VALUE self)
+{
+    X509 *x509;
+    EVP_PKEY *pkey;
+
+    GetX509(self, x509);
+    if (!(pkey = X509_get_pubkey(x509))) { /* adds an reference */
+        ossl_raise(eX509CertError, NULL);
+    }
+
+    return ossl_pkey_new(pkey); /* NO DUP - OK */
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-public_key-3D">
+            
+              <b>cert.public_key = key => key</b>
+            
+            <a href="../../../classes/OpenSSL/X509/Certificate.html#method-i-public_key-3D" name="method-i-public_key-3D" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-public_key-3D_source')" id="l_method-i-public_key-3D_source">show</a>
+                
+              </p>
+              <div id="method-i-public_key-3D_source" class="dyn-source">
+                <pre>static VALUE
+ossl_x509_set_public_key(VALUE self, VALUE key)
+{
+    X509 *x509;
+
+    GetX509(self, x509);
+    if (!X509_set_pubkey(x509, GetPKeyPtr(key))) { /* DUPs pkey */
+        ossl_raise(eX509CertError, NULL);
+    }
+
+    return key;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-serial">
+            
+              <b>cert.serial => integer</b>
+            
+            <a href="../../../classes/OpenSSL/X509/Certificate.html#method-i-serial" name="method-i-serial" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-serial_source')" id="l_method-i-serial_source">show</a>
+                
+              </p>
+              <div id="method-i-serial_source" class="dyn-source">
+                <pre>static VALUE
+ossl_x509_get_serial(VALUE self)
+{
+    X509 *x509;
+
+    GetX509(self, x509);
+
+    return asn1integer_to_num(X509_get_serialNumber(x509));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-serial-3D">
+            
+              <b>cert.serial = integer => integer</b>
+            
+            <a href="../../../classes/OpenSSL/X509/Certificate.html#method-i-serial-3D" name="method-i-serial-3D" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-serial-3D_source')" id="l_method-i-serial-3D_source">show</a>
+                
+              </p>
+              <div id="method-i-serial-3D_source" class="dyn-source">
+                <pre>static VALUE
+ossl_x509_set_serial(VALUE self, VALUE num)
+{
+    X509 *x509;
+
+    GetX509(self, x509);
+
+    x509-&gt;cert_info-&gt;serialNumber =
+        num_to_asn1integer(num, X509_get_serialNumber(x509));
+
+    return num;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-sign">
+            
+              <b>cert.sign(key, digest) => self</b>
+            
+            <a href="../../../classes/OpenSSL/X509/Certificate.html#method-i-sign" name="method-i-sign" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-sign_source')" id="l_method-i-sign_source">show</a>
+                
+              </p>
+              <div id="method-i-sign_source" class="dyn-source">
+                <pre>static VALUE
+ossl_x509_sign(VALUE self, VALUE key, VALUE digest)
+{
+    X509 *x509;
+    EVP_PKEY *pkey;
+    const EVP_MD *md;
+
+    pkey = GetPrivPKeyPtr(key); /* NO NEED TO DUP */
+    md = GetDigestPtr(digest);
+    GetX509(self, x509);
+    if (!X509_sign(x509, pkey, md)) {
+        ossl_raise(eX509CertError, NULL);
+    }
+
+    return self;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-signature_algorithm">
+            
+              <b>cert.signature_algorithm => string</b>
+            
+            <a href="../../../classes/OpenSSL/X509/Certificate.html#method-i-signature_algorithm" name="method-i-signature_algorithm" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-signature_algorithm_source')" id="l_method-i-signature_algorithm_source">show</a>
+                
+              </p>
+              <div id="method-i-signature_algorithm_source" class="dyn-source">
+                <pre>static VALUE
+ossl_x509_get_signature_algorithm(VALUE self)
+{
+    X509 *x509;
+    BIO *out;
+    VALUE str;
+
+    GetX509(self, x509);
+    out = BIO_new(BIO_s_mem());
+    if (!out) ossl_raise(eX509CertError, NULL);
+
+    if (!i2a_ASN1_OBJECT(out, x509-&gt;cert_info-&gt;signature-&gt;algorithm)) {
+        BIO_free(out);
+        ossl_raise(eX509CertError, NULL);
+    }
+    str = ossl_membio2str(out);
+
+    return str;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-subject">
+            
+              <b>cert.subject => name</b>
+            
+            <a href="../../../classes/OpenSSL/X509/Certificate.html#method-i-subject" name="method-i-subject" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-subject_source')" id="l_method-i-subject_source">show</a>
+                
+              </p>
+              <div id="method-i-subject_source" class="dyn-source">
+                <pre>static VALUE
+ossl_x509_get_subject(VALUE self)
+{
+    X509 *x509;
+    X509_NAME *name;
+
+    GetX509(self, x509);
+    if (!(name = X509_get_subject_name(x509))) { /* NO DUP - don&#39;t free! */
+        ossl_raise(eX509CertError, NULL);
+    }
+
+    return ossl_x509name_new(name);
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-subject-3D">
+            
+              <b>cert.subject = name => name</b>
+            
+            <a href="../../../classes/OpenSSL/X509/Certificate.html#method-i-subject-3D" name="method-i-subject-3D" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-subject-3D_source')" id="l_method-i-subject-3D_source">show</a>
+                
+              </p>
+              <div id="method-i-subject-3D_source" class="dyn-source">
+                <pre>static VALUE
+ossl_x509_set_subject(VALUE self, VALUE subject)
+{
+    X509 *x509;
+
+    GetX509(self, x509);
+    if (!X509_set_subject_name(x509, GetX509NamePtr(subject))) { /* DUPs name */
+        ossl_raise(eX509CertError, NULL);
+    }
+
+    return subject;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-to_der">
+            
+              <b>cert.to_der => string</b>
+            
+            <a href="../../../classes/OpenSSL/X509/Certificate.html#method-i-to_der" name="method-i-to_der" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-to_der_source')" id="l_method-i-to_der_source">show</a>
+                
+              </p>
+              <div id="method-i-to_der_source" class="dyn-source">
+                <pre>static VALUE
+ossl_x509_to_der(VALUE self)
+{
+    X509 *x509;
+    VALUE str;
+    long len;
+    unsigned char *p;
+
+    GetX509(self, x509);
+    if ((len = i2d_X509(x509, NULL)) &lt;= 0)
+        ossl_raise(eX509CertError, NULL);
+    str = rb_str_new(0, len);
+    p = (unsigned char *)RSTRING_PTR(str);
+    if (i2d_X509(x509, &amp;p) &lt;= 0)
+        ossl_raise(eX509CertError, NULL);
+    ossl_str_adjust(str, p);
+
+    return str;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-to_pem">
+            
+              <b>cert.to_pem => string</b>
+            
+            <a href="../../../classes/OpenSSL/X509/Certificate.html#method-i-to_pem" name="method-i-to_pem" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+            <div class="aka">
+              Also aliased as: <a href="Certificate.html#method-i-to_s">to_s</a>
+            </div>
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-to_pem_source')" id="l_method-i-to_pem_source">show</a>
+                
+              </p>
+              <div id="method-i-to_pem_source" class="dyn-source">
+                <pre>static VALUE
+ossl_x509_to_pem(VALUE self)
+{
+    X509 *x509;
+    BIO *out;
+    VALUE str;
+
+    GetX509(self, x509);
+    out = BIO_new(BIO_s_mem());
+    if (!out) ossl_raise(eX509CertError, NULL);
+
+    if (!PEM_write_bio_X509(out, x509)) {
+        BIO_free(out);
+        ossl_raise(eX509CertError, NULL);
+    }
+    str = ossl_membio2str(out);
+
+    return str;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-to_s">
+            
+              <b>to_s</b>()
+            
+            <a href="../../../classes/OpenSSL/X509/Certificate.html#method-i-to_s" name="method-i-to_s" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+            <div class="aka">
+              Alias for: <a href="Certificate.html#method-i-to_pem">to_pem</a>
+            </div>
+          
+          
+          
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-to_text">
+            
+              <b>cert.to_text => string</b>
+            
+            <a href="../../../classes/OpenSSL/X509/Certificate.html#method-i-to_text" name="method-i-to_text" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-to_text_source')" id="l_method-i-to_text_source">show</a>
+                
+              </p>
+              <div id="method-i-to_text_source" class="dyn-source">
+                <pre>static VALUE
+ossl_x509_to_text(VALUE self)
+{
+    X509 *x509;
+    BIO *out;
+    VALUE str;
+
+    GetX509(self, x509);
+
+    out = BIO_new(BIO_s_mem());
+    if (!out) ossl_raise(eX509CertError, NULL);
+
+    if (!X509_print(out, x509)) {
+        BIO_free(out);
+        ossl_raise(eX509CertError, NULL);
+    }
+    str = ossl_membio2str(out);
+
+    return str;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-verify">
+            
+              <b>cert.verify(key) => true | false
+</b>
+            
+            <a href="../../../classes/OpenSSL/X509/Certificate.html#method-i-verify" name="method-i-verify" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Checks that cert signature is made with PRIVversion of this PUBLIC
+&#39;key&#39;</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-verify_source')" id="l_method-i-verify_source">show</a>
+                
+              </p>
+              <div id="method-i-verify_source" class="dyn-source">
+                <pre>static VALUE
+ossl_x509_verify(VALUE self, VALUE key)
+{
+    X509 *x509;
+    EVP_PKEY *pkey;
+    int i;
+
+    pkey = GetPKeyPtr(key); /* NO NEED TO DUP */
+    GetX509(self, x509);
+    if ((i = X509_verify(x509, pkey)) &lt; 0) {
+        ossl_raise(eX509CertError, NULL);
+    }
+    if (i &gt; 0) {
+        return Qtrue;
+    }
+
+    return Qfalse;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-version">
+            
+              <b>cert.version => integer</b>
+            
+            <a href="../../../classes/OpenSSL/X509/Certificate.html#method-i-version" name="method-i-version" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-version_source')" id="l_method-i-version_source">show</a>
+                
+              </p>
+              <div id="method-i-version_source" class="dyn-source">
+                <pre>static VALUE
+ossl_x509_get_version(VALUE self)
+{
+    X509 *x509;
+
+    GetX509(self, x509);
+
+    return LONG2NUM(X509_get_version(x509));
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-i-version-3D">
+            
+              <b>cert.version = integer => integer</b>
+            
+            <a href="../../../classes/OpenSSL/X509/Certificate.html#method-i-version-3D" name="method-i-version-3D" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-version-3D_source')" id="l_method-i-version-3D_source">show</a>
+                
+              </p>
+              <div id="method-i-version-3D_source" class="dyn-source">
+                <pre>static VALUE
+ossl_x509_set_version(VALUE self, VALUE version)
+{
+    X509 *x509;
+    long ver;
+
+    if ((ver = NUM2LONG(version)) &lt; 0) {
+        ossl_raise(eX509CertError, &quot;version must be &gt;= 0!&quot;);
+    }
+    GetX509(self, x509);
+    if (!X509_set_version(x509, ver)) {
+        ossl_raise(eX509CertError, NULL);
+    }
+
+    return version;
+}</pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+
+    </div>
+  </body>
+</html>    

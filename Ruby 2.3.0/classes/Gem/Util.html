@@ -1,0 +1,477 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Gem::Util</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../../css/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="../../css/github.css" type="text/css" media="screen" />
+<script src="../../js/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+        <h1>
+            <span class="type">Module</span> 
+            Gem::Util 
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="../../files/lib/rubygems/util_rb.html">lib/rubygems/util.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<p>frozen_string_literal: false</p>
+
+<p>This module contains various utility methods as module methods.</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>G</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-gunzip">gunzip</a>,
+              </li>
+            
+              
+              <li>
+                <a href="#method-c-gzip">gzip</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>I</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-inflate">inflate</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>P</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-popen">popen</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>S</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-silent_system">silent_system</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>T</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="#method-c-traverse_parents">traverse_parents</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+
+
+
+  
+
+    
+
+    
+
+    
+      <!-- Section constants -->
+      <div class="sectiontitle">Constants</div>
+      <table border='0' cellpadding='5'>
+        
+          <tr valign='top'>
+            <td class="attr-name">NULL_DEVICE</td>
+            <td>=</td>
+            <td class="attr-value">defined?(IO::NULL) ? IO::NULL : Gem.win_platform? ? &#39;NUL&#39; : &#39;/dev/null&#39;</td>
+          </tr>
+          
+            <tr valign='top'>
+              <td>&nbsp;</td>
+              <td colspan="2" class="attr-desc"></td>
+            </tr>
+          
+        
+      </table>
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-gunzip">
+            
+              <b>gunzip</b>(data)
+            
+            <a href="../../classes/Gem/Util.html#method-c-gunzip" name="method-c-gunzip" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p><a href="../Zlib/GzipReader.html">Zlib::GzipReader</a> wrapper that unzips
+<code>data</code>.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-gunzip_source')" id="l_method-c-gunzip_source">show</a>
+                
+              </p>
+              <div id="method-c-gunzip_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/util.rb, line 12</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">self</span>.<span class="ruby-identifier">gunzip</span>(<span class="ruby-identifier">data</span>)
+  <span class="ruby-identifier">require</span> <span class="ruby-string">&#39;zlib&#39;</span>
+  <span class="ruby-identifier">require</span> <span class="ruby-string">&#39;stringio&#39;</span>
+  <span class="ruby-identifier">data</span> = <span class="ruby-constant">StringIO</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">data</span>, <span class="ruby-string">&#39;r&#39;</span>)
+
+  <span class="ruby-identifier">unzipped</span> = <span class="ruby-constant">Zlib</span><span class="ruby-operator">::</span><span class="ruby-constant">GzipReader</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">data</span>).<span class="ruby-identifier">read</span>
+  <span class="ruby-identifier">unzipped</span>.<span class="ruby-identifier">force_encoding</span> <span class="ruby-constant">Encoding</span><span class="ruby-operator">::</span><span class="ruby-constant">BINARY</span> <span class="ruby-keyword">if</span> <span class="ruby-constant">Object</span>.<span class="ruby-identifier">const_defined?</span> <span class="ruby-value">:Encoding</span>
+  <span class="ruby-identifier">unzipped</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-gzip">
+            
+              <b>gzip</b>(data)
+            
+            <a href="../../classes/Gem/Util.html#method-c-gzip" name="method-c-gzip" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p><a href="../Zlib/GzipWriter.html">Zlib::GzipWriter</a> wrapper that zips
+<code>data</code>.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-gzip_source')" id="l_method-c-gzip_source">show</a>
+                
+              </p>
+              <div id="method-c-gzip_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/util.rb, line 25</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">self</span>.<span class="ruby-identifier">gzip</span>(<span class="ruby-identifier">data</span>)
+  <span class="ruby-identifier">require</span> <span class="ruby-string">&#39;zlib&#39;</span>
+  <span class="ruby-identifier">require</span> <span class="ruby-string">&#39;stringio&#39;</span>
+  <span class="ruby-identifier">zipped</span> = <span class="ruby-constant">StringIO</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">&#39;&#39;</span>,<span class="ruby-string">&#39;w&#39;</span>)
+  <span class="ruby-identifier">zipped</span>.<span class="ruby-identifier">set_encoding</span> <span class="ruby-constant">Encoding</span><span class="ruby-operator">::</span><span class="ruby-constant">BINARY</span> <span class="ruby-keyword">if</span> <span class="ruby-constant">Object</span>.<span class="ruby-identifier">const_defined?</span> <span class="ruby-value">:Encoding</span>
+
+  <span class="ruby-constant">Zlib</span><span class="ruby-operator">::</span><span class="ruby-constant">GzipWriter</span>.<span class="ruby-identifier">wrap</span> <span class="ruby-identifier">zipped</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">io</span><span class="ruby-operator">|</span> <span class="ruby-identifier">io</span>.<span class="ruby-identifier">write</span> <span class="ruby-identifier">data</span> <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">zipped</span>.<span class="ruby-identifier">string</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-inflate">
+            
+              <b>inflate</b>(data)
+            
+            <a href="../../classes/Gem/Util.html#method-c-inflate" name="method-c-inflate" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>A <a href="../Zlib/Inflate.html#method-i-inflate">Zlib::Inflate#inflate</a>
+wrapper</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-inflate_source')" id="l_method-c-inflate_source">show</a>
+                
+              </p>
+              <div id="method-c-inflate_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/util.rb, line 39</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">self</span>.<span class="ruby-identifier">inflate</span>(<span class="ruby-identifier">data</span>)
+  <span class="ruby-identifier">require</span> <span class="ruby-string">&#39;zlib&#39;</span>
+  <span class="ruby-constant">Zlib</span><span class="ruby-operator">::</span><span class="ruby-constant">Inflate</span>.<span class="ruby-identifier">inflate</span> <span class="ruby-identifier">data</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-popen">
+            
+              <b>popen</b>(*command)
+            
+            <a href="../../classes/Gem/Util.html#method-c-popen" name="method-c-popen" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>This calls <a href="../IO.html#method-c-popen">IO.popen</a> where it
+accepts an array for a <code>command</code> (Ruby 1.9+) and implements an
+<a href="../IO.html#method-c-popen">IO.popen</a>-like behavior where it
+does not accept an array for a command.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-popen_source')" id="l_method-c-popen_source">show</a>
+                
+              </p>
+              <div id="method-c-popen_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/util.rb, line 49</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">self</span>.<span class="ruby-identifier">popen</span> <span class="ruby-operator">*</span><span class="ruby-identifier">command</span>
+  <span class="ruby-constant">IO</span>.<span class="ruby-identifier">popen</span> <span class="ruby-identifier">command</span>, <span class="ruby-operator">&amp;</span><span class="ruby-value">:read</span>
+<span class="ruby-keyword">rescue</span> <span class="ruby-constant">TypeError</span> <span class="ruby-comment"># ruby 1.8 only supports string command</span>
+  <span class="ruby-identifier">r</span>, <span class="ruby-identifier">w</span> = <span class="ruby-constant">IO</span>.<span class="ruby-identifier">pipe</span>
+
+  <span class="ruby-identifier">pid</span> = <span class="ruby-identifier">fork</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-constant">STDIN</span>.<span class="ruby-identifier">close</span>
+    <span class="ruby-constant">STDOUT</span>.<span class="ruby-identifier">reopen</span> <span class="ruby-identifier">w</span>
+
+    <span class="ruby-identifier">exec</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">command</span>)
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">w</span>.<span class="ruby-identifier">close</span>
+
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-identifier">r</span>.<span class="ruby-identifier">read</span>
+  <span class="ruby-keyword">ensure</span>
+    <span class="ruby-constant">Process</span>.<span class="ruby-identifier">wait</span> <span class="ruby-identifier">pid</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-silent_system">
+            
+              <b>silent_system</b>(*command)
+            
+            <a href="../../classes/Gem/Util.html#method-c-silent_system" name="method-c-silent_system" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Invokes system, but silences all output.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-silent_system_source')" id="l_method-c-silent_system_source">show</a>
+                
+              </p>
+              <div id="method-c-silent_system_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/util.rb, line 75</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">self</span>.<span class="ruby-identifier">silent_system</span> <span class="ruby-operator">*</span><span class="ruby-identifier">command</span>
+  <span class="ruby-identifier">opt</span> = {<span class="ruby-value">:out</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">NULL_DEVICE</span>, <span class="ruby-value">:err</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-value">:child</span>, <span class="ruby-value">:out</span>]}
+  <span class="ruby-keyword">if</span> <span class="ruby-constant">Hash</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">command</span>.<span class="ruby-identifier">last</span>
+    <span class="ruby-identifier">opt</span>.<span class="ruby-identifier">update</span>(<span class="ruby-identifier">command</span>.<span class="ruby-identifier">last</span>)
+    <span class="ruby-identifier">cmds</span> = <span class="ruby-identifier">command</span>[<span class="ruby-number">0</span><span class="ruby-operator">...</span><span class="ruby-number">-1</span>]
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">cmds</span> = <span class="ruby-identifier">command</span>.<span class="ruby-identifier">dup</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">system</span>(<span class="ruby-operator">*</span>(<span class="ruby-identifier">cmds</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">opt</span>))
+<span class="ruby-keyword">rescue</span> <span class="ruby-constant">TypeError</span>
+  <span class="ruby-identifier">require</span> <span class="ruby-string">&#39;thread&#39;</span>
+
+  <span class="ruby-ivar">@silent_mutex</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Mutex</span>.<span class="ruby-identifier">new</span>
+
+  <span class="ruby-identifier">null_device</span> = <span class="ruby-constant">NULL_DEVICE</span>
+
+  <span class="ruby-ivar">@silent_mutex</span>.<span class="ruby-identifier">synchronize</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-keyword">begin</span>
+      <span class="ruby-identifier">stdout</span> = <span class="ruby-constant">STDOUT</span>.<span class="ruby-identifier">dup</span>
+      <span class="ruby-identifier">stderr</span> = <span class="ruby-constant">STDERR</span>.<span class="ruby-identifier">dup</span>
+
+      <span class="ruby-constant">STDOUT</span>.<span class="ruby-identifier">reopen</span> <span class="ruby-identifier">null_device</span>, <span class="ruby-string">&#39;w&#39;</span>
+      <span class="ruby-constant">STDERR</span>.<span class="ruby-identifier">reopen</span> <span class="ruby-identifier">null_device</span>, <span class="ruby-string">&#39;w&#39;</span>
+
+      <span class="ruby-keyword">return</span> <span class="ruby-identifier">system</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">command</span>)
+    <span class="ruby-keyword">ensure</span>
+      <span class="ruby-constant">STDOUT</span>.<span class="ruby-identifier">reopen</span> <span class="ruby-identifier">stdout</span>
+      <span class="ruby-constant">STDERR</span>.<span class="ruby-identifier">reopen</span> <span class="ruby-identifier">stderr</span>
+      <span class="ruby-identifier">stdout</span>.<span class="ruby-identifier">close</span>
+      <span class="ruby-identifier">stderr</span>.<span class="ruby-identifier">close</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+        
+        <div class="method">
+          <div class="title method-title" id="method-c-traverse_parents">
+            
+              <b>traverse_parents</b>(directory)
+            
+            <a href="../../classes/Gem/Util.html#method-c-traverse_parents" name="method-c-traverse_parents" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Enumerates the parents of <code>directory</code>.</p>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-traverse_parents_source')" id="l_method-c-traverse_parents_source">show</a>
+                
+              </p>
+              <div id="method-c-traverse_parents_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File lib/rubygems/util.rb, line 112</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">self</span>.<span class="ruby-identifier">traverse_parents</span> <span class="ruby-identifier">directory</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">enum_for</span> <span class="ruby-identifier">__method__</span>, <span class="ruby-identifier">directory</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">block_given?</span>
+
+  <span class="ruby-identifier">here</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span> <span class="ruby-identifier">directory</span>
+  <span class="ruby-identifier">start</span> = <span class="ruby-identifier">here</span>
+
+  <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">chdir</span> <span class="ruby-identifier">start</span>
+
+  <span class="ruby-keyword">begin</span>
+    <span class="ruby-identifier">loop</span> <span class="ruby-keyword">do</span>
+      <span class="ruby-keyword">yield</span> <span class="ruby-identifier">here</span>
+
+      <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">chdir</span> <span class="ruby-string">&#39;..&#39;</span>
+
+      <span class="ruby-keyword">return</span> <span class="ruby-keyword">if</span> <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">pwd</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">here</span> <span class="ruby-comment"># toplevel</span>
+
+      <span class="ruby-identifier">here</span> = <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">pwd</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">ensure</span>
+    <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">chdir</span> <span class="ruby-identifier">start</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                        </div>
+
+    </div>
+  </body>
+</html>    
