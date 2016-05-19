@@ -1,8 +1,8 @@
 #!/bin/bash
 # Generates merged sdoc
 
-RAILS_VERSION="v3.1.3"
-RUBY_VERSION="1.9.3-p0"
+RAILS_VERSION="v4.2.6"
+RUBY_VERSION="2.3.0"
 
 echo "Creating directories"
 gem install sdoc
@@ -10,7 +10,6 @@ echo "**************************************************************************
 echo "Until the author of sdoc merges pull request #32"
 echo "copy https://raw.github.com/vijaydev/sdoc/45d1393efc1b41cb0b4aa3506570b9e7bfaea674/lib/sdoc/github.rb to your doc lib/github.rb file"
 echo "************************************************************************************************************************************"
-pause
 mkdir repos
 mkdir sdocs
 cd repos
@@ -29,7 +28,7 @@ echo "Fetching ruby $RUBY_VERSION from ruby-lang.org"
 cd ..
 mkdir ruby
 cd ruby
-curl -o ruby.tar.bz2 http://ftp.ruby-lang.org/pub/ruby/1.9/ruby-$RUBY_VERSION.tar.bz2
+curl -o ruby.tar.bz2 http://ftp.ruby-lang.org/pub/ruby/ruby-$RUBY_VERSION.tar.bz2
 tar xjf ruby.tar.bz2
 cd ruby-$RUBY_VERSION
 echo "Generating SDOC"
