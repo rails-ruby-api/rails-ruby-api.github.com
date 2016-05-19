@@ -74,6 +74,13 @@ Searchdoc.Navigation = new function() {
             case 13: //Event.KEY_RETURN:
                 if (this.$current) this.select(this.$current);
                 break;
+            case 83: // s (qwerty)
+            case 79: // o (dvorak)
+                if (e.ctrlKey) {
+                    $('#search').focus();
+                    e.preventDefault();
+                }
+                break;
         }
         if (e.ctrlKey && e.shiftKey) this.select(this.$current);
     }
@@ -142,7 +149,6 @@ Searchdoc.Panel = function(element, data, tree, frame) {
     this.$view = this.$result.parent();
     this.data = data;
     this.searcher = new Searcher(data.index);
-
     this.tree = new Searchdoc.Tree($('.tree', element), tree, this);
     this.init();
 }

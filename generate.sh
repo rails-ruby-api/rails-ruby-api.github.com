@@ -4,12 +4,9 @@
 RAILS_VERSION="v4.2.6"
 RUBY_VERSION="2.3.0"
 
-echo "Creating directories"
 gem install sdoc
-echo "************************************************************************************************************************************"
-echo "Until the author of sdoc merges pull request #32"
-echo "copy https://raw.github.com/vijaydev/sdoc/45d1393efc1b41cb0b4aa3506570b9e7bfaea674/lib/sdoc/github.rb to your doc lib/github.rb file"
-echo "************************************************************************************************************************************"
+
+echo "Creating directories"
 mkdir repos
 mkdir sdocs
 cd repos
@@ -32,10 +29,10 @@ curl -o ruby.tar.bz2 http://ftp.ruby-lang.org/pub/ruby/ruby-$RUBY_VERSION.tar.bz
 tar xjf ruby.tar.bz2
 cd ruby-$RUBY_VERSION
 echo "Generating SDOC"
-sdoc -o ../../sdocs/ruby-$RUBY_VERSION --line-numbers --format=sdoc -T rails --github .
+sdoc -o ../../../sdocs/ruby-$RUBY_VERSION --line-numbers --format=sdoc -T rails --github .
 
 # Merge sdocs
-cd ../../sdocs
+cd ../../../sdocs
 
 echo "Merging Ruby and Rails SDOC"
 sdoc-merge --title "Ruby $RUBY_VERSION, Rails $RAILS_VERSION" --op rails-ruby --names "Ruby $RUBY_VERSION,Rails $RAILS_VERSION" ruby-$RUBY_VERSION rails-$RAILS_VERSION
@@ -45,6 +42,6 @@ echo "Cleaning up"
 rm -rf rails-$RAILS_VERSION ruby-$RUBY_VERSION
 rm -rf ../repos
 
-echo "==================================="
-echo "Merged SDOC is now in in rails-ruby"
-echo "==================================="
+echo "================================"
+echo "Merged SDOC is now in rails-ruby"
+echo "================================"
