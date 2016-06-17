@@ -7,12 +7,13 @@ RUBY_VERSION="2.3.0"
 gem install sdoc
 
 echo "Creating directories"
-mkdir repos
-mkdir sdocs
+mkdir -p repos
+mkdir -p sdocs
 cd repos
 
 # Rails
 echo "Fetching Rails $RAILS_VERSION repo from github.com"
+rm -rf rails
 git clone https://github.com/rails/rails.git
 cd rails
 git ch $RAILS_VERSION
